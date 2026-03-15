@@ -1,0 +1,26 @@
+{
+  "name": "asb-web-workspace",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "catalog": {
+      "@biomejs/biome": "2.3.13",
+      "typescript": "~5.9.3",
+      "valibot": "^1.3.0",
+      "license-checker-rseidelsohn": "^4.4.2"
+    }
+  },
+  "scripts": {
+    "build": "bun build:asb-ts && bun build:asb-web",
+    "build:asb-ts": "bun --filter asb-ts build",
+    "build:asb-web": "bun --filter asb-web build",
+    "biome": "biome check .",
+    "biome:fix": "biome check --write --unsafe ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:"
+  }
+}

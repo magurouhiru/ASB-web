@@ -1,0 +1,22 @@
+**Acknowledgments**  
+This project is a web-based rewrite of the excellent desktop application [ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor) by cadon.
+
+# ASB-web
+
+このリポジトリは[ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor) の一部機能をTypescript で書き直し、web アプリとして公開するために作成されました。  
+[ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor)の方が機能は非常に多く、実績もあるため、興味を持った方は本家を使用することをお勧めします。
+
+[ASB-web を試してみる(GitHub Pages)](https://magurouhiru.github.io/ASB-web/)
+
+## 機能
+- [x] 個体値テスト(野生のみ)
+  - [x] UIから値を入力
+- [ ] 抽出機能(野生のみ)
+  - [ ] UIから値を入力
+  - [ ] クエリパラメータから値を入力
+  - [ ] OCRで値を入力
+
+## このアプリについて
+- プライバシー: 本アプリは、入力されたデータや個人情報をサーバーに送信したり、保存したりすることはありません。
+- アクセス解析: GitHub Pages 標準の統計機能（誰がアクセスしたか特定できない数値データ）のみを参照しています。
+- 免責事項: 本アプリの利用により生じた損害について、作者は一切の責任を負いません。

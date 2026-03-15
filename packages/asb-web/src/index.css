@@ -1,0 +1,3 @@
+/* tailwindcssを使用するため、基本的には何も書かない */
+@import "tailwindcss";
+@import "@heroui/styles";

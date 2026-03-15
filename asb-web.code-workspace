@@ -1,0 +1,13 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+    // {
+    //   "path": "packages/asb-ts"
+    // },
+    // {
+    //   "path": "packages/asb-web"
+    // }
+  ]
+}
