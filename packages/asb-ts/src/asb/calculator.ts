@@ -9,7 +9,6 @@ import {
   type SpeciesStat,
   type Stats,
   type Values,
-  
   type ValuesIn,
   ValuesSchema,
 } from "./types.js";
