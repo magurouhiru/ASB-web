@@ -1,3 +1,17 @@
+├─ @heroui/react@3.0.0-rc.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/heroui-inc/heroui
+│  ├─ publisher: HeroUI
+│  ├─ email: support@heroui.com
+│  ├─ path: /home/vscode/app/packages/asb-web/node_modules/@heroui/react
+│  └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/@heroui/react/LICENSE
+├─ @heroui/styles@3.0.0-rc.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/heroui-inc/heroui
+│  ├─ publisher: HeroUI
+│  ├─ email: support@heroui.com
+│  ├─ path: /home/vscode/app/packages/asb-web/node_modules/@heroui/styles
+│  └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/@heroui/styles/LICENSE
 ├─ @lingui/core@5.9.3
 │  ├─ licenses: MIT
 │  ├─ repository: https://github.com/lingui/js-lingui
@@ -17,6 +31,24 @@
 │  ├─ publisher: mediapipe@google.com
 │  ├─ path: /home/vscode/app/packages/asb-web/node_modules/@mediapipe/tasks-vision
 │  └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/@mediapipe/tasks-vision/README.md
+├─ @tanstack/react-devtools@0.10.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/TanStack/devtools
+│  ├─ publisher: Tanner Linsley
+│  ├─ path: /home/vscode/app/packages/asb-web/node_modules/@tanstack/react-devtools
+│  └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/@tanstack/react-devtools/LICENSE
+├─ @tanstack/react-form-devtools@0.2.19
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/TanStack/form
+│  ├─ publisher: tannerlinsley
+│  ├─ path: /home/vscode/app/packages/asb-web/node_modules/@tanstack/react-form-devtools
+│  └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/@tanstack/react-form-devtools/LICENSE
+├─ @tanstack/react-form@1.28.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/TanStack/form
+│  ├─ publisher: tannerlinsley
+│  ├─ path: /home/vscode/app/packages/asb-web/node_modules/@tanstack/react-form
+│  └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/@tanstack/react-form/LICENSE
 ├─ @tanstack/react-router-devtools@1.166.8
 │  ├─ licenses: MIT
 │  ├─ repository: https://github.com/TanStack/router
@@ -49,6 +81,12 @@
 │  ├─ repository: https://github.com/facebook/react
 │  ├─ path: /home/vscode/app/packages/asb-web/node_modules/react
 │  └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/react/LICENSE
+├─ recharts@3.8.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/recharts/recharts
+│  ├─ publisher: recharts group
+│  ├─ path: /home/vscode/app/packages/asb-web/node_modules/recharts
+│  └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/recharts/LICENSE
 ├─ tone@15.1.22
 │  ├─ licenses: MIT
 │  ├─ repository: https://github.com/Tonejs/Tone.js

@@ -11,9 +11,9 @@ This project is a web-based rewrite of the excellent desktop application [ARK Sm
 ## 機能
 - [x] 個体値テスト(野生のみ)
   - [x] UIから値を入力
-- [ ] 抽出機能(野生のみ)
-  - [ ] UIから値を入力
-  - [ ] クエリパラメータから値を入力
+- [x] 抽出機能(野生のみ)
+  - [x] UIから値を入力
+  - [x] クエリパラメータから値を入力
   - [ ] OCRで値を入力
 
 ## このアプリについて

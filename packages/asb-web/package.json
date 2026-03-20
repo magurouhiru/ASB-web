@@ -29,13 +29,16 @@
     "asb-ts": "workspace:*",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "tone": "^15.1.22"
+    "recharts": "^3.8.0",
+    "tone": "^15.1.22",
+    "valibot": "catalog:"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
     "@lingui/cli": "^5.9.3",
     "@lingui/swc-plugin": "^5.10.1",
     "@lingui/vite-plugin": "^5.9.0",
+    "@recharts/devtools": "^0.0.11",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/devtools-vite": "^0.6.0",
     "@tanstack/router-plugin": "^1.157.18",
