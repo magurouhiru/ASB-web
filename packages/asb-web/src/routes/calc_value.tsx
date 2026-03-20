@@ -16,6 +16,7 @@ import {
   type LevelsIn,
   LevelsSchema,
   NAMES,
+  NameSchema,
   type Values,
 } from "asb-ts";
 import { useState } from "react";
@@ -55,7 +56,9 @@ function CalcValueComponent() {
     },
     validators: {
       onChange: ({ value }) => {
-        const stats = getStats(value.name);
+        const nameParsed = v.safeParse(NameSchema, value.name);
+        if (!nameParsed.success) return;
+        const stats = getStats(nameParsed.output);
         const parsed = v.safeParse(LevelsSchema, {
           health: { wild: value.Health_wild },
           stamina: { wild: value.Stamina_wild },

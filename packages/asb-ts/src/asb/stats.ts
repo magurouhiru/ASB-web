@@ -2,6 +2,7 @@ import * as v from "valibot";
 import { SPECIES as ASA_SPECIES } from "./ASA-values.js";
 import {
   type FullStatsRaw,
+  type Name,
   type SpeciesStat,
   type SpeciesStatIn,
   SpeciesStatSchema,
@@ -49,7 +50,7 @@ const NULL_STATS = v.parse(StatsSchema, {
 const SEARCH_ORDER = [SPECIES, ASA_SPECIES] as const;
 const SEARCH_TARGET = SEARCH_ORDER.flat();
 
-export function getStats(name: string): Stats {
+export function getStats(name: Name): Stats {
   if (name === "") throw new Error(`なんかいきものの名前を入力して`);
   const found = SEARCH_TARGET.find((s) => s.name === name);
   if (!found) throw new Error(`${name}が見つからなんだ`);
