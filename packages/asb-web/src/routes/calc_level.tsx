@@ -52,7 +52,7 @@ function CalcLevelComponent() {
       { subject: "🏃", A: levels.Stamina.wild, fullMark: 50 },
       { subject: "🏊", A: levels.Oxygen.wild, fullMark: 50 },
       { subject: "🍰", A: levels.Food.wild, fullMark: 50 },
-      { subject: "🏋️‍♂️", A: levels.Stamina.wild, Weight: 50 },
+      { subject: "🏋️‍♂️", A: levels.Weight.wild, fullMark: 50 },
       {
         subject: "🤺",
         A: levels.MeleeDamageMultiplier.wild,
@@ -171,9 +171,7 @@ function CalcLevelComponent() {
                 </NumberField.Group>
                 <output>
                   {levels?.Health.wild}
-                  {levels?.Health.error
-                    ? ` ± ${(levels?.Health.wild * levels?.Health.error).toFixed(2)}`
-                    : ""}
+                  {levels?.Health.error ? ` ± ${levels?.Health.error}` : ""}
                 </output>
               </div>
             </field.NumberField>
@@ -194,7 +192,10 @@ function CalcLevelComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{levels?.Stamina.wild}</output>
+                <output>
+                  {levels?.Stamina.wild}
+                  {levels?.Stamina.error ? ` ± ${levels.Stamina.error}` : ""}
+                </output>
               </div>
             </field.NumberField>
           )}
@@ -214,7 +215,10 @@ function CalcLevelComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{levels?.Oxygen.wild}</output>
+                <output>
+                  {levels?.Oxygen.wild}
+                  {levels?.Oxygen.error ? ` ± ${levels.Oxygen.error}` : ""}
+                </output>
               </div>
             </field.NumberField>
           )}
@@ -234,7 +238,10 @@ function CalcLevelComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{levels?.Food.wild}</output>
+                <output>
+                  {levels?.Food.wild}
+                  {levels?.Food.error ? ` ± ${levels.Food.error}` : ""}
+                </output>
               </div>
             </field.NumberField>
           )}
@@ -254,7 +261,10 @@ function CalcLevelComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{levels?.Weight.wild}</output>
+                <output>
+                  {levels?.Weight.wild}
+                  {levels?.Weight.error ? ` ± ${levels.Weight.error}` : ""}
+                </output>
               </div>
             </field.NumberField>
           )}
@@ -275,7 +285,12 @@ function CalcLevelComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{levels?.MeleeDamageMultiplier.wild}</output>
+                <output>
+                  {levels?.MeleeDamageMultiplier.wild}
+                  {levels?.MeleeDamageMultiplier.error
+                    ? ` ± ${levels.MeleeDamageMultiplier.error}`
+                    : ""}
+                </output>
               </div>
             </field.NumberField>
           )}
@@ -295,7 +310,12 @@ function CalcLevelComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{levels?.Torpidity.wild}</output>
+                <output>
+                  {levels?.Torpidity.wild}
+                  {levels?.Torpidity.error
+                    ? ` ± ${levels.Torpidity.error}`
+                    : ""}
+                </output>
               </div>
             </field.NumberField>
           )}
@@ -306,35 +326,39 @@ function CalcLevelComponent() {
         </form.AppForm>
       </form>
 
-      <RadarChart
-        style={{
-          width: "100%",
-          height: "100%",
-          maxWidth: "500px",
-          maxHeight: "80vh",
-          aspectRatio: 1,
-        }}
-        responsive
-        outerRadius="80%"
-        data={data}
-        margin={{
-          top: 20,
-          left: 20,
-          right: 20,
-          bottom: 20,
-        }}
-      >
-        <PolarGrid />
-        <PolarAngleAxis dataKey="subject" />
-        <PolarRadiusAxis angle={30} domain={[0, 50]} tickCount={6} />
-        <Radar
-          name="main"
-          dataKey="A"
-          stroke="#8884d8"
-          fill="#8884d8"
-          fillOpacity={0.6}
-        />
-      </RadarChart>
+      {data.length > 0 ? (
+        <RadarChart
+          style={{
+            width: "100%",
+            height: "100%",
+            maxWidth: "500px",
+            maxHeight: "80vh",
+            aspectRatio: 1,
+          }}
+          responsive
+          outerRadius="80%"
+          data={data}
+          margin={{
+            top: 20,
+            left: 20,
+            right: 20,
+            bottom: 20,
+          }}
+        >
+          <PolarGrid />
+          <PolarAngleAxis dataKey="subject" />
+          <PolarRadiusAxis angle={30} domain={[0, 50]} tickCount={6} />
+          <Radar
+            name="main"
+            dataKey="A"
+            stroke="#8884d8"
+            fill="#8884d8"
+            fillOpacity={0.6}
+          />
+        </RadarChart>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

@@ -58,6 +58,8 @@ export function calculateLevel(stats: Stats, values: Values): Levels {
   };
 }
 
+/** 丸める */
+const ROUND = 10;
 function calcL(stat: SpeciesStat | null, value: number): LevelDetail {
   if (!stat || value === 0) return { wild: 0 };
   const tmpV = Math.round(
@@ -65,7 +67,8 @@ function calcL(stat: SpeciesStat | null, value: number): LevelDetail {
   );
   const cLevel = Math.max(tmpV, 0); // マイナスになるとあれなので最小値0にする。
   const cValue = calcV(stat, { wild: cLevel });
-  const error = Math.abs(value - cValue); // 面倒なので差だけ取る。
+  const tmpE = (Math.abs(value - cValue) / value) * cLevel;
+  const error = Math.ceil(tmpE * ROUND) / ROUND; // あれなので丸める。
   return {
     wild: cLevel,
     error: error !== 0 ? error : null,

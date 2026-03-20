@@ -7,8 +7,14 @@ export const Route = createFileRoute("/")({
 function HomeComponent() {
   return (
     <div>
-      <Link to="/calc_value">レベルから個体値を算出</Link>
-      <Link to="/calc_level">個体値からレベルを算出</Link>
+      <ul>
+        <li>
+          <Link to="/calc_value">レベル→個体値</Link>
+        </li>
+        <li>
+          <Link to="/calc_level">個体値→レベル</Link>
+        </li>
+      </ul>
     </div>
   );
 }
