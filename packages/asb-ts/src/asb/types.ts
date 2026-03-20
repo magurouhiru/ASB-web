@@ -1,3 +1,9 @@
+import * as v from "valibot";
+
+/*
+  values.ts 用のts の型
+*/
+
 /**
  * /ARKStatsExtractor/ARKBreedingStats/species/Species.cs
  * 0: baseValue, 1: incPerWildLevel, 2: incPerDomLevel, 3: addBonus, 4: multBonus.
@@ -55,41 +61,142 @@ export interface Species {
   ];
 }
 
+/*
+  valibot の型
+*/
+
+export const PositiveValueSchema = v.pipe(v.number(), v.minValue(0));
+
+/**
+ * packages/asb-ts/ARKStatsExtractor/ARKBreedingStats/species/SpeciesStat.cs
+ */
+export type SpeciesStat = v.InferOutput<typeof SpeciesStatSchema>;
+export type SpeciesStatIn = v.InferInput<typeof SpeciesStatSchema>;
+export const SpeciesStatSchema = v.strictObject({
+  baseValue: v.pipe(
+    PositiveValueSchema,
+    v.brand("SpeciesStatSchema/baseValue"),
+  ),
+  incPerWildLevel: v.pipe(
+    PositiveValueSchema,
+    v.brand("SpeciesStatSchema/incPerWildLevel"),
+  ),
+});
+
+/**
+ * asb-ts/ARKStatsExtractor/ARKBreedingStats/Ark.cs
+ */
+export type Stats = v.InferOutput<typeof StatsSchema>;
+export type StatsIn = v.InferInput<typeof StatsSchema>;
+export const StatsSchema = v.object({
+  health: v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/health")),
+  stamina: v.nullable(
+    v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/stamina")),
+  ),
+  oxygen: v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/oxygen")),
+  food: v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/food")),
+  water: v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/water")),
+  temperature: v.nullable(
+    v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/temperature")),
+  ),
+  weight: v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/eight")),
+  meleeDamageMultiplier: v.nullable(
+    v.pipe(
+      v.nullable(SpeciesStatSchema),
+      v.brand("StatsSchema/meleeDamageMultiplier"),
+    ),
+  ),
+  speedMultiplier: v.nullable(
+    v.pipe(
+      v.nullable(SpeciesStatSchema),
+      v.brand("StatsSchema/speedMultiplier"),
+    ),
+  ),
+  temperatureFortitude: v.nullable(
+    v.pipe(
+      v.nullable(SpeciesStatSchema),
+      v.brand("StatsSchema/temperatureFortitude"),
+    ),
+  ),
+  craftingSpeedMultiplier: v.nullable(
+    v.pipe(
+      v.nullable(SpeciesStatSchema),
+      v.brand("StatsSchema/craftingSpeedMultiplier"),
+    ),
+  ),
+  torpidity: v.nullable(
+    v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/torpidity")),
+  ),
+});
+
 /**
  * wild: 野生のレベル
- * error: 実際の値と算出した値の誤差(%)
+ * error: 実際の値と算出した値の誤差
  */
-export interface LevelDetail {
-  wild: number;
-  error?: number | null;
-}
+export type LevelDetail = v.InferOutput<typeof LevelDetailSchema>;
+export type LevelDetailIn = v.InferInput<typeof LevelDetailSchema>;
+export const LevelDetailSchema = v.object({
+  wild: v.pipe(PositiveValueSchema, v.brand("LevelDetailSchema/wild")),
+  error: v.pipe(
+    v.nullish(PositiveValueSchema),
+    v.brand("LevelDetailSchema/error"),
+  ),
+});
 
-export interface Levels {
-  Health: LevelDetail;
-  Stamina: LevelDetail;
-  Oxygen: LevelDetail;
-  Food: LevelDetail;
-  Water: LevelDetail;
-  Temperature: LevelDetail;
-  Weight: LevelDetail;
-  MeleeDamageMultiplier: LevelDetail;
-  SpeedMultiplier: LevelDetail;
-  TemperatureFortitude: LevelDetail;
-  CraftingSpeedMultiplier: LevelDetail;
-  Torpidity: LevelDetail;
-}
+export type Levels = v.InferOutput<typeof LevelsSchema>;
+export type LevelsIn = v.InferInput<typeof LevelsSchema>;
+export const LevelsSchema = v.object({
+  health: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/health")),
+  stamina: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/stamina")),
+  oxygen: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/oxygen")),
+  food: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/food")),
+  water: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/water")),
+  temperature: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/temperature")),
+  weight: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/weight")),
+  meleeDamageMultiplier: v.pipe(
+    LevelDetailSchema,
+    v.brand("LevelsSchema/meleeDamageMultiplier"),
+  ),
+  speedMultiplier: v.pipe(
+    LevelDetailSchema,
+    v.brand("LevelsSchema/speedMultiplier"),
+  ),
+  temperatureFortitude: v.pipe(
+    LevelDetailSchema,
+    v.brand("LevelsSchema/temperatureFortitude"),
+  ),
+  craftingSpeedMultiplier: v.pipe(
+    LevelDetailSchema,
+    v.brand("LevelsSchema/craftingSpeedMultiplier"),
+  ),
+  torpidity: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/torpidity")),
+});
 
-export interface Values {
-  Health: number;
-  Stamina: number;
-  Oxygen: number;
-  Food: number;
-  Water: number;
-  Temperature: number;
-  Weight: number;
-  MeleeDamageMultiplier: number;
-  SpeedMultiplier: number;
-  TemperatureFortitude: number;
-  CraftingSpeedMultiplier: number;
-  Torpidity: number;
-}
+export type Values = v.InferOutput<typeof ValuesSchema>;
+export type ValuesIn = v.InferInput<typeof ValuesSchema>;
+export const ValuesSchema = v.object({
+  health: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/health")),
+  stamina: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/stamina")),
+  oxygen: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/oxygen")),
+  food: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/food")),
+  water: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/water")),
+  temperature: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/temperature")),
+  weight: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/weight")),
+  meleeDamageMultiplier: v.pipe(
+    PositiveValueSchema,
+    v.brand("ValuesSchema/meleeDamageMultiplier"),
+  ),
+  speedMultiplier: v.pipe(
+    PositiveValueSchema,
+    v.brand("ValuesSchema/speedMultiplier"),
+  ),
+  temperatureFortitude: v.pipe(
+    PositiveValueSchema,
+    v.brand("ValuesSchema/temperatureFortitude"),
+  ),
+  craftingSpeedMultiplier: v.pipe(
+    PositiveValueSchema,
+    v.brand("ValuesSchema/craftingSpeedMultiplier"),
+  ),
+  torpidity: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/torpidity")),
+});

@@ -1,76 +1,92 @@
-import type { SpeciesStat, Stats } from "./stats.js";
-import type { LevelDetail, Levels, Values } from "./types.js";
+import * as v from "valibot";
+import {
+  type LevelDetail,
+  type LevelDetailIn,
+  LevelDetailSchema,
+  type Levels,
+  type LevelsIn,
+  LevelsSchema,
+  type SpeciesStat,
+  type Stats,
+  type Values,
+  type ValuesIn,
+  ValuesSchema,
+} from "./types.js";
 
 export function calculateValue(stats: Stats, levels: Levels): Values {
-  return {
-    Health: calcV(stats.Health, levels.Health),
-    Stamina: calcV(stats.Stamina, levels.Stamina),
-    Oxygen: calcV(stats.Oxygen, levels.Oxygen),
-    Food: calcV(stats.Food, levels.Food),
-    Water: calcV(stats.Water, levels.Water),
-    Temperature: calcV(stats.Temperature, levels.Temperature),
-    Weight: calcV(stats.Weight, levels.Weight),
-    MeleeDamageMultiplier: calcV(
-      stats.MeleeDamageMultiplier,
-      levels.MeleeDamageMultiplier,
+  return v.parse(ValuesSchema, {
+    health: calcV(stats.health, levels.health),
+    stamina: calcV(stats.stamina, levels.stamina),
+    oxygen: calcV(stats.oxygen, levels.oxygen),
+    food: calcV(stats.food, levels.food),
+    water: calcV(stats.water, levels.water),
+    temperature: calcV(stats.temperature, levels.temperature),
+    weight: calcV(stats.weight, levels.weight),
+    meleeDamageMultiplier: calcV(
+      stats.meleeDamageMultiplier,
+      levels.meleeDamageMultiplier,
     ),
-    SpeedMultiplier: calcV(stats.SpeedMultiplier, levels.SpeedMultiplier),
-    TemperatureFortitude: calcV(
-      stats.TemperatureFortitude,
-      levels.TemperatureFortitude,
+    speedMultiplier: calcV(stats.speedMultiplier, levels.speedMultiplier),
+    temperatureFortitude: calcV(
+      stats.temperatureFortitude,
+      levels.temperatureFortitude,
     ),
-    CraftingSpeedMultiplier: calcV(
-      stats.CraftingSpeedMultiplier,
-      levels.CraftingSpeedMultiplier,
+    craftingSpeedMultiplier: calcV(
+      stats.craftingSpeedMultiplier,
+      levels.craftingSpeedMultiplier,
     ),
-    Torpidity: calcV(stats.Torpidity, levels.Torpidity),
-  };
+    torpidity: calcV(stats.torpidity, levels.torpidity),
+  } satisfies ValuesIn);
 }
 
 function calcV(stat: SpeciesStat | null, level: LevelDetail): number {
   if (!stat) return 0;
-  return stat.BaseValue * (1 + stat.IncPerWildLevel * level.wild);
+  return stat.baseValue * (1 + stat.incPerWildLevel * level.wild);
 }
 
 export function calculateLevel(stats: Stats, values: Values): Levels {
-  return {
-    Health: calcL(stats.Health, values.Health),
-    Stamina: calcL(stats.Stamina, values.Stamina),
-    Oxygen: calcL(stats.Oxygen, values.Oxygen),
-    Food: calcL(stats.Food, values.Food),
-    Water: calcL(stats.Water, values.Water),
-    Temperature: calcL(stats.Temperature, values.Temperature),
-    Weight: calcL(stats.Weight, values.Weight),
-    MeleeDamageMultiplier: calcL(
-      stats.MeleeDamageMultiplier,
-      values.MeleeDamageMultiplier,
+  return v.parse(LevelsSchema, {
+    health: calcL(stats.health, values.health),
+    stamina: calcL(stats.stamina, values.stamina),
+    oxygen: calcL(stats.oxygen, values.oxygen),
+    food: calcL(stats.food, values.food),
+    water: calcL(stats.water, values.water),
+    temperature: calcL(stats.temperature, values.temperature),
+    weight: calcL(stats.weight, values.weight),
+    meleeDamageMultiplier: calcL(
+      stats.meleeDamageMultiplier,
+      values.meleeDamageMultiplier,
     ),
-    SpeedMultiplier: calcL(stats.SpeedMultiplier, values.SpeedMultiplier),
-    TemperatureFortitude: calcL(
-      stats.TemperatureFortitude,
-      values.TemperatureFortitude,
+    speedMultiplier: calcL(stats.speedMultiplier, values.speedMultiplier),
+    temperatureFortitude: calcL(
+      stats.temperatureFortitude,
+      values.temperatureFortitude,
     ),
-    CraftingSpeedMultiplier: calcL(
-      stats.CraftingSpeedMultiplier,
-      values.CraftingSpeedMultiplier,
+    craftingSpeedMultiplier: calcL(
+      stats.craftingSpeedMultiplier,
+      values.craftingSpeedMultiplier,
     ),
-    Torpidity: calcL(stats.Torpidity, values.Torpidity),
-  };
+    torpidity: calcL(stats.torpidity, values.torpidity),
+  } satisfies LevelsIn);
 }
 
 /** 丸める */
 const ROUND = 10;
 function calcL(stat: SpeciesStat | null, value: number): LevelDetail {
-  if (!stat || value === 0) return { wild: 0 };
+  if (!stat || value === 0)
+    return v.parse(LevelDetailSchema, { wild: 0 } satisfies LevelDetailIn);
   const tmpV = Math.round(
-    (value - stat.BaseValue) / stat.BaseValue / stat.IncPerWildLevel,
+    (value - stat.baseValue) / stat.baseValue / stat.incPerWildLevel,
   );
   const cLevel = Math.max(tmpV, 0); // マイナスになるとあれなので最小値0にする。
-  const cValue = calcV(stat, { wild: cLevel });
+  const cValue = calcV(
+    stat,
+    v.parse(LevelDetailSchema, { wild: cLevel } satisfies LevelDetailIn),
+  );
   const tmpE = (Math.abs(value - cValue) / value) * cLevel;
   const error = Math.ceil(tmpE * ROUND) / ROUND; // あれなので丸める。
-  return {
+  return v.parse(LevelDetailSchema, {
     wild: cLevel,
     error: error !== 0 ? error : null,
-  };
+  } satisfies LevelDetailIn);
 }

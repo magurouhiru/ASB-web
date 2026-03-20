@@ -1,5 +1,15 @@
+import * as v from "valibot";
 import { SPECIES as ASA_SPECIES } from "./ASA-values.js";
-import type { FullStatsRaw, StatsRow } from "./types.js";
+import {
+  type FullStatsRaw,
+  type SpeciesStat,
+  type SpeciesStatIn,
+  SpeciesStatSchema,
+  type Stats,
+  type StatsIn,
+  type StatsRow,
+  StatsSchema,
+} from "./types.js";
 import { SPECIES } from "./values.js";
 
 // Index of the base value in fullStatsRaw.
@@ -7,14 +17,6 @@ const StatsRawIndexBase = 0;
 
 // Index of the increase per wild level value in fullStatsRaw.
 const StatsRawIndexIncPerWildLevel = 1;
-
-/**
- * packages/asb-ts/ARKStatsExtractor/ARKBreedingStats/species/SpeciesStat.cs
- */
-export interface SpeciesStat {
-  BaseValue: number;
-  IncPerWildLevel: number;
-}
 
 const Health = 0;
 const Stamina = 1;
@@ -29,38 +31,20 @@ const SpeedMultiplier = 9;
 const TemperatureFortitude = 10;
 const CraftingSpeedMultiplier = 11;
 
-/**
- * asb-ts/ARKStatsExtractor/ARKBreedingStats/Ark.cs
- */
-export interface Stats {
-  Health: SpeciesStat | null;
-  Stamina: SpeciesStat | null;
-  Oxygen: SpeciesStat | null;
-  Food: SpeciesStat | null;
-  Water: SpeciesStat | null;
-  Temperature: SpeciesStat | null;
-  Weight: SpeciesStat | null;
-  MeleeDamageMultiplier: SpeciesStat | null;
-  SpeedMultiplier: SpeciesStat | null;
-  TemperatureFortitude: SpeciesStat | null;
-  CraftingSpeedMultiplier: SpeciesStat | null;
-  Torpidity: SpeciesStat | null;
-}
-
-const NULL_STATS: Stats = {
-  Health: null,
-  Stamina: null,
-  Oxygen: null,
-  Food: null,
-  Water: null,
-  Temperature: null,
-  Weight: null,
-  MeleeDamageMultiplier: null,
-  SpeedMultiplier: null,
-  TemperatureFortitude: null,
-  CraftingSpeedMultiplier: null,
-  Torpidity: null,
-};
+const NULL_STATS = v.parse(StatsSchema, {
+  health: null,
+  stamina: null,
+  oxygen: null,
+  food: null,
+  water: null,
+  temperature: null,
+  weight: null,
+  meleeDamageMultiplier: null,
+  speedMultiplier: null,
+  temperatureFortitude: null,
+  craftingSpeedMultiplier: null,
+  torpidity: null,
+} satisfies StatsIn);
 
 const SEARCH_ORDER = [SPECIES, ASA_SPECIES] as const;
 const SEARCH_TARGET = SEARCH_ORDER.flat();
@@ -79,60 +63,60 @@ export function getStats(name: string): Stats {
 }
 
 function reducer(accumulator: Stats, currentValue: Stats): Stats {
-  if (currentValue.Health) accumulator.Health = currentValue.Health;
-  if (currentValue.Stamina) accumulator.Stamina = currentValue.Stamina;
-  if (currentValue.Oxygen) accumulator.Oxygen = currentValue.Oxygen;
-  if (currentValue.Food) accumulator.Food = currentValue.Food;
-  if (currentValue.Water) accumulator.Water = currentValue.Water;
-  if (currentValue.Temperature)
-    accumulator.Temperature = currentValue.Temperature;
-  if (currentValue.Weight) accumulator.Weight = currentValue.Weight;
-  if (currentValue.MeleeDamageMultiplier)
-    accumulator.MeleeDamageMultiplier = currentValue.MeleeDamageMultiplier;
-  if (currentValue.SpeedMultiplier)
-    accumulator.SpeedMultiplier = currentValue.SpeedMultiplier;
-  if (currentValue.TemperatureFortitude)
-    accumulator.TemperatureFortitude = currentValue.TemperatureFortitude;
-  if (currentValue.CraftingSpeedMultiplier)
-    accumulator.CraftingSpeedMultiplier = currentValue.CraftingSpeedMultiplier;
-  if (currentValue.Torpidity) accumulator.Torpidity = currentValue.Torpidity;
+  if (currentValue.health) accumulator.health = currentValue.health;
+  if (currentValue.stamina) accumulator.stamina = currentValue.stamina;
+  if (currentValue.oxygen) accumulator.oxygen = currentValue.oxygen;
+  if (currentValue.food) accumulator.food = currentValue.food;
+  if (currentValue.water) accumulator.water = currentValue.water;
+  if (currentValue.temperature)
+    accumulator.temperature = currentValue.temperature;
+  if (currentValue.weight) accumulator.weight = currentValue.weight;
+  if (currentValue.meleeDamageMultiplier)
+    accumulator.meleeDamageMultiplier = currentValue.meleeDamageMultiplier;
+  if (currentValue.speedMultiplier)
+    accumulator.speedMultiplier = currentValue.speedMultiplier;
+  if (currentValue.temperatureFortitude)
+    accumulator.temperatureFortitude = currentValue.temperatureFortitude;
+  if (currentValue.craftingSpeedMultiplier)
+    accumulator.craftingSpeedMultiplier = currentValue.craftingSpeedMultiplier;
+  if (currentValue.torpidity) accumulator.torpidity = currentValue.torpidity;
   return accumulator;
 }
 
 function toStats(fullStatsRaw: FullStatsRaw): Stats {
-  return {
-    Health: fullStatsRaw[Health] ? toSpeciesStat(fullStatsRaw[Health]) : null,
-    Stamina: fullStatsRaw[Stamina]
+  return v.parse(StatsSchema, {
+    health: fullStatsRaw[Health] ? toSpeciesStat(fullStatsRaw[Health]) : null,
+    stamina: fullStatsRaw[Stamina]
       ? toSpeciesStat(fullStatsRaw[Stamina])
       : null,
-    Oxygen: fullStatsRaw[Oxygen] ? toSpeciesStat(fullStatsRaw[Oxygen]) : null,
-    Food: fullStatsRaw[Food] ? toSpeciesStat(fullStatsRaw[Food]) : null,
-    Water: fullStatsRaw[Water] ? toSpeciesStat(fullStatsRaw[Water]) : null,
-    Temperature: fullStatsRaw[Temperature]
+    oxygen: fullStatsRaw[Oxygen] ? toSpeciesStat(fullStatsRaw[Oxygen]) : null,
+    food: fullStatsRaw[Food] ? toSpeciesStat(fullStatsRaw[Food]) : null,
+    water: fullStatsRaw[Water] ? toSpeciesStat(fullStatsRaw[Water]) : null,
+    temperature: fullStatsRaw[Temperature]
       ? toSpeciesStat(fullStatsRaw[Temperature])
       : null,
-    Weight: fullStatsRaw[Weight] ? toSpeciesStat(fullStatsRaw[Weight]) : null,
-    MeleeDamageMultiplier: fullStatsRaw[MeleeDamageMultiplier]
+    weight: fullStatsRaw[Weight] ? toSpeciesStat(fullStatsRaw[Weight]) : null,
+    meleeDamageMultiplier: fullStatsRaw[MeleeDamageMultiplier]
       ? toSpeciesStat(fullStatsRaw[MeleeDamageMultiplier])
       : null,
-    SpeedMultiplier: fullStatsRaw[SpeedMultiplier]
+    speedMultiplier: fullStatsRaw[SpeedMultiplier]
       ? toSpeciesStat(fullStatsRaw[SpeedMultiplier])
       : null,
-    TemperatureFortitude: fullStatsRaw[TemperatureFortitude]
+    temperatureFortitude: fullStatsRaw[TemperatureFortitude]
       ? toSpeciesStat(fullStatsRaw[TemperatureFortitude])
       : null,
-    CraftingSpeedMultiplier: fullStatsRaw[CraftingSpeedMultiplier]
+    craftingSpeedMultiplier: fullStatsRaw[CraftingSpeedMultiplier]
       ? toSpeciesStat(fullStatsRaw[CraftingSpeedMultiplier])
       : null,
-    Torpidity: fullStatsRaw[Torpidity]
+    torpidity: fullStatsRaw[Torpidity]
       ? toSpeciesStat(fullStatsRaw[Torpidity])
       : null,
-  };
+  } satisfies StatsIn);
 }
 
 function toSpeciesStat(row: StatsRow): SpeciesStat {
-  return {
-    BaseValue: row[StatsRawIndexBase],
-    IncPerWildLevel: row[StatsRawIndexIncPerWildLevel],
-  };
+  return v.parse(SpeciesStatSchema, {
+    baseValue: row[StatsRawIndexBase],
+    incPerWildLevel: row[StatsRawIndexIncPerWildLevel],
+  } satisfies SpeciesStatIn);
 }

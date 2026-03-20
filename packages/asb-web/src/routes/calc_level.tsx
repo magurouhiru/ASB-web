@@ -1,18 +1,24 @@
 import type { Key } from "@heroui/react";
 import {
   Autocomplete,
-  Button,
   EmptyState,
   Label,
   ListBox,
   NumberField,
   SearchField,
-  toast,
   useFilter,
 } from "@heroui/react";
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
-import { calculateLevel, getStats, type Levels, NAMES } from "asb-ts";
+import {
+  calculateLevel,
+  getStats,
+  type Levels,
+  NAMES,
+  PositiveValueSchema,
+  type ValuesIn,
+  ValuesSchema,
+} from "asb-ts";
 import { useMemo, useState } from "react";
 import {
   PolarAngleAxis,
@@ -21,9 +27,23 @@ import {
   Radar,
   RadarChart,
 } from "recharts";
+import * as v from "valibot";
+
+const searchSchema = v.pipe(
+  v.object({
+    n: v.fallback(v.string(), ""),
+    h: v.fallback(PositiveValueSchema, 0),
+    s: v.fallback(PositiveValueSchema, 0),
+    o: v.fallback(PositiveValueSchema, 0),
+    f: v.fallback(PositiveValueSchema, 0),
+    w: v.fallback(PositiveValueSchema, 0),
+    m: v.fallback(PositiveValueSchema, 0),
+  }),
+);
 
 export const Route = createFileRoute("/calc_level")({
   component: CalcLevelComponent,
+  validateSearch: searchSchema,
 });
 
 const { fieldContext, formContext } = createFormHookContexts();
@@ -33,9 +53,7 @@ const { useAppForm } = createFormHook({
     Autocomplete,
     NumberField,
   },
-  formComponents: {
-    Button,
-  },
+  formComponents: {},
   fieldContext,
   formContext,
 });
@@ -44,60 +62,61 @@ function CalcLevelComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
   const items = [...NAMES.values()].map((n) => ({ id: n as Key, name: n }));
   const [levels, setLevels] = useState<Levels | null>(null);
+  const { n, h, s, o, f, w, m } = Route.useSearch();
 
   const data = useMemo(() => {
     if (!levels) return [];
-    const d = [
-      { subject: "❤", A: levels.Health.wild, fullMark: 50 },
-      { subject: "🏃", A: levels.Stamina.wild, fullMark: 50 },
-      { subject: "🏊", A: levels.Oxygen.wild, fullMark: 50 },
-      { subject: "🍰", A: levels.Food.wild, fullMark: 50 },
-      { subject: "🏋️‍♂️", A: levels.Weight.wild, fullMark: 50 },
+    return [
+      { subject: "❤", A: levels.health.wild, fullMark: 50 },
+      { subject: "🏃", A: levels.stamina.wild, fullMark: 50 },
+      { subject: "🏊", A: levels.oxygen.wild, fullMark: 50 },
+      { subject: "🍰", A: levels.food.wild, fullMark: 50 },
+      { subject: "🏋️‍♂️", A: levels.weight.wild, fullMark: 50 },
       {
         subject: "🤺",
-        A: levels.MeleeDamageMultiplier.wild,
+        A: levels.meleeDamageMultiplier.wild,
         fullMark: 50,
       },
     ];
-    console.log(d);
-    return d;
   }, [levels]);
 
+  const defaultValues = {
+    name: n,
+    Health: h,
+    Stamina: s,
+    Oxygen: o,
+    Food: f,
+    Weight: w,
+    MeleeDamageMultiplier: m,
+    Torpidity: 0,
+  };
+
+  const updateLevels = ({ value }: { value: typeof defaultValues }) => {
+    const stats = getStats(value.name);
+    const parsed = v.safeParse(ValuesSchema, {
+      health: value.Health,
+      stamina: value.Stamina,
+      oxygen: value.Oxygen,
+      food: value.Food,
+      water: 0,
+      temperature: 0,
+      weight: value.Weight,
+      meleeDamageMultiplier: value.MeleeDamageMultiplier,
+      speedMultiplier: 0,
+      temperatureFortitude: 0,
+      craftingSpeedMultiplier: 0,
+      torpidity: value.Torpidity,
+    } satisfies ValuesIn);
+    if (!parsed.success) return;
+    const result = calculateLevel(stats, parsed.output);
+    setLevels(result);
+  };
+
   const form = useAppForm({
-    defaultValues: {
-      name: "",
-      Health: 0,
-      Stamina: 0,
-      Oxygen: 0,
-      Food: 0,
-      Weight: 0,
-      MeleeDamageMultiplier: 0,
-      Torpidity: 0,
-    },
-    onSubmit: ({ value }) => {
-      // Do something with form data
-      try {
-        const stats = getStats(value.name);
-        const l = calculateLevel(stats, {
-          Health: value.Health,
-          Stamina: value.Stamina,
-          Oxygen: value.Oxygen,
-          Food: value.Food,
-          Water: 0,
-          Temperature: 0,
-          Weight: value.Weight,
-          MeleeDamageMultiplier: value.MeleeDamageMultiplier,
-          SpeedMultiplier: 0,
-          TemperatureFortitude: 0,
-          CraftingSpeedMultiplier: 0,
-          Torpidity: value.Torpidity,
-        });
-        setLevels({ ...l });
-      } catch (e) {
-        console.error(e);
-        if (e instanceof Error) toast.danger(e.message);
-        else toast.danger(`なんかエラーが出ました:${JSON.stringify(e)}`);
-      }
+    defaultValues,
+    validators: {
+      onMount: updateLevels,
+      onChange: updateLevels,
     },
   });
 
@@ -112,6 +131,7 @@ function CalcLevelComponent() {
         <form.AppField name="name">
           {(field) => (
             <field.Autocomplete
+              defaultValue={field.state.value}
               placeholder="選択してね"
               selectionMode="single"
               onChange={(key) => field.setValue(key as string)}
@@ -158,7 +178,7 @@ function CalcLevelComponent() {
         <form.AppField name="Health">
           {(field) => (
             <field.NumberField
-              defaultValue={0}
+              defaultValue={field.state.value}
               minValue={0}
               onChange={(v) => field.setValue(v)}
             >
@@ -170,8 +190,8 @@ function CalcLevelComponent() {
                   <NumberField.IncrementButton />
                 </NumberField.Group>
                 <output>
-                  {levels?.Health.wild}
-                  {levels?.Health.error ? ` ± ${levels?.Health.error}` : ""}
+                  {levels?.health.wild}
+                  {levels?.health.error ? ` ± ${levels?.health.error}` : ""}
                 </output>
               </div>
             </field.NumberField>
@@ -181,7 +201,7 @@ function CalcLevelComponent() {
         <form.AppField name="Stamina">
           {(field) => (
             <field.NumberField
-              defaultValue={0}
+              defaultValue={field.state.value}
               minValue={0}
               onChange={(v) => field.setValue(v)}
             >
@@ -193,8 +213,8 @@ function CalcLevelComponent() {
                   <NumberField.IncrementButton />
                 </NumberField.Group>
                 <output>
-                  {levels?.Stamina.wild}
-                  {levels?.Stamina.error ? ` ± ${levels.Stamina.error}` : ""}
+                  {levels?.stamina.wild}
+                  {levels?.stamina.error ? ` ± ${levels.stamina.error}` : ""}
                 </output>
               </div>
             </field.NumberField>
@@ -204,7 +224,7 @@ function CalcLevelComponent() {
         <form.AppField name="Oxygen">
           {(field) => (
             <field.NumberField
-              defaultValue={0}
+              defaultValue={field.state.value}
               minValue={0}
               onChange={(v) => field.setValue(v)}
             >
@@ -216,8 +236,8 @@ function CalcLevelComponent() {
                   <NumberField.IncrementButton />
                 </NumberField.Group>
                 <output>
-                  {levels?.Oxygen.wild}
-                  {levels?.Oxygen.error ? ` ± ${levels.Oxygen.error}` : ""}
+                  {levels?.oxygen.wild}
+                  {levels?.oxygen.error ? ` ± ${levels.oxygen.error}` : ""}
                 </output>
               </div>
             </field.NumberField>
@@ -227,7 +247,7 @@ function CalcLevelComponent() {
         <form.AppField name="Food">
           {(field) => (
             <field.NumberField
-              defaultValue={0}
+              defaultValue={field.state.value}
               minValue={0}
               onChange={(v) => field.setValue(v)}
             >
@@ -239,8 +259,8 @@ function CalcLevelComponent() {
                   <NumberField.IncrementButton />
                 </NumberField.Group>
                 <output>
-                  {levels?.Food.wild}
-                  {levels?.Food.error ? ` ± ${levels.Food.error}` : ""}
+                  {levels?.food.wild}
+                  {levels?.food.error ? ` ± ${levels.food.error}` : ""}
                 </output>
               </div>
             </field.NumberField>
@@ -250,7 +270,7 @@ function CalcLevelComponent() {
         <form.AppField name="Weight">
           {(field) => (
             <field.NumberField
-              defaultValue={0}
+              defaultValue={field.state.value}
               minValue={0}
               onChange={(v) => field.setValue(v)}
             >
@@ -262,8 +282,8 @@ function CalcLevelComponent() {
                   <NumberField.IncrementButton />
                 </NumberField.Group>
                 <output>
-                  {levels?.Weight.wild}
-                  {levels?.Weight.error ? ` ± ${levels.Weight.error}` : ""}
+                  {levels?.weight.wild}
+                  {levels?.weight.error ? ` ± ${levels.weight.error}` : ""}
                 </output>
               </div>
             </field.NumberField>
@@ -273,7 +293,7 @@ function CalcLevelComponent() {
         <form.AppField name="MeleeDamageMultiplier">
           {(field) => (
             <field.NumberField
-              defaultValue={0}
+              defaultValue={field.state.value}
               minValue={0}
               formatOptions={{ style: "percent" }}
               onChange={(v) => field.setValue(v)}
@@ -286,9 +306,9 @@ function CalcLevelComponent() {
                   <NumberField.IncrementButton />
                 </NumberField.Group>
                 <output>
-                  {levels?.MeleeDamageMultiplier.wild}
-                  {levels?.MeleeDamageMultiplier.error
-                    ? ` ± ${levels.MeleeDamageMultiplier.error}`
+                  {levels?.meleeDamageMultiplier.wild}
+                  {levels?.meleeDamageMultiplier.error
+                    ? ` ± ${levels.meleeDamageMultiplier.error}`
                     : ""}
                 </output>
               </div>
@@ -299,7 +319,7 @@ function CalcLevelComponent() {
         <form.AppField name="Torpidity">
           {(field) => (
             <field.NumberField
-              defaultValue={0}
+              defaultValue={field.state.value}
               minValue={0}
               onChange={(v) => field.setValue(v)}
             >
@@ -311,54 +331,46 @@ function CalcLevelComponent() {
                   <NumberField.IncrementButton />
                 </NumberField.Group>
                 <output>
-                  {levels?.Torpidity.wild}
-                  {levels?.Torpidity.error
-                    ? ` ± ${levels.Torpidity.error}`
+                  {levels?.torpidity.wild}
+                  {levels?.torpidity.error
+                    ? ` ± ${levels.torpidity.error}`
                     : ""}
                 </output>
               </div>
             </field.NumberField>
           )}
         </form.AppField>
-
-        <form.AppForm>
-          <form.Button type="submit">計算</form.Button>
-        </form.AppForm>
       </form>
 
-      {data.length > 0 ? (
-        <RadarChart
-          style={{
-            width: "100%",
-            height: "100%",
-            maxWidth: "500px",
-            maxHeight: "80vh",
-            aspectRatio: 1,
-          }}
-          responsive
-          outerRadius="80%"
-          data={data}
-          margin={{
-            top: 20,
-            left: 20,
-            right: 20,
-            bottom: 20,
-          }}
-        >
-          <PolarGrid />
-          <PolarAngleAxis dataKey="subject" />
-          <PolarRadiusAxis angle={30} domain={[0, 50]} tickCount={6} />
-          <Radar
-            name="main"
-            dataKey="A"
-            stroke="#8884d8"
-            fill="#8884d8"
-            fillOpacity={0.6}
-          />
-        </RadarChart>
-      ) : (
-        ""
-      )}
+      <RadarChart
+        style={{
+          width: "100%",
+          height: "100%",
+          maxWidth: "500px",
+          maxHeight: "80vh",
+          aspectRatio: 1,
+        }}
+        responsive
+        outerRadius="80%"
+        data={data}
+        margin={{
+          top: 20,
+          left: 20,
+          right: 20,
+          bottom: 20,
+        }}
+      >
+        <PolarGrid />
+        <PolarAngleAxis dataKey="subject" />
+        <PolarRadiusAxis angle={30} domain={[0, 50]} tickCount={6} />
+        <Radar
+          name="main"
+          dataKey="A"
+          stroke="#8884d8"
+          fill="#8884d8"
+          fillOpacity={0.6}
+        />
+      </RadarChart>
     </div>
   );
 }

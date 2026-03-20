@@ -1,19 +1,25 @@
 import type { Key } from "@heroui/react";
 import {
   Autocomplete,
-  Button,
   EmptyState,
   Label,
   ListBox,
   NumberField,
   SearchField,
-  toast,
   useFilter,
 } from "@heroui/react";
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
-import { calculateValue, getStats, NAMES, type Values } from "asb-ts";
+import {
+  calculateValue,
+  getStats,
+  type LevelsIn,
+  LevelsSchema,
+  NAMES,
+  type Values,
+} from "asb-ts";
 import { useState } from "react";
+import * as v from "valibot";
 
 export const Route = createFileRoute("/calc_value")({
   component: CalcValueComponent,
@@ -26,9 +32,7 @@ const { useAppForm } = createFormHook({
     Autocomplete,
     NumberField,
   },
-  formComponents: {
-    Button,
-  },
+  formComponents: {},
   fieldContext,
   formContext,
 });
@@ -49,30 +53,27 @@ function CalcValueComponent() {
       MeleeDamageMultiplier_wild: 0,
       Torpidity_wild: 0,
     },
-    onSubmit: ({ value }) => {
-      // Do something with form data
-      try {
+    validators: {
+      onChange: ({ value }) => {
         const stats = getStats(value.name);
-        const v = calculateValue(stats, {
-          Health: { wild: value.Health_wild },
-          Stamina: { wild: value.Stamina_wild },
-          Oxygen: { wild: value.Oxygen_wild },
-          Food: { wild: value.Food_wild },
-          Water: { wild: 0 },
-          Temperature: { wild: 0 },
-          Weight: { wild: value.Weight_wild },
-          MeleeDamageMultiplier: { wild: value.MeleeDamageMultiplier_wild },
-          SpeedMultiplier: { wild: 0 },
-          TemperatureFortitude: { wild: 0 },
-          CraftingSpeedMultiplier: { wild: 0 },
-          Torpidity: { wild: value.Torpidity_wild },
-        });
-        setValues({ ...v });
-      } catch (e) {
-        console.error(e);
-        if (e instanceof Error) toast.danger(e.message);
-        else toast.danger(`なんかエラーが出ました:${JSON.stringify(e)}`);
-      }
+        const parsed = v.safeParse(LevelsSchema, {
+          health: { wild: value.Health_wild },
+          stamina: { wild: value.Stamina_wild },
+          oxygen: { wild: value.Oxygen_wild },
+          food: { wild: value.Food_wild },
+          water: { wild: 0 },
+          temperature: { wild: 0 },
+          weight: { wild: value.Weight_wild },
+          meleeDamageMultiplier: { wild: value.MeleeDamageMultiplier_wild },
+          speedMultiplier: { wild: 0 },
+          temperatureFortitude: { wild: 0 },
+          craftingSpeedMultiplier: { wild: 0 },
+          torpidity: { wild: value.Torpidity_wild },
+        } satisfies LevelsIn);
+        if (!parsed.success) return;
+        const result = calculateValue(stats, parsed.output);
+        setValues(result);
+      },
     },
   });
 
@@ -144,7 +145,7 @@ function CalcValueComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{values?.Health}</output>
+                <output>{values?.health}</output>
               </div>
             </field.NumberField>
           )}
@@ -164,7 +165,7 @@ function CalcValueComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{values?.Stamina}</output>
+                <output>{values?.stamina}</output>
               </div>
             </field.NumberField>
           )}
@@ -184,7 +185,7 @@ function CalcValueComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{values?.Oxygen}</output>
+                <output>{values?.oxygen}</output>
               </div>
             </field.NumberField>
           )}
@@ -204,7 +205,7 @@ function CalcValueComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{values?.Food}</output>
+                <output>{values?.food}</output>
               </div>
             </field.NumberField>
           )}
@@ -224,7 +225,7 @@ function CalcValueComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{values?.Weight}</output>
+                <output>{values?.weight}</output>
               </div>
             </field.NumberField>
           )}
@@ -245,7 +246,7 @@ function CalcValueComponent() {
                   <NumberField.IncrementButton />
                 </NumberField.Group>
                 <output>
-                  {Math.round((values?.MeleeDamageMultiplier ?? 0) * 100)}%
+                  {Math.round((values?.meleeDamageMultiplier ?? 0) * 100)}%
                 </output>
               </div>
             </field.NumberField>
@@ -266,15 +267,11 @@ function CalcValueComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{values?.Torpidity}</output>
+                <output>{values?.torpidity}</output>
               </div>
             </field.NumberField>
           )}
         </form.AppField>
-
-        <form.AppForm>
-          <form.Button type="submit">計算</form.Button>
-        </form.AppForm>
       </form>
     </div>
   );
