@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as Privacy_policyRouteImport } from './routes/privacy_policy'
 import { Route as Calc_valueRouteImport } from './routes/calc_value'
+import { Route as Calc_levelRouteImport } from './routes/calc_level'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -22,6 +23,11 @@ const Privacy_policyRoute = Privacy_policyRouteImport.update({
 const Calc_valueRoute = Calc_valueRouteImport.update({
   id: '/calc_value',
   path: '/calc_value',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Calc_levelRoute = Calc_levelRouteImport.update({
+  id: '/calc_level',
+  path: '/calc_level',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -38,12 +44,14 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/calc_level': typeof Calc_levelRoute
   '/calc_value': typeof Calc_valueRoute
   '/privacy_policy': typeof Privacy_policyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/calc_level': typeof Calc_levelRoute
   '/calc_value': typeof Calc_valueRoute
   '/privacy_policy': typeof Privacy_policyRoute
 }
@@ -51,20 +59,28 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/calc_level': typeof Calc_levelRoute
   '/calc_value': typeof Calc_valueRoute
   '/privacy_policy': typeof Privacy_policyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/calc_value' | '/privacy_policy'
+  fullPaths: '/' | '/about' | '/calc_level' | '/calc_value' | '/privacy_policy'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/calc_value' | '/privacy_policy'
-  id: '__root__' | '/' | '/about' | '/calc_value' | '/privacy_policy'
+  to: '/' | '/about' | '/calc_level' | '/calc_value' | '/privacy_policy'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/calc_level'
+    | '/calc_value'
+    | '/privacy_policy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  Calc_levelRoute: typeof Calc_levelRoute
   Calc_valueRoute: typeof Calc_valueRoute
   Privacy_policyRoute: typeof Privacy_policyRoute
 }
@@ -83,6 +99,13 @@ declare module '@tanstack/react-router' {
       path: '/calc_value'
       fullPath: '/calc_value'
       preLoaderRoute: typeof Calc_valueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calc_level': {
+      id: '/calc_level'
+      path: '/calc_level'
+      fullPath: '/calc_level'
+      preLoaderRoute: typeof Calc_levelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -105,6 +128,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  Calc_levelRoute: Calc_levelRoute,
   Calc_valueRoute: Calc_valueRoute,
   Privacy_policyRoute: Privacy_policyRoute,
 }

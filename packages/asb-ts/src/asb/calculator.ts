@@ -32,7 +32,7 @@ function calcV(stat: SpeciesStat | null, level: LevelDetail): number {
   return stat.BaseValue * (1 + stat.IncPerWildLevel * level.wild);
 }
 
-export function extract(stats: Stats, values: Values): Levels {
+export function calculateLevel(stats: Stats, values: Values): Levels {
   return {
     Health: calcL(stats.Health, values.Health),
     Stamina: calcL(stats.Stamina, values.Stamina),
@@ -59,8 +59,10 @@ export function extract(stats: Stats, values: Values): Levels {
 }
 
 function calcL(stat: SpeciesStat | null, value: number): LevelDetail {
-  if (!stat || value !== 0) return { wild: 0 };
-  const cLevel = Math.round((value - stat.BaseValue) / stat.IncPerWildLevel);
+  if (!stat || value === 0) return { wild: 0 };
+  const cLevel = Math.round(
+    (value - stat.BaseValue) / stat.BaseValue / stat.IncPerWildLevel,
+  );
   const cValue = calcV(stat, { wild: cLevel });
   const error = Math.abs(value - cValue) / value;
   return {

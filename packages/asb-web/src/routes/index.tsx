@@ -8,6 +8,7 @@ function HomeComponent() {
   return (
     <div>
       <Link to="/calc_value">レベルから個体値を算出</Link>
+      <Link to="/calc_level">個体値からレベルを算出</Link>
     </div>
   );
 }
