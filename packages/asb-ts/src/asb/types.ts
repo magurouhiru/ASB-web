@@ -1,4 +1,5 @@
 import * as v from "valibot";
+import { NAMES } from "./names.js";
 
 /*
   values.ts 用のts の型
@@ -64,6 +65,9 @@ export interface Species {
 /*
   valibot の型
 */
+
+export type Name = v.InferOutput<typeof NameSchema>;
+export const NameSchema = v.pipe(v.picklist([...NAMES]), v.brand("NameSchema"));
 
 export const PositiveValueSchema = v.pipe(v.number(), v.minValue(0));
 

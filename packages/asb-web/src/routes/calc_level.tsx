@@ -15,6 +15,7 @@ import {
   getStats,
   type Levels,
   NAMES,
+  NameSchema,
   PositiveValueSchema,
   type ValuesIn,
   ValuesSchema,
@@ -92,8 +93,10 @@ function CalcLevelComponent() {
   };
 
   const updateLevels = ({ value }: { value: typeof defaultValues }) => {
-    const stats = getStats(value.name);
-    const parsed = v.safeParse(ValuesSchema, {
+    const nameParsed = v.safeParse(NameSchema, value.name);
+    if (!nameParsed.success) return;
+    const stats = getStats(nameParsed.output);
+    const valuesParsed = v.safeParse(ValuesSchema, {
       health: value.Health,
       stamina: value.Stamina,
       oxygen: value.Oxygen,
@@ -107,8 +110,8 @@ function CalcLevelComponent() {
       craftingSpeedMultiplier: 0,
       torpidity: value.Torpidity,
     } satisfies ValuesIn);
-    if (!parsed.success) return;
-    const result = calculateLevel(stats, parsed.output);
+    if (!valuesParsed.success) return;
+    const result = calculateLevel(stats, valuesParsed.output);
     setLevels(result);
   };
 
