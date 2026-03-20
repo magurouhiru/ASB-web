@@ -1,4 +1,8 @@
-import { createRouter, RouterProvider } from "@tanstack/react-router";
+import {
+  createHashHistory,
+  createRouter,
+  RouterProvider,
+} from "@tanstack/react-router";
 import ReactDOM from "react-dom/client";
 // biome-ignore lint/suspicious/noTsIgnore: vita でビルド時に作成されるので無視する
 // @ts-ignore
@@ -23,6 +27,7 @@ const router = createRouter({
   defaultPreload: "intent",
   scrollRestoration: true,
   basepath: "ASB-web",
+  history: createHashHistory(),
 });
 
 // Register things for typesafety
