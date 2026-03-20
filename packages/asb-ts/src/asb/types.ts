@@ -54,3 +54,42 @@ export interface Species {
     number,
   ];
 }
+
+/**
+ * wild: 野生のレベル
+ * error: 実際の値と算出した値の誤差(%)
+ */
+export interface LevelDetail {
+  wild: number;
+  error?: number | null;
+}
+
+export interface Levels {
+  Health: LevelDetail;
+  Stamina: LevelDetail;
+  Oxygen: LevelDetail;
+  Food: LevelDetail;
+  Water: LevelDetail;
+  Temperature: LevelDetail;
+  Weight: LevelDetail;
+  MeleeDamageMultiplier: LevelDetail;
+  SpeedMultiplier: LevelDetail;
+  TemperatureFortitude: LevelDetail;
+  CraftingSpeedMultiplier: LevelDetail;
+  Torpidity: LevelDetail;
+}
+
+export interface Values {
+  Health: number;
+  Stamina: number;
+  Oxygen: number;
+  Food: number;
+  Water: number;
+  Temperature: number;
+  Weight: number;
+  MeleeDamageMultiplier: number;
+  SpeedMultiplier: number;
+  TemperatureFortitude: number;
+  CraftingSpeedMultiplier: number;
+  Torpidity: number;
+}
