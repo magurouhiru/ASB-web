@@ -12,11 +12,11 @@ import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   calculateLevel,
+  getName,
   getStats,
   type Levels,
-  NAMES,
-  NameSchema,
   PositiveValueSchema,
+  SAFE_DICT,
   type ValuesIn,
   ValuesSchema,
 } from "asb-ts";
@@ -61,9 +61,13 @@ const { useAppForm } = createFormHook({
 
 function CalcLevelComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
-  const items = [...NAMES.values()].map((n) => ({ id: n as Key, name: n }));
+  const items = SAFE_DICT.map((n) => ({ id: n.en as Key, name: n.ja })).sort(
+    (a, b) => a.name.localeCompare(b.name, "ja"),
+  );
   const [levels, setLevels] = useState<Levels | null>(null);
   const { n, h, s, o, f, w, m } = Route.useSearch();
+
+  console.log(n);
 
   const data = useMemo(() => {
     if (!levels) return [];
@@ -93,9 +97,9 @@ function CalcLevelComponent() {
   };
 
   const updateLevels = ({ value }: { value: typeof defaultValues }) => {
-    const nameParsed = v.safeParse(NameSchema, value.name);
-    if (!nameParsed.success) return;
-    const stats = getStats(nameParsed.output);
+    const n = getName(value.name);
+    if (!n) return;
+    const stats = getStats(n);
     const valuesParsed = v.safeParse(ValuesSchema, {
       health: value.Health,
       stamina: value.Stamina,
@@ -134,7 +138,7 @@ function CalcLevelComponent() {
         <form.AppField name="name">
           {(field) => (
             <field.Autocomplete
-              defaultValue={field.state.value}
+              defaultValue={getName(field.state.value)}
               placeholder="選択してね"
               selectionMode="single"
               onChange={(key) => field.setValue(key as string)}

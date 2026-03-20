@@ -93,10 +93,10 @@
 │  ├─ publisher: Yotam Mann
 │  ├─ path: /home/vscode/app/packages/asb-web/node_modules/tone
 │  └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/tone/LICENSE.md
-└─ valibot@1.3.0
+└─ valibot@1.3.1
    ├─ licenses: MIT
    ├─ repository: https://github.com/open-circle/valibot
    ├─ publisher: Fabian Hiller
-   ├─ path: /home/vscode/app/packages/asb-web/node_modules/asb-ts/node_modules/valibot
-   └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/asb-ts/node_modules/valibot/LICENSE.md
+   ├─ path: /home/vscode/app/packages/asb-web/node_modules/valibot
+   └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/valibot/LICENSE.md
 
