@@ -81,6 +81,12 @@
 │  ├─ repository: https://github.com/facebook/react
 │  ├─ path: /home/vscode/app/packages/asb-web/node_modules/react
 │  └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/react/LICENSE
+├─ recharts@3.8.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/recharts/recharts
+│  ├─ publisher: recharts group
+│  ├─ path: /home/vscode/app/packages/asb-web/node_modules/recharts
+│  └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/recharts/LICENSE
 ├─ tone@15.1.22
 │  ├─ licenses: MIT
 │  ├─ repository: https://github.com/Tonejs/Tone.js

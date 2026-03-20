@@ -13,7 +13,14 @@ import {
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import { calculateLevel, getStats, type Levels, NAMES } from "asb-ts";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import {
+  PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
+  Radar,
+  RadarChart,
+} from "recharts";
 
 export const Route = createFileRoute("/calc_level")({
   component: CalcLevelComponent,
@@ -36,8 +43,25 @@ const { useAppForm } = createFormHook({
 function CalcLevelComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
   const items = [...NAMES.values()].map((n) => ({ id: n as Key, name: n }));
-
   const [levels, setLevels] = useState<Levels | null>(null);
+
+  const data = useMemo(() => {
+    if (!levels) return [];
+    const d = [
+      { subject: "❤", A: levels.Health.wild, fullMark: 50 },
+      { subject: "🏃", A: levels.Stamina.wild, fullMark: 50 },
+      { subject: "🏊", A: levels.Oxygen.wild, fullMark: 50 },
+      { subject: "🍰", A: levels.Food.wild, fullMark: 50 },
+      { subject: "🏋️‍♂️", A: levels.Stamina.wild, Weight: 50 },
+      {
+        subject: "🤺",
+        A: levels.MeleeDamageMultiplier.wild,
+        fullMark: 50,
+      },
+    ];
+    console.log(d);
+    return d;
+  }, [levels]);
 
   const form = useAppForm({
     defaultValues: {
@@ -68,7 +92,6 @@ function CalcLevelComponent() {
           CraftingSpeedMultiplier: 0,
           Torpidity: value.Torpidity,
         });
-        console.log(l);
         setLevels({ ...l });
       } catch (e) {
         console.error(e);
@@ -146,7 +169,12 @@ function CalcLevelComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>{levels?.Health.wild}</output>
+                <output>
+                  {levels?.Health.wild}
+                  {levels?.Health.error
+                    ? ` ± ${(levels?.Health.wild * levels?.Health.error).toFixed(2)}`
+                    : ""}
+                </output>
               </div>
             </field.NumberField>
           )}
@@ -159,7 +187,7 @@ function CalcLevelComponent() {
               minValue={0}
               onChange={(v) => field.setValue(v)}
             >
-              <Label>🚴スタミナ</Label>
+              <Label>🏃スタミナ</Label>
               <div className="flex items-center gap-2">
                 <NumberField.Group>
                   <NumberField.DecrementButton />
@@ -277,6 +305,36 @@ function CalcLevelComponent() {
           <form.Button type="submit">計算</form.Button>
         </form.AppForm>
       </form>
+
+      <RadarChart
+        style={{
+          width: "100%",
+          height: "100%",
+          maxWidth: "500px",
+          maxHeight: "80vh",
+          aspectRatio: 1,
+        }}
+        responsive
+        outerRadius="80%"
+        data={data}
+        margin={{
+          top: 20,
+          left: 20,
+          right: 20,
+          bottom: 20,
+        }}
+      >
+        <PolarGrid />
+        <PolarAngleAxis dataKey="subject" />
+        <PolarRadiusAxis angle={30} domain={[0, 50]} tickCount={6} />
+        <Radar
+          name="main"
+          dataKey="A"
+          stroke="#8884d8"
+          fill="#8884d8"
+          fillOpacity={0.6}
+        />
+      </RadarChart>
     </div>
   );
 }

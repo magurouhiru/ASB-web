@@ -36,7 +36,6 @@ const { useAppForm } = createFormHook({
 function CalcValueComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
   const items = [...NAMES.values()].map((n) => ({ id: n as Key, name: n }));
-
   const [values, setValues] = useState<Values | null>(null);
 
   const form = useAppForm({
