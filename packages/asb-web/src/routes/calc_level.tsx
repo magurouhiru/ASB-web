@@ -39,6 +39,7 @@ const searchSchema = v.pipe(
     f: v.fallback(PositiveValueSchema, 0),
     w: v.fallback(PositiveValueSchema, 0),
     m: v.fallback(PositiveValueSchema, 0),
+    t: v.fallback(PositiveValueSchema, 0),
   }),
 );
 
@@ -65,7 +66,7 @@ function CalcLevelComponent() {
     (a, b) => a.name.localeCompare(b.name, "ja"),
   );
   const [levels, setLevels] = useState<Levels | null>(null);
-  const { n, h, s, o, f, w, m } = Route.useSearch();
+  const { n, h, s, o, f, w, m, t } = Route.useSearch();
 
   console.log(n);
 
@@ -93,7 +94,7 @@ function CalcLevelComponent() {
     Food: f,
     Weight: w,
     MeleeDamageMultiplier: m,
-    Torpidity: 0,
+    Torpidity: t,
   };
 
   const updateLevels = ({ value }: { value: typeof defaultValues }) => {
