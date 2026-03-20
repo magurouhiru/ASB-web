@@ -128,6 +128,7 @@ function CalcLevelComponent() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          e.stopPropagation();
         }}
       >
         <form.AppField name="name">
