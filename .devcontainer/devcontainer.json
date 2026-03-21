@@ -112,7 +112,7 @@
     "chown": "sudo chown -R vscode:vscode /home/vscode/app",
     "bun ci": "bun ci",
     "build asb-ts": "bun build:asb-ts",
-    "ollama pull llama3.1": "curl http://ollama:11434/api/pull -d '{\"model\": \"llama3.1\", \"stream\": false}'"
+    // "ollama pull llama3.1": "curl http://ollama:11434/api/pull -d '{\"model\": \"llama3.1\", \"stream\": false}'"
   }
   // "postAttachCommand": [],
   // "waitFor": "updateContentCommand"
