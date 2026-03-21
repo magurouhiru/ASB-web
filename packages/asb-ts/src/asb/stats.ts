@@ -52,6 +52,8 @@ const SEARCH_TARGET = SEARCH_ORDER.flat();
 
 export function getStats(name: Name): Stats {
   if (name === "") throw new Error(`なんかいきものの名前を入力して`);
+
+  // TODO: ちゃんと元のやつを確認する。いったん計算に使えるやつで最後のやつを使う。
   const foundList = SEARCH_TARGET.filter((s) => s.name === name).filter((s) => {
     const fsr = s.fullStatsRaw;
     if (
