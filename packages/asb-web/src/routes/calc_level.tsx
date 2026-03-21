@@ -68,8 +68,6 @@ function CalcLevelComponent() {
   const [levels, setLevels] = useState<Levels | null>(null);
   const { n, h, s, o, f, w, m, t } = Route.useSearch();
 
-  console.log(n, h, s, o, f, w, m, t);
-
   const data = useMemo(() => {
     if (!levels) return [];
     return [
