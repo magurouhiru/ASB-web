@@ -32,6 +32,16 @@ const SpeedMultiplier = 9;
 const TemperatureFortitude = 10;
 const CraftingSpeedMultiplier = 11;
 
+const NEED_STATS = [
+  Health,
+  Stamina,
+  Torpidity,
+  Oxygen,
+  Food,
+  Weight,
+  MeleeDamageMultiplier,
+];
+
 const NULL_STATS = v.parse(StatsSchema, {
   health: null,
   stamina: null,
@@ -56,11 +66,14 @@ export function getStats(name: Name): Stats {
   // TODO: ちゃんと元のやつを確認する。いったん計算に使えるやつで最後のやつを使う。
   const foundList = SEARCH_TARGET.filter((s) => s.name === name).filter((s) => {
     const fsr = s.fullStatsRaw;
+    console.log("fsr", fsr);
     if (
       !fsr ||
-      fsr.every((r) => {
-        // incPerWildLevel が0の時はなし
-        return r ? r[1] !== 0 : true;
+      // 計算に必要なincPerWildLevel が0の時はなし
+      fsr.some((r, i) => {
+        console.log(r);
+        if (NEED_STATS.includes(i)) return r ? r[1] === 0 : true;
+        else return false;
       })
     ) {
       return false;
