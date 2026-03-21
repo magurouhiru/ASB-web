@@ -71,6 +71,13 @@
 │  ├─ private: true
 │  ├─ path: /home/vscode/app/packages/asb-web
 │  └─ licenseFile: /home/vscode/app/packages/asb-web/LICENSE
+├─ fuse.js@7.1.0
+│  ├─ licenses: Apache-2.0
+│  ├─ repository: https://github.com/krisk/Fuse
+│  ├─ publisher: Kiro Risk
+│  ├─ email: kirollos@gmail.com
+│  ├─ path: /home/vscode/app/packages/asb-web/node_modules/fuse.js
+│  └─ licenseFile: /home/vscode/app/packages/asb-web/node_modules/fuse.js/LICENSE
 ├─ react-dom@19.2.4
 │  ├─ licenses: MIT
 │  ├─ repository: https://github.com/facebook/react
