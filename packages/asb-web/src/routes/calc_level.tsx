@@ -38,9 +38,7 @@ const items = SAFE_DICT.map((n) => ({ id: n.en as Key, name: n.ja })).sort(
 const fuzzySearch = (searchName: string) => {
   const fuse = new Fuse(items, {
     keys: ["name"],
-    threshold: 0.3,
-    includeScore: true,
-    distance: 5,
+    threshold: 1,
   });
   const result = fuse.search(searchName);
   return result[0]?.item.name ?? "";
