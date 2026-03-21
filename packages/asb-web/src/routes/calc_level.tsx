@@ -20,6 +20,7 @@ import {
   type ValuesIn,
   ValuesSchema,
 } from "asb-ts";
+import Fuse from "fuse.js";
 import { useMemo, useState } from "react";
 import {
   PolarAngleAxis,
@@ -30,9 +31,30 @@ import {
 } from "recharts";
 import * as v from "valibot";
 
+const items = SAFE_DICT.map((n) => ({ id: n.en as Key, name: n.ja })).sort(
+  (a, b) => a.name.localeCompare(b.name, "ja"),
+);
+
+const fuzzySearch = (searchName: string) => {
+  const fuse = new Fuse(items, {
+    keys: ["name"],
+    threshold: 0.3,
+    includeScore: true,
+    distance: 5,
+  });
+  const result = fuse.search(searchName);
+  return result[0]?.item.name ?? "";
+};
+
 const searchSchema = v.pipe(
   v.object({
-    n: v.fallback(v.string(), ""),
+    n: v.fallback(
+      v.pipe(
+        v.string(),
+        v.transform((input) => fuzzySearch(input)),
+      ),
+      "",
+    ),
     h: v.fallback(PositiveValueSchema, 0),
     s: v.fallback(PositiveValueSchema, 0),
     o: v.fallback(PositiveValueSchema, 0),
@@ -62,9 +84,6 @@ const { useAppForm } = createFormHook({
 
 function CalcLevelComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
-  const items = SAFE_DICT.map((n) => ({ id: n.en as Key, name: n.ja })).sort(
-    (a, b) => a.name.localeCompare(b.name, "ja"),
-  );
   const [levels, setLevels] = useState<Levels | null>(null);
   const { n, h, s, o, f, w, m, t } = Route.useSearch();
 
@@ -186,7 +205,6 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
-              step={0.1}
               onChange={(v) => field.setValue(v)}
             >
               <Label>❤体力</Label>
@@ -210,7 +228,6 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
-              step={0.1}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🏃スタミナ</Label>
@@ -234,7 +251,6 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
-              step={0.1}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🏊酸素量</Label>
@@ -258,7 +274,6 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
-              step={0.1}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🍰食料</Label>
@@ -282,7 +297,6 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
-              step={0.1}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🏋️‍♂️重量</Label>
@@ -306,7 +320,6 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
-              step={0.1}
               formatOptions={{ style: "percent" }}
               onChange={(v) => field.setValue(v)}
             >
@@ -333,7 +346,6 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
-              step={0.1}
               onChange={(v) => field.setValue(v)}
             >
               <Label>😵‍💫気絶値</Label>
