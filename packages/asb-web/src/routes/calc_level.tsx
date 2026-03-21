@@ -68,8 +68,6 @@ function CalcLevelComponent() {
   const [levels, setLevels] = useState<Levels | null>(null);
   const { n, h, s, o, f, w, m, t } = Route.useSearch();
 
-  console.log(n);
-
   const data = useMemo(() => {
     if (!levels) return [];
     return [
@@ -188,6 +186,7 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              step={0.1}
               onChange={(v) => field.setValue(v)}
             >
               <Label>❤体力</Label>
@@ -211,6 +210,7 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              step={0.1}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🏃スタミナ</Label>
@@ -234,6 +234,7 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              step={0.1}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🏊酸素量</Label>
@@ -257,6 +258,7 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              step={0.1}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🍰食料</Label>
@@ -280,6 +282,7 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              step={0.1}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🏋️‍♂️重量</Label>
@@ -303,6 +306,7 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              step={0.1}
               formatOptions={{ style: "percent" }}
               onChange={(v) => field.setValue(v)}
             >
@@ -329,6 +333,7 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              step={0.1}
               onChange={(v) => field.setValue(v)}
             >
               <Label>😵‍💫気絶値</Label>
