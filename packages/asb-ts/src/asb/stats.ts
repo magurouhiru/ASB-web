@@ -69,10 +69,11 @@ export function getStats(name: Name): Stats {
     console.log("fsr", fsr);
     if (
       !fsr ||
-      // incPerWildLevel が0の時はなし
-      fsr.some((r) => {
+      // 計算に必要なincPerWildLevel が0の時はなし
+      fsr.some((r, i) => {
         console.log(r);
-        return r ? r[1] === 0 : false;
+        if (NEED_STATS.includes(i)) return r ? r[1] === 0 : true;
+        else return false;
       })
     ) {
       return false;
