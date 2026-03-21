@@ -52,9 +52,24 @@ const SEARCH_TARGET = SEARCH_ORDER.flat();
 
 export function getStats(name: Name): Stats {
   if (name === "") throw new Error(`なんかいきものの名前を入力して`);
-  const found = SEARCH_TARGET.find((s) => s.name === name);
-  if (!found) throw new Error(`${name}が見つからなんだ`);
-  return SEARCH_TARGET.filter((s) => s.blueprintPath === found.blueprintPath)
+  const foundList = SEARCH_TARGET.filter((s) => s.name === name).filter((s) => {
+    const fsr = s.fullStatsRaw;
+    if (
+      !fsr ||
+      fsr.every((r) => {
+        // incPerWildLevel が0の時はなし
+        return r ? r[1] !== 0 : true;
+      })
+    ) {
+      return false;
+    }
+    return true;
+  });
+  const foundLast = foundList.at(-1);
+  if (!foundLast) throw new Error(`${name}が見つからなんだ`);
+  return SEARCH_TARGET.filter(
+    (s) => s.blueprintPath === foundLast.blueprintPath,
+  )
     .map((s) => {
       if (!s.fullStatsRaw) return null;
       return toStats(s.fullStatsRaw);
