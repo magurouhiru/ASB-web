@@ -32,14 +32,14 @@ function extractValues(path: string): Species[] {
   const data = JSON.parse(rawData);
 
   // species フィールドから Species 配列を作成
-  const speciesList: Species[] = (data.species as Species[])
+  const speciesList = (data.species as Species[])
     .map((item) => ({
       name: item.name,
       blueprintPath: item.blueprintPath,
       fullStatsRaw: item.fullStatsRaw,
       mutationMult: item.mutationMult,
     }))
-    .filter((s) => s.name || s.fullStatsRaw || s.mutationMult);
+    .filter((s) => s.name || s.fullStatsRaw || s.mutationMult) as Species[];
 
   return speciesList;
 }
