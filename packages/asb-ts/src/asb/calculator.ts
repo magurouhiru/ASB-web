@@ -39,9 +39,16 @@ export function calculateValue(stats: Stats, levels: Levels): Values {
   } satisfies ValuesIn);
 }
 
+// 2進数による誤差をなくすための値、これより小さい値は四捨五入する。
+const ROUND_DOWN = 10000;
 function calcV(stat: SpeciesStat | null, level: LevelDetail): number {
   if (!stat) return 0;
-  return stat.baseValue * (1 + stat.incPerWildLevel * level.wild);
+  return (
+    // 2進数による誤差をなくす
+    Math.round(
+      stat.baseValue * (1 + stat.incPerWildLevel * level.wild) * ROUND_DOWN,
+    ) / ROUND_DOWN
+  );
 }
 
 export function calculateLevel(stats: Stats, values: Values): Levels {
@@ -74,7 +81,10 @@ export function calculateLevel(stats: Stats, values: Values): Levels {
 const ROUND = 10;
 function calcL(stat: SpeciesStat | null, value: number): LevelDetail {
   if (!stat || value === 0)
-    return v.parse(LevelDetailSchema, { wild: 0 } satisfies LevelDetailIn);
+    return v.parse(LevelDetailSchema, {
+      wild: 0,
+      error: null,
+    } satisfies LevelDetailIn);
   if (stat.baseValue === 0 || stat.incPerWildLevel === 0)
     throw new Error("データがおかしくて0で割ろうとしてるよ");
   const tmpV = Math.round(
@@ -85,7 +95,10 @@ function calcL(stat: SpeciesStat | null, value: number): LevelDetail {
     stat,
     v.parse(LevelDetailSchema, { wild: cLevel } satisfies LevelDetailIn),
   );
-  const tmpE = (Math.abs(value - cValue) / value) * cLevel;
+  // 2進数による誤差をなくす
+  const tmpE =
+    Math.round((Math.abs(value - cValue) / value) * cLevel * ROUND_DOWN) /
+    ROUND_DOWN;
   const error = Math.ceil(tmpE * ROUND) / ROUND; // あれなので丸める。
   return v.parse(LevelDetailSchema, {
     wild: cLevel,

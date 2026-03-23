@@ -21,6 +21,8 @@ jobs:
         run: bun ci
       - name: check
         run: bun biome
+      - name: test
+        run: bun test
       - name: build
         run: bun run build
       - name: Upload static files as artifact

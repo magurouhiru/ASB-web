@@ -11,13 +11,16 @@
       "fuse.js": "^7.1.0",
       "typescript": "~5.9.3",
       "valibot": "^1.3.0",
-      "license-checker-rseidelsohn": "^4.4.2"
+      "license-checker-rseidelsohn": "^4.4.2",
+      "vitest": "^4.1.0"
     }
   },
   "scripts": {
     "build": "bun build:asb-ts && bun build:asb-web",
     "build:asb-ts": "bun --filter asb-ts build",
     "build:asb-web": "bun --filter asb-web build",
+    "test": "bun test:asb-ts",
+    "test:asb-ts": "bun --filter asb-ts test",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe ."
   },
