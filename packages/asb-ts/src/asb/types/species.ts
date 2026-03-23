@@ -16,11 +16,11 @@ import { PositiveNot0ValueSchema, PositiveValueSchema } from "./common.js";
 export type StatsRow = v.InferOutput<typeof StatsRowSchema>;
 export type StatsRowIn = v.InferInput<typeof StatsRowSchema>;
 export const StatsRowSchema = v.tuple([
-  v.pipe(PositiveValueSchema, v.brand("StatsRowSchema/baseValue")),
-  v.pipe(PositiveValueSchema, v.brand("StatsRowSchema/incPerWildLevel")),
-  v.pipe(PositiveValueSchema, v.brand("StatsRowSchema/incPerDomLevel")),
-  v.pipe(PositiveValueSchema, v.brand("StatsRowSchema/addBonus")),
-  v.pipe(PositiveValueSchema, v.brand("StatsRowSchema/multBonus")),
+  PositiveValueSchema,
+  PositiveValueSchema,
+  PositiveValueSchema,
+  PositiveValueSchema,
+  PositiveValueSchema,
 ]);
 
 /**
@@ -123,11 +123,11 @@ export const SpeciesSchema = v.pipe(
 export type CStatsRow = v.InferOutput<typeof CStatsRowSchema>;
 export type CStatsRowIn = v.InferInput<typeof CStatsRowSchema>;
 export const CStatsRowSchema = v.tuple([
-  v.pipe(PositiveNot0ValueSchema, v.brand("CStatsRowSchema/baseValue")),
-  v.pipe(PositiveNot0ValueSchema, v.brand("CStatsRowSchema/incPerWildLevel")),
-  v.pipe(PositiveValueSchema, v.brand("CStatsRowSchema/incPerDomLevel")),
-  v.pipe(PositiveValueSchema, v.brand("CStatsRowSchema/addBonus")),
-  v.pipe(PositiveValueSchema, v.brand("CStatsRowSchema/multBonus")),
+  PositiveNot0ValueSchema,
+  PositiveNot0ValueSchema,
+  PositiveValueSchema,
+  PositiveValueSchema,
+  PositiveValueSchema,
 ]);
 
 /**
