@@ -11,14 +11,11 @@ import {
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  calculateLevel,
-  getStats,
+  calcL,
   type Levels,
   NAME_DICT,
   PositiveValueSchema,
   searchNameFromDict,
-  type ValuesIn,
-  ValuesSchema,
 } from "asb-ts";
 import { useMemo, useState } from "react";
 import {
@@ -93,35 +90,17 @@ function CalcLevelComponent() {
 
   const defaultValues = {
     name: n,
-    Health: h,
-    Stamina: s,
-    Oxygen: o,
-    Food: f,
-    Weight: w,
-    MeleeDamageMultiplier: m,
-    Torpidity: t,
+    health: h,
+    stamina: s,
+    oxygen: o,
+    food: f,
+    weight: w,
+    meleeDamageMultiplier: m,
+    torpidity: t,
   };
 
   const updateLevels = ({ value }: { value: typeof defaultValues }) => {
-    const n = searchNameFromDict(value.name);
-    if (!n) return;
-    const stats = getStats(n);
-    const valuesParsed = v.safeParse(ValuesSchema, {
-      health: value.Health,
-      stamina: value.Stamina,
-      oxygen: value.Oxygen,
-      food: value.Food,
-      water: 0,
-      temperature: 0,
-      weight: value.Weight,
-      meleeDamageMultiplier: value.MeleeDamageMultiplier,
-      speedMultiplier: 0,
-      temperatureFortitude: 0,
-      craftingSpeedMultiplier: 0,
-      torpidity: value.Torpidity,
-    } satisfies ValuesIn);
-    if (!valuesParsed.success) return;
-    const result = calculateLevel(stats, valuesParsed.output);
+    const result = calcL(value);
     setLevels(result);
   };
 
@@ -188,7 +167,7 @@ function CalcLevelComponent() {
           )}
         </form.AppField>
 
-        <form.AppField name="Health">
+        <form.AppField name="health">
           {(field) => (
             <field.NumberField
               defaultValue={field.state.value}
@@ -211,7 +190,7 @@ function CalcLevelComponent() {
           )}
         </form.AppField>
 
-        <form.AppField name="Stamina">
+        <form.AppField name="stamina">
           {(field) => (
             <field.NumberField
               defaultValue={field.state.value}
@@ -234,7 +213,7 @@ function CalcLevelComponent() {
           )}
         </form.AppField>
 
-        <form.AppField name="Oxygen">
+        <form.AppField name="oxygen">
           {(field) => (
             <field.NumberField
               defaultValue={field.state.value}
@@ -257,7 +236,7 @@ function CalcLevelComponent() {
           )}
         </form.AppField>
 
-        <form.AppField name="Food">
+        <form.AppField name="food">
           {(field) => (
             <field.NumberField
               defaultValue={field.state.value}
@@ -280,7 +259,7 @@ function CalcLevelComponent() {
           )}
         </form.AppField>
 
-        <form.AppField name="Weight">
+        <form.AppField name="weight">
           {(field) => (
             <field.NumberField
               defaultValue={field.state.value}
@@ -303,7 +282,7 @@ function CalcLevelComponent() {
           )}
         </form.AppField>
 
-        <form.AppField name="MeleeDamageMultiplier">
+        <form.AppField name="meleeDamageMultiplier">
           {(field) => (
             <field.NumberField
               defaultValue={field.state.value}
@@ -329,7 +308,7 @@ function CalcLevelComponent() {
           )}
         </form.AppField>
 
-        <form.AppField name="Torpidity">
+        <form.AppField name="torpidity">
           {(field) => (
             <field.NumberField
               defaultValue={field.state.value}
