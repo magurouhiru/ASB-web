@@ -32,7 +32,7 @@
 │  ├─ publisher: Microsoft Corp.
 │  ├─ path: /home/vscode/app/packages/asb-ts/node_modules/typescript
 │  └─ licenseFile: /home/vscode/app/packages/asb-ts/node_modules/typescript/LICENSE.txt
-└─ valibot@1.3.0
+└─ valibot@1.3.1
    ├─ licenses: MIT
    ├─ repository: https://github.com/open-circle/valibot
    ├─ publisher: Fabian Hiller

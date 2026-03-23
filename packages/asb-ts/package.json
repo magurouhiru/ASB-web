@@ -14,10 +14,11 @@
     "watch": "tsc -b -w",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe .",
-    "tools:getValues": "bun run ./tools/getValues.ts && bun run biome:fix",
+    "tools:create-values": "bun run ./tools/create-values.ts && bun run biome:fix",
     "license:gen": "bun x license-checker-rseidelsohn > ./THIRD_PARTY_LICENSES.txt"
   },
   "dependencies": {
+    "fuse.js": "catalog:",
     "valibot": "catalog:"
   },
   "devDependencies": {
