@@ -11,7 +11,7 @@ import {
   type Values,
   type ValuesIn,
   ValuesSchema,
-} from "./types.js";
+} from "./types/index.js";
 
 export function calculateValue(stats: Stats, levels: Levels): Values {
   return v.parse(ValuesSchema, {

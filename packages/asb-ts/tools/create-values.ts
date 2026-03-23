@@ -69,7 +69,7 @@ function createConstTs(species: Species[], outputPath: string) {
   const content = `
 // このファイルは機械的に出力されました。
 
-  import type { Species } from "./types/index.js";
+  import type { Species } from "../types/index.js";
 
   export const SPECIES: Species[] = [\n  ${species
     .map((s) => {
@@ -95,11 +95,11 @@ function main() {
   const species = extractValues(
     "./ARKStatsExtractor/ARKBreedingStats/json/values/values.json",
   );
-  createConstTs(species, "./src/asb/values.ts");
+  createConstTs(species, "./src/asb/values/values.ts");
   const _ASA_species = extractValues(
     "./ARKStatsExtractor/ARKBreedingStats/json/values/ASA-values.json",
   );
-  createConstTs(species, "./src/asb/ASA-values.ts");
+  createConstTs(species, "./src/asb/values/ASA-values.ts");
 }
 
 main();

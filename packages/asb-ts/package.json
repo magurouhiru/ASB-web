@@ -15,6 +15,7 @@
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe .",
     "tools:create-values": "bun run ./tools/create-values.ts && bun run biome:fix",
+    "tools:create-name-dict": "bun run ./tools/create-name-dict.ts && bun run biome:fix",
     "license:gen": "bun x license-checker-rseidelsohn > ./THIRD_PARTY_LICENSES.txt"
   },
   "dependencies": {

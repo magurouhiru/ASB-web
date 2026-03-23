@@ -1,8 +1,6 @@
 import * as v from "valibot";
-import { SPECIES as ASA_SPECIES } from "./ASA-values.js";
 import {
   type FullStatsRaw,
-  type Name,
   type SpeciesStat,
   type SpeciesStatIn,
   SpeciesStatSchema,
@@ -10,8 +8,10 @@ import {
   type StatsIn,
   type StatsRow,
   StatsSchema,
-} from "./types.js";
-import { SPECIES } from "./values.js";
+} from "./types/index.js";
+import { SPECIES as ASA_SPECIES } from "./values/ASA-values.js";
+import type { Name } from "./values/index.js";
+import { SPECIES } from "./values/values.js";
 
 // Index of the base value in fullStatsRaw.
 const StatsRawIndexBase = 0;
@@ -66,12 +66,10 @@ export function getStats(name: Name): Stats {
   // TODO: ちゃんと元のやつを確認する。いったん計算に使えるやつで最後のやつを使う。
   const foundList = SEARCH_TARGET.filter((s) => s.name === name).filter((s) => {
     const fsr = s.fullStatsRaw;
-    console.log("fsr", fsr);
     if (
       !fsr ||
       // 計算に必要なincPerWildLevel が0の時はなし
       fsr.some((r, i) => {
-        console.log(r);
         if (NEED_STATS.includes(i)) return r ? r[1] === 0 : true;
         else return false;
       })

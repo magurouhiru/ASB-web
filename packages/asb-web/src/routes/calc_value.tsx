@@ -15,8 +15,8 @@ import {
   getStats,
   type LevelsIn,
   LevelsSchema,
-  NAMES,
-  NameSchema,
+  NAME_DICT,
+  searchNameFromDict,
   type Values,
 } from "asb-ts";
 import { useState } from "react";
@@ -40,7 +40,10 @@ const { useAppForm } = createFormHook({
 
 function CalcValueComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
-  const items = [...NAMES.values()].map((n) => ({ id: n as Key, name: n }));
+  const items = [...NAME_DICT.values()].map((n) => ({
+    id: n.en as Key,
+    name: n.ja,
+  }));
   const [values, setValues] = useState<Values | null>(null);
 
   const form = useAppForm({
@@ -56,9 +59,9 @@ function CalcValueComponent() {
     },
     validators: {
       onChange: ({ value }) => {
-        const nameParsed = v.safeParse(NameSchema, value.name);
-        if (!nameParsed.success) return;
-        const stats = getStats(nameParsed.output);
+        const name = searchNameFromDict(value.name);
+        if (!name) return;
+        const stats = getStats(name);
         const parsed = v.safeParse(LevelsSchema, {
           health: { wild: value.Health_wild },
           stamina: { wild: value.Stamina_wild },

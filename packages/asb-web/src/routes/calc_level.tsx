@@ -12,15 +12,14 @@ import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   calculateLevel,
-  getName,
   getStats,
   type Levels,
+  NAME_DICT,
   PositiveValueSchema,
-  SAFE_DICT,
+  searchNameFromDict,
   type ValuesIn,
   ValuesSchema,
 } from "asb-ts";
-import Fuse from "fuse.js";
 import { useMemo, useState } from "react";
 import {
   PolarAngleAxis,
@@ -31,25 +30,12 @@ import {
 } from "recharts";
 import * as v from "valibot";
 
-const items = SAFE_DICT.map((n) => ({ id: n.en as Key, name: n.ja })).sort(
-  (a, b) => a.name.localeCompare(b.name, "ja"),
-);
-
-const fuzzySearch = (searchName: string) => {
-  const fuse = new Fuse(items, {
-    keys: ["name"],
-    threshold: 1,
-  });
-  const result = fuse.search(searchName);
-  return result[0]?.item.name ?? "";
-};
-
 const searchSchema = v.pipe(
   v.object({
     n: v.fallback(
       v.pipe(
         v.string(),
-        v.transform((input) => fuzzySearch(input)),
+        v.transform((input) => searchNameFromDict(input) ?? input),
       ),
       "",
     ),
@@ -84,6 +70,10 @@ function CalcLevelComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
   const [levels, setLevels] = useState<Levels | null>(null);
   const { n, h, s, o, f, w, m, t } = Route.useSearch();
+  const items = [...NAME_DICT.values()].map((n) => ({
+    id: n.en as Key,
+    name: n.ja,
+  }));
 
   const data = useMemo(() => {
     if (!levels) return [];
@@ -113,7 +103,7 @@ function CalcLevelComponent() {
   };
 
   const updateLevels = ({ value }: { value: typeof defaultValues }) => {
-    const n = getName(value.name);
+    const n = searchNameFromDict(value.name);
     if (!n) return;
     const stats = getStats(n);
     const valuesParsed = v.safeParse(ValuesSchema, {
@@ -154,7 +144,7 @@ function CalcLevelComponent() {
         <form.AppField name="name">
           {(field) => (
             <field.Autocomplete
-              defaultValue={getName(field.state.value)}
+              defaultValue={searchNameFromDict(field.state.value)}
               placeholder="選択してね"
               selectionMode="single"
               onChange={(key) => field.setValue(key as string)}

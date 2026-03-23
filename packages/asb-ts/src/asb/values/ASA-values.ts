@@ -1,6 +1,6 @@
 // このファイルは機械的に出力されました。
 
-import type { Species } from "./types/index.js";
+import type { Species } from "../types/index.js";
 
 export const SPECIES: Species[] = [
   {
