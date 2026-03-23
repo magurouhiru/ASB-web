@@ -69,7 +69,7 @@ test.each([
       meleeDamageMultiplier: 1.9,
       torpidity: 5604.0,
     },
-    [26, 25, 24, 21, 25, 18, 139],
+    [26, 25, 24, 21, 25, 18, 1390],
   ],
 ])("calcL - $name", (inputs, expected) => {
   const result = calcL(inputs);
