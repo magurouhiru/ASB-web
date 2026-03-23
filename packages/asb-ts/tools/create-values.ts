@@ -4,7 +4,6 @@
 */
 
 import fs from "node:fs";
-import path from "node:path";
 import * as v from "valibot";
 import { type Species, SpeciesSchema } from "../src/asb/types/index.js";
 
@@ -62,9 +61,6 @@ function extractValues(path: string): Species[] {
  * @param outputPath 出力ファイルのパス
  */
 function createConstTs(species: Species[], outputPath: string) {
-  // 出力パスからディレクトリ名とファイル名を取得
-  const _filename = path.basename(outputPath);
-
   // values.ts の内容を作成
   const content = `
 // このファイルは機械的に出力されました。
@@ -76,6 +72,7 @@ function createConstTs(species: Species[], outputPath: string) {
       const field = [];
       if (s.name) field.push(`name:"${s.name}"`);
       field.push(`blueprintPath:"${s.blueprintPath}"`);
+      if (s.variants) field.push(`variants:${JSON.stringify(s.variants)}`);
       if (s.fullStatsRaw)
         field.push(`fullStatsRaw: ${JSON.stringify(s.fullStatsRaw)}`);
       if (s.mutationMult)
@@ -96,10 +93,11 @@ function main() {
     "./ARKStatsExtractor/ARKBreedingStats/json/values/values.json",
   );
   createConstTs(species, "./src/asb/values/values.ts");
-  const _ASA_species = extractValues(
+
+  const ASA_species = extractValues(
     "./ARKStatsExtractor/ARKBreedingStats/json/values/ASA-values.json",
   );
-  createConstTs(species, "./src/asb/values/ASA-values.ts");
+  createConstTs(ASA_species, "./src/asb/values/ASA-values.ts");
 }
 
 main();

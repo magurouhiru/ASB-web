@@ -4,7 +4,6 @@
 */
 
 import fs from "node:fs";
-import path from "node:path";
 import { ALL_SPECIES } from "../src/asb/values/index.js";
 
 function deleteDuplicate(list: typeof DICT) {
@@ -30,9 +29,6 @@ function getNames() {
  * @param outputPath 出力ファイルのパス
  */
 function createConstTs(dict: typeof DICT, outputPath: string) {
-  // 出力パスからディレクトリ名とファイル名を取得
-  const _filename = path.basename(outputPath);
-
   // values.ts の内容を作成
   const content = `
 // このファイルは機械的に出力されました。

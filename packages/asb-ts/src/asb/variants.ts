@@ -1,0 +1,25 @@
+// このファイルは機械的に出力されました。
+
+export const VARIANT_DEFAULT_UNSELECTED: string[] = [
+  "Alpha",
+  "Beta",
+  "Boss",
+  "Corrupted",
+  "Escort",
+  "FinalBattle",
+  "Gamma",
+  "Gauntlet",
+  "Gauntlet2",
+  "Hunt",
+  "LifeLabyrinth",
+  "Mega",
+  "Minion",
+  "Mission",
+  "Race",
+  "Race2",
+  "Retrieve",
+  "Sport",
+  "Summoned",
+  "TekCave",
+  "Unused",
+] as const;

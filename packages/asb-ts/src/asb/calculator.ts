@@ -75,6 +75,8 @@ const ROUND = 10;
 function calcL(stat: SpeciesStat | null, value: number): LevelDetail {
   if (!stat || value === 0)
     return v.parse(LevelDetailSchema, { wild: 0 } satisfies LevelDetailIn);
+  if (stat.baseValue === 0 || stat.incPerWildLevel === 0)
+    throw new Error("データがおかしくて0で割ろうとしてるよ");
   const tmpV = Math.round(
     (value - stat.baseValue) / stat.baseValue / stat.incPerWildLevel,
   );

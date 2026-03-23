@@ -102,6 +102,7 @@ export const SpeciesSchema = v.pipe(
   v.object({
     name: v.nullish(v.string()),
     blueprintPath: v.string(),
+    variants: v.nullish(v.array(v.string())),
     fullStatsRaw: v.nullish(FullStatsRawSchema),
     mutationMult: v.nullish(MutationMultSchema),
   }),

@@ -12,6 +12,7 @@ import {
 import { SPECIES as ASA_SPECIES } from "./values/ASA-values.js";
 import type { Name } from "./values/index.js";
 import { SPECIES } from "./values/values.js";
+import { VARIANT_DEFAULT_UNSELECTED } from "./variants.js";
 
 // Index of the base value in fullStatsRaw.
 const StatsRawIndexBase = 0;
@@ -32,16 +33,6 @@ const SpeedMultiplier = 9;
 const TemperatureFortitude = 10;
 const CraftingSpeedMultiplier = 11;
 
-const NEED_STATS = [
-  Health,
-  Stamina,
-  Torpidity,
-  Oxygen,
-  Food,
-  Weight,
-  MeleeDamageMultiplier,
-];
-
 const NULL_STATS = v.parse(StatsSchema, {
   health: null,
   stamina: null,
@@ -60,24 +51,15 @@ const NULL_STATS = v.parse(StatsSchema, {
 const SEARCH_ORDER = [SPECIES, ASA_SPECIES] as const;
 const SEARCH_TARGET = SEARCH_ORDER.flat();
 
-export function getStats(name: Name): Stats {
+export function getStats(
+  name: Name,
+  variantsUnselected = VARIANT_DEFAULT_UNSELECTED,
+): Stats {
   if (name === "") throw new Error(`なんかいきものの名前を入力して`);
 
-  // TODO: ちゃんと元のやつを確認する。いったん計算に使えるやつで最後のやつを使う。
-  const foundList = SEARCH_TARGET.filter((s) => s.name === name).filter((s) => {
-    const fsr = s.fullStatsRaw;
-    if (
-      !fsr ||
-      // 計算に必要なincPerWildLevel が0の時はなし
-      fsr.some((r, i) => {
-        if (NEED_STATS.includes(i)) return r ? r[1] === 0 : true;
-        else return false;
-      })
-    ) {
-      return false;
-    }
-    return true;
-  });
+  const foundList = SEARCH_TARGET.filter((s) => s.name === name).filter(
+    (s) => !(s.variants ?? []).some((v) => variantsUnselected.includes(v)),
+  );
   const foundLast = foundList.at(-1);
   if (!foundLast) throw new Error(`${name}が見つからなんだ`);
   return SEARCH_TARGET.filter(
