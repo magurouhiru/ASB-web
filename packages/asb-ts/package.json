@@ -30,7 +30,6 @@
     "@types/bun": "latest",
     "@types/node": "^25.5.0",
     "license-checker-rseidelsohn": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
+    "typescript": "catalog:"
   }
 }
