@@ -18,6 +18,8 @@
     "build": "bun build:asb-ts && bun build:asb-web",
     "build:asb-ts": "bun --filter asb-ts build",
     "build:asb-web": "bun --filter asb-web build",
+    "test": "bun test:asb-ts",
+    "test:asb-ts": "bun --filter asb-ts test",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe ."
   },
