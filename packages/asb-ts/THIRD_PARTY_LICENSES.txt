@@ -19,6 +19,13 @@
 │  ├─ private: true
 │  ├─ path: /home/vscode/app/packages/asb-ts
 │  └─ licenseFile: /home/vscode/app/packages/asb-ts/LICENSE
+├─ fuse.js@7.1.0
+│  ├─ licenses: Apache-2.0
+│  ├─ repository: https://github.com/krisk/Fuse
+│  ├─ publisher: Kiro Risk
+│  ├─ email: kirollos@gmail.com
+│  ├─ path: /home/vscode/app/packages/asb-ts/node_modules/fuse.js
+│  └─ licenseFile: /home/vscode/app/packages/asb-ts/node_modules/fuse.js/LICENSE
 ├─ license-checker-rseidelsohn@4.4.2
 │  ├─ licenses: BSD-3-Clause
 │  ├─ repository: https://github.com/RSeidelsohn/license-checker-rseidelsohn
@@ -32,7 +39,7 @@
 │  ├─ publisher: Microsoft Corp.
 │  ├─ path: /home/vscode/app/packages/asb-ts/node_modules/typescript
 │  └─ licenseFile: /home/vscode/app/packages/asb-ts/node_modules/typescript/LICENSE.txt
-└─ valibot@1.3.0
+└─ valibot@1.3.1
    ├─ licenses: MIT
    ├─ repository: https://github.com/open-circle/valibot
    ├─ publisher: Fabian Hiller

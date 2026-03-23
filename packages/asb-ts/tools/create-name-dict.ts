@@ -1,14 +1,54 @@
-import { SPECIES as ASA_SPECIES } from "./ASA-values.js";
-import { SPECIES } from "./values.js";
+/*
+    このファイルは、検索に使用する名前一覧を生成するためのツールです。
+    create-values で生成したSpecies と辞書から日本語名の紐づけを行います。
+*/
 
-export const NAMES = new Set(
-  [SPECIES, ASA_SPECIES]
-    .flat()
-    .map((s) => s.name)
-    .filter((n) => n !== undefined),
-);
+import fs from "node:fs";
+import { ALL_SPECIES } from "../src/asb/values/index.js";
 
-export const DICT: { en: string; ja: string }[] = [
+function deleteDuplicate(list: typeof DICT) {
+  const tmpList1 = Array.from(
+    new Map(list.map((obj) => [obj.en, obj])).values(),
+  );
+  const tmpList2 = Array.from(
+    new Map(tmpList1.map((obj) => [obj.ja, obj])).values(),
+  );
+  return tmpList2;
+}
+
+function getNames() {
+  const valuesNames = ALL_SPECIES.map((s) => s.name).filter(
+    (s) => s !== null && s !== undefined,
+  );
+  const safeDict = DICT.filter((d) => valuesNames.includes(d.en));
+  return deleteDuplicate(safeDict).sort((a, b) => a.ja.localeCompare(b.ja));
+}
+
+/**
+ * この関数は、いきものの名前の一覧を出力します。
+ * @param outputPath 出力ファイルのパス
+ */
+function createConstTs(dict: typeof DICT, outputPath: string) {
+  // values.ts の内容を作成
+  const content = `
+// このファイルは機械的に出力されました。
+
+  export const NAME_DICT: {en:string,ja:string}[] = [\n  ${dict
+    .map((d) => `{en:"${d.en}",ja:"${d.ja}"},`)
+    .join("\n")
+    .trim()}\n] as const;
+    `;
+
+  // ファイルを出力
+  fs.writeFileSync(outputPath, content, "utf-8");
+}
+
+function main() {
+  const dict = getNames();
+  createConstTs(dict, "./src/asb/name-dict.ts");
+}
+
+const DICT: { en: string; ja: string }[] = [
   { en: "R-Allosaurus", ja: "Rアロサウルス" },
   { en: "R-Equus", ja: "Rエクウス" },
   { en: "R-Gasbags", ja: "Rガスバッグ" },
@@ -935,3 +975,5 @@ export const DICT: { en: string; ja: string }[] = [
   { en: "Diseased Leech", ja: "病気持ちのヒル" },
   { en: "Injured Brute Reaper King", ja: "負傷した凶暴なリーパーキング" },
 ];
+
+main();

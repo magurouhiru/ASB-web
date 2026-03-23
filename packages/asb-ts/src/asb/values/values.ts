@@ -1,12 +1,13 @@
 // このファイルは機械的に出力されました。
 
-import type { Species } from "./types.js";
+import type { Species } from "../types/index.js";
 
 export const SPECIES: Species[] = [
   {
     name: "Rockwell",
     blueprintPath:
       "/Game/Aberration/Boss/Rockwell/Rockwell_Character_BP_Easy.Rockwell_Character_BP_Easy",
+    variants: ["Aberration", "Boss", "Gamma"],
     fullStatsRaw: [
       [42000, 0.2, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -26,6 +27,7 @@ export const SPECIES: Species[] = [
     name: "Rockwell",
     blueprintPath:
       "/Game/Aberration/Boss/Rockwell/Rockwell_Character_BP_Hard.Rockwell_Character_BP_Hard",
+    variants: ["Aberration", "Alpha", "Boss"],
     fullStatsRaw: [
       [115000, 0.2, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -45,6 +47,7 @@ export const SPECIES: Species[] = [
     name: "Rockwell",
     blueprintPath:
       "/Game/Aberration/Boss/Rockwell/Rockwell_Character_BP_Medium.Rockwell_Character_BP_Medium",
+    variants: ["Aberration", "Beta", "Boss"],
     fullStatsRaw: [
       [68500, 0.2, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -61,66 +64,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "RockwellTentacle",
-    blueprintPath:
-      "/Game/Aberration/Boss/RockwellTentacle/RockwellTentacle_Character_BP_Alpha.RockwellTentacle_Character_BP_Alpha",
-    fullStatsRaw: [
-      [15250, 0, 0.27, 0.5, 0],
-      [250, 0.1, 0.1, 0, 0],
-      [1000, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0.15],
-      null,
-      null,
-      [380, 0.02, 0.04, 0, 0],
-      [1, 0, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, -0.1, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "RockwellTentacle",
-    blueprintPath:
-      "/Game/Aberration/Boss/RockwellTentacle/RockwellTentacle_Character_BP_Beta.RockwellTentacle_Character_BP_Beta",
-    fullStatsRaw: [
-      [8500, 0, 0.27, 0.5, 0],
-      [250, 0.1, 0.1, 0, 0],
-      [1000, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0.15],
-      null,
-      null,
-      [380, 0.02, 0.04, 0, 0],
-      [1, 0, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, -0.1, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "RockwellTentacle",
-    blueprintPath:
-      "/Game/Aberration/Boss/RockwellTentacle/RockwellTentacle_Character_BP_Gamma.RockwellTentacle_Character_BP_Gamma",
-    fullStatsRaw: [
-      [3800, 0, 0.27, 0.5, 0],
-      [250, 0.1, 0.1, 0, 0],
-      [1000, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0.15],
-      null,
-      null,
-      [380, 0.02, 0.04, 0, 0],
-      [1, 0, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, -0.1, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Basilisk",
     blueprintPath:
       "/Game/Aberration/Dinos/Basilisk/Basilisk_Character_BP.Basilisk_Character_BP",
+    variants: ["Aberration"],
     fullStatsRaw: [
       [2750, 0.2, 0.27, 0.5, 0],
       [650, 0.1, 0.1, 0, 0],
@@ -140,6 +87,7 @@ export const SPECIES: Species[] = [
     name: "Basilisk Ghost",
     blueprintPath:
       "/Game/Aberration/Dinos/Basilisk/Ghost_Basilisk_Character_BP.Ghost_Basilisk_Character_BP",
+    variants: ["Aberration", "Ghost"],
     fullStatsRaw: [
       [2750, 0.2, 0.27, 0.5, 0],
       [650, 0.1, 0.1, 0, 0],
@@ -159,6 +107,7 @@ export const SPECIES: Species[] = [
     name: "Alpha Basilisk",
     blueprintPath:
       "/Game/Aberration/Dinos/Basilisk/MegaBasilisk_Character_BP.MegaBasilisk_Character_BP",
+    variants: ["Aberration", "Mega"],
     fullStatsRaw: [
       [19500, 0.2, 0.27, 0.5, 0],
       [650, 0.1, 0.1, 0, 0],
@@ -178,6 +127,7 @@ export const SPECIES: Species[] = [
     name: "Ravager",
     blueprintPath:
       "/Game/Aberration/Dinos/CaveWolf/CaveWolf_Character_BP.CaveWolf_Character_BP",
+    variants: ["Aberration"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -197,6 +147,7 @@ export const SPECIES: Species[] = [
     name: "Nameless",
     blueprintPath:
       "/Game/Aberration/Dinos/ChupaCabra/ChupaCabra_Character_BP.ChupaCabra_Character_BP",
+    variants: ["Aberration"],
     fullStatsRaw: [
       [220, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -216,6 +167,7 @@ export const SPECIES: Species[] = [
     name: "Nameless",
     blueprintPath:
       "/Game/Aberration/Dinos/ChupaCabra/ChupaCabra_Character_BP_Minion.ChupaCabra_Character_BP_Minion",
+    variants: ["Aberration", "Minion"],
     fullStatsRaw: [
       [220, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -235,6 +187,7 @@ export const SPECIES: Species[] = [
     name: "Nameless",
     blueprintPath:
       "/Game/Aberration/Dinos/ChupaCabra/ChupaCabra_Character_BP_Surface.ChupaCabra_Character_BP_Surface",
+    variants: ["Aberration", "Surface"],
     fullStatsRaw: [
       [220, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -254,6 +207,7 @@ export const SPECIES: Species[] = [
     name: "Karkinos",
     blueprintPath:
       "/Game/Aberration/Dinos/Crab/Crab_Character_BP.Crab_Character_BP",
+    variants: ["Aberration"],
     fullStatsRaw: [
       [1200, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -273,6 +227,7 @@ export const SPECIES: Species[] = [
     name: "Alpha Karkinos",
     blueprintPath:
       "/Game/Aberration/Dinos/Crab/MegaCrab_Character_BP.MegaCrab_Character_BP",
+    variants: ["Aberration", "Mega"],
     fullStatsRaw: [
       [20400, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -292,6 +247,7 @@ export const SPECIES: Species[] = [
     name: "Lamprey",
     blueprintPath:
       "/Game/Aberration/Dinos/Lamprey/Lamprey_Character.Lamprey_Character",
+    variants: ["Aberration"],
     fullStatsRaw: [
       [40, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -311,6 +267,7 @@ export const SPECIES: Species[] = [
     name: "Featherlight",
     blueprintPath:
       "/Game/Aberration/Dinos/LanternBird/LanternBird_Character_BP.LanternBird_Character_BP",
+    variants: ["Aberration"],
     fullStatsRaw: [
       [115, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -330,6 +287,7 @@ export const SPECIES: Species[] = [
     name: "Shinehorn",
     blueprintPath:
       "/Game/Aberration/Dinos/LanternGoat/LanternGoat_Character_BP.LanternGoat_Character_BP",
+    variants: ["Aberration"],
     fullStatsRaw: [
       [115, 0.2, 0.27, 0.5, 0],
       [180, 0.11, 0.11, 0.1, 0],
@@ -349,6 +307,7 @@ export const SPECIES: Species[] = [
     name: "Glowtail",
     blueprintPath:
       "/Game/Aberration/Dinos/LanternLizard/LanternLizard_Character_BP.LanternLizard_Character_BP",
+    variants: ["Aberration"],
     fullStatsRaw: [
       [115, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.125, 0, 0],
@@ -368,6 +327,7 @@ export const SPECIES: Species[] = [
     name: "Bulbdog Ghost",
     blueprintPath:
       "/Game/Aberration/Dinos/LanternPug/Ghost_LanternPug_Character_BP.Ghost_LanternPug_Character_BP",
+    variants: ["Aberration", "Ghost"],
     fullStatsRaw: [
       [145, 0.2, 0.27, 0.5, 0],
       [200, 0.12, 0.12, 0.05, 0],
@@ -387,6 +347,7 @@ export const SPECIES: Species[] = [
     name: "Bulbdog",
     blueprintPath:
       "/Game/Aberration/Dinos/LanternPug/LanternPug_Character_BP.LanternPug_Character_BP",
+    variants: ["Aberration"],
     fullStatsRaw: [
       [145, 0.2, 0.27, 0.5, 0],
       [200, 0.12, 0.12, 0.05, 0],
@@ -406,6 +367,7 @@ export const SPECIES: Species[] = [
     name: "Glowbug",
     blueprintPath:
       "/Game/Aberration/Dinos/Lightbug/Lightbug_Character_BaseBP.Lightbug_Character_BaseBP",
+    variants: ["Aberration"],
     fullStatsRaw: [
       [75, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -425,6 +387,7 @@ export const SPECIES: Species[] = [
     name: "Roll Rat",
     blueprintPath:
       "/Game/Aberration/Dinos/MoleRat/MoleRat_Character_BP.MoleRat_Character_BP",
+    variants: ["Aberration"],
     fullStatsRaw: [
       [850, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -444,6 +407,7 @@ export const SPECIES: Species[] = [
     name: "Surface Reaper King Ghost",
     blueprintPath:
       "/Game/Aberration/Dinos/Nameless/Ghost_Xenomorph_Character_BP_Male_Surface.Ghost_Xenomorph_Character_BP_Male_Surface",
+    variants: ["Aberration", "Ghost", "Male", "Surface"],
     fullStatsRaw: [
       [2500, 0.2, 0.27, 0.5, 0],
       [480, 0.1, 0.1, 0, 0],
@@ -463,27 +427,9 @@ export const SPECIES: Species[] = [
     name: "Alpha Surface Reaper King",
     blueprintPath:
       "/Game/Aberration/Dinos/Nameless/MegaXenomorph_Character_BP_Male_Surface.MegaXenomorph_Character_BP_Male_Surface",
+    variants: ["Aberration", "Male", "Mega", "Surface"],
     fullStatsRaw: [
       [42500, 0.2, 0.27, 0.5, 0],
-      [480, 0.1, 0.1, 0, 0],
-      [925, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [415, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Reaper Queen",
-    blueprintPath:
-      "/Game/Aberration/Dinos/Nameless/Xenomorph_Character_BP_Female.Xenomorph_Character_BP_Female",
-    fullStatsRaw: [
-      [45000, 0.0052, 0.135, -38500, 0],
       [480, 0.1, 0.1, 0, 0],
       [925, 0.06, 0, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -501,6 +447,7 @@ export const SPECIES: Species[] = [
     name: "Subterranean Reaper King",
     blueprintPath:
       "/Game/Aberration/Dinos/Nameless/Xenomorph_Character_BP_Male_Chupa.Xenomorph_Character_BP_Male_Chupa",
+    variants: ["Aberration", "Male"],
     fullStatsRaw: [
       [2000, 0.2, 0.27, 0.5, 0],
       [480, 0.1, 0.1, 0, 0],
@@ -520,6 +467,7 @@ export const SPECIES: Species[] = [
     name: "Surface Reaper King",
     blueprintPath:
       "/Game/Aberration/Dinos/Nameless/Xenomorph_Character_BP_Male_Lunar.Xenomorph_Character_BP_Male_Lunar",
+    variants: ["Aberration", "Lunar", "Male"],
     fullStatsRaw: [
       [2500, 0.2, 0.27, 0.5, 0],
       [480, 0.1, 0.1, 0, 0],
@@ -539,6 +487,7 @@ export const SPECIES: Species[] = [
     name: "Elemental Reaper King",
     blueprintPath:
       "/Game/Aberration/Dinos/Nameless/Xenomorph_Character_BP_Male_Minion.Xenomorph_Character_BP_Male_Minion",
+    variants: ["Aberration", "Male", "Minion"],
     fullStatsRaw: [
       [1250, 0.2, 0.27, 0.5, 0],
       [480, 0.1, 0.1, 0, 0],
@@ -558,27 +507,9 @@ export const SPECIES: Species[] = [
     name: "Surface Reaper King",
     blueprintPath:
       "/Game/Aberration/Dinos/Nameless/Xenomorph_Character_BP_Male_Surface.Xenomorph_Character_BP_Male_Surface",
+    variants: ["Aberration", "Male", "Surface"],
     fullStatsRaw: [
       [2500, 0.2, 0.27, 0.5, 0],
-      [480, 0.1, 0.1, 0, 0],
-      [925, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [415, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Reaper King",
-    blueprintPath:
-      "/Game/Aberration/Dinos/Nameless/Xenomorph_Character_BP_Male_Tamed.Xenomorph_Character_BP_Male_Tamed",
-    fullStatsRaw: [
-      [45000, 0.0052, 0.135, -38500, 0],
       [480, 0.1, 0.1, 0, 0],
       [925, 0.06, 0, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -596,6 +527,7 @@ export const SPECIES: Species[] = [
     name: "Seeker",
     blueprintPath:
       "/Game/Aberration/Dinos/Pteroteuthis/Pteroteuthis_Char_BP.Pteroteuthis_Char_BP",
+    variants: ["Aberration"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -615,6 +547,7 @@ export const SPECIES: Species[] = [
     name: "Seeker",
     blueprintPath:
       "/Game/Aberration/Dinos/Pteroteuthis/Pteroteuthis_Char_BP_Surface.Pteroteuthis_Char_BP_Surface",
+    variants: ["Aberration", "Surface"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -631,28 +564,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Rock Drake",
-    blueprintPath:
-      "/Game/Aberration/Dinos/RockDrake/RockDrake_Character_BP.RockDrake_Character_BP",
-    fullStatsRaw: [
-      [1950, 0.085, 0.2025, -1050, 0],
-      [450, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [2000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Attack Drone",
     blueprintPath:
       "/Game/EndGame/Dinos/Drone/EndDrone_Character_BP.EndDrone_Character_BP",
+    variants: ["Boss", "Gamma"],
     fullStatsRaw: [
       [145.800003, 0.2, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -672,6 +587,7 @@ export const SPECIES: Species[] = [
     name: "Attack Drone",
     blueprintPath:
       "/Game/EndGame/Dinos/Drone/EndDrone_Character_BP_Hard.EndDrone_Character_BP_Hard",
+    variants: ["Alpha", "Boss"],
     fullStatsRaw: [
       [877.500061, 0.2, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -691,6 +607,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Attack Drone",
     blueprintPath:
       "/Game/EndGame/Dinos/Drone/EndDrone_Character_BP_Malfunctioned.EndDrone_Character_BP_Malfunctioned",
+    variants: ["Boss"],
     fullStatsRaw: [
       [145.800003, 0.2, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -710,6 +627,7 @@ export const SPECIES: Species[] = [
     name: "Attack Drone",
     blueprintPath:
       "/Game/EndGame/Dinos/Drone/EndDrone_Character_BP_Med.EndDrone_Character_BP_Med",
+    variants: ["Beta", "Boss"],
     fullStatsRaw: [
       [585, 0.2, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -729,6 +647,7 @@ export const SPECIES: Species[] = [
     name: "Attack Drone",
     blueprintPath:
       "/Game/EndGame/Dinos/Drone/EndDrone_Lunar_Character_BP.EndDrone_Lunar_Character_BP",
+    variants: ["Boss", "Lunar"],
     fullStatsRaw: [
       [145.800003, 0.2, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -748,6 +667,7 @@ export const SPECIES: Species[] = [
     name: "Overseer",
     blueprintPath:
       "/Game/EndGame/Dinos/Endboss/EndBoss_Character_Easy.EndBoss_Character_Easy",
+    variants: ["Boss", "Gamma"],
     fullStatsRaw: [
       [63360, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -767,6 +687,7 @@ export const SPECIES: Species[] = [
     name: "Overseer",
     blueprintPath:
       "/Game/EndGame/Dinos/Endboss/EndBoss_Character_Hard.EndBoss_Character_Hard",
+    variants: ["Alpha", "Boss"],
     fullStatsRaw: [
       [207360.016, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -786,6 +707,7 @@ export const SPECIES: Species[] = [
     name: "Overseer",
     blueprintPath:
       "/Game/EndGame/Dinos/Endboss/EndBoss_Character_Medium.EndBoss_Character_Medium",
+    variants: ["Beta", "Boss"],
     fullStatsRaw: [
       [132480, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -805,6 +727,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/EndGame/Dinos/Endboss/EndbossDragon/EndBossDragon_Character_BP_Easy.EndBossDragon_Character_BP_Easy",
+    variants: ["Boss", "Gamma"],
     fullStatsRaw: [
       [161280, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -824,6 +747,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/EndGame/Dinos/Endboss/EndbossDragon/EndBossDragon_Character_BP_Hard.EndBossDragon_Character_BP_Hard",
+    variants: ["Alpha", "Boss"],
     fullStatsRaw: [
       [241920, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -843,6 +767,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/EndGame/Dinos/Endboss/EndbossDragon/EndBossDragon_Character_BP_Medium.EndBossDragon_Character_BP_Medium",
+    variants: ["Beta", "Boss"],
     fullStatsRaw: [
       [186480, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -862,6 +787,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/EndGame/Dinos/Endboss/EndbossGorilla/EndBossGorilla_Character_BP_Easy.EndBossGorilla_Character_BP_Easy",
+    variants: ["Boss", "Gamma"],
     fullStatsRaw: [
       [92400, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -881,6 +807,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/EndGame/Dinos/Endboss/EndbossGorilla/EndBossGorilla_Character_BP_Hard.EndBossGorilla_Character_BP_Hard",
+    variants: ["Alpha", "Boss"],
     fullStatsRaw: [
       [128800, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -900,6 +827,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/EndGame/Dinos/Endboss/EndbossGorilla/EndBossGorilla_Character_BP_Medium.EndBossGorilla_Character_BP_Medium",
+    variants: ["Beta", "Boss"],
     fullStatsRaw: [
       [112000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -919,6 +847,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/EndGame/Dinos/Endboss/EndbossSpider/EndBossSpiderL_Character_BP_Easy.EndBossSpiderL_Character_BP_Easy",
+    variants: ["Boss", "Gamma"],
     fullStatsRaw: [
       [136080, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -938,6 +867,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/EndGame/Dinos/Endboss/EndbossSpider/EndBossSpiderL_Character_BP_Hard.EndBossSpiderL_Character_BP_Hard",
+    variants: ["Alpha", "Boss"],
     fullStatsRaw: [
       [186480, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -957,6 +887,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/EndGame/Dinos/Endboss/EndbossSpider/EndBossSpiderL_Character_BP_Medium.EndBossSpiderL_Character_BP_Medium",
+    variants: ["Beta", "Boss"],
     fullStatsRaw: [
       [151200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -976,6 +907,7 @@ export const SPECIES: Species[] = [
     name: "Defense Unit",
     blueprintPath:
       "/Game/EndGame/Dinos/Tank/EndTank_Character_BP.EndTank_Character_BP",
+    variants: ["Boss", "Gamma"],
     fullStatsRaw: [
       [924.000061, 0.2, 0.27, 0.5, 0],
       [2000, 0.1, 0.1, 0, 0],
@@ -995,6 +927,7 @@ export const SPECIES: Species[] = [
     name: "Defense Unit",
     blueprintPath:
       "/Game/EndGame/Dinos/Tank/EndTank_Character_BP_Hard.EndTank_Character_BP_Hard",
+    variants: ["Alpha", "Boss"],
     fullStatsRaw: [
       [2772, 0.2, 0.27, 0.5, 0],
       [2000, 0.1, 0.1, 0, 0],
@@ -1014,6 +947,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Defense Unit",
     blueprintPath:
       "/Game/EndGame/Dinos/Tank/EndTank_Character_BP_Malfunctioned.EndTank_Character_BP_Malfunctioned",
+    variants: ["Boss"],
     fullStatsRaw: [
       [924.000061, 0.2, 0.27, 0.5, 0],
       [2000, 0.1, 0.1, 0, 0],
@@ -1033,6 +967,7 @@ export const SPECIES: Species[] = [
     name: "Defense Unit",
     blueprintPath:
       "/Game/EndGame/Dinos/Tank/EndTank_Character_BP_Med.EndTank_Character_BP_Med",
+    variants: ["Beta", "Boss"],
     fullStatsRaw: [
       [1848.00012, 0.2, 0.27, 0.5, 0],
       [2000, 0.1, 0.1, 0, 0],
@@ -1052,6 +987,7 @@ export const SPECIES: Species[] = [
     name: "Defense Unit",
     blueprintPath:
       "/Game/EndGame/Dinos/Tank/EndTank_Lunar_Character_BP.EndTank_Lunar_Character_BP",
+    variants: ["Boss", "Lunar"],
     fullStatsRaw: [
       [924.000061, 0.2, 0.27, 0.5, 0],
       [2000, 0.1, 0.1, 0, 0],
@@ -1071,6 +1007,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Arthropluera",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Arthropluera/Arthro_Character_BP_Corrupt.Arthro_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [500, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -1090,6 +1027,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Carnotaurus",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Carno/Carno_Character_BP_Corrupt.Carno_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [420, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -1109,6 +1047,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Chalicotherium",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Chalicotherium/Chalico_Character_BP_Corrupt.Chalico_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [600, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -1128,6 +1067,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Deathworm",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Deathworm/Deathworm_Character_BP_Corrupt.Deathworm_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [20000, 0.002, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -1147,6 +1087,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Dilophosaur",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Dilo/Dilo_Character_BP_Corrupt.Dilo_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [130, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -1166,6 +1107,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Dimorphodon",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Dimorphodon/Dimorph_Character_BP_Corrupt.Dimorph_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [125, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -1182,28 +1124,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Corrupted Giganotosaurus",
-    blueprintPath:
-      "/Game/Extinction/Dinos/Corrupt/Giganotosaurus/Gigant_Character_BP_Corrupt.Gigant_Character_BP_Corrupt",
-    fullStatsRaw: [
-      [35000, 0.0005, 0.002, 0, 0],
-      [400, 0.0005, 0.01, 0, 0],
-      [10000, 0.06, 0, 0, 0],
-      [150, 0.0025, 0.025, 0, 0],
-      [4000, 0.0025, 0.025, 0, 0],
-      null,
-      null,
-      [700, 0.01, 0.01, 0, 0],
-      [1, 0.05, 0.05, -0.8, 0],
-      [1, 0, 0.0031, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Corrupted Reaper King",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Nameless/Xenomorph_Character_BP_Male_Tamed_Corrupt.Xenomorph_Character_BP_Male_Tamed_Corrupt",
+    variants: ["Corrupted", "Extinction", "Male", "Tamed"],
     fullStatsRaw: [
       [18500, 0.001, 0.135, 0, 0],
       [480, 0.1, 0.1, 0, 0],
@@ -1223,6 +1147,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Paraceratherium",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Paraceratherium/Paracer_Character_BP_Corrupt.Paracer_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [1026, 0.2, 0.172125, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -1242,6 +1167,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Pteranodon",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Ptero/Ptero_Character_BP_Corrupt.Ptero_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [210, 0.2, 0.15, 0.5, 0],
       [150, 0.05, 0.04, 0, 0],
@@ -1261,6 +1187,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Raptor",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Raptor/Raptor_Character_BP_Corrupt.Raptor_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -1280,6 +1207,7 @@ export const SPECIES: Species[] = [
     name: "Enraged Corrupted Rex",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Rex/MegaRex_Character_BP_Corrupt.MegaRex_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [8500, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -1299,6 +1227,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Rex",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Rex/Rex_Character_BP_Corrupt.Rex_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -1315,28 +1244,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Corrupted Rock Drake",
-    blueprintPath:
-      "/Game/Extinction/Dinos/Corrupt/RockDrake/RockDrake_Character_BP_Corrupt.RockDrake_Character_BP_Corrupt",
-    fullStatsRaw: [
-      [1950, 0.085, 0.2025, -1050, 0],
-      [450, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [2000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Corrupted Spino",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Spino/Spino_Character_BP_Corrupt.Spino_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [700, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -1356,6 +1267,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Stegosaurus",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Stego/Stego_Character_BP_Corrupt.Stego_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [650, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -1375,6 +1287,7 @@ export const SPECIES: Species[] = [
     name: "Enraged Triceratops",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Trike/MegaTrike_Character_BP_Corrupt.MegaTrike_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [2500, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -1394,6 +1307,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Triceratops",
     blueprintPath:
       "/Game/Extinction/Dinos/Corrupt/Trike/Trike_Character_BP_Corrupt.Trike_Character_BP_Corrupt",
+    variants: ["Corrupted", "Extinction"],
     fullStatsRaw: [
       [375, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -1410,28 +1324,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Corrupted Wyvern",
-    blueprintPath:
-      "/Game/Extinction/Dinos/Corrupt/Wyvern/Wyvern_Character_BP_Fire_Corrupt.Wyvern_Character_BP_Fire_Corrupt",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [315, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Desert Titan",
     blueprintPath:
       "/Game/Extinction/Dinos/DesertKaiju/DesertKaiju_Character_BP.DesertKaiju_Character_BP",
+    variants: ["Boss", "Extinction"],
     fullStatsRaw: [
       [250000, 0, 0, 0, 0],
       [5000, 0, 0, 0, 0],
@@ -1451,6 +1347,7 @@ export const SPECIES: Species[] = [
     name: "Desert Titan Flock",
     blueprintPath:
       "/Game/Extinction/Dinos/DesertKaiju/DesertKaiju_FirstFlockChar_BP.DesertKaiju_FirstFlockChar_BP",
+    variants: ["Extinction", "Minion"],
     fullStatsRaw: [
       [4000, 0.2, 0.27, 0.5, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -1470,6 +1367,7 @@ export const SPECIES: Species[] = [
     name: "Enforcer",
     blueprintPath:
       "/Game/Extinction/Dinos/Enforcer/Enforcer_Character_BP.Enforcer_Character_BP",
+    variants: ["Extinction"],
     fullStatsRaw: [
       [375, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -1489,6 +1387,7 @@ export const SPECIES: Species[] = [
     name: "Forest Titan",
     blueprintPath:
       "/Game/Extinction/Dinos/ForestKaiju/ForestKaiju_Character_BP.ForestKaiju_Character_BP",
+    variants: ["Boss", "Extinction"],
     fullStatsRaw: [
       [400000, 0, 0, 0.5, 0],
       [6000, 0, 0, 0, 0],
@@ -1505,28 +1404,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Forest Wyvern",
-    blueprintPath:
-      "/Game/Extinction/Dinos/ForestKaiju/Minion/Wyvern_Character_BP_Fire_Minion.Wyvern_Character_BP_Fire_Minion",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [315, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Gacha",
     blueprintPath:
       "/Game/Extinction/Dinos/Gacha/Gacha_Character_BP.Gacha_Character_BP",
+    variants: ["Extinction"],
     fullStatsRaw: [
       [750, 0.2, 0.27, 0.5, 0],
       [325, 0.1, 0.1, 0, 0],
@@ -1546,6 +1427,7 @@ export const SPECIES: Species[] = [
     name: "GachaClaus",
     blueprintPath:
       "/Game/Extinction/Dinos/Gacha/Gacha_Claus_Character_BP.Gacha_Claus_Character_BP",
+    variants: ["Extinction"],
     fullStatsRaw: [
       [750, 0.2, 0.27, 0.5, 0],
       [325, 0.1, 0.1, 0, 0],
@@ -1565,6 +1447,7 @@ export const SPECIES: Species[] = [
     name: "Gasbags",
     blueprintPath:
       "/Game/Extinction/Dinos/GasBag/GasBags_Character_BP.GasBags_Character_BP",
+    variants: ["Extinction"],
     fullStatsRaw: [
       [650, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -1584,6 +1467,7 @@ export const SPECIES: Species[] = [
     name: "Managarmr",
     blueprintPath:
       "/Game/Extinction/Dinos/IceJumper/IceJumper_Character_BP.IceJumper_Character_BP",
+    variants: ["Extinction"],
     fullStatsRaw: [
       [825, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.06, 0, 0],
@@ -1603,6 +1487,7 @@ export const SPECIES: Species[] = [
     name: "Ice Titan",
     blueprintPath:
       "/Game/Extinction/Dinos/IceKaiju/IceKaiju_Character_BP.IceKaiju_Character_BP",
+    variants: ["Boss", "Extinction"],
     fullStatsRaw: [
       [350000, 0, 0, 0.5, 0],
       [10000, 0, 0, 0, 0],
@@ -1622,6 +1507,7 @@ export const SPECIES: Species[] = [
     name: "Corrupt Tumor",
     blueprintPath:
       "/Game/Extinction/Dinos/KingKaiju/CorruptTumor_Character_BP.CorruptTumor_Character_BP",
+    variants: ["Corrupted", "Extinction", "Minion"],
     fullStatsRaw: [
       [15000, 0, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -1641,6 +1527,7 @@ export const SPECIES: Species[] = [
     name: "Gamma King Titan",
     blueprintPath:
       "/Game/Extinction/Dinos/KingKaiju/KingKaiju_Character_BP.KingKaiju_Character_BP",
+    variants: ["Boss", "Extinction", "Gamma"],
     fullStatsRaw: [
       [1500000, 0, 0, 0, 0],
       [1000000, 0.1, 0.1, 0, 0],
@@ -1660,6 +1547,7 @@ export const SPECIES: Species[] = [
     name: "Alpha King Titan",
     blueprintPath:
       "/Game/Extinction/Dinos/KingKaiju/KingKaiju_Character_BP_Alpha.KingKaiju_Character_BP_Alpha",
+    variants: ["Alpha", "Boss", "Extinction", "Mega"],
     fullStatsRaw: [
       [1500000, 0, 0, 0, 0],
       [1000000, 0.1, 0.1, 0, 0],
@@ -1679,6 +1567,7 @@ export const SPECIES: Species[] = [
     name: "Beta King Titan",
     blueprintPath:
       "/Game/Extinction/Dinos/KingKaiju/KingKaiju_Character_BP_Beta.KingKaiju_Character_BP_Beta",
+    variants: ["Beta", "Boss", "Extinction"],
     fullStatsRaw: [
       [1500000, 0, 0, 0, 0],
       [1000000, 0.1, 0.1, 0, 0],
@@ -1698,6 +1587,7 @@ export const SPECIES: Species[] = [
     name: "Corruptling",
     blueprintPath:
       "/Game/Extinction/Dinos/KingKaiju/Minions/Corrupt_Arthro_Character_BP.Corrupt_Arthro_Character_BP",
+    variants: ["Corrupted", "Extinction", "Minion"],
     fullStatsRaw: [
       [7000, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -1717,6 +1607,7 @@ export const SPECIES: Species[] = [
     name: "Mega Mek",
     blueprintPath:
       "/Game/Extinction/Dinos/Mek/MegaMek_Character_BP.MegaMek_Character_BP",
+    variants: ["Extinction"],
     fullStatsRaw: [
       [9000, 0.2, 0.27, 0.5, 0],
       [1000, 0.1, 0.1, 0, 0],
@@ -1736,6 +1627,7 @@ export const SPECIES: Species[] = [
     name: "Mek",
     blueprintPath:
       "/Game/Extinction/Dinos/Mek/Mek_Character_BP.Mek_Character_BP",
+    variants: ["Extinction"],
     fullStatsRaw: [
       [5500, 0.16, 0.27, 0.5, 0],
       [1000, 0.1, 0.1, 0, 0],
@@ -1755,6 +1647,7 @@ export const SPECIES: Species[] = [
     name: "Snow Owl Ghost",
     blueprintPath:
       "/Game/Extinction/Dinos/Owl/Ghost_Owl_Character_BP.Ghost_Owl_Character_BP",
+    variants: ["Extinction", "Ghost"],
     fullStatsRaw: [
       [325, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -1774,6 +1667,7 @@ export const SPECIES: Species[] = [
     name: "Snow Owl",
     blueprintPath:
       "/Game/Extinction/Dinos/Owl/Owl_Character_BP.Owl_Character_BP",
+    variants: ["Extinction"],
     fullStatsRaw: [
       [325, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -1793,6 +1687,7 @@ export const SPECIES: Species[] = [
     name: "Scout",
     blueprintPath:
       "/Game/Extinction/Dinos/Scout/Scout_Character_BP.Scout_Character_BP",
+    variants: ["Extinction"],
     fullStatsRaw: [
       [3, 0.075, 0, 0.5, 0],
       [90, 2, 0, 0, 0],
@@ -1812,6 +1707,7 @@ export const SPECIES: Species[] = [
     name: "Velonasaur",
     blueprintPath:
       "/Game/Extinction/Dinos/Spindles/Spindles_Character_BP.Spindles_Character_BP",
+    variants: ["Extinction"],
     fullStatsRaw: [
       [440, 0.2, 0.27, 0.5, 0],
       [325, 0.1, 0.1, 0, 0],
@@ -1831,6 +1727,7 @@ export const SPECIES: Species[] = [
     name: "Defense Unit",
     blueprintPath:
       "/Game/Extinction/Dinos/Tank/Defender_Character_BP.Defender_Character_BP",
+    variants: ["Extinction"],
     fullStatsRaw: [
       [924.000061, 0.2, 0.27, 0.5, 0],
       [2000, 0.1, 0.1, 0, 0],
@@ -1850,6 +1747,7 @@ export const SPECIES: Species[] = [
     name: "Fenrisúlfr",
     blueprintPath:
       "/Game/Fjordur/Boss/Fenrir_Character_BP_Boss.Fenrir_Character_BP_Boss",
+    variants: ["Boss", "Fjordur"],
     fullStatsRaw: [
       [200000, 0.2, 0.27, 0.6, 0],
       [1320, 0, 0, 0, 0],
@@ -1869,6 +1767,7 @@ export const SPECIES: Species[] = [
     name: "Fenrisúlfr",
     blueprintPath:
       "/Game/Fjordur/Boss/Fenrir_Character_BP_Boss_Easy.Fenrir_Character_BP_Boss_Easy",
+    variants: ["Boss", "Fjordur", "Gamma"],
     fullStatsRaw: [
       [385000, 0.2, 0.27, 0.6, 0],
       [1320, 0, 0, 0, 0],
@@ -1888,6 +1787,7 @@ export const SPECIES: Species[] = [
     name: "Fenrisúlfr",
     blueprintPath:
       "/Game/Fjordur/Boss/Fenrir_Character_BP_Boss_Hard.Fenrir_Character_BP_Boss_Hard",
+    variants: ["Alpha", "Boss", "Fjordur"],
     fullStatsRaw: [
       [1200000, 0.2, 0.27, 0.6, 0],
       [1320, 0, 0, 0, 0],
@@ -1907,6 +1807,7 @@ export const SPECIES: Species[] = [
     name: "Fenrisúlfr",
     blueprintPath:
       "/Game/Fjordur/Boss/Fenrir_Character_BP_Boss_Medium.Fenrir_Character_BP_Boss_Medium",
+    variants: ["Beta", "Boss", "Fjordur"],
     fullStatsRaw: [
       [750000, 0.2, 0.27, 0.6, 0],
       [1320, 0, 0, 0, 0],
@@ -1926,6 +1827,7 @@ export const SPECIES: Species[] = [
     name: "Fenrir",
     blueprintPath:
       "/Game/Fjordur/Boss/Fenrir_Character_BP_Minion.Fenrir_Character_BP_Minion",
+    variants: ["Boss", "Fjordur", "Minion"],
     fullStatsRaw: [
       [750, 0.2, 0.27, 0.6, 0],
       [330, 0.1, 0.1, 0, 0],
@@ -1945,6 +1847,7 @@ export const SPECIES: Species[] = [
     name: "Andrewsarchus",
     blueprintPath:
       "/Game/Fjordur/Dinos/Andrewsarchus/Andrewsarchus_Character_BP.Andrewsarchus_Character_BP",
+    variants: ["Fjordur"],
     fullStatsRaw: [
       [800, 0.2, 0.27, 0.5, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -1964,6 +1867,7 @@ export const SPECIES: Species[] = [
     name: "Beyla Spawn",
     blueprintPath:
       "/Game/Fjordur/Dinos/Beyla/BeylaMinion_Character_BP.BeylaMinion_Character_BP",
+    variants: ["Fjordur", "Minion"],
     fullStatsRaw: [
       [150, 0.1, 0.27, 0.5, 0],
       [200, 0, 0, 0, 0],
@@ -1983,6 +1887,7 @@ export const SPECIES: Species[] = [
     name: "Beyla",
     blueprintPath:
       "/Game/Fjordur/Dinos/Beyla/Beyla_Character_BP.Beyla_Character_BP",
+    variants: ["Boss", "Fjordur"],
     fullStatsRaw: [
       [175000, 0.2, 0.27, 0.5, 0],
       [1250, 0, 0, 0, 0],
@@ -2002,6 +1907,7 @@ export const SPECIES: Species[] = [
     name: "Desmodus",
     blueprintPath:
       "/Game/Fjordur/Dinos/Desmodus/Desmodus_Character_BP.Desmodus_Character_BP",
+    variants: ["Fjordur"],
     fullStatsRaw: [
       [325, 0.17, 0.27, 0.5, 0],
       [500, 0.05, 0.06, 0, 0],
@@ -2021,6 +1927,7 @@ export const SPECIES: Species[] = [
     name: "Fenrir",
     blueprintPath:
       "/Game/Fjordur/Dinos/Fenrir/Fenrir_Character_BP.Fenrir_Character_BP",
+    variants: ["Fjordur"],
     fullStatsRaw: [
       [750, 0.2, 0.27, 0.6, 0],
       [330, 0.1, 0.1, 0, 0],
@@ -2040,6 +1947,7 @@ export const SPECIES: Species[] = [
     name: "Fjordhawk",
     blueprintPath:
       "/Game/Fjordur/Dinos/Fjordhawk/Fjordhawk_Character_BP.Fjordhawk_Character_BP",
+    variants: ["Fjordur"],
     fullStatsRaw: [
       [125, 0.167, 0.22545, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -2059,6 +1967,7 @@ export const SPECIES: Species[] = [
     name: "Fenrir",
     blueprintPath:
       "/Game/Fjordur/Dinos/HatiSkoll/Fenrir_Character_BP_MiniBoss.Fenrir_Character_BP_MiniBoss",
+    variants: ["Boss", "Fjordur"],
     fullStatsRaw: [
       [125000, 0.2, 0.27, 0.6, 0],
       [1320, 0, 0, 0, 0],
@@ -2078,6 +1987,7 @@ export const SPECIES: Species[] = [
     name: "Hati",
     blueprintPath:
       "/Game/Fjordur/Dinos/HatiSkoll/Fenrir_Character_BP_MiniBoss_Hati.Fenrir_Character_BP_MiniBoss_Hati",
+    variants: ["Boss", "Fjordur"],
     fullStatsRaw: [
       [250000, 0.2, 0.27, 0.6, 0],
       [1320, 0, 0, 0, 0],
@@ -2097,6 +2007,7 @@ export const SPECIES: Species[] = [
     name: "Sköll",
     blueprintPath:
       "/Game/Fjordur/Dinos/HatiSkoll/Fenrir_Character_BP_MiniBoss_Skoll.Fenrir_Character_BP_MiniBoss_Skoll",
+    variants: ["Boss", "Fjordur"],
     fullStatsRaw: [
       [125000, 0.2, 0.27, 0.6, 0],
       [1320, 0, 0, 0, 0],
@@ -2116,6 +2027,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/Fjordur/Dinos/IslandBosses/Dragon_Character_BP_Boss_Easy_FJ.Dragon_Character_BP_Boss_Easy_FJ",
+    variants: ["Boss", "Fjordur", "Gamma"],
     fullStatsRaw: [
       [432000, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -2135,6 +2047,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/Fjordur/Dinos/IslandBosses/Dragon_Character_BP_Boss_Hard_FJ.Dragon_Character_BP_Boss_Hard_FJ",
+    variants: ["Alpha", "Boss", "Fjordur"],
     fullStatsRaw: [
       [972000, 0.25, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -2154,6 +2067,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/Fjordur/Dinos/IslandBosses/Dragon_Character_BP_Boss_Medium_FJ.Dragon_Character_BP_Boss_Medium_FJ",
+    variants: ["Beta", "Boss", "Fjordur"],
     fullStatsRaw: [
       [864000.062, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -2173,6 +2087,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/Fjordur/Dinos/IslandBosses/Gorilla_Character_BP_Easy_FJ.Gorilla_Character_BP_Easy_FJ",
+    variants: ["Boss", "Fjordur", "Gamma"],
     fullStatsRaw: [
       [180000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -2192,6 +2107,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/Fjordur/Dinos/IslandBosses/Gorilla_Character_BP_Hard_FJ.Gorilla_Character_BP_Hard_FJ",
+    variants: ["Alpha", "Boss", "Fjordur"],
     fullStatsRaw: [
       [540000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -2211,6 +2127,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/Fjordur/Dinos/IslandBosses/Gorilla_Character_BP_Medium_FJ.Gorilla_Character_BP_Medium_FJ",
+    variants: ["Beta", "Boss", "Fjordur"],
     fullStatsRaw: [
       [396000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -2230,6 +2147,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/Fjordur/Dinos/IslandBosses/SpiderL_Character_BP_Easy_FJ.SpiderL_Character_BP_Easy_FJ",
+    variants: ["Boss", "Fjordur", "Gamma"],
     fullStatsRaw: [
       [324000, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -2249,6 +2167,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/Fjordur/Dinos/IslandBosses/SpiderL_Character_BP_Hard_FJ.SpiderL_Character_BP_Hard_FJ",
+    variants: ["Alpha", "Boss", "Fjordur"],
     fullStatsRaw: [
       [972000.062, 0.25, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -2268,6 +2187,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/Fjordur/Dinos/IslandBosses/SpiderL_Character_BP_Medium_FJ.SpiderL_Character_BP_Medium_FJ",
+    variants: ["Beta", "Boss", "Fjordur"],
     fullStatsRaw: [
       [648000, 0.15, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -2287,6 +2207,7 @@ export const SPECIES: Species[] = [
     name: "Rubble Bear",
     blueprintPath:
       "/Game/Fjordur/Dinos/Steinbjorn/Direbear_Character_BP_SteinbjornMinion.Direbear_Character_BP_SteinbjornMinion",
+    variants: ["Boss", "Fjordur", "Minion"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -2306,6 +2227,7 @@ export const SPECIES: Species[] = [
     name: "Steinbjörn",
     blueprintPath:
       "/Game/Fjordur/Dinos/Steinbjorn/Steinbjorn_Character_BP.Steinbjorn_Character_BP",
+    variants: ["Boss", "Fjordur"],
     fullStatsRaw: [
       [300000, 0.2, 0.27, 0.5, 0],
       [750, 0, 0, 0, 0],
@@ -2325,6 +2247,7 @@ export const SPECIES: Species[] = [
     name: "X-Parasaur",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/BogPara/Bog_Para_Character_BP.Bog_Para_Character_BP",
+    variants: ["Bog", "Genesis"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -2344,6 +2267,7 @@ export const SPECIES: Species[] = [
     name: "X-Paraceratherium",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/BogParaceratherium/Bog_Paracer_Character_BP.Bog_Paracer_Character_BP",
+    variants: ["Bog", "Genesis"],
     fullStatsRaw: [
       [1026, 0.2, 0.172125, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -2363,6 +2287,7 @@ export const SPECIES: Species[] = [
     name: "X-Raptor",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Bog_Raptor/Bog_Raptor_Character_BP.Bog_Raptor_Character_BP",
+    variants: ["Bog", "Genesis"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -2382,6 +2307,7 @@ export const SPECIES: Species[] = [
     name: "X-Spino",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Bog_Spino/Bog_Spino_Character_BP.Bog_Spino_Character_BP",
+    variants: ["Bog", "Genesis"],
     fullStatsRaw: [
       [700, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -2401,6 +2327,7 @@ export const SPECIES: Species[] = [
     name: "X-Tapejara",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Bog_Tapejara/Bog_Tapejara_Character_BP.Bog_Tapejara_Character_BP",
+    variants: ["Bog", "Genesis"],
     fullStatsRaw: [
       [325, 0.17, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -2417,28 +2344,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "X-Rock Elemental",
-    blueprintPath:
-      "/Game/Genesis/Dinos/BiomeVariants/Lava_Golem/Volcano_Golem_Character_BP.Volcano_Golem_Character_BP",
-    fullStatsRaw: [
-      [25000, 0.0125, 0.135, -22000, 0],
-      [300, 0.1, 0.1, 0, 0],
-      [5000, 0.02, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [6000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [660, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.125, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "X-Sabertooth Salmon",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Lunar_Salmon/Lunar_Salmon_Character_BP.Lunar_Salmon_Character_BP",
+    variants: ["Genesis", "Lunar"],
     fullStatsRaw: [
       [65, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -2458,6 +2367,7 @@ export const SPECIES: Species[] = [
     name: "X-Sabertooth Salmon",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Lunar_Salmon/Rare_Lunar_Salmon_Character_BP.Rare_Lunar_Salmon_Character_BP",
+    variants: ["Genesis", "Lunar", "Rare"],
     fullStatsRaw: [
       [65, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -2477,6 +2387,7 @@ export const SPECIES: Species[] = [
     name: "X-Basilosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Ocean_Basilosaurus/Ocean_Basilosaurus_Character_BP.Ocean_Basilosaurus_Character_BP",
+    variants: ["Genesis", "Ocean"],
     fullStatsRaw: [
       [2400, 0.2, 0.243, 0.3, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -2496,6 +2407,7 @@ export const SPECIES: Species[] = [
     name: "X-Ichthyosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Ocean_Dolphin/Ocean_Dolphin_Character_BP.Ocean_Dolphin_Character_BP",
+    variants: ["Genesis", "Ocean"],
     fullStatsRaw: [
       [275, 0.05, 0.0675, 0.3, 0],
       [300, 0.2, 0.2, 0, 0],
@@ -2515,6 +2427,7 @@ export const SPECIES: Species[] = [
     name: "X-Dunkleosteus",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Ocean_Dunkleosteus/Ocean_Dunkle_Character_BP.Ocean_Dunkle_Character_BP",
+    variants: ["Genesis", "Ocean"],
     fullStatsRaw: [
       [710, 0.2, 0.27, 0.3, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -2534,6 +2447,7 @@ export const SPECIES: Species[] = [
     name: "X-Megalodon",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Ocean_Megalodon/Ocean_Megalodon_Character_BP.Ocean_Megalodon_Character_BP",
+    variants: ["Genesis", "Ocean"],
     fullStatsRaw: [
       [600, 0.2, 0.27, 0.3, 0],
       [320, 0.1, 0.1, 0, 0],
@@ -2553,6 +2467,7 @@ export const SPECIES: Species[] = [
     name: "X-Mosasaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Ocean_Mosasaurus/Ocean_Mosa_Character_BP.Ocean_Mosa_Character_BP",
+    variants: ["Genesis", "Ocean"],
     fullStatsRaw: [
       [3600, 0.12, 0.21, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -2572,6 +2487,7 @@ export const SPECIES: Species[] = [
     name: "X-Argentavis",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Snow_Argentavis/Snow_Argent_Character_BP.Snow_Argent_Character_BP",
+    variants: ["Genesis", "Snow"],
     fullStatsRaw: [
       [365, 0.2, 0.30375, 0.5, 0],
       [400, 0.05, 0.075, 0, 0],
@@ -2591,6 +2507,7 @@ export const SPECIES: Species[] = [
     name: "X-Otter",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Snow_Otter/Snow_Otter_Character_BP.Snow_Otter_Character_BP",
+    variants: ["Genesis", "Snow"],
     fullStatsRaw: [
       [40, 0.2, 0.27, 0.5, 0],
       [180, 0.1, 0.1, 0, 0],
@@ -2610,6 +2527,7 @@ export const SPECIES: Species[] = [
     name: "X-Sabertooth",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Snow_Saber/Snow_Saber_Character_BP.Snow_Saber_Character_BP",
+    variants: ["Genesis", "Snow"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -2629,6 +2547,7 @@ export const SPECIES: Species[] = [
     name: "X-Woolly Rhino",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Snow_WoollyRhino/Snow_Rhino_Character_BP.Snow_Rhino_Character_BP",
+    variants: ["Genesis", "Snow"],
     fullStatsRaw: [
       [500, 0.2, 0.27, 0.5, 0],
       [120, 0.1, 0.1, 0, 0],
@@ -2648,6 +2567,7 @@ export const SPECIES: Species[] = [
     name: "X-Yutyrannus",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Snow_Yutyrannus/Snow_Yutyrannus_Character_BP.Snow_Yutyrannus_Character_BP",
+    variants: ["Genesis", "Snow"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -2667,6 +2587,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Dinotar",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/VR/VRDaeodon_Character_BP.VRDaeodon_Character_BP",
+    variants: ["Genesis", "Minion", "VR"],
     fullStatsRaw: [
       [900, 0.2, 0.27, 0.5, 0],
       [250, 0.1, 0.1, 0, 0],
@@ -2686,6 +2607,7 @@ export const SPECIES: Species[] = [
     name: "Attack Drone",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/VR/VREndDrone_Character_BP.VREndDrone_Character_BP",
+    variants: ["Boss", "Genesis", "Minion", "VR"],
     fullStatsRaw: [
       [100, 0.05, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -2705,6 +2627,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Dinotar",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/VR/VRGigant_Character_BP.VRGigant_Character_BP",
+    variants: ["Genesis", "Minion", "VR"],
     fullStatsRaw: [
       [5000, 0.01, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -2724,6 +2647,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Dinotar",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/VR/VRRaptor_Character_BP.VRRaptor_Character_BP",
+    variants: ["Genesis", "Minion", "VR"],
     fullStatsRaw: [
       [300, 0.06, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -2743,6 +2667,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Dinotar",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/VR/VRRex_Character_BP.VRRex_Character_BP",
+    variants: ["Genesis", "Minion", "VR"],
     fullStatsRaw: [
       [900, 0.04, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -2762,6 +2687,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Dinotar",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/VR/VRTrike_Character_BP.VRTrike_Character_BP",
+    variants: ["Genesis", "Minion", "VR"],
     fullStatsRaw: [
       [400, 0.05, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -2781,6 +2707,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Dinotar",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/VR/VRXenomorph_Character_BP_Male_Minion.VRXenomorph_Character_BP_Male_Minion",
+    variants: ["Genesis", "Male", "Minion", "VR"],
     fullStatsRaw: [
       [1800, 0.04, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -2800,6 +2727,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Dinotar",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/VR/VRYutyrannus_Character_BP.VRYutyrannus_Character_BP",
+    variants: ["Genesis", "Minion", "VR"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -2816,28 +2744,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "X-Allosaurus",
-    blueprintPath:
-      "/Game/Genesis/Dinos/BiomeVariants/Volcano_Allosaurus/Volcano_Allo_Character_BP.Volcano_Allo_Character_BP",
-    fullStatsRaw: [
-      [630, 0.2, 0.27, 0.5, 0],
-      [250, 0.1, 0.1, 0, 0],
-      [1000, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0.15],
-      null,
-      null,
-      [380, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, -0.1, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "X-Ankylosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Volcano_Ankylosaurus/Volcano_Ankylo_Character_BP.Volcano_Ankylo_Character_BP",
+    variants: ["Genesis", "Volcano"],
     fullStatsRaw: [
       [700, 0.2, 0.27, 0.5, 0],
       [175, 0.1, 0.1, 0, 0],
@@ -2857,6 +2767,7 @@ export const SPECIES: Species[] = [
     name: "X-Dragon",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Volcano_Dragon/Volcanic_Dragon_Character_BP.Volcanic_Dragon_Character_BP",
+    variants: ["Boss", "Genesis", "Volcano"],
     fullStatsRaw: [
       [240000, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -2876,6 +2787,7 @@ export const SPECIES: Species[] = [
     name: "X-Rex",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Volcano_Rex/Volcano_Rex_Character_BP.Volcano_Rex_Character_BP",
+    variants: ["Genesis", "Volcano"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -2895,6 +2807,7 @@ export const SPECIES: Species[] = [
     name: "X-Triceratops",
     blueprintPath:
       "/Game/Genesis/Dinos/BiomeVariants/Volcano_Trike/Volcano_Trike_Character_BP.Volcano_Trike_Character_BP",
+    variants: ["Genesis", "Volcano"],
     fullStatsRaw: [
       [375, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -2914,6 +2827,7 @@ export const SPECIES: Species[] = [
     name: "Bloodstalker",
     blueprintPath:
       "/Game/Genesis/Dinos/BogSpider/BogSpider_Character_BP.BogSpider_Character_BP",
+    variants: ["Bog", "Genesis"],
     fullStatsRaw: [
       [450, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -2932,6 +2846,7 @@ export const SPECIES: Species[] = [
   {
     name: "Corrupted Avatar",
     blueprintPath: "/Game/Genesis/Dinos/Bots/Bot_Character_BP.Bot_Character_BP",
+    variants: ["Genesis"],
     fullStatsRaw: [
       [100, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -2950,6 +2865,7 @@ export const SPECIES: Species[] = [
   {
     name: "Corrupted Avatar",
     blueprintPath: "/Game/Genesis/Dinos/Bots/Bot_WithBow_BP.Bot_WithBow_BP",
+    variants: ["Genesis", "Minion"],
     fullStatsRaw: [
       [100, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -2968,6 +2884,7 @@ export const SPECIES: Species[] = [
   {
     name: "Corrupted Avatar",
     blueprintPath: "/Game/Genesis/Dinos/Bots/Bot_WithSpear_BP.Bot_WithSpear_BP",
+    variants: ["Genesis", "Minion"],
     fullStatsRaw: [
       [100, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -2987,6 +2904,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Avatar",
     blueprintPath:
       "/Game/Genesis/Dinos/Bots/Bot_WithTekGrenades_BP.Bot_WithTekGrenades_BP",
+    variants: ["Genesis", "Minion"],
     fullStatsRaw: [
       [100, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -3006,6 +2924,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Avatar",
     blueprintPath:
       "/Game/Genesis/Dinos/Bots/Bot_WithTekRifle_BP.Bot_WithTekRifle_BP",
+    variants: ["Genesis", "Minion"],
     fullStatsRaw: [
       [100, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -3022,28 +2941,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Magmasaur",
-    blueprintPath:
-      "/Game/Genesis/Dinos/Cherufe/Cherufe_Character_BP.Cherufe_Character_BP",
-    fullStatsRaw: [
-      [3000, 0.05, 0.135, 3000, 0],
-      [500, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [200, 0.1, 0.1, 0, 0],
-      [2000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [550, 0.02, 0.04, 0, 0],
-      [1, 0.03, 0.03, -0.25, 0.4],
-      [1, 0, 0.005, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Moeder, Master of the Ocean",
     blueprintPath:
       "/Game/Genesis/Dinos/EelBoss/EelBoss_Character_BP_Easy.EelBoss_Character_BP_Easy",
+    variants: ["Boss", "Gamma", "Genesis"],
     fullStatsRaw: [
       [490000, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -3063,6 +2964,7 @@ export const SPECIES: Species[] = [
     name: "Moeder, Master of the Ocean",
     blueprintPath:
       "/Game/Genesis/Dinos/EelBoss/EelBoss_Character_BP_Hard.EelBoss_Character_BP_Hard",
+    variants: ["Alpha", "Boss", "Genesis"],
     fullStatsRaw: [
       [960400, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -3082,6 +2984,7 @@ export const SPECIES: Species[] = [
     name: "Moeder, Master of the Ocean",
     blueprintPath:
       "/Game/Genesis/Dinos/EelBoss/EelBoss_Character_BP_Medium.EelBoss_Character_BP_Medium",
+    variants: ["Beta", "Boss", "Genesis"],
     fullStatsRaw: [
       [686000, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -3101,6 +3004,7 @@ export const SPECIES: Species[] = [
     name: "Eel Minion",
     blueprintPath:
       "/Game/Genesis/Dinos/EelBoss/EelMinion_Character_BP_Easy.EelMinion_Character_BP_Easy",
+    variants: ["Boss", "Gamma", "Genesis", "Minion"],
     fullStatsRaw: [
       [3200, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -3120,6 +3024,7 @@ export const SPECIES: Species[] = [
     name: "Eel Minion",
     blueprintPath:
       "/Game/Genesis/Dinos/EelBoss/EelMinion_Character_BP_Hard.EelMinion_Character_BP_Hard",
+    variants: ["Alpha", "Boss", "Genesis", "Minion"],
     fullStatsRaw: [
       [9600, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -3139,6 +3044,7 @@ export const SPECIES: Species[] = [
     name: "Eel Minion",
     blueprintPath:
       "/Game/Genesis/Dinos/EelBoss/EelMinion_Character_BP_Medium.EelMinion_Character_BP_Medium",
+    variants: ["Beta", "Boss", "Genesis", "Minion"],
     fullStatsRaw: [
       [6400, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -3158,6 +3064,7 @@ export const SPECIES: Species[] = [
     name: "Megachelon",
     blueprintPath:
       "/Game/Genesis/Dinos/GiantTurtle/GiantTurtle_Character_BP.GiantTurtle_Character_BP",
+    variants: ["Genesis"],
     fullStatsRaw: [
       [1920, 0.2, 0.2295, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -3177,6 +3084,7 @@ export const SPECIES: Species[] = [
     name: "Daeodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Arctic/Daeodon_Character_BP_Escort.Daeodon_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [900, 0.2, 0.27, 0.5, 0],
       [250, 0.1, 0.1, 0, 0],
@@ -3196,6 +3104,7 @@ export const SPECIES: Species[] = [
     name: "Polar Bear",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Arctic/Direbear_Character_Polar_Escort.Direbear_Character_Polar_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -3215,6 +3124,7 @@ export const SPECIES: Species[] = [
     name: "Direwolf",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Arctic/Direwolf_Character_BP_Escort.Direwolf_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [330, 0.2, 0.27, 0.66, 0],
       [260, 0.1, 0.1, 0, 0],
@@ -3231,28 +3141,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Procoptodon",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Escort/Arctic/Procoptodon_Character_BP_Escort.Procoptodon_Character_BP_Escort",
-    fullStatsRaw: [
-      [2000, 0.005, 0, -495, 0],
-      [1000, 0, 0, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0, 0, 0, 0],
-      [100, 0, 0, 0, 0],
-      null,
-      null,
-      [1000, 0, 0, 0, 0],
-      [1, 0, 0, 0.5, 0.4],
-      [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "X-Sabertooth",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Arctic/Snow_Saber_Character_BP_Escort.Snow_Saber_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -3272,6 +3164,7 @@ export const SPECIES: Species[] = [
     name: "Baryonyx",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Bog/Baryonyx_Character_BP_Escort.Baryonyx_Character_BP_Escort",
+    variants: ["Bog", "Escort", "Genesis", "Mission"],
     fullStatsRaw: [
       [440, 0.2, 0.27, 0.5, 0],
       [325, 0.1, 0.1, 0, 0],
@@ -3291,6 +3184,7 @@ export const SPECIES: Species[] = [
     name: "Titanoboa",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Bog/BoaFrill_Character_BP_Escort.BoaFrill_Character_BP_Escort",
+    variants: ["Bog", "Escort", "Genesis", "Mission"],
     fullStatsRaw: [
       [170, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -3310,6 +3204,7 @@ export const SPECIES: Species[] = [
     name: "X-Raptor",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Bog/Bog_Raptor_Character_BP_Escort.Bog_Raptor_Character_BP_Escort",
+    variants: ["Bog", "Escort", "Genesis", "Mission"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -3329,6 +3224,7 @@ export const SPECIES: Species[] = [
     name: "Terror Bird",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Bog/TerrorBird_Character_BP_Escort.TerrorBird_Character_BP_Escort",
+    variants: ["Bog", "Escort", "Genesis", "Mission"],
     fullStatsRaw: [
       [270, 0.2, 0.27, 0.5, 0],
       [160, 0.1, 0.1, 0, 0],
@@ -3345,66 +3241,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Beelzebufo",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Escort/Bog/Toad_Character_BP_Escort.Toad_Character_BP_Escort",
-    fullStatsRaw: [
-      [2000, 0.005, 0, -495, 0],
-      [1000, 0, 0, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0, 0, 0, 0],
-      [100, 0, 0, 0, 0],
-      null,
-      null,
-      [1000, 0, 0, 0, 0],
-      [1, 0, 0, 0.5, 0.4],
-      [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Shinehorn",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Escort/Lunar/LanternGoat_Character_BP_Escort.LanternGoat_Character_BP_Escort",
-    fullStatsRaw: [
-      [2500, 0.002, 0, -495, 0],
-      [1000, 0, 0, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0, 0, 0, 0],
-      [100, 0, 0, 0, 0],
-      null,
-      null,
-      [1000, 0, 0, 0, 0],
-      [1, 0, 0, 1, 0.4],
-      [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Bulbdog",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Escort/Lunar/LanternPug_Character_BP_Escort.LanternPug_Character_BP_Escort",
-    fullStatsRaw: [
-      [2500, 0.002, 0, -495, 0],
-      [1000, 0, 0, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0, 0, 0, 0],
-      [100, 0, 0, 0, 0],
-      null,
-      null,
-      [1000, 0, 0, 0, 0],
-      [1, 0, 0, 1, 0.4],
-      [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Seeker",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Lunar/Pteroteuthis_Char_BP_Escort.Pteroteuthis_Char_BP_Escort",
+    variants: ["Escort", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -3424,6 +3264,7 @@ export const SPECIES: Species[] = [
     name: "Anglerfish",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/Angler_Character_BP_Escort.Angler_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Ocean"],
     fullStatsRaw: [
       [450, 0.2, 0.27, 0.3, 0],
       [240, 0.1, 0.1, 0, 0],
@@ -3440,47 +3281,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Electrophorus",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/Eel_Character_BP_Escort.Eel_Character_BP_Escort",
-    fullStatsRaw: [
-      [180, 0.2, 0.27, -0.2, 0],
-      [165, 0.1, 0.1, 0, 0],
-      [175, 0.06, 0, 0.5, 0],
-      [1050, 0.1, 0.1, 0, 0],
-      [1500, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [150, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.25],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Megachelon",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/GiantTurtle_Character_BP_Escort.GiantTurtle_Character_BP_Escort",
-    fullStatsRaw: [
-      [2000, 0.005, 0, -495, 0],
-      [1000, 0, 0, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0, 0, 0, 0],
-      [100, 0, 0, 0, 0],
-      null,
-      null,
-      [1000, 0, 0, 0, 0],
-      [1, 0, 0, 0.5, 0.4],
-      [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Liopleurodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/Liopleurodon_Character_BP_Escort.Liopleurodon_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Ocean"],
     fullStatsRaw: [
       [1800, 0.2, 0.27, 0.3, 0],
       [800, 0.1, 0.1, 0, 0],
@@ -3500,6 +3304,7 @@ export const SPECIES: Species[] = [
     name: "Manta",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/Manta_Character_BP_Escort.Manta_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Ocean"],
     fullStatsRaw: [
       [320, 0.05, 0.0675, 0.5, 0],
       [270, 0.2, 0.2, 0, 0],
@@ -3519,6 +3324,7 @@ export const SPECIES: Species[] = [
     name: "Parakeet Fish School",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/MicrobeSwarmChar_BP_Escort.MicrobeSwarmChar_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Ocean"],
     fullStatsRaw: [
       [1800, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -3538,6 +3344,7 @@ export const SPECIES: Species[] = [
     name: "X-Ichthyosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/Ocean_Dolphin_Character_BP_Escort.Ocean_Dolphin_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Ocean"],
     fullStatsRaw: [
       [275, 0.05, 0.0675, 0.3, 0],
       [300, 0.2, 0.2, 0, 0],
@@ -3557,6 +3364,7 @@ export const SPECIES: Species[] = [
     name: "X-Dunkleosteus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/Ocean_Dunkle_Character_BP_Escort.Ocean_Dunkle_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Ocean"],
     fullStatsRaw: [
       [710, 0.2, 0.27, 0.3, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -3576,6 +3384,7 @@ export const SPECIES: Species[] = [
     name: "X-Megalodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/Ocean_Megalodon_Character_BP_Escort.Ocean_Megalodon_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Ocean"],
     fullStatsRaw: [
       [600, 0.2, 0.27, 0.3, 0],
       [320, 0.1, 0.1, 0, 0],
@@ -3595,6 +3404,7 @@ export const SPECIES: Species[] = [
     name: "Plesiosaur",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/Plesiosaur_Character_BP_Escort.Plesiosaur_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Ocean"],
     fullStatsRaw: [
       [2400, 0.12, 0.162, 0.16, 0],
       [800, 0.1, 0.1, 0, 0],
@@ -3611,28 +3421,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Pteranodon",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/Ptero_Character_BP_Escort.Ptero_Character_BP_Escort",
-    fullStatsRaw: [
-      [2000, 0.005, 0, -495, 0],
-      [1000, 0, 0, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0, 0, 0, 0],
-      [100, 0, 0, 0, 0],
-      null,
-      null,
-      [1000, 0, 0, 0, 0],
-      [1, 0, 0, 0.5, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Sabertooth Salmon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/Salmon_Character_BP_Escort.Salmon_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Ocean"],
     fullStatsRaw: [
       [65, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -3649,28 +3441,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Carbonemys",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Escort/Ocean/Turtle_Character_BP_Escort.Turtle_Character_BP_Escort",
-    fullStatsRaw: [
-      [1750, 0.005, 0, -495, 0],
-      [1000, 0, 0, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0, 0, 0, 0],
-      [100, 0, 0, 0, 0],
-      null,
-      null,
-      [1000, 0, 0, 0, 0],
-      [1, 0, 0, 0.5, 0.4],
-      [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Carnotaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Volcanic/Carno_Character_BP_Escort.Carno_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [420, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -3687,28 +3461,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Parasaur",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Escort/Volcanic/Para_Character_BP_Escort.Para_Character_BP_Escort",
-    fullStatsRaw: [
-      [1250, 0.005, 0, -495, 0],
-      [1000, 0, 0, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0, 0, 0, 0],
-      [100, 0, 0, 0, 0],
-      null,
-      null,
-      [1000, 0, 0, 0, 0],
-      [1, 0, 0, 0.5, 0.4],
-      [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Raptor",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Volcanic/Raptor_Character_BP_Escort.Raptor_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -3728,6 +3484,7 @@ export const SPECIES: Species[] = [
     name: "Pulmonoscorpius",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Volcanic/Scorpion_Character_BP_Escort.Scorpion_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [280, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -3744,28 +3501,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "X-Allosaurus",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Escort/Volcanic/Volcano_Allo_Character_BP_Escort.Volcano_Allo_Character_BP_Escort",
-    fullStatsRaw: [
-      [630, 0.2, 0.27, 0.5, 0],
-      [250, 0.1, 0.1, 0, 0],
-      [1000, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0.15],
-      null,
-      null,
-      [380, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, -0.1, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "X-Rex",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Escort/Volcanic/Volcano_Rex_Character_BP_Escort.Volcano_Rex_Character_BP_Escort",
+    variants: ["Escort", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -3785,6 +3524,7 @@ export const SPECIES: Species[] = [
     name: "Castoroides",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Beaver_Character_BP_Gauntlet.Beaver_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -3804,6 +3544,7 @@ export const SPECIES: Species[] = [
     name: "Yeti",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Bigfoot_Character_BP_Gauntlet.Bigfoot_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -3823,6 +3564,7 @@ export const SPECIES: Species[] = [
     name: "Chalicotherium",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Chalico_Character_BP_Gauntlet.Chalico_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -3842,6 +3584,7 @@ export const SPECIES: Species[] = [
     name: "Daeodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Daeodon_Character_BP_Gauntlet.Daeodon_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -3861,6 +3604,7 @@ export const SPECIES: Species[] = [
     name: "Polar Bear",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Direbear_Character_Polar_Gauntlet.Direbear_Character_Polar_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -3880,6 +3624,7 @@ export const SPECIES: Species[] = [
     name: "Direwolf",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Direwolf_Character_BP_Gauntlet.Direwolf_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -3899,6 +3644,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Gorilla_Character_BP_Gauntlet.Gorilla_Character_BP_Gauntlet",
+    variants: ["Boss", "Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [125000, 0.01, 0.2, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -3915,28 +3661,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Rock Elemental",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/IceGolem_Character_BP_Gauntlet.IceGolem_Character_BP_Gauntlet",
-    fullStatsRaw: [
-      [25000, 0.0125, 0.135, -22000, 0],
-      [300, 0.1, 0.1, 0, 0],
-      [5000, 0.02, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [6000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [660, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.125, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Managarmr",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/IceJumper_Character_BP_Gauntlet.IceJumper_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -3956,6 +3684,7 @@ export const SPECIES: Species[] = [
     name: "Mammoth",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Mammoth_Character_BP_Gauntlet.Mammoth_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -3975,6 +3704,7 @@ export const SPECIES: Species[] = [
     name: "Megatherium",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Megatherium_Character_BP_Gauntlet.Megatherium_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -3994,6 +3724,7 @@ export const SPECIES: Species[] = [
     name: "Snow Owl",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Owl_Character_BP_Gauntlet.Owl_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4013,6 +3744,7 @@ export const SPECIES: Species[] = [
     name: "Ferox",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Shapeshifter_Large_Character_BP_Gauntlet.Shapeshifter_Large_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Large", "Mission", "Snow"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [1000, 0.1, 0.1, 0, 0],
@@ -4032,6 +3764,7 @@ export const SPECIES: Species[] = [
     name: "X-Argentavis",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Snow_Argent_Character_BP_Gauntlet.Snow_Argent_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4051,6 +3784,7 @@ export const SPECIES: Species[] = [
     name: "X-Woolly Rhino",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Snow_Rhino_Character_BP_Gauntlet.Snow_Rhino_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4070,6 +3804,7 @@ export const SPECIES: Species[] = [
     name: "X-Sabertooth",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Snow_Saber_Character_BP_Gauntlet.Snow_Saber_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4089,6 +3824,7 @@ export const SPECIES: Species[] = [
     name: "X-Yutyrannus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Snow_Yutyrannus_Character_BP_Gauntlet.Snow_Yutyrannus_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4108,6 +3844,7 @@ export const SPECIES: Species[] = [
     name: "Therizinosaur",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Arctic/Therizino_Character_BP_Gauntlet.Therizino_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Snow"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4127,6 +3864,7 @@ export const SPECIES: Species[] = [
     name: "Baryonyx",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Baryonyx_Character_BP_Gauntlet.Baryonyx_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4146,6 +3884,7 @@ export const SPECIES: Species[] = [
     name: "Giant Queen Bee",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Bee_Queen_Character_BP_Gauntlet.Bee_Queen_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4165,6 +3904,7 @@ export const SPECIES: Species[] = [
     name: "Titanoboa",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/BoaFrill_Character_BP_Gauntlet.BoaFrill_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4184,6 +3924,7 @@ export const SPECIES: Species[] = [
     name: "Bloodstalker",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/BogSpider_Character_BP_Gauntlet.BogSpider_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4203,6 +3944,7 @@ export const SPECIES: Species[] = [
     name: "X-Paraceratherium",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Bog_Paracer_Character_BP_Gauntlet.Bog_Paracer_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4222,6 +3964,7 @@ export const SPECIES: Species[] = [
     name: "X-Raptor",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Bog_Raptor_Character_BP_Gauntlet.Bog_Raptor_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4241,6 +3984,7 @@ export const SPECIES: Species[] = [
     name: "X-Spino",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Bog_Spino_Character_BP_Gauntlet.Bog_Spino_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [500, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4260,6 +4004,7 @@ export const SPECIES: Species[] = [
     name: "X-Tapejara",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Bog_Tapejara_Character_BP_Gauntlet.Bog_Tapejara_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4279,6 +4024,7 @@ export const SPECIES: Species[] = [
     name: "Dilophosaur",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Dilo_Character_BP_Gauntlet.Dilo_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4298,6 +4044,7 @@ export const SPECIES: Species[] = [
     name: "Dodo",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Dodo_Character_BP_Aggressive.Dodo_Character_BP_Aggressive",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4317,6 +4064,7 @@ export const SPECIES: Species[] = [
     name: "Dodo",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Dodo_Character_BP_Aggressive_Large.Dodo_Character_BP_Aggressive_Large",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4336,6 +4084,7 @@ export const SPECIES: Species[] = [
     name: "Iguanodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Iguanodon_Character_BP_Gauntlet.Iguanodon_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4355,6 +4104,7 @@ export const SPECIES: Species[] = [
     name: "Kaprosuchus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Kaprosuchus_Character_BP_Gauntlet.Kaprosuchus_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4374,6 +4124,7 @@ export const SPECIES: Species[] = [
     name: "Mantis",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Mantis_Character_BP_Gauntlet.Mantis_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4393,6 +4144,7 @@ export const SPECIES: Species[] = [
     name: "Lymantria",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Moth_Character_BP_Gauntlet.Moth_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4412,6 +4164,7 @@ export const SPECIES: Species[] = [
     name: "Pachyrhinosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Pachyrhino_Character_BP_Gauntlet.Pachyrhino_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4431,6 +4184,7 @@ export const SPECIES: Species[] = [
     name: "Sarco",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Sarco_Character_BP_Gauntlet.Sarco_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4450,6 +4204,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/SpiderL_Character_BP_Gauntlet.SpiderL_Character_BP_Gauntlet",
+    variants: ["Bog", "Boss", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [300000, 0.01, 0.27, 0.5, 0],
       [150, 0, 0, 0, 0],
@@ -4469,6 +4224,7 @@ export const SPECIES: Species[] = [
     name: "Araneo",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/SpiderS_Character_BP_Gauntlet.SpiderS_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4488,6 +4244,7 @@ export const SPECIES: Species[] = [
     name: "Terror Bird",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/TerrorBird_Character_BP_Gauntlet.TerrorBird_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4507,6 +4264,7 @@ export const SPECIES: Species[] = [
     name: "Beelzebufo",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Toad_Character_BP_Gauntlet.Toad_Character_BP_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4526,6 +4284,7 @@ export const SPECIES: Species[] = [
     name: "Poison Wyvern",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Bog/Wyvern_Character_BP_Poison_Gauntlet.Wyvern_Character_BP_Poison_Gauntlet",
+    variants: ["Bog", "Gauntlet", "Genesis", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4542,28 +4301,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Malfunctioned Tek Giganotosaurus",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/BionicGigant_Character_BP_Malfunctioned_Gauntlet.BionicGigant_Character_BP_Malfunctioned_Gauntlet",
-    fullStatsRaw: [
-      [75000, 0.01, 0.002, -63000, 0],
-      [400, 0, 0, 0, 0],
-      [10000, 0.06, 0, 0, 0],
-      [150, 0, 0, 0, 0],
-      [4000, 0, 0, 0, 0],
-      null,
-      null,
-      [700, 0, 0, 0, 0],
-      [1, 0, 0, 0, 0],
-      [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Malfunctioned Tek Parasaur",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/BionicPara_Character_BP_Malfunctioned_Gauntlet.BionicPara_Character_BP_Malfunctioned_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4583,6 +4324,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Quetzal",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/BionicQuetz_Character_BP_Malfunctioned_Gauntlet.BionicQuetz_Character_BP_Malfunctioned_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4602,6 +4344,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Raptor",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/BionicRaptor_Character_BP_Malfunctioned_Gauntlet.BionicRaptor_Character_BP_Malfunctioned_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4621,6 +4364,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Rex",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/BionicRex_Character_BP_Malfunctioned_Gauntlet.BionicRex_Character_BP_Malfunctioned_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4640,6 +4384,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Stegosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/BionicStego_Character_BP_Malfunctioned_Gauntlet.BionicStego_Character_BP_Malfunctioned_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4659,6 +4404,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Triceratops",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/BionicTrike_Character_BP_Malfunctioned_Gauntlet.BionicTrike_Character_BP_Malfunctioned_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4678,6 +4424,7 @@ export const SPECIES: Species[] = [
     name: "Deathworm",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/Deathworm_Character_BP_Gauntlet.Deathworm_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4697,6 +4444,7 @@ export const SPECIES: Species[] = [
     name: "Attack Drone",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/EndDrone_Character_BP_Gauntlet.EndDrone_Character_BP_Gauntlet",
+    variants: ["Boss", "Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4716,6 +4464,7 @@ export const SPECIES: Species[] = [
     name: "Defense Unit",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/EndTank_Character_BP_Gauntlet.EndTank_Character_BP_Gauntlet",
+    variants: ["Boss", "Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4735,6 +4484,7 @@ export const SPECIES: Species[] = [
     name: "Bulbdog",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/LanternPug_Character_BP_Gauntlet.LanternPug_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4754,6 +4504,7 @@ export const SPECIES: Species[] = [
     name: "Seeker",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/Pteroteuthis_Char_BP_Gauntlet.Pteroteuthis_Char_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4773,6 +4524,7 @@ export const SPECIES: Species[] = [
     name: "Rock Drake",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/RockDrake_Character_BP_Gauntlet.RockDrake_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4792,6 +4544,7 @@ export const SPECIES: Species[] = [
     name: "Lightning Wyvern",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Lunar/Wyvern_Character_BP_Lightning_Gauntlet.Wyvern_Character_BP_Lightning_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Lunar", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4811,6 +4564,7 @@ export const SPECIES: Species[] = [
     name: "Arthropluera",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Arthro_Character_BP_Gauntlet.Arthro_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4830,6 +4584,7 @@ export const SPECIES: Species[] = [
     name: "Onyc",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Bat_Character_BP_Gauntlet.Bat_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4849,6 +4604,7 @@ export const SPECIES: Species[] = [
     name: "Carnotaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Carno_Character_BP_Gauntlet.Carno_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4868,6 +4624,7 @@ export const SPECIES: Species[] = [
     name: "Ravager",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/CaveWolf_Character_BP_Gauntlet.CaveWolf_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4887,6 +4644,7 @@ export const SPECIES: Species[] = [
     name: "Magmasaur",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Cherufe_Character_BP_Gauntlet.Cherufe_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4906,6 +4664,7 @@ export const SPECIES: Species[] = [
     name: "Kentrosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Kentro_Character_BP_Gauntlet.Kentro_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4925,6 +4684,7 @@ export const SPECIES: Species[] = [
     name: "Megalania",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Megalania_Character_BP_Gauntlet.Megalania_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4944,6 +4704,7 @@ export const SPECIES: Species[] = [
     name: "Megalosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Megalosaurus_Character_BP_Gauntlet.Megalosaurus_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4963,6 +4724,7 @@ export const SPECIES: Species[] = [
     name: "Phoenix",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Phoenix_Character_BP_Gauntlet.Phoenix_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -4982,6 +4744,7 @@ export const SPECIES: Species[] = [
     name: "Purlovia",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Purlovia_Character_BP_Gauntlet.Purlovia_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -5001,6 +4764,7 @@ export const SPECIES: Species[] = [
     name: "Pulmonoscorpius",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Scorpion_Character_BP_Gauntlet.Scorpion_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -5020,6 +4784,7 @@ export const SPECIES: Species[] = [
     name: "Thorny Dragon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/SpineyLizard_Character_BP_Gauntlet.SpineyLizard_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -5039,6 +4804,7 @@ export const SPECIES: Species[] = [
     name: "X-Allosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Volcano_Allo_Character_BP_Gauntlet.Volcano_Allo_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -5058,6 +4824,7 @@ export const SPECIES: Species[] = [
     name: "X-Ankylosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Volcano_Ankylo_Character_BP_Gauntlet.Volcano_Ankylo_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -5074,28 +4841,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "X-Rock Elemental",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Volcano_Golem_Character_BP_Gauntlet.Volcano_Golem_Character_BP_Gauntlet",
-    fullStatsRaw: [
-      [25000, 0.0125, 0.135, -22000, 0],
-      [300, 0.1, 0.1, 0, 0],
-      [5000, 0.02, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [6000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [660, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.125, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "X-Rex",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Volcano_Rex_Character_BP_Gauntlet.Volcano_Rex_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -5115,6 +4864,7 @@ export const SPECIES: Species[] = [
     name: "X-Triceratops",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Volcano_Trike_Character_BP_Gauntlet.Volcano_Trike_Character_BP_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -5134,6 +4884,7 @@ export const SPECIES: Species[] = [
     name: "Fire Wyvern",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Wyvern_Character_BP_Fire_Gauntlet.Wyvern_Character_BP_Fire_Gauntlet",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -5153,6 +4904,7 @@ export const SPECIES: Species[] = [
     name: "Brute Fire Wyvern",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Gauntlet/Volcanic/Wyvern_Character_BP_Fire_GauntletBoss.Wyvern_Character_BP_Fire_GauntletBoss",
+    variants: ["Gauntlet", "Genesis", "Mission", "Volcano"],
     fullStatsRaw: [
       [150000, 0.01, 0.2, 0.3, 0],
       [10000, 0, 0, 0, 0],
@@ -5172,6 +4924,7 @@ export const SPECIES: Species[] = [
     name: "Carnotaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Arctic/Carno_Character_BP_HuntFollower.Carno_Character_BP_HuntFollower",
+    variants: ["Genesis", "Hunt", "Mission", "Snow"],
     fullStatsRaw: [
       [420, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -5191,6 +4944,7 @@ export const SPECIES: Species[] = [
     name: "Direwolf",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Arctic/Direwolf_Character_BP_Hunt.Direwolf_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Snow"],
     fullStatsRaw: [
       [820, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -5210,6 +4964,7 @@ export const SPECIES: Species[] = [
     name: "Brute Mammoth",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Arctic/Mammoth_Character_BP_Hunt.Mammoth_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Snow"],
     fullStatsRaw: [
       [3800, 0.3, 0.27, 0.5, 0],
       [495, 0.1, 0.1, 0, 0],
@@ -5229,6 +4984,7 @@ export const SPECIES: Species[] = [
     name: "Mammoth",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Arctic/Mammoth_Character_BP_HuntFollower.Mammoth_Character_BP_HuntFollower",
+    variants: ["Genesis", "Hunt", "Mission", "Snow"],
     fullStatsRaw: [
       [850, 0.2, 0.27, 0.5, 0],
       [330, 0.1, 0.1, 0, 0],
@@ -5248,6 +5004,7 @@ export const SPECIES: Species[] = [
     name: "Brute Ferox",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Arctic/Shapeshifter_Large_Character_BP_Hunt.Shapeshifter_Large_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Large", "Mission", "Snow"],
     fullStatsRaw: [
       [3900, 0.3, 0.27, 0.5, 0],
       [900, 0.1, 0.1, 0, 0],
@@ -5267,6 +5024,7 @@ export const SPECIES: Species[] = [
     name: "X-Sabertooth",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Arctic/Snow_Saber_Character_BP_Hunt.Snow_Saber_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Snow"],
     fullStatsRaw: [
       [820, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -5286,6 +5044,7 @@ export const SPECIES: Species[] = [
     name: "Brute X-Yutyrannus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Arctic/Snow_Yutyrannus_Character_BP_Hunt.Snow_Yutyrannus_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Snow"],
     fullStatsRaw: [
       [3300, 0.3, 0.27, 0.5, 0],
       [840, 0.1, 0.1, 0, 0],
@@ -5305,6 +5064,7 @@ export const SPECIES: Species[] = [
     name: "X-Yutyrannus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Arctic/Snow_Yutyrannus_Character_BP_HuntFollower.Snow_Yutyrannus_Character_BP_HuntFollower",
+    variants: ["Genesis", "Hunt", "Mission", "Snow"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -5324,6 +5084,7 @@ export const SPECIES: Species[] = [
     name: "Brute Megaloceros",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Arctic/Stag_Character_BP_Hunt.Stag_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Snow"],
     fullStatsRaw: [
       [760, 0.3, 0.27, 0.5, 0],
       [560, 0.1, 0.1, 0, 0],
@@ -5343,6 +5104,7 @@ export const SPECIES: Species[] = [
     name: "Brute Megaloceros",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Arctic/Stag_Character_BP_Hunt_Mega.Stag_Character_BP_Hunt_Mega",
+    variants: ["Genesis", "Hunt", "Mission", "Snow"],
     fullStatsRaw: [
       [2350, 0.3, 0.27, 0.5, 0],
       [560, 0.1, 0.1, 0, 0],
@@ -5362,6 +5124,7 @@ export const SPECIES: Species[] = [
     name: "Baryonyx",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Bog/Baryonyx_Character_BP_Hunt.Baryonyx_Character_BP_Hunt",
+    variants: ["Bog", "Genesis", "Hunt", "Mission"],
     fullStatsRaw: [
       [440, 0.2, 0.27, 0.5, 0],
       [325, 0.1, 0.1, 0, 0],
@@ -5381,6 +5144,7 @@ export const SPECIES: Species[] = [
     name: "Brute Bloodstalker",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Bog/BogSpider_Character_BP_Hunt.BogSpider_Character_BP_Hunt",
+    variants: ["Bog", "Genesis", "Hunt", "Mission"],
     fullStatsRaw: [
       [2600, 0.3, 0.27, 0.5, 0],
       [550, 0.1, 0.1, 0, 0],
@@ -5400,6 +5164,7 @@ export const SPECIES: Species[] = [
     name: "Brute X-Raptor",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Bog/Bog_Raptor_Character_BP_Hunt.Bog_Raptor_Character_BP_Hunt",
+    variants: ["Bog", "Genesis", "Hunt", "Mission"],
     fullStatsRaw: [
       [820, 0.3, 0.27, 0.5, 0],
       [250, 0.1, 0.1, 0, 0],
@@ -5419,6 +5184,7 @@ export const SPECIES: Species[] = [
     name: "X-Raptor",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Bog/Bog_Raptor_Character_BP_Hunt_Secondary.Bog_Raptor_Character_BP_Hunt_Secondary",
+    variants: ["Bog", "Genesis", "Hunt", "Mission"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -5438,6 +5204,7 @@ export const SPECIES: Species[] = [
     name: "Brute X-Spino",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Bog/Bog_Spino_Character_BP_Hunt.Bog_Spino_Character_BP_Hunt",
+    variants: ["Bog", "Genesis", "Hunt", "Mission"],
     fullStatsRaw: [
       [3200, 0.3, 0.27, 0.5, 0],
       [700, 0.1, 0.1, 0, 0],
@@ -5457,6 +5224,7 @@ export const SPECIES: Species[] = [
     name: "Dimetrodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Bog/Dimetro_Character_BP_Hunt.Dimetro_Character_BP_Hunt",
+    variants: ["Bog", "Genesis", "Hunt", "Mission"],
     fullStatsRaw: [
       [350, 0.2, 0.27, 0.65, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -5476,6 +5244,7 @@ export const SPECIES: Species[] = [
     name: "Brute Sarco",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Bog/Sarco_Character_BP_Hunt.Sarco_Character_BP_Hunt",
+    variants: ["Bog", "Genesis", "Hunt", "Mission"],
     fullStatsRaw: [
       [2700, 0.3, 0.27, 0.65, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -5495,6 +5264,7 @@ export const SPECIES: Species[] = [
     name: "Sarco",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Bog/Sarco_Character_BP_Hunt_Secondary.Sarco_Character_BP_Hunt_Secondary",
+    variants: ["Bog", "Genesis", "Hunt", "Mission"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.65, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -5514,6 +5284,7 @@ export const SPECIES: Species[] = [
     name: "Brute Araneo",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Bog/SpiderS_Character_BP_Hunt.SpiderS_Character_BP_Hunt",
+    variants: ["Bog", "Genesis", "Hunt", "Mission"],
     fullStatsRaw: [
       [1850, 0.2, 0.405, 0.5, 0],
       [250, 0.1, 0.1, 0, 0],
@@ -5530,28 +5301,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Brute Malfunctioned Tek Giganotosaurus",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Hunt/Lunar/BionicGigant_Character_BP_Malfunctioned_Hunt.BionicGigant_Character_BP_Malfunctioned_Hunt",
-    fullStatsRaw: [
-      [10000, 0.045, 0.002, -63000, 0],
-      [400, 0.0005, 0.01, 0, 0],
-      [10000, 0.06, 0, 0, 0],
-      [150, 0.0025, 0.025, 0, 0],
-      [4000, 0.0025, 0.025, 0, 0],
-      null,
-      null,
-      [700, 0.01, 0.01, 0, 0],
-      [1, 0.05, 0.05, -0.8, 0],
-      [1, 0, 0.0031, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Malfunctioned Tek Rex",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Lunar/BionicRex_Character_BP_Malfunctioned_Adolescent_Hunt.BionicRex_Character_BP_Malfunctioned_Adolescent_Hunt",
+    variants: ["Genesis", "Hunt", "Lunar", "Mission"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -5571,6 +5324,7 @@ export const SPECIES: Species[] = [
     name: "Brute Malfunctioned Tek Rex",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Lunar/BionicRex_Character_BP_Malfunctioned_Hunt.BionicRex_Character_BP_Malfunctioned_Hunt",
+    variants: ["Genesis", "Hunt", "Lunar", "Mission"],
     fullStatsRaw: [
       [3950, 0.3, 0.27, 0.5, 0],
       [630, 0.1, 0.1, 0, 0],
@@ -5590,6 +5344,7 @@ export const SPECIES: Species[] = [
     name: "Brute Seeker",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Lunar/Pteroteuthis_Char_BP_HuntFollower.Pteroteuthis_Char_BP_HuntFollower",
+    variants: ["Genesis", "Hunt", "Lunar", "Mission"],
     fullStatsRaw: [
       [680, 0.3, 0.27, 0.5, 0],
       [250, 0.1, 0.1, 0, 0],
@@ -5609,6 +5364,7 @@ export const SPECIES: Species[] = [
     name: "Brute Astrocetus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Lunar/SpaceWhale_Character_BP_Brute.SpaceWhale_Character_BP_Brute",
+    variants: ["Genesis", "Hunt", "Lunar", "Mission"],
     fullStatsRaw: [
       [10000, 0.009, 0.108, 0.5, 0],
       [900, 0.05, 0.05, 0, 0],
@@ -5628,6 +5384,7 @@ export const SPECIES: Species[] = [
     name: "Brute Basilosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Ocean/Basilosaurus_Character_BP_Hunt.Basilosaurus_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Ocean"],
     fullStatsRaw: [
       [2400, 0.2, 0.243, 0.3, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -5644,28 +5401,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Electrophorus",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Hunt/Ocean/Eel_Character_BP_Hunt.Eel_Character_BP_Hunt",
-    fullStatsRaw: [
-      [180, 0.2, 0.27, -0.2, 0],
-      [165, 0.1, 0.1, 0, 0],
-      [175, 0.06, 0, 0.5, 0],
-      [1050, 0.1, 0.1, 0, 0],
-      [1500, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [150, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.25],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Brute Leedsichthys",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Ocean/Leedsichthys_Character_BP_Hunt.Leedsichthys_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Ocean"],
     fullStatsRaw: [
       [8400, 0.18, 0.243, 0.3, 0],
       [750, 0.1, 0.1, 0, 0],
@@ -5685,6 +5424,7 @@ export const SPECIES: Species[] = [
     name: "Liopleurodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Ocean/Liopleurodon_Character_BP_Hunt.Liopleurodon_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Ocean"],
     fullStatsRaw: [
       [3200, 0.2, 0.27, 0.3, 0],
       [800, 0.1, 0.1, 0, 0],
@@ -5704,6 +5444,7 @@ export const SPECIES: Species[] = [
     name: "Brute X-Megalodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Ocean/Ocean_Megalodon_Character_BP_Hunt.Ocean_Megalodon_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Ocean"],
     fullStatsRaw: [
       [2600, 0.3, 0.27, 0.3, 0],
       [640, 0.1, 0.1, 0, 0],
@@ -5723,6 +5464,7 @@ export const SPECIES: Species[] = [
     name: "Brute X-Mosasaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Ocean/Ocean_Mosa_Character_BP_Hunt.Ocean_Mosa_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Ocean"],
     fullStatsRaw: [
       [5300, 0.18, 0.21, 0.3, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -5742,6 +5484,7 @@ export const SPECIES: Species[] = [
     name: "Brute Plesiosaur",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Ocean/Plesiosaur_Character_BP_Hunt.Plesiosaur_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Ocean"],
     fullStatsRaw: [
       [5100, 0.18, 0.162, 0.16, 0],
       [1200, 0.1, 0.1, 0, 0],
@@ -5761,6 +5504,7 @@ export const SPECIES: Species[] = [
     name: "Brute Tusoteuthis",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Ocean/Tusoteuthis_Character_BP_Hunt.Tusoteuthis_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Ocean"],
     fullStatsRaw: [
       [7400, 0.3, 0.2025, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -5780,6 +5524,7 @@ export const SPECIES: Species[] = [
     name: "Basilisk",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Volcanic/Basilisk_Character_BP_Hunt.Basilisk_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Volcano"],
     fullStatsRaw: [
       [2500, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -5799,6 +5544,7 @@ export const SPECIES: Species[] = [
     name: "Carnotaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Volcanic/Carno_Character_BP_Hunt.Carno_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Volcano"],
     fullStatsRaw: [
       [2800, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -5815,28 +5561,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Brute Magmasaur",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Hunt/Volcanic/Cherufe_Character_BP_Hunt.Cherufe_Character_BP_Hunt",
-    fullStatsRaw: [
-      [2250, 0.3, 0.135, 3000, 0],
-      [750, 0.05, 0.05, 0, 0],
-      [1450, 0.06, 0, 0.5, 0],
-      [400, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [750, 0.02, 0.04, 0, 0],
-      [1, 0.03, 0.03, -0.25, 0.4],
-      [1, 0, 0.005, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Raptor",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Volcanic/Raptor_Character_BP_Hunt_Volcanic.Raptor_Character_BP_Hunt_Volcanic",
+    variants: ["Genesis", "Hunt", "Mission", "Volcano"],
     fullStatsRaw: [
       [2200, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -5856,6 +5584,7 @@ export const SPECIES: Species[] = [
     name: "Pulmonoscorpius",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Volcanic/Scorpion_Character_BP_Hunt.Scorpion_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Volcano"],
     fullStatsRaw: [
       [1800, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -5875,6 +5604,7 @@ export const SPECIES: Species[] = [
     name: "Brute X-Allosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Volcanic/Volcano_Allo_Character_BP_Hunt.Volcano_Allo_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Volcano"],
     fullStatsRaw: [
       [1750, 0.3, 0.27, 0.5, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -5891,28 +5621,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Brute X-Rock Elemental",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Hunt/Volcanic/Volcano_Golem_Character_BP_Hunt.Volcano_Golem_Character_BP_Hunt",
-    fullStatsRaw: [
-      [2100, 0.0175, 0.135, -22000, 0],
-      [450, 0.1, 0.1, 0, 0],
-      [6500, 0.02, 0, 0.5, 0],
-      [300, 0.1, 0.1, 0, 0],
-      [7500, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [880, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.125, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Brute X-Rex",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Hunt/Volcanic/Volcano_Rex_Character_BP_Hunt.Volcano_Rex_Character_BP_Hunt",
+    variants: ["Genesis", "Hunt", "Mission", "Volcano"],
     fullStatsRaw: [
       [3950, 0.3, 0.27, 0.5, 0],
       [630, 0.1, 0.1, 0, 0],
@@ -5932,6 +5644,7 @@ export const SPECIES: Species[] = [
     name: "Bloodstalker",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Race/BogSpider_Character_BP_Race.BogSpider_Character_BP_Race",
+    variants: ["Bog", "Genesis", "Mission", "Race"],
     fullStatsRaw: [
       [450, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -5951,6 +5664,7 @@ export const SPECIES: Species[] = [
     name: "Doedicurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Race/Doed_Character_BP_Race.Doed_Character_BP_Race",
+    variants: ["Genesis", "Mission", "Race"],
     fullStatsRaw: [
       [1000, 0.2, 0.27, 0.5, 0],
       [1000, 0.1, 0.1, 0, 0],
@@ -5970,6 +5684,7 @@ export const SPECIES: Species[] = [
     name: "Gallimimus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Race/Galli_Character_BP_Race.Galli_Character_BP_Race",
+    variants: ["Genesis", "Mission", "Race"],
     fullStatsRaw: [
       [1000, 0.2, 0.27, 0.5, 0],
       [1000, 0.1, 0.1, 0, 0],
@@ -5989,6 +5704,7 @@ export const SPECIES: Species[] = [
     name: "Kaprosuchus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Race/Kapro_Character_BP_Race.Kapro_Character_BP_Race",
+    variants: ["Genesis", "Mission", "Race"],
     fullStatsRaw: [
       [1000, 0.2, 0.27, 0.5, 0],
       [1000, 0.1, 0.1, 0, 0],
@@ -6008,6 +5724,7 @@ export const SPECIES: Species[] = [
     name: "Manta",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Race/Manta_Character_BP_Race.Manta_Character_BP_Race",
+    variants: ["Genesis", "Mission", "Race"],
     fullStatsRaw: [
       [1000, 0.2, 0.27, 0.5, 0],
       [1000, 0.1, 0.1, 0, 0],
@@ -6027,6 +5744,7 @@ export const SPECIES: Species[] = [
     name: "Ichthyosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Race/RaceDolphin_Character_BP.RaceDolphin_Character_BP",
+    variants: ["Genesis", "Mission", "Race"],
     fullStatsRaw: [
       [1000, 0.2, 0.27, 0.5, 0],
       [1000, 0.1, 0.1, 0, 0],
@@ -6046,6 +5764,7 @@ export const SPECIES: Species[] = [
     name: "X-Sabertooth",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Race/RaceSnow_Saber_Character_BP.RaceSnow_Saber_Character_BP",
+    variants: ["Genesis", "Mission", "Race", "Snow"],
     fullStatsRaw: [
       [1000, 0.2, 0.27, 0.5, 0],
       [1000, 0.1, 0.1, 0, 0],
@@ -6065,6 +5784,7 @@ export const SPECIES: Species[] = [
     name: "X-Woolly Rhino",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Race/Snow_Rhino_Character_BP_Race.Snow_Rhino_Character_BP_Race",
+    variants: ["Genesis", "Mission", "Race", "Snow"],
     fullStatsRaw: [
       [500, 0.2, 0.27, 0.5, 0],
       [120, 0.1, 0.1, 0, 0],
@@ -6084,6 +5804,7 @@ export const SPECIES: Species[] = [
     name: "Carnotaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Arctic/Carno_Character_BP_Retrieve.Carno_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Snow"],
     fullStatsRaw: [
       [420, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -6103,6 +5824,7 @@ export const SPECIES: Species[] = [
     name: "Daeodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Arctic/Daeodon_Character_BP_Retrieve.Daeodon_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Snow"],
     fullStatsRaw: [
       [900, 0.2, 0.27, 0.5, 0],
       [250, 0.1, 0.1, 0, 0],
@@ -6122,6 +5844,7 @@ export const SPECIES: Species[] = [
     name: "Polar Bear",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Arctic/Direbear_Character_Polar_Retrieve.Direbear_Character_Polar_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Snow"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -6141,6 +5864,7 @@ export const SPECIES: Species[] = [
     name: "Direwolf",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Arctic/Direwolf_Character_BP_Retrieve.Direwolf_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Snow"],
     fullStatsRaw: [
       [330, 0.2, 0.27, 0.66, 0],
       [260, 0.1, 0.1, 0, 0],
@@ -6157,28 +5881,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Rock Elemental",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Retrieve/Arctic/IceGolem_Character_BP_Retrieve.IceGolem_Character_BP_Retrieve",
-    fullStatsRaw: [
-      [25000, 0.0125, 0.135, -22000, 0],
-      [300, 0.1, 0.1, 0, 0],
-      [5000, 0.02, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [6000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [660, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.125, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Microraptor",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Arctic/Microraptor_Character_BP_Retrieve.Microraptor_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Snow"],
     fullStatsRaw: [
       [130, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -6198,6 +5904,7 @@ export const SPECIES: Species[] = [
     name: "Purlovia",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Arctic/Purlovia_Character_BP_Polar_Retrieve.Purlovia_Character_BP_Polar_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Snow"],
     fullStatsRaw: [
       [275, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -6217,6 +5924,7 @@ export const SPECIES: Species[] = [
     name: "X-Argentavis",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Arctic/Snow_Argent_Character_BP_Retrieve.Snow_Argent_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Snow"],
     fullStatsRaw: [
       [365, 0.2, 0.30375, 0.5, 0],
       [400, 0.05, 0.075, 0, 0],
@@ -6236,6 +5944,7 @@ export const SPECIES: Species[] = [
     name: "X-Sabertooth",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Arctic/Snow_Saber_Character_BP_Retrieve.Snow_Saber_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Snow"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -6255,6 +5964,7 @@ export const SPECIES: Species[] = [
     name: "X-Yutyrannus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Arctic/Snow_Yutyrannus_Character_BP_Retrieve.Snow_Yutyrannus_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Snow"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -6274,6 +5984,7 @@ export const SPECIES: Species[] = [
     name: "Titanoboa",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Bog/BoaFrill_Character_BP_Retrieve.BoaFrill_Character_BP_Retrieve",
+    variants: ["Bog", "Genesis", "Mission", "Retrieve"],
     fullStatsRaw: [
       [170, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -6293,6 +6004,7 @@ export const SPECIES: Species[] = [
     name: "X-Raptor",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Bog/Bog_Raptor_Character_BP_Retrieve.Bog_Raptor_Character_BP_Retrieve",
+    variants: ["Bog", "Genesis", "Mission", "Retrieve"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -6312,6 +6024,7 @@ export const SPECIES: Species[] = [
     name: "X-Spino",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Bog/Bog_Spino_Character_BP_Retrieve.Bog_Spino_Character_BP_Retrieve",
+    variants: ["Bog", "Genesis", "Mission", "Retrieve"],
     fullStatsRaw: [
       [700, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -6331,6 +6044,7 @@ export const SPECIES: Species[] = [
     name: "Dilophosaur",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Bog/Dilo_Character_BP_Retrieve.Dilo_Character_BP_Retrieve",
+    variants: ["Bog", "Genesis", "Mission", "Retrieve"],
     fullStatsRaw: [
       [130, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -6350,6 +6064,7 @@ export const SPECIES: Species[] = [
     name: "Kaprosuchus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Bog/Kaprosuchus_Character_BP_Retrieve.Kaprosuchus_Character_BP_Retrieve",
+    variants: ["Bog", "Genesis", "Mission", "Retrieve"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -6369,6 +6084,7 @@ export const SPECIES: Species[] = [
     name: "Sarco",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Bog/Sarco_Character_BP_Retrieve.Sarco_Character_BP_Retrieve",
+    variants: ["Bog", "Genesis", "Mission", "Retrieve"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.65, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -6388,6 +6104,7 @@ export const SPECIES: Species[] = [
     name: "Araneo",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Bog/SpiderS_Character_BP_Retrieve.SpiderS_Character_BP_Retrieve",
+    variants: ["Bog", "Genesis", "Mission", "Retrieve"],
     fullStatsRaw: [
       [150, 0.2, 0.135, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -6407,6 +6124,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Parasaur",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Lunar/BionicPara_Character_BP_Malfunctioned_Retrieve.BionicPara_Character_BP_Malfunctioned_Retrieve",
+    variants: ["Genesis", "Lunar", "Mission", "Retrieve"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -6426,6 +6144,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Quetzal",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Lunar/BionicQuetz_Character_BP_Malfunctioned_Retrieve.BionicQuetz_Character_BP_Malfunctioned_Retrieve",
+    variants: ["Genesis", "Lunar", "Mission", "Retrieve"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -6445,6 +6164,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Raptor",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Lunar/BionicRaptor_Character_BP_Malfunctioned_Retrieve.BionicRaptor_Character_BP_Malfunctioned_Retrieve",
+    variants: ["Genesis", "Lunar", "Mission", "Retrieve"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -6464,6 +6184,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Rex",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Lunar/BionicRex_Character_BP_Malfunctioned_Retrieve.BionicRex_Character_BP_Malfunctioned_Retrieve",
+    variants: ["Genesis", "Lunar", "Mission", "Retrieve"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -6483,6 +6204,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Stegosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Lunar/BionicStego_Character_BP_Malfunctioned_Retrieve.BionicStego_Character_BP_Malfunctioned_Retrieve",
+    variants: ["Genesis", "Lunar", "Mission", "Retrieve"],
     fullStatsRaw: [
       [650, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -6502,6 +6224,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Triceratops",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Lunar/BionicTrike_Character_BP_Malfunctioned_Retrieve.BionicTrike_Character_BP_Malfunctioned_Retrieve",
+    variants: ["Genesis", "Lunar", "Mission", "Retrieve"],
     fullStatsRaw: [
       [375, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -6521,6 +6244,7 @@ export const SPECIES: Species[] = [
     name: "Seeker",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Lunar/Pteroteuthis_Char_BP_Retrieve.Pteroteuthis_Char_BP_Retrieve",
+    variants: ["Genesis", "Lunar", "Mission", "Retrieve"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -6540,6 +6264,7 @@ export const SPECIES: Species[] = [
     name: "Cnidaria",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Ocean/Cnidaria_Character_BP_Retrieve.Cnidaria_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Ocean", "Retrieve"],
     fullStatsRaw: [
       [180, 0.2, 0.27, 0.5, 0],
       [120, 0.1, 0.1, 0, 0],
@@ -6556,28 +6281,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Electrophorus",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Retrieve/Ocean/Eel_Character_BP_Retrieve.Eel_Character_BP_Retrieve",
-    fullStatsRaw: [
-      [180, 0.2, 0.27, -0.2, 0],
-      [165, 0.1, 0.1, 0, 0],
-      [175, 0.06, 0, 0.5, 0],
-      [1050, 0.1, 0.1, 0, 0],
-      [1500, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [150, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.25],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Leedsichthys",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Ocean/Leedsichthys_Character_BP_Retrieve.Leedsichthys_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Ocean", "Retrieve"],
     fullStatsRaw: [
       [4400, 0.12, 0.243, 0.3, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -6597,6 +6304,7 @@ export const SPECIES: Species[] = [
     name: "Liopleurodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Ocean/Liopleurodon_Character_BP_Retrieve.Liopleurodon_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Ocean", "Retrieve"],
     fullStatsRaw: [
       [1800, 0.2, 0.27, 0.3, 0],
       [800, 0.1, 0.1, 0, 0],
@@ -6616,6 +6324,7 @@ export const SPECIES: Species[] = [
     name: "Manta",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Ocean/Manta_Character_BP_Retrieve.Manta_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Ocean", "Retrieve"],
     fullStatsRaw: [
       [320, 0.05, 0.0675, 0.5, 0],
       [270, 0.2, 0.2, 0, 0],
@@ -6635,6 +6344,7 @@ export const SPECIES: Species[] = [
     name: "Golden Striped Megalodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Ocean/Ocean_Megalodon_Character_BP_Retrieve.Ocean_Megalodon_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Ocean", "Retrieve"],
     fullStatsRaw: [
       [600, 0.2, 0.27, 0.3, 0],
       [320, 0.1, 0.1, 0, 0],
@@ -6654,6 +6364,7 @@ export const SPECIES: Species[] = [
     name: "X-Megalodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Ocean/Ocean_Megalodon_Character_BP_RetrieveNonTarget.Ocean_Megalodon_Character_BP_RetrieveNonTarget",
+    variants: ["Genesis", "Mission", "Ocean", "Retrieve"],
     fullStatsRaw: [
       [600, 0.2, 0.27, 0.3, 0],
       [320, 0.1, 0.1, 0, 0],
@@ -6673,6 +6384,7 @@ export const SPECIES: Species[] = [
     name: "Golden Striped Brute Megalodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Ocean/Ocean_Megalodon_Character_BP_Retrieve_Brute.Ocean_Megalodon_Character_BP_Retrieve_Brute",
+    variants: ["Genesis", "Mission", "Ocean", "Retrieve"],
     fullStatsRaw: [
       [2600, 0.3, 0.27, 0.3, 0],
       [640, 0.1, 0.1, 0, 0],
@@ -6692,6 +6404,7 @@ export const SPECIES: Species[] = [
     name: "X-Mosasaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Ocean/Ocean_Mosa_Character_BP_Retrieve.Ocean_Mosa_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Ocean", "Retrieve"],
     fullStatsRaw: [
       [3600, 0.12, 0.21, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -6711,6 +6424,7 @@ export const SPECIES: Species[] = [
     name: "Plesiosaur",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Ocean/Plesiosaur_Character_BP_Retrieve.Plesiosaur_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Ocean", "Retrieve"],
     fullStatsRaw: [
       [2400, 0.12, 0.162, 0.16, 0],
       [800, 0.1, 0.1, 0, 0],
@@ -6730,6 +6444,7 @@ export const SPECIES: Species[] = [
     name: "Tusoteuthis",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Ocean/Tusoteuthis_Character_BP_Retrieve.Tusoteuthis_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Ocean", "Retrieve"],
     fullStatsRaw: [
       [2700, 0.2, 0.2025, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -6749,6 +6464,7 @@ export const SPECIES: Species[] = [
     name: "Argentavis",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Argent_Character_BP_Retrieve.Argent_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [365, 0.2, 0.30375, 0.5, 0],
       [400, 0.05, 0.075, 0, 0],
@@ -6768,6 +6484,7 @@ export const SPECIES: Species[] = [
     name: "Arthropluera",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Arthro_Character_BP_Retrieve.Arthro_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [500, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -6787,6 +6504,7 @@ export const SPECIES: Species[] = [
     name: "Basilisk",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Basilisk_Character_BP_Retrieve.Basilisk_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [2750, 0.2, 0.27, 0.5, 0],
       [650, 0.1, 0.1, 0, 0],
@@ -6806,6 +6524,7 @@ export const SPECIES: Species[] = [
     name: "Onyc",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Bat_Character_BP_Retrieve.Bat_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -6822,28 +6541,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Magmasaur",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Cherufe_Character_BP_Retrieve.Cherufe_Character_BP_Retrieve",
-    fullStatsRaw: [
-      [3000, 0.05, 0.135, 3000, 0],
-      [500, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [200, 0.1, 0.1, 0, 0],
-      [2000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [550, 0.02, 0.04, 0, 0],
-      [1, 0.03, 0.03, -0.25, 0.4],
-      [1, 0, 0.005, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Dimorphodon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Dimorph_Character_BP_Aggressive_Retrieve.Dimorph_Character_BP_Aggressive_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [264, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -6863,6 +6564,7 @@ export const SPECIES: Species[] = [
     name: "Kentrosaurus",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Kentro_Character_BP_Retrieve.Kentro_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [650, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -6882,6 +6584,7 @@ export const SPECIES: Species[] = [
     name: "Purlovia",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Purlovia_Character_BP_Retrieve.Purlovia_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [275, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -6901,6 +6604,7 @@ export const SPECIES: Species[] = [
     name: "Raptor",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Raptor_Character_BP_Retrieve.Raptor_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -6920,6 +6624,7 @@ export const SPECIES: Species[] = [
     name: "Pulmonoscorpius",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Scorpion_Character_BP_Retrieve.Scorpion_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [280, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -6939,6 +6644,7 @@ export const SPECIES: Species[] = [
     name: "Thorny Dragon",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/SpineyLizard_Character_BP_Retrieve.SpineyLizard_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [260, 0.2, 0.27, 0.66, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -6955,28 +6661,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "X-Allosaurus",
-    blueprintPath:
-      "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Volcano_Allo_Character_BP_Retrieve.Volcano_Allo_Character_BP_Retrieve",
-    fullStatsRaw: [
-      [630, 0.2, 0.27, 0.5, 0],
-      [250, 0.1, 0.1, 0, 0],
-      [1000, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0.15],
-      null,
-      null,
-      [380, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, -0.1, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "X-Rex",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Volcano_Rex_Character_BP_Retrieve.Volcano_Rex_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -6996,6 +6684,7 @@ export const SPECIES: Species[] = [
     name: "X-Triceratops",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Volcano_Trike_Character_BP_Retrieve.Volcano_Trike_Character_BP_Retrieve",
+    variants: ["Genesis", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [375, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -7015,6 +6704,7 @@ export const SPECIES: Species[] = [
     name: "Alpha X-Triceratops",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Retrieve/Volcanic/Volcano_Trike_Character_BP_Retrieve_Alpha.Volcano_Trike_Character_BP_Retrieve_Alpha",
+    variants: ["Genesis", "Mega", "Mission", "Retrieve", "Volcano"],
     fullStatsRaw: [
       [3500, 0.3, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -7034,6 +6724,7 @@ export const SPECIES: Species[] = [
     name: "Dodo",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Sport/Dodo_Character_BP_Basketball.Dodo_Character_BP_Basketball",
+    variants: ["Genesis", "Mission", "Sport"],
     fullStatsRaw: [
       [40, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7053,6 +6744,7 @@ export const SPECIES: Species[] = [
     name: "Bulbdog",
     blueprintPath:
       "/Game/Genesis/Dinos/MissionVariants/Sport/LanternPug_Character_BP_Basketball.LanternPug_Character_BP_Basketball",
+    variants: ["Genesis", "Mission", "Sport"],
     fullStatsRaw: [
       [145, 0.2, 0.27, 0.5, 0],
       [200, 0.12, 0.12, 0.05, 0],
@@ -7072,6 +6764,7 @@ export const SPECIES: Species[] = [
     name: "Ferox",
     blueprintPath:
       "/Game/Genesis/Dinos/Shapeshifter/Shapeshifter_Large/Shapeshifter_Large_Character_BP.Shapeshifter_Large_Character_BP",
+    variants: ["Genesis", "Large"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [1000, 0.1, 0.1, 0, 0],
@@ -7091,6 +6784,7 @@ export const SPECIES: Species[] = [
     name: "Ferox",
     blueprintPath:
       "/Game/Genesis/Dinos/Shapeshifter/Shapeshifter_Small/Shapeshifter_Small_Character_BP.Shapeshifter_Small_Character_BP",
+    variants: ["Genesis", "Small"],
     fullStatsRaw: [
       [55, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7110,6 +6804,7 @@ export const SPECIES: Species[] = [
     name: "Astrocetus",
     blueprintPath:
       "/Game/Genesis/Dinos/SpaceWhale/SpaceWhale_Character_BP.SpaceWhale_Character_BP",
+    variants: ["Genesis"],
     fullStatsRaw: [
       [2800, 0.14, 0.108, 0.5, 0],
       [600, 0.05, 0.05, 0, 0],
@@ -7129,6 +6824,7 @@ export const SPECIES: Species[] = [
     name: "Insect Swarm",
     blueprintPath:
       "/Game/Genesis/Dinos/Swarms/InsectSwarmChar_BP.InsectSwarmChar_BP",
+    variants: ["Genesis"],
     fullStatsRaw: [
       [500, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7148,6 +6844,7 @@ export const SPECIES: Species[] = [
     name: "Parakeet Fish School",
     blueprintPath:
       "/Game/Genesis/Dinos/Swarms/MicrobeSwarmChar_BP.MicrobeSwarmChar_BP",
+    variants: ["Genesis"],
     fullStatsRaw: [
       [1800, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7167,6 +6864,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Master Controller",
     blueprintPath:
       "/Game/Genesis/Dinos/VRMainBoss/VRMainBoss_Character_Easy.VRMainBoss_Character_Easy",
+    variants: ["Boss", "Gamma", "Genesis", "Minion", "VR"],
     fullStatsRaw: [
       [25000, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7186,6 +6884,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Master Controller",
     blueprintPath:
       "/Game/Genesis/Dinos/VRMainBoss/VRMainBoss_Character_Hard.VRMainBoss_Character_Hard",
+    variants: ["Alpha", "Boss", "Genesis", "Minion", "VR"],
     fullStatsRaw: [
       [150000, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7205,6 +6904,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Master Controller",
     blueprintPath:
       "/Game/Genesis/Dinos/VRMainBoss/VRMainBoss_Character_Medium.VRMainBoss_Character_Medium",
+    variants: ["Beta", "Boss", "Genesis", "Minion", "VR"],
     fullStatsRaw: [
       [60000, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7221,28 +6921,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "R-Allosaurus",
-    blueprintPath:
-      "/Game/Genesis2/Dinos/BiomeVariants/Allo_Character_BP_Rockwell.Allo_Character_BP_Rockwell",
-    fullStatsRaw: [
-      [630, 0.2, 0.27, 0.5, 0],
-      [250, 0.1, 0.1, 0, 0],
-      [1000, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0.15],
-      null,
-      null,
-      [380, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, -0.1, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "R-Carnotaurus",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Carno_Character_BP_Rockwell.Carno_Character_BP_Rockwell",
+    variants: ["Genesis2", "Rockwell"],
     fullStatsRaw: [
       [420, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -7262,6 +6944,7 @@ export const SPECIES: Species[] = [
     name: "R-Daeodon",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Daeodon_Character_BP_Eden.Daeodon_Character_BP_Eden",
+    variants: ["Eden", "Genesis2"],
     fullStatsRaw: [
       [900, 0.2, 0.27, 0.5, 0],
       [250, 0.1, 0.1, 0, 0],
@@ -7281,6 +6964,7 @@ export const SPECIES: Species[] = [
     name: "R-Dilophosaur",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Dilo_Character_BP_Rockwell.Dilo_Character_BP_Rockwell",
+    variants: ["Genesis2", "Rockwell"],
     fullStatsRaw: [
       [130, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7300,6 +6984,7 @@ export const SPECIES: Species[] = [
     name: "R-Dire Bear",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Direbear_Character_BP_Rockwell.Direbear_Character_BP_Rockwell",
+    variants: ["Genesis2", "Rockwell"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -7319,6 +7004,7 @@ export const SPECIES: Species[] = [
     name: "R-Direwolf",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Direwolf_Character_BP_Eden.Direwolf_Character_BP_Eden",
+    variants: ["Eden", "Genesis2"],
     fullStatsRaw: [
       [330, 0.2, 0.27, 0.66, 0],
       [260, 0.1, 0.1, 0, 0],
@@ -7338,6 +7024,7 @@ export const SPECIES: Species[] = [
     name: "R-Equus",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Equus_Character_BP_Eden.Equus_Character_BP_Eden",
+    variants: ["Eden", "Genesis2"],
     fullStatsRaw: [
       [240, 0.2, 0.27, 0.5, 0],
       [560, 0.1, 0.1, 0, 0],
@@ -7357,6 +7044,7 @@ export const SPECIES: Species[] = [
     name: "R-Gasbags",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/GasBags_Character_BP_Eden.GasBags_Character_BP_Eden",
+    variants: ["Eden", "Genesis2"],
     fullStatsRaw: [
       [650, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -7373,28 +7061,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "R-Giganotosaurus",
-    blueprintPath:
-      "/Game/Genesis2/Dinos/BiomeVariants/Gigant_Character_BP_Rockwell.Gigant_Character_BP_Rockwell",
-    fullStatsRaw: [
-      [80000, 0.0005, 0.002, -63000, 0],
-      [400, 0.0005, 0.01, 0, 0],
-      [10000, 0.06, 0, 0, 0],
-      [150, 0.0025, 0.025, 0, 0],
-      [4000, 0.0025, 0.025, 0, 0],
-      null,
-      null,
-      [700, 0.01, 0.01, 0, 0],
-      [1, 0.05, 0.05, -0.8, 0],
-      [1, 0, 0.0031, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "R-Megatherium",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Megatherium_Character_BP_Eden.Megatherium_Character_BP_Eden",
+    variants: ["Eden", "Genesis2"],
     fullStatsRaw: [
       [740, 0.2, 0.27, 0.5, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -7414,6 +7084,7 @@ export const SPECIES: Species[] = [
     name: "R-Snow Owl",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Owl_Character_BP_Eden.Owl_Character_BP_Eden",
+    variants: ["Eden", "Genesis2"],
     fullStatsRaw: [
       [325, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -7433,6 +7104,7 @@ export const SPECIES: Species[] = [
     name: "R-Parasaur",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Para_Character_BP_Eden.Para_Character_BP_Eden",
+    variants: ["Eden", "Genesis2"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -7452,6 +7124,7 @@ export const SPECIES: Species[] = [
     name: "R-Procoptodon",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Procoptodon_Character_BP_Eden.Procoptodon_Character_BP_Eden",
+    variants: ["Eden", "Genesis2"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.75, 0],
       [350, 0.1, 0.1, 0.1, 0],
@@ -7471,6 +7144,7 @@ export const SPECIES: Species[] = [
     name: "R-Quetzal",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Quetz_Character_BP_Rockwell.Quetz_Character_BP_Rockwell",
+    variants: ["Genesis2", "Rockwell"],
     fullStatsRaw: [
       [1200, 0.2, 0.108, 0.5, 0],
       [800, 0.05, 0.05, 0, 0],
@@ -7490,6 +7164,7 @@ export const SPECIES: Species[] = [
     name: "R-Brontosaurus",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Sauropod_Character_BP_Rockwell.Sauropod_Character_BP_Rockwell",
+    variants: ["Genesis2", "Rockwell"],
     fullStatsRaw: [
       [2070, 0.2, 0.1254, 0.5, 0],
       [240, 0.1, 0.1, 0, 0],
@@ -7509,6 +7184,7 @@ export const SPECIES: Species[] = [
     name: "R-Velonasaur",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Spindles_Character_BP_Rockwell.Spindles_Character_BP_Rockwell",
+    variants: ["Genesis2", "Rockwell"],
     fullStatsRaw: [
       [440, 0.2, 0.27, 0.5, 0],
       [325, 0.1, 0.1, 0, 0],
@@ -7528,6 +7204,7 @@ export const SPECIES: Species[] = [
     name: "R-Thylacoleo",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Thylacoleo_Character_BP_Eden.Thylacoleo_Character_BP_Eden",
+    variants: ["Eden", "Genesis2"],
     fullStatsRaw: [
       [700, 0.2, 0.189, 0.5, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -7547,6 +7224,7 @@ export const SPECIES: Species[] = [
     name: "R-Carbonemys",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Turtle_Character_BP_Rockwell.Turtle_Character_BP_Rockwell",
+    variants: ["Genesis2", "Rockwell"],
     fullStatsRaw: [
       [700, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -7563,49 +7241,12 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "R-Reaper Queen",
-    blueprintPath:
-      "/Game/Genesis2/Dinos/BiomeVariants/Xenomorph_Character_BP_Female_Gen2.Xenomorph_Character_BP_Female_Gen2",
-    fullStatsRaw: [
-      [45000, 0.0052, 0.135, -38500, 0],
-      [480, 0.1, 0.1, 0, 0],
-      [925, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [415, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "R-Reaper King",
     blueprintPath:
       "/Game/Genesis2/Dinos/BiomeVariants/Xenomorph_Character_BP_Male_Gen2.Xenomorph_Character_BP_Male_Gen2",
+    variants: ["Genesis2", "Male"],
     fullStatsRaw: [
       [2500, 0.2, 0.27, 0.5, 0],
-      [480, 0.1, 0.1, 0, 0],
-      [925, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [415, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "R-Reaper King",
-    blueprintPath:
-      "/Game/Genesis2/Dinos/BiomeVariants/Xenomorph_Character_BP_Male_Tamed_Gen2.Xenomorph_Character_BP_Male_Tamed_Gen2",
-    fullStatsRaw: [
-      [45000, 0.0052, 0.135, -38500, 0],
       [480, 0.1, 0.1, 0, 0],
       [925, 0.06, 0, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -7623,6 +7264,7 @@ export const SPECIES: Species[] = [
     name: "Noglin",
     blueprintPath:
       "/Game/Genesis2/Dinos/BrainSlug/BrainSlug_Character_BP.BrainSlug_Character_BP",
+    variants: ["Genesis2"],
     fullStatsRaw: [
       [50, 0.2, 0.32, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7642,6 +7284,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Survivor",
     blueprintPath:
       "/Game/Genesis2/Dinos/CorruptHumans/CorruptHuman_Character_BP_BASE.CorruptHuman_Character_BP_BASE",
+    variants: ["Corrupted", "Genesis2"],
     fullStatsRaw: [
       [250, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7661,6 +7304,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Survivor",
     blueprintPath:
       "/Game/Genesis2/Dinos/CorruptHumans/CorruptHuman_WithTekRifle_Character_BP.CorruptHuman_WithTekRifle_Character_BP",
+    variants: ["Corrupted", "Genesis2"],
     fullStatsRaw: [
       [250, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7680,6 +7324,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Survivor",
     blueprintPath:
       "/Game/Genesis2/Dinos/CorruptHumans/RockwellSpawn/RockwellSpawn_Character_BP.RockwellSpawn_Character_BP",
+    variants: ["Boss", "Genesis2"],
     fullStatsRaw: [
       [2500, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7699,6 +7344,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Survivor",
     blueprintPath:
       "/Game/Genesis2/Dinos/CorruptHumans/RockwellSpawn/RockwellSpawn_Character_BP_AltAnim.RockwellSpawn_Character_BP_AltAnim",
+    variants: ["Boss", "Genesis2"],
     fullStatsRaw: [
       [2500, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7718,6 +7364,7 @@ export const SPECIES: Species[] = [
     name: "Exo-Mek",
     blueprintPath:
       "/Game/Genesis2/Dinos/Exosuit/Exosuit_Character_BP.Exosuit_Character_BP",
+    variants: ["Genesis2"],
     fullStatsRaw: [
       [2000, 0, 0, 0.5, 0],
       null,
@@ -7737,6 +7384,7 @@ export const SPECIES: Species[] = [
     name: "Exo-Mek",
     blueprintPath:
       "/Game/Genesis2/Dinos/Exosuit/Exosuit_RTS_Character_BP.Exosuit_RTS_Character_BP",
+    variants: ["Genesis2"],
     fullStatsRaw: [
       [2000, 0, 0, 0.5, 0],
       null,
@@ -7756,6 +7404,7 @@ export const SPECIES: Species[] = [
     name: "Shadowmane",
     blueprintPath:
       "/Game/Genesis2/Dinos/LionfishLion/LionfishLion_Character_BP.LionfishLion_Character_BP",
+    variants: ["Genesis2"],
     fullStatsRaw: [
       [825, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -7775,6 +7424,7 @@ export const SPECIES: Species[] = [
     name: "Shadowmane",
     blueprintPath:
       "/Game/Genesis2/Dinos/LionfishLion/LionfishLion_Character_BP_Female.LionfishLion_Character_BP_Female",
+    variants: ["Female", "Genesis2"],
     fullStatsRaw: [
       [825, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -7794,6 +7444,7 @@ export const SPECIES: Species[] = [
     name: "Macrophage",
     blueprintPath:
       "/Game/Genesis2/Dinos/Macrophage/Macrophage_Swarm_Character.Macrophage_Swarm_Character",
+    variants: ["Genesis2"],
     fullStatsRaw: [
       [1000, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7810,28 +7461,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Maewing",
-    blueprintPath:
-      "/Game/Genesis2/Dinos/MilkGlider/MilkGlider_Character_BP.MilkGlider_Character_BP",
-    fullStatsRaw: [
-      [700, 0.085, 0.2025, 0, 0],
-      [450, 0.05, 0.05, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [2000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Astrodelphis",
     blueprintPath:
       "/Game/Genesis2/Dinos/SpaceDolphin/SpaceDolphin_Character_BP.SpaceDolphin_Character_BP",
+    variants: ["Genesis2"],
     fullStatsRaw: [
       [325, 0.2, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -7848,28 +7481,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "R-Allosaurus",
-    blueprintPath:
-      "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Allo_Character_BP_Rockwell_Summoned.Allo_Character_BP_Rockwell_Summoned",
-    fullStatsRaw: [
-      [630, 0.2, 0.27, 0.5, 0],
-      [250, 0.1, 0.1, 0, 0],
-      [1000, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0.15],
-      null,
-      null,
-      [380, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, -0.1, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Argentavis",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Argent_Character_BP_Summoned.Argent_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [365, 0.2, 0.30375, 0.5, 0],
       [400, 0.05, 0.075, 0, 0],
@@ -7889,6 +7504,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Arthropluera",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Arthro_Character_BP_Aberrant_Summoned.Arthro_Character_BP_Aberrant_Summoned",
+    variants: ["Aberrant", "Genesis2", "Summoned"],
     fullStatsRaw: [
       [500, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -7908,6 +7524,7 @@ export const SPECIES: Species[] = [
     name: "Baryonyx",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Baryonyx_Character_BP_Summoned.Baryonyx_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [440, 0.2, 0.27, 0.5, 0],
       [325, 0.1, 0.1, 0, 0],
@@ -7927,6 +7544,7 @@ export const SPECIES: Species[] = [
     name: "Basilisk",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Basilisk_Character_BP_Summoned.Basilisk_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [2750, 0.2, 0.27, 0.5, 0],
       [650, 0.1, 0.1, 0, 0],
@@ -7946,6 +7564,7 @@ export const SPECIES: Species[] = [
     name: "Onyc",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Bat_Character_BP_Summoned.Bat_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -7965,6 +7584,7 @@ export const SPECIES: Species[] = [
     name: "Titanoboa",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/BoaFrill_Character_BP_Summoned.BoaFrill_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [170, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -7984,6 +7604,7 @@ export const SPECIES: Species[] = [
     name: "Bloodstalker",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/BogSpider_Character_BP_Summoned.BogSpider_Character_BP_Summoned",
+    variants: ["Bog", "Genesis2", "Summoned"],
     fullStatsRaw: [
       [450, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -8003,6 +7624,7 @@ export const SPECIES: Species[] = [
     name: "R-Carnotaurus",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Carno_Character_BP_Rockwell_Summoned.Carno_Character_BP_Rockwell_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [420, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -8022,6 +7644,7 @@ export const SPECIES: Species[] = [
     name: "Ravager",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/CaveWolf_Character_BP_Summoned.CaveWolf_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -8038,28 +7661,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Magmasaur",
-    blueprintPath:
-      "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Cherufe_Character_BP_Summoned.Cherufe_Character_BP_Summoned",
-    fullStatsRaw: [
-      [3000, 0.05, 0.135, 3000, 0],
-      [500, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [200, 0.1, 0.1, 0, 0],
-      [2000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [550, 0.02, 0.04, 0, 0],
-      [1, 0.03, 0.03, -0.25, 0.4],
-      [1, 0, 0.005, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Karkinos",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Crab_Character_BP_Summoned.Crab_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [1200, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -8079,6 +7684,7 @@ export const SPECIES: Species[] = [
     name: "R-Daeodon",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Daeodon_Character_BP_Eden_Summoned.Daeodon_Character_BP_Eden_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [900, 0.2, 0.27, 0.5, 0],
       [250, 0.1, 0.1, 0, 0],
@@ -8098,6 +7704,7 @@ export const SPECIES: Species[] = [
     name: "R-Dilophosaur",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Dilo_Character_BP_Rockwell_Summoned.Dilo_Character_BP_Rockwell_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [130, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -8117,6 +7724,7 @@ export const SPECIES: Species[] = [
     name: "R-Dire Bear",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Direbear_Character_BP_Rockwell_Summoned.Direbear_Character_BP_Rockwell_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -8136,6 +7744,7 @@ export const SPECIES: Species[] = [
     name: "Dire Bear",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Direbear_Character_BP_Summoned.Direbear_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -8155,6 +7764,7 @@ export const SPECIES: Species[] = [
     name: "R-Direwolf",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Direwolf_Character_BP_Eden_Summoned.Direwolf_Character_BP_Eden_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [330, 0.2, 0.27, 0.66, 0],
       [260, 0.1, 0.1, 0, 0],
@@ -8174,6 +7784,7 @@ export const SPECIES: Species[] = [
     name: "Managarmr",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/IceJumper_Character_BP_Summoned.IceJumper_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [825, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.06, 0, 0],
@@ -8193,6 +7804,7 @@ export const SPECIES: Species[] = [
     name: "Kaprosuchus",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Kaprosuchus_Character_BP_Summoned.Kaprosuchus_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -8212,6 +7824,7 @@ export const SPECIES: Species[] = [
     name: "Shadowmane",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/LionfishLion_Character_BP_Summoned.LionfishLion_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [825, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -8231,6 +7844,7 @@ export const SPECIES: Species[] = [
     name: "Mantis",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Mantis_Character_BP_Summoned.Mantis_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [275, 0.2, 0.135, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -8250,6 +7864,7 @@ export const SPECIES: Species[] = [
     name: "R-Megatherium",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Megatherium_Character_BP_Eden_Summoned.Megatherium_Character_BP_Eden_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [740, 0.2, 0.27, 0.5, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -8269,6 +7884,7 @@ export const SPECIES: Species[] = [
     name: "Microraptor",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Microraptor_Character_BP_Summoned.Microraptor_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [130, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -8288,6 +7904,7 @@ export const SPECIES: Species[] = [
     name: "R-Snow Owl",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Owl_Character_BP_Eden_Summoned.Owl_Character_BP_Eden_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [325, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -8307,6 +7924,7 @@ export const SPECIES: Species[] = [
     name: "Paraceratherium",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Paracer_Character_BP_Summoned.Paracer_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [1026, 0.2, 0.172125, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -8326,6 +7944,7 @@ export const SPECIES: Species[] = [
     name: "Pteranodon",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Ptero_Character_BP_Summoned.Ptero_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [210, 0.2, 0.15, 0.5, 0],
       [150, 0.05, 0.04, 0, 0],
@@ -8345,6 +7964,7 @@ export const SPECIES: Species[] = [
     name: "Purlovia",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Purlovia_Character_BP_Summoned.Purlovia_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [275, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -8364,6 +7984,7 @@ export const SPECIES: Species[] = [
     name: "R-Quetzal",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Quetz_Character_BP_Rockwell_Summoned.Quetz_Character_BP_Rockwell_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [1200, 0.2, 0.108, 0.5, 0],
       [800, 0.05, 0.05, 0, 0],
@@ -8383,6 +8004,7 @@ export const SPECIES: Species[] = [
     name: "Rex",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Rex_Character_BP_Summoned.Rex_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -8399,47 +8021,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Rock Drake",
-    blueprintPath:
-      "/Game/Genesis2/Dinos/Summoner/SummonedDinos/RockDrake_Character_BP_Summoned.RockDrake_Character_BP_Summoned",
-    fullStatsRaw: [
-      [1950, 0.085, 0.2025, -1050, 0],
-      [450, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [2000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Rock Elemental",
-    blueprintPath:
-      "/Game/Genesis2/Dinos/Summoner/SummonedDinos/RockGolem_Character_BP_Summoned.RockGolem_Character_BP_Summoned",
-    fullStatsRaw: [
-      [25000, 0.0125, 0.135, -22000, 0],
-      [300, 0.1, 0.1, 0, 0],
-      [5000, 0.02, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [6000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [660, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.125, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Sabertooth",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Saber_Character_BP_Summoned.Saber_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -8459,6 +8044,7 @@ export const SPECIES: Species[] = [
     name: "Sarco",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Sarco_Character_BP_Summoned.Sarco_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.65, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -8478,6 +8064,7 @@ export const SPECIES: Species[] = [
     name: "R-Brontosaurus",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Sauropod_Character_BP_Rockwell_Summoned.Sauropod_Character_BP_Rockwell_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [2070, 0.2, 0.1254, 0.5, 0],
       [240, 0.1, 0.1, 0, 0],
@@ -8497,6 +8084,7 @@ export const SPECIES: Species[] = [
     name: "Ferox",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Shapeshifter_Large_Character_BP_Summoned.Shapeshifter_Large_Character_BP_Summoned",
+    variants: ["Genesis2", "Large", "Summoned"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [1000, 0.1, 0.1, 0, 0],
@@ -8516,6 +8104,7 @@ export const SPECIES: Species[] = [
     name: "Araneo",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/SpiderS_Character_BP_Summoned.SpiderS_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [150, 0.2, 0.135, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -8535,6 +8124,7 @@ export const SPECIES: Species[] = [
     name: "R-Velonasaur",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Spindles_Character_BP_Rockwell_Summoned.Spindles_Character_BP_Rockwell_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [440, 0.2, 0.27, 0.5, 0],
       [325, 0.1, 0.1, 0, 0],
@@ -8554,6 +8144,7 @@ export const SPECIES: Species[] = [
     name: "Thorny Dragon",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/SpineyLizard_Character_BP_Summoned.SpineyLizard_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [260, 0.2, 0.27, 0.66, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -8573,6 +8164,7 @@ export const SPECIES: Species[] = [
     name: "Spino",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Spino_Character_BP_Summoned.Spino_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [700, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -8592,6 +8184,7 @@ export const SPECIES: Species[] = [
     name: "Stegosaurus",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Stego_Character_BP_Summoned.Stego_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [650, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -8611,6 +8204,7 @@ export const SPECIES: Species[] = [
     name: "Terror Bird",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/TerrorBird_Character_BP_Summoned.TerrorBird_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [270, 0.2, 0.27, 0.5, 0],
       [160, 0.1, 0.1, 0, 0],
@@ -8630,6 +8224,7 @@ export const SPECIES: Species[] = [
     name: "Therizinosaur",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Therizino_Character_BP_Summoned.Therizino_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [870, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -8649,6 +8244,7 @@ export const SPECIES: Species[] = [
     name: "R-Thylacoleo",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Thylacoleo_Character_BP_Eden_Summoned.Thylacoleo_Character_BP_Eden_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [700, 0.2, 0.189, 0.5, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -8668,6 +8264,7 @@ export const SPECIES: Species[] = [
     name: "Triceratops",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Trike_Character_BP_Summoned.Trike_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [375, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -8687,6 +8284,7 @@ export const SPECIES: Species[] = [
     name: "R-Reaper King",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Xenomorph_Character_BP_Male_Gen2_Summoned.Xenomorph_Character_BP_Male_Gen2_Summoned",
+    variants: ["Genesis2", "Male", "Summoned"],
     fullStatsRaw: [
       [1250, 0.2, 0.27, 0.5, 0],
       [480, 0.1, 0.1, 0, 0],
@@ -8706,6 +8304,7 @@ export const SPECIES: Species[] = [
     name: "Yutyrannus",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/Yutyrannus_Character_BP_Summoned.Yutyrannus_Character_BP_Summoned",
+    variants: ["Genesis2", "Summoned"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -8725,6 +8324,7 @@ export const SPECIES: Species[] = [
     name: "Summoner",
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/Summoner_Character_BP.Summoner_Character_BP",
+    variants: ["Genesis2"],
     fullStatsRaw: [
       [850, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -8744,6 +8344,7 @@ export const SPECIES: Species[] = [
     name: "Tek Stryder",
     blueprintPath:
       "/Game/Genesis2/Dinos/TekStrider/TekStrider_Character_BP.TekStrider_Character_BP",
+    variants: ["Genesis2"],
     fullStatsRaw: [
       [4000, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -8760,28 +8361,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Voidwyrm",
-    blueprintPath:
-      "/Game/Genesis2/Dinos/TekWyvern/TekWyvern_Character_BP.TekWyvern_Character_BP",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [315, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Gigantopithecus",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/Bigfoot_Character_BP_Hunt.Bigfoot_Character_BP_Hunt",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [2200, 0.1, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -8801,6 +8384,7 @@ export const SPECIES: Species[] = [
     name: "Dilophosaur",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/Dilo_Character_BP_Hunt.Dilo_Character_BP_Hunt",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [600, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -8820,6 +8404,7 @@ export const SPECIES: Species[] = [
     name: "Polar Bear",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/Direbear_Character_Hunt.Direbear_Character_Hunt",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -8839,6 +8424,7 @@ export const SPECIES: Species[] = [
     name: "R-Direwolf",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/Direwolf_Character_BP_Eden_Hunt_Enemy.Direwolf_Character_BP_Eden_Hunt_Enemy",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [330, 0.2, 0.27, 0.66, 0],
       [260, 0.1, 0.1, 0, 0],
@@ -8858,6 +8444,7 @@ export const SPECIES: Species[] = [
     name: "Bulbdog",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/LanternPug_Character_BP_Hunt.LanternPug_Character_BP_Hunt",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [700, 0.2, 0.27, 0.5, 0],
       [300, 0.12, 0.12, 0.05, 0],
@@ -8877,6 +8464,7 @@ export const SPECIES: Species[] = [
     name: "Shadowmane",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/LionfishLion_Character_BP_Hunt.LionfishLion_Character_BP_Hunt",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [825, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -8896,6 +8484,7 @@ export const SPECIES: Species[] = [
     name: "Shadowmane",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/LionfishLion_Character_BP_Hunt_Alpha.LionfishLion_Character_BP_Hunt_Alpha",
+    variants: ["Alpha", "Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [825, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -8915,6 +8504,7 @@ export const SPECIES: Species[] = [
     name: "Megalosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/Megalosaurus_Character_BP_Hunt_Enemy.Megalosaurus_Character_BP_Hunt_Enemy",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [325, 0.12, 0.27, 0.66, 0],
       [400, 0, 0, 0, 0],
@@ -8931,28 +8521,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Maewing",
-    blueprintPath:
-      "/Game/Genesis2/Missions/Hunt/Dinos/MilkGlider_Character_BP_TorporHunt.MilkGlider_Character_BP_TorporHunt",
-    fullStatsRaw: [
-      [1200, 0.085, 0.2025, 0, 0],
-      [500, 0.05, 0.05, 0, 0],
-      [700, 0.05, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [2000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Paraceratherium",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/Paracer_Character_BP_TorporHunt.Paracer_Character_BP_TorporHunt",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [1400, 0.2, 0.172125, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -8972,6 +8544,7 @@ export const SPECIES: Species[] = [
     name: "X-Raptor",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/Raptor_Character_BP_Hunt_Enemy.Raptor_Character_BP_Hunt_Enemy",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -8991,6 +8564,7 @@ export const SPECIES: Species[] = [
     name: "Rex",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/Rex_Character_BP_Hunt_Enemy.Rex_Character_BP_Hunt_Enemy",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -9010,6 +8584,7 @@ export const SPECIES: Species[] = [
     name: "Brute Ferox",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/Shapeshifter_Large_Character_BP_Hunt_Gen2.Shapeshifter_Large_Character_BP_Hunt_Gen2",
+    variants: ["Genesis2", "Hunt", "Large", "Mission"],
     fullStatsRaw: [
       [3900, 0.3, 0.27, 0.5, 0],
       [900, 0.1, 0.1, 0, 0],
@@ -9029,6 +8604,7 @@ export const SPECIES: Species[] = [
     name: "R-Velonasaur",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/Spindles_Character_BP_Rockwell_Hunt.Spindles_Character_BP_Rockwell_Hunt",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [440, 0.2, 0.27, 0.5, 0],
       [325, 0.1, 0.1, 0, 0],
@@ -9048,6 +8624,7 @@ export const SPECIES: Species[] = [
     name: "R-Velonasaur",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/Spindles_Character_BP_Rockwell_Hunt_Alpha.Spindles_Character_BP_Rockwell_Hunt_Alpha",
+    variants: ["Alpha", "Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [440, 0.2, 0.27, 0.5, 0],
       [325, 0.1, 0.1, 0, 0],
@@ -9067,6 +8644,7 @@ export const SPECIES: Species[] = [
     name: "Thorny Dragon",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/SpineyLizard_Character_BP_Hunt.SpineyLizard_Character_BP_Hunt",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [2000, 0.2, 0.27, 0.66, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -9086,6 +8664,7 @@ export const SPECIES: Species[] = [
     name: "R-Thylacoleo",
     blueprintPath:
       "/Game/Genesis2/Missions/Hunt/Dinos/Thylacoleo_Character_BP_Eden_Hunt_Enemy.Thylacoleo_Character_BP_Eden_Hunt_Enemy",
+    variants: ["Genesis2", "Hunt", "Mission"],
     fullStatsRaw: [
       [425, 0.1, 0.27, 0.66, 0],
       [400, 0, 0, 0, 0],
@@ -9105,6 +8684,7 @@ export const SPECIES: Species[] = [
     name: "Rockwell Prime",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Difficulties/Alpha/RockwellNode_Character_BP_Boss_Alpha.RockwellNode_Character_BP_Boss_Alpha",
+    variants: ["Alpha", "Boss", "FinalBattle", "Genesis2", "Mission"],
     fullStatsRaw: [
       [100000, 0.2, 0.27, 0.5, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -9124,6 +8704,7 @@ export const SPECIES: Species[] = [
     name: "Rockwell Node",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Difficulties/Alpha/RockwellNode_Character_BP_FinalFight_Alpha.RockwellNode_Character_BP_FinalFight_Alpha",
+    variants: ["Alpha", "Boss", "FinalBattle", "Genesis2", "Mission"],
     fullStatsRaw: [
       [96000, 0.2, 0.27, 0.5, 0],
       [4500, 0.1, 0.1, 0, 0],
@@ -9143,6 +8724,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Survivor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Difficulties/Alpha/RockwellSpawn_Character_BP_AltAnim_Alpha.RockwellSpawn_Character_BP_AltAnim_Alpha",
+    variants: ["Alpha", "Boss", "FinalBattle", "Genesis2", "Mission"],
     fullStatsRaw: [
       [10000, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -9162,6 +8744,7 @@ export const SPECIES: Species[] = [
     name: "Summoner",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Difficulties/Alpha/Summoner_Character_BP_FinalFight_Alpha.Summoner_Character_BP_FinalFight_Alpha",
+    variants: ["Alpha", "FinalBattle", "Genesis2", "Mission"],
     fullStatsRaw: [
       [850, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -9181,6 +8764,7 @@ export const SPECIES: Species[] = [
     name: "Rockwell Prime",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Difficulties/Beta/RockwellNode_Character_BP_Boss_Beta.RockwellNode_Character_BP_Boss_Beta",
+    variants: ["Beta", "Boss", "FinalBattle", "Genesis2", "Mission"],
     fullStatsRaw: [
       [75000, 0.2, 0.27, 0.5, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -9200,6 +8784,7 @@ export const SPECIES: Species[] = [
     name: "Rockwell Node",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Difficulties/Beta/RockwellNode_Character_BP_FinalFight_Beta.RockwellNode_Character_BP_FinalFight_Beta",
+    variants: ["Beta", "Boss", "FinalBattle", "Genesis2", "Mission"],
     fullStatsRaw: [
       [48000, 0.2, 0.27, 0.5, 0],
       [4500, 0.1, 0.1, 0, 0],
@@ -9219,6 +8804,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Survivor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Difficulties/Beta/RockwellSpawn_Character_BP_AltAnim_Beta.RockwellSpawn_Character_BP_AltAnim_Beta",
+    variants: ["Beta", "Boss", "FinalBattle", "Genesis2", "Mission"],
     fullStatsRaw: [
       [5000, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -9238,6 +8824,7 @@ export const SPECIES: Species[] = [
     name: "Summoner",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Difficulties/Beta/Summoner_Character_BP_FinalFight_Beta.Summoner_Character_BP_FinalFight_Beta",
+    variants: ["Beta", "FinalBattle", "Genesis2", "Mission"],
     fullStatsRaw: [
       [850, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -9257,6 +8844,7 @@ export const SPECIES: Species[] = [
     name: "Rockwell Prime",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Difficulties/Gamma/RockwellNode_Character_BP_Boss_Gamma.RockwellNode_Character_BP_Boss_Gamma",
+    variants: ["Boss", "FinalBattle", "Gamma", "Genesis2", "Mission"],
     fullStatsRaw: [
       [25000, 0.2, 0.27, 0.5, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -9276,6 +8864,7 @@ export const SPECIES: Species[] = [
     name: "Rockwell Node",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Difficulties/Gamma/RockwellNode_Character_BP_FinalFight_Gamma.RockwellNode_Character_BP_FinalFight_Gamma",
+    variants: ["Boss", "FinalBattle", "Gamma", "Genesis2", "Mission"],
     fullStatsRaw: [
       [24000, 0.2, 0.27, 0.5, 0],
       [4500, 0.1, 0.1, 0, 0],
@@ -9295,6 +8884,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Survivor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Difficulties/Gamma/RockwellSpawn_Character_BP_AltAnim_Gamma.RockwellSpawn_Character_BP_AltAnim_Gamma",
+    variants: ["Boss", "FinalBattle", "Gamma", "Genesis2", "Mission"],
     fullStatsRaw: [
       [2500, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -9314,6 +8904,7 @@ export const SPECIES: Species[] = [
     name: "Summoner",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Difficulties/Gamma/Summoner_Character_BP_FinalFight_Gamma.Summoner_Character_BP_FinalFight_Gamma",
+    variants: ["FinalBattle", "Gamma", "Genesis2", "Mission"],
     fullStatsRaw: [
       [850, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -9333,6 +8924,7 @@ export const SPECIES: Species[] = [
     name: "Exo-Mek",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Dinos/Exosuit_Character_BP_FinalFight.Exosuit_Character_BP_FinalFight",
+    variants: ["FinalBattle", "Genesis2", "Mission"],
     fullStatsRaw: [
       [5000, 0, 0, 0.5, 0],
       null,
@@ -9352,6 +8944,7 @@ export const SPECIES: Species[] = [
     name: "Rockwell Prime",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Dinos/RockwellNode_Character_BP_Boss.RockwellNode_Character_BP_Boss",
+    variants: ["Boss", "FinalBattle", "Genesis2", "Mission"],
     fullStatsRaw: [
       [25000, 0.2, 0.27, 0.5, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -9371,6 +8964,7 @@ export const SPECIES: Species[] = [
     name: "Rockwell Node",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Dinos/RockwellNode_Character_BP_FinalFight.RockwellNode_Character_BP_FinalFight",
+    variants: ["Boss", "FinalBattle", "Genesis2", "Mission"],
     fullStatsRaw: [
       [12000, 0.2, 0.27, 0.5, 0],
       [4500, 0.1, 0.1, 0, 0],
@@ -9390,6 +8984,7 @@ export const SPECIES: Species[] = [
     name: "Summoner",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/FinalBattleAlt/Dinos/Summoner_Character_BP_FinalFight.Summoner_Character_BP_FinalFight",
+    variants: ["FinalBattle", "Genesis2", "Mission"],
     fullStatsRaw: [
       [850, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -9409,6 +9004,7 @@ export const SPECIES: Species[] = [
     name: "Achatina",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Achatina_Character_BP_STA.Achatina_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9428,6 +9024,7 @@ export const SPECIES: Species[] = [
     name: "Allosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Allo_Character_BP_STA.Allo_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9447,6 +9044,7 @@ export const SPECIES: Species[] = [
     name: "Ankylosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Ankylo_Character_BP_STA.Ankylo_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9466,6 +9064,7 @@ export const SPECIES: Species[] = [
     name: "Titanomyrma Drone",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Ant_Character_BP_STA.Ant_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9485,6 +9084,7 @@ export const SPECIES: Species[] = [
     name: "Archaeopteryx",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Archa_Character_BP_STA.Archa_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9504,6 +9104,7 @@ export const SPECIES: Species[] = [
     name: "Argentavis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Argent_Character_BP_STA.Argent_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9523,6 +9124,7 @@ export const SPECIES: Species[] = [
     name: "Arthropluera",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Arthro_Character_BP_STA.Arthro_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9542,6 +9144,7 @@ export const SPECIES: Species[] = [
     name: "Baryonyx",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Baryonyx_Character_BP_STA.Baryonyx_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9561,6 +9164,7 @@ export const SPECIES: Species[] = [
     name: "Basilisk",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Basilisk_Character_BP_STA.Basilisk_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9580,6 +9184,7 @@ export const SPECIES: Species[] = [
     name: "Onyc",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Bat_Character_BP_STA.Bat_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9599,6 +9204,7 @@ export const SPECIES: Species[] = [
     name: "Castoroides",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Beaver_Character_BP_STA.Beaver_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9618,6 +9224,7 @@ export const SPECIES: Species[] = [
     name: "Giant Bee",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Bee_Character_BP_STA.Bee_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9637,6 +9244,7 @@ export const SPECIES: Species[] = [
     name: "Giant Queen Bee",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Bee_Queen_Character_BP_STA.Bee_Queen_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9656,6 +9264,7 @@ export const SPECIES: Species[] = [
     name: "Gigantopithecus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Bigfoot_Character_BP_STA.Bigfoot_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9675,6 +9284,7 @@ export const SPECIES: Species[] = [
     name: "Titanoboa",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/BoaFrill_Character_BP_STA.BoaFrill_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9694,6 +9304,7 @@ export const SPECIES: Species[] = [
     name: "Bloodstalker",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/BogSpider_Character_STA.BogSpider_Character_STA",
+    variants: ["Bog", "Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9713,6 +9324,7 @@ export const SPECIES: Species[] = [
     name: "Noglin",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/BrainSlug_Character_BP_STA.BrainSlug_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9732,6 +9344,7 @@ export const SPECIES: Species[] = [
     name: "Carnotaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Carno_Character_BP_STA.Carno_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9751,6 +9364,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Carnotaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Carno_Character_BP_STA_Corrupted.Carno_Character_BP_STA_Corrupted",
+    variants: ["Corrupted", "Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9770,6 +9384,7 @@ export const SPECIES: Species[] = [
     name: "Ravager",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/CaveWolf_Character_BP_STA.CaveWolf_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9789,6 +9404,7 @@ export const SPECIES: Species[] = [
     name: "Chalicotherium",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Chalico_Character_BP_STA.Chalico_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9808,6 +9424,7 @@ export const SPECIES: Species[] = [
     name: "Magmasaur",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Cherufe_Character_BP_STA.Cherufe_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9827,6 +9444,7 @@ export const SPECIES: Species[] = [
     name: "Compy",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Compy_Character_BP_STA.Compy_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9846,6 +9464,7 @@ export const SPECIES: Species[] = [
     name: "Karkinos",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Crab_Character_BP_STA.Crab_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9865,6 +9484,7 @@ export const SPECIES: Species[] = [
     name: "Blood Crystal Wyvern",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/CrystalWyvern_Character_BP_Blood_STA.CrystalWyvern_Character_BP_Blood_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9884,6 +9504,7 @@ export const SPECIES: Species[] = [
     name: "Ember Crystal Wyvern",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/CrystalWyvern_Character_BP_Ember_STA.CrystalWyvern_Character_BP_Ember_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9903,6 +9524,7 @@ export const SPECIES: Species[] = [
     name: "Tropical Crystal Wyvern",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/CrystalWyvern_Character_BP_WS_STA.CrystalWyvern_Character_BP_WS_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9922,6 +9544,7 @@ export const SPECIES: Species[] = [
     name: "Daeodon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Daeodon_Character_BP_STA.Daeodon_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9941,6 +9564,7 @@ export const SPECIES: Species[] = [
     name: "Deathworm",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Deathworm_Character_BP_STA.Deathworm_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9960,6 +9584,7 @@ export const SPECIES: Species[] = [
     name: "Deinonychus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Deinonychus_Character_BP_STA.Deinonychus_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9979,6 +9604,7 @@ export const SPECIES: Species[] = [
     name: "Dilophosaur",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Dilo_Character_BP_STA.Dilo_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -9998,6 +9624,7 @@ export const SPECIES: Species[] = [
     name: "Dimetrodon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Dimetro_Character_BP_STA.Dimetro_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10017,6 +9644,7 @@ export const SPECIES: Species[] = [
     name: "Dimorphodon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Dimorph_Character_BP_STA.Dimorph_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10036,6 +9664,7 @@ export const SPECIES: Species[] = [
     name: "Diplocaulus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Diplocaulus_Character_BP_STA.Diplocaulus_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10055,6 +9684,7 @@ export const SPECIES: Species[] = [
     name: "Diplodocus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Diplodocus_Character_BP_STA.Diplodocus_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10074,6 +9704,7 @@ export const SPECIES: Species[] = [
     name: "Dire Bear",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Direbear_Character_BP_STA.Direbear_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10093,6 +9724,7 @@ export const SPECIES: Species[] = [
     name: "Direwolf",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Direwolf_Character_BP_STA.Direwolf_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10112,6 +9744,7 @@ export const SPECIES: Species[] = [
     name: "DodoRex",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/DodoRex_Character_BP_STA.DodoRex_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [300000, 0.1, 0, 0, 0],
       [1666, 0, 0, 0, 0],
@@ -10131,6 +9764,7 @@ export const SPECIES: Species[] = [
     name: "Dodo",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Dodo_Character_BP_STA.Dodo_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10150,6 +9784,7 @@ export const SPECIES: Species[] = [
     name: "Doedicurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Doed_Character_BP_STA.Doed_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10169,6 +9804,7 @@ export const SPECIES: Species[] = [
     name: "Meganeura",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Dragonfly_Character_BP_STA.Dragonfly_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10188,6 +9824,7 @@ export const SPECIES: Species[] = [
     name: "Dung Beetle",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/DungBeetle_Character_BP_STA.DungBeetle_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10207,6 +9844,7 @@ export const SPECIES: Species[] = [
     name: "Attack Drone",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/EndDrone_Character_BP_STA.EndDrone_Character_BP_STA",
+    variants: ["Boss", "Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10226,6 +9864,7 @@ export const SPECIES: Species[] = [
     name: "Defense Unit",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/EndTank_Character_BP_STA.EndTank_Character_BP_STA",
+    variants: ["Boss", "Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10245,6 +9884,7 @@ export const SPECIES: Species[] = [
     name: "Enforcer",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Enforcer_Character_BP_STA.Enforcer_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10264,6 +9904,7 @@ export const SPECIES: Species[] = [
     name: "Equus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Equus_Character_BP_STA.Equus_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10283,6 +9924,7 @@ export const SPECIES: Species[] = [
     name: "Titanomyrma Soldier",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/FlyingAnt_Character_BP_STA.FlyingAnt_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10302,6 +9944,7 @@ export const SPECIES: Species[] = [
     name: "Gacha",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Gacha_Character_BP_STA.Gacha_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10321,6 +9964,7 @@ export const SPECIES: Species[] = [
     name: "Gallimimus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Galli_Character_BP_STA.Galli_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10340,6 +9984,7 @@ export const SPECIES: Species[] = [
     name: "Gasbags",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/GasBags_Character_BP_STA.GasBags_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10359,6 +10004,7 @@ export const SPECIES: Species[] = [
     name: "Megachelon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/GiantTurtle_Character_BP_STA.GiantTurtle_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10378,6 +10024,7 @@ export const SPECIES: Species[] = [
     name: "Giganotosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Gigant_Character_BP_STA.Gigant_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10397,6 +10044,7 @@ export const SPECIES: Species[] = [
     name: "Griffin",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Griffin_Character_BP_STA.Griffin_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10416,6 +10064,7 @@ export const SPECIES: Species[] = [
     name: "Hesperornis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Hesperornis_Character_BP_STA.Hesperornis_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10435,6 +10084,7 @@ export const SPECIES: Species[] = [
     name: "Hyaenodon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Hyaenodon_Character_BP_STA.Hyaenodon_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10454,6 +10104,7 @@ export const SPECIES: Species[] = [
     name: "Managarmr",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/IceJumper_Character_BP_STA.IceJumper_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10473,6 +10124,7 @@ export const SPECIES: Species[] = [
     name: "Ichthyornis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Ichthyornis_Character_BP_STA.Ichthyornis_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10492,6 +10144,7 @@ export const SPECIES: Species[] = [
     name: "Iguanodon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Iguanodon_Character_BP_STA.Iguanodon_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10511,6 +10164,7 @@ export const SPECIES: Species[] = [
     name: "Insect Swarm",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/InsectSwarmChar_BP_STA.InsectSwarmChar_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10530,6 +10184,7 @@ export const SPECIES: Species[] = [
     name: "Jerboa",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Jerboa_Character_BP_STA.Jerboa_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10549,6 +10204,7 @@ export const SPECIES: Species[] = [
     name: "Oil Jug Bug",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Jugbug_Oil_Character_BP_STA.Jugbug_Oil_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10568,6 +10224,7 @@ export const SPECIES: Species[] = [
     name: "Water Jug Bug",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Jugbug_Water_Character_BP_STA.Jugbug_Water_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10587,6 +10244,7 @@ export const SPECIES: Species[] = [
     name: "Kairuku",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Kairuku_Character_BP_STA.Kairuku_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10606,6 +10264,7 @@ export const SPECIES: Species[] = [
     name: "Kaprosuchus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Kaprosuchus_Character_BP_STA.Kaprosuchus_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10625,6 +10284,7 @@ export const SPECIES: Species[] = [
     name: "Kentrosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Kentro_Character_BP_STA.Kentro_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10644,6 +10304,7 @@ export const SPECIES: Species[] = [
     name: "Featherlight",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/LanternBird_Character_BP_STA.LanternBird_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10663,6 +10324,7 @@ export const SPECIES: Species[] = [
     name: "Shinehorn",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/LanternGoat_Character_BP_STA.LanternGoat_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10682,6 +10344,7 @@ export const SPECIES: Species[] = [
     name: "Glowtail",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/LanternLizard_Character_BP_STA.LanternLizard_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10701,6 +10364,7 @@ export const SPECIES: Species[] = [
     name: "Bulbdog",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/LanternPug_Character_BP_STA.LanternPug_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10720,6 +10384,7 @@ export const SPECIES: Species[] = [
     name: "Leech",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Leech_Character_STA.Leech_Character_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10739,6 +10404,7 @@ export const SPECIES: Species[] = [
     name: "Glowbug",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Lightbug_Character_STA.Lightbug_Character_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10758,6 +10424,7 @@ export const SPECIES: Species[] = [
     name: "Shadowmane",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/LionfishLion_Character_BP_STA.LionfishLion_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10777,6 +10444,7 @@ export const SPECIES: Species[] = [
     name: "Lystrosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Lystro_Character_BP_STA.Lystro_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10796,6 +10464,7 @@ export const SPECIES: Species[] = [
     name: "Macrophage",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Macrophage_Swarm_Character_STA.Macrophage_Swarm_Character_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10815,6 +10484,7 @@ export const SPECIES: Species[] = [
     name: "Mammoth",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Mammoth_Character_BP_STA.Mammoth_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10834,6 +10504,7 @@ export const SPECIES: Species[] = [
     name: "Mantis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Mantis_Character_BP_STA.Mantis_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10853,6 +10524,7 @@ export const SPECIES: Species[] = [
     name: "Megalania",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Megalania_Character_BP_STA.Megalania_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10872,6 +10544,7 @@ export const SPECIES: Species[] = [
     name: "Megalosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Megalosaurus_Character_BP_STA.Megalosaurus_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10891,6 +10564,7 @@ export const SPECIES: Species[] = [
     name: "Megatherium",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Megatherium_Character_BP_STA.Megatherium_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10910,6 +10584,7 @@ export const SPECIES: Species[] = [
     name: "Mek",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Mek_Character_BP_STA.Mek_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10929,6 +10604,7 @@ export const SPECIES: Species[] = [
     name: "Microraptor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Microraptor_Character_BP_STA.Microraptor_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10948,6 +10624,7 @@ export const SPECIES: Species[] = [
     name: "Maewing",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/MilkGlider_Character_BP_STA.MilkGlider_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10967,6 +10644,7 @@ export const SPECIES: Species[] = [
     name: "Roll Rat",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/MoleRat_Character_BP_STA.MoleRat_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -10986,6 +10664,7 @@ export const SPECIES: Species[] = [
     name: "Mesopithecus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Monkey_Character_BP_STA.Monkey_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11005,6 +10684,7 @@ export const SPECIES: Species[] = [
     name: "Moschops",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Moschops_Character_BP_STA.Moschops_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11024,6 +10704,7 @@ export const SPECIES: Species[] = [
     name: "Lymantria",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Moth_Character_BP_STA.Moth_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11043,6 +10724,7 @@ export const SPECIES: Species[] = [
     name: "Otter",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Otter_Character_BP_STA.Otter_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11062,6 +10744,7 @@ export const SPECIES: Species[] = [
     name: "Oviraptor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Oviraptor_Character_BP_STA.Oviraptor_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11081,6 +10764,7 @@ export const SPECIES: Species[] = [
     name: "Snow Owl",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Owl_Character_BP_STA.Owl_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11100,6 +10784,7 @@ export const SPECIES: Species[] = [
     name: "Pachy",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Pachy_Character_BP_STA.Pachy_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11119,6 +10804,7 @@ export const SPECIES: Species[] = [
     name: "Pachyrhinosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Pachyrhino_Character_BP_STA.Pachyrhino_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11138,6 +10824,7 @@ export const SPECIES: Species[] = [
     name: "Parasaur",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Para_Character_BP_STA.Para_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11157,6 +10844,7 @@ export const SPECIES: Species[] = [
     name: "Paraceratherium",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Paracer_Character_BP_STA.Paracer_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11176,6 +10864,7 @@ export const SPECIES: Species[] = [
     name: "Pegomastax",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Pegomastax_Character_BP_STA.Pegomastax_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11195,6 +10884,7 @@ export const SPECIES: Species[] = [
     name: "Pelagornis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Pela_Character_BP_STA.Pela_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11214,6 +10904,7 @@ export const SPECIES: Species[] = [
     name: "Phiomia",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Phiomia_Character_BP_STA.Phiomia_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11233,6 +10924,7 @@ export const SPECIES: Species[] = [
     name: "Phoenix",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Phoenix_Character_BP_STA.Phoenix_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11252,6 +10944,7 @@ export const SPECIES: Species[] = [
     name: "Procoptodon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Procoptodon_Character_BP_STA.Procoptodon_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11271,6 +10964,7 @@ export const SPECIES: Species[] = [
     name: "Pteranodon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Ptero_Character_BP_STA.Ptero_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11290,6 +10984,7 @@ export const SPECIES: Species[] = [
     name: "Seeker",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Pteroteuthis_Char_BP_STA.Pteroteuthis_Char_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11309,6 +11004,7 @@ export const SPECIES: Species[] = [
     name: "Purlovia",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Purlovia_Character_BP_STA.Purlovia_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11328,6 +11024,7 @@ export const SPECIES: Species[] = [
     name: "Quetzal",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Quetz_Character_BP_STA.Quetz_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11347,6 +11044,7 @@ export const SPECIES: Species[] = [
     name: "Ice Wyvern",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Ragnarok_Wyvern_Override_Ice_STA.Ragnarok_Wyvern_Override_Ice_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11366,6 +11064,7 @@ export const SPECIES: Species[] = [
     name: "Raptor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Raptor_Character_BP_STA.Raptor_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11385,6 +11084,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Raptor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Raptor_Character_BP_STA_Corrupted.Raptor_Character_BP_STA_Corrupted",
+    variants: ["Corrupted", "Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11404,6 +11104,7 @@ export const SPECIES: Species[] = [
     name: "Rex",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Rex_Character_BP_STA.Rex_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11423,6 +11124,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Rex",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Rex_Character_BP_STA_Corrupted.Rex_Character_BP_STA_Corrupted",
+    variants: ["Corrupted", "Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11442,6 +11144,7 @@ export const SPECIES: Species[] = [
     name: "Woolly Rhino",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Rhino_Character_BP_STA.Rhino_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11461,6 +11164,7 @@ export const SPECIES: Species[] = [
     name: "Rock Drake",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/RockDrake_Character_BP_STA.RockDrake_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11480,6 +11184,7 @@ export const SPECIES: Species[] = [
     name: "Rock Elemental",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/RockGolem_Character_BP_STA.RockGolem_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11499,6 +11204,7 @@ export const SPECIES: Species[] = [
     name: "Sabertooth",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Saber_Character_BP_STA.Saber_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11518,6 +11224,7 @@ export const SPECIES: Species[] = [
     name: "Sarco",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Sarco_Character_BP_STA.Sarco_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11537,6 +11244,7 @@ export const SPECIES: Species[] = [
     name: "Brontosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Sauropod_Character_BP_STA.Sauropod_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11556,6 +11264,7 @@ export const SPECIES: Species[] = [
     name: "Pulmonoscorpius",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Scorpion_Character_BP_STA.Scorpion_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11575,6 +11284,7 @@ export const SPECIES: Species[] = [
     name: "Scout",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Scout_Character_BP_STA.Scout_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11594,6 +11304,7 @@ export const SPECIES: Species[] = [
     name: "Ferox",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Shapeshifter_Large_Character_BP_STA.Shapeshifter_Large_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Large", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11613,6 +11324,7 @@ export const SPECIES: Species[] = [
     name: "Ferox",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Shapeshifter_Small_Character_BP_STA.Shapeshifter_Small_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission", "Small"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11632,6 +11344,7 @@ export const SPECIES: Species[] = [
     name: "Ovis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Sheep_Character_BP_STA.Sheep_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11651,6 +11364,7 @@ export const SPECIES: Species[] = [
     name: "Astrodelphis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/SpaceDolphin_Character_BP_STA.SpaceDolphin_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11670,6 +11384,7 @@ export const SPECIES: Species[] = [
     name: "Astrocetus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/SpaceWhale_Character_BP_STA.SpaceWhale_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11689,6 +11404,7 @@ export const SPECIES: Species[] = [
     name: "Araneo",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/SpiderS_Character_BP_STA.SpiderS_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11708,6 +11424,7 @@ export const SPECIES: Species[] = [
     name: "Velonasaur",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Spindles_Character_BP_STA.Spindles_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11727,6 +11444,7 @@ export const SPECIES: Species[] = [
     name: "Thorny Dragon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/SpineyLizard_Character_BP_STA.SpineyLizard_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11746,6 +11464,7 @@ export const SPECIES: Species[] = [
     name: "Spino",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Spino_Character_BP_STA.Spino_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11765,6 +11484,7 @@ export const SPECIES: Species[] = [
     name: "Megaloceros",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Stag_Character_BP_STA.Stag_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11784,6 +11504,7 @@ export const SPECIES: Species[] = [
     name: "Stegosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Stego_Character_BP_STA.Stego_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11803,6 +11524,7 @@ export const SPECIES: Species[] = [
     name: "Summoner",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Summoner_Character_BP_STA.Summoner_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11822,6 +11544,7 @@ export const SPECIES: Species[] = [
     name: "Tapejara",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Tapejara_Character_BP_STA.Tapejara_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11841,6 +11564,7 @@ export const SPECIES: Species[] = [
     name: "Tek Stryder",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/TekStrider_Character_BP_STA.TekStrider_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11860,6 +11584,7 @@ export const SPECIES: Species[] = [
     name: "Voidwyrm",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/TekWyvern_Character_BP_STA.TekWyvern_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11879,6 +11604,7 @@ export const SPECIES: Species[] = [
     name: "Terror Bird",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/TerrorBird_Character_BP_STA.TerrorBird_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11898,6 +11624,7 @@ export const SPECIES: Species[] = [
     name: "Therizinosaur",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Therizino_Character_BP_STA.Therizino_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11917,6 +11644,7 @@ export const SPECIES: Species[] = [
     name: "Thylacoleo",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Thylacoleo_Character_BP_STA.Thylacoleo_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11936,6 +11664,7 @@ export const SPECIES: Species[] = [
     name: "Titanosaur",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Titanosaur_Character_BP_STA.Titanosaur_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11955,6 +11684,7 @@ export const SPECIES: Species[] = [
     name: "Beelzebufo",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Toad_Character_BP_STA.Toad_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11974,6 +11704,7 @@ export const SPECIES: Species[] = [
     name: "Triceratops",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Trike_Character_BP_STA.Trike_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -11993,6 +11724,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Triceratops",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Trike_Character_BP_STA_Corrupted.Trike_Character_BP_STA_Corrupted",
+    variants: ["Corrupted", "Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12012,6 +11744,7 @@ export const SPECIES: Species[] = [
     name: "Trilobite",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Trilobite_Character_STA.Trilobite_Character_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12031,6 +11764,7 @@ export const SPECIES: Species[] = [
     name: "Troodon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Troodon_Character_BP_STA.Troodon_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12050,6 +11784,7 @@ export const SPECIES: Species[] = [
     name: "Tropeognathus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Tropeognathus_Character_BP_STA.Tropeognathus_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12069,6 +11804,7 @@ export const SPECIES: Species[] = [
     name: "Carbonemys",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Turtle_Character_BP_STA.Turtle_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12088,6 +11824,7 @@ export const SPECIES: Species[] = [
     name: "Vulture",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Vulture_Character_BP_STA.Vulture_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12107,6 +11844,7 @@ export const SPECIES: Species[] = [
     name: "Fire Wyvern",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Wyvern_Character_BP_Fire_STA.Wyvern_Character_BP_Fire_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12126,6 +11864,7 @@ export const SPECIES: Species[] = [
     name: "Forest Wyvern",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Wyvern_Character_BP_Forest_STA.Wyvern_Character_BP_Forest_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12145,6 +11884,7 @@ export const SPECIES: Species[] = [
     name: "Lightning Wyvern",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Wyvern_Character_BP_Lightning_STA.Wyvern_Character_BP_Lightning_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12164,6 +11904,7 @@ export const SPECIES: Species[] = [
     name: "Poison Wyvern",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Wyvern_Character_BP_Poison_STA.Wyvern_Character_BP_Poison_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12183,6 +11924,7 @@ export const SPECIES: Species[] = [
     name: "Yutyrannus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/Yutyrannus_Character_BP_STA.Yutyrannus_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12202,6 +11944,7 @@ export const SPECIES: Species[] = [
     name: "Zomdodo",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/ZombieDodo_Character_BP_STA.ZombieDodo_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12221,6 +11964,7 @@ export const SPECIES: Species[] = [
     name: "Zomdodo",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/ZombieDodo_Character_BP_STA_Huge.ZombieDodo_Character_BP_STA_Huge",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12240,6 +11984,7 @@ export const SPECIES: Species[] = [
     name: "Zomdodo",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/ZombieDodo_Character_BP_STA_Large.ZombieDodo_Character_BP_STA_Large",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12259,6 +12004,7 @@ export const SPECIES: Species[] = [
     name: "Zomdodo",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/ZombieDodo_Character_BP_STA_Medium.ZombieDodo_Character_BP_STA_Medium",
+    variants: ["Beta", "Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12278,6 +12024,7 @@ export const SPECIES: Species[] = [
     name: "Morellatops",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Dinos/camelsaurus_Character_BP_STA.camelsaurus_Character_BP_STA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12297,6 +12044,7 @@ export const SPECIES: Species[] = [
     name: "VR Allosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Allo_Character_BP_TameSTA.Allo_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12316,6 +12064,7 @@ export const SPECIES: Species[] = [
     name: "VR Bloodstalker",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/BogSpider_Character_TameSTA.BogSpider_Character_TameSTA",
+    variants: ["Bog", "Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12335,6 +12084,7 @@ export const SPECIES: Species[] = [
     name: "VR Ravager",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/CaveWolf_Character_BP_TameSTA.CaveWolf_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12354,6 +12104,7 @@ export const SPECIES: Species[] = [
     name: "VR Karkinos",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Crab_Character_BP_TameSTA.Crab_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12373,6 +12124,7 @@ export const SPECIES: Species[] = [
     name: "VR Dimorphodon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Dimorph_Character_BP_TameSTA.Dimorph_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12392,6 +12144,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Dragon_Character_BP_STA.Dragon_Character_BP_STA",
+    variants: ["Boss", "Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [240000, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -12411,6 +12164,7 @@ export const SPECIES: Species[] = [
     name: "VR Enforcer",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Enforcer_Character_BP_TameSTA.Enforcer_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12430,6 +12184,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Gorilla_Character_BP_STA.Gorilla_Character_BP_STA",
+    variants: ["Boss", "Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [125000, 0.01, 0.2, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -12449,6 +12204,7 @@ export const SPECIES: Species[] = [
     name: "VR Kaprosuchus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Kaprosuchus_Character_BP_TameSTA.Kaprosuchus_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12468,6 +12224,7 @@ export const SPECIES: Species[] = [
     name: "VR Shadowmane",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/LionfishLion_Character_BP_TameSTA.LionfishLion_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12487,6 +12244,7 @@ export const SPECIES: Species[] = [
     name: "VR Mantis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Mantis_Character_BP_TameSTA.Mantis_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [275, 0.2, 0.135, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -12506,6 +12264,7 @@ export const SPECIES: Species[] = [
     name: "VR Lymantria",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Moth_Character_BP_TameSTA.Moth_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12525,6 +12284,7 @@ export const SPECIES: Species[] = [
     name: "VR Raptor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Raptor_Character_BP_TameSTA.Raptor_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12544,6 +12304,7 @@ export const SPECIES: Species[] = [
     name: "VR Ferox",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Shapeshifter_Large_Character_BP_TameSTA.Shapeshifter_Large_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Large", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12563,6 +12324,7 @@ export const SPECIES: Species[] = [
     name: "VR Astrodelphis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/SpaceDolphin_Character_BP_TameSTA.SpaceDolphin_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12582,6 +12344,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/SpiderL_Character_BP_STA.SpiderL_Character_BP_STA",
+    variants: ["Boss", "Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [300000, 0.01, 0.27, 0.5, 0],
       [150, 0, 0, 0, 0],
@@ -12601,6 +12364,7 @@ export const SPECIES: Species[] = [
     name: "VR Velonasaur",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Spindles_Character_BP_TameSTA.Spindles_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12620,6 +12384,7 @@ export const SPECIES: Species[] = [
     name: "VR Stegosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Stego_Character_BP_TameSTA.Stego_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12639,6 +12404,7 @@ export const SPECIES: Species[] = [
     name: "VR Triceratops",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Gauntlet2/STA/Endless/Tames/Trike_Character_BP_TameSTA.Trike_Character_BP_TameSTA",
+    variants: ["Gauntlet2", "Genesis2", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12658,6 +12424,7 @@ export const SPECIES: Species[] = [
     name: "VR Argentavis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/Argent_Character_BP_LifeSupport.Argent_Character_BP_LifeSupport",
+    variants: ["Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [365, 0.2, 0.30375, 0.5, 0],
       [400, 0.05, 0.075, 0, 0],
@@ -12677,6 +12444,7 @@ export const SPECIES: Species[] = [
     name: "VR Onyc",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/Bat_Character_BP_LifeSupport.Bat_Character_BP_LifeSupport",
+    variants: ["Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -12696,6 +12464,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Raptor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/BionicRaptor_Character_BP_Malfunctioned_LifeSupport.BionicRaptor_Character_BP_Malfunctioned_LifeSupport",
+    variants: ["Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -12715,6 +12484,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Stegosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/BionicStego_Character_BP_Malfunctioned_LifeSupport.BionicStego_Character_BP_Malfunctioned_LifeSupport",
+    variants: ["Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [650, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -12734,6 +12504,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Triceratops",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/BionicTrike_Character_BP_Malfunctioned_LifeSupport.BionicTrike_Character_BP_Malfunctioned_LifeSupport",
+    variants: ["Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [375, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -12753,6 +12524,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Attack Drone",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/EndDrone_Character_BP_Malfunctioned_LifeSupport.EndDrone_Character_BP_Malfunctioned_LifeSupport",
+    variants: ["Boss", "Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [145.800003, 0.2, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -12772,6 +12544,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Defense Unit",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/EndTank_Character_BP_LifeSupport.EndTank_Character_BP_LifeSupport",
+    variants: ["Boss", "Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12791,6 +12564,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Enforcer",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/Enforcer_Character_BP_Malfunctioned_LifeSupport.Enforcer_Character_BP_Malfunctioned_LifeSupport",
+    variants: ["Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [375, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -12810,6 +12584,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Mek Knight",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/Mek_Character_BP_LifeSupport.Mek_Character_BP_LifeSupport",
+    variants: ["Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [5000, 0.16, 0.27, 0.5, 0],
       [1000, 0.1, 0.1, 0, 0],
@@ -12829,6 +12604,7 @@ export const SPECIES: Species[] = [
     name: "VR Parasaur",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/Para_Character_BP_LifeSupport.Para_Character_BP_LifeSupport",
+    variants: ["Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12848,6 +12624,7 @@ export const SPECIES: Species[] = [
     name: "Pteranodon",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/Ptero_Character_BP_LifeSupport.Ptero_Character_BP_LifeSupport",
+    variants: ["Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [160, 1, 0, 0, 0],
       [1000, 0, 0, 0, 0],
@@ -12867,6 +12644,7 @@ export const SPECIES: Species[] = [
     name: "VR Rex",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/Rex_Character_BP_LifeSupport.Rex_Character_BP_LifeSupport",
+    variants: ["Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -12886,6 +12664,7 @@ export const SPECIES: Species[] = [
     name: "Malfunctioned Tek Stryder",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/LifeSupport/Dinos/TekStrider_Character_BP_LifeSupport.TekStrider_Character_BP_LifeSupport",
+    variants: ["Genesis2", "LifeSupport", "Mission"],
     fullStatsRaw: [
       [5000, 0.2, 0.27, 0.5, 0],
       [600, 0.1, 0.1, 0, 0],
@@ -12902,28 +12681,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "R-Allosaurus",
-    blueprintPath:
-      "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Allo_Character_BP_ExpG_Pod.Allo_Character_BP_ExpG_Pod",
-    fullStatsRaw: [
-      [630, 0.2, 0.27, 0.5, 0],
-      [250, 0.1, 0.1, 0, 0],
-      [1000, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0.15],
-      null,
-      null,
-      [380, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, -0.1, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "VR Argentavis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Argent_Character_BP_ExpG.Argent_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [365, 0.2, 0.30375, 0.5, 0],
       [400, 0.05, 0.075, 0, 0],
@@ -12943,6 +12704,7 @@ export const SPECIES: Species[] = [
     name: "Argentavis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Argent_Character_BP_ExpG_Pod.Argent_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [365, 0.2, 0.30375, 0.5, 0],
       [400, 0.05, 0.075, 0, 0],
@@ -12962,6 +12724,7 @@ export const SPECIES: Species[] = [
     name: "Arthropluera",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Arthro_Character_BP_ExpG.Arthro_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [500, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -12981,6 +12744,7 @@ export const SPECIES: Species[] = [
     name: "VR Onyc",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Bat_Character_BP_ExpG.Bat_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -13000,6 +12764,7 @@ export const SPECIES: Species[] = [
     name: "Gigantopithecus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Bigfoot_Character_BP_ExpG_Pod.Bigfoot_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [640, 0.1, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -13019,6 +12784,7 @@ export const SPECIES: Species[] = [
     name: "VR Carnotaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Carno_Character_BP_ExpG.Carno_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [420, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -13038,6 +12804,7 @@ export const SPECIES: Species[] = [
     name: "VR Chalicotherium",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Chalico_Character_BP_ExpG.Chalico_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [600, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -13057,6 +12824,7 @@ export const SPECIES: Species[] = [
     name: "Chalicotherium",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Chalico_Character_BP_ExpG_Pod.Chalico_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [600, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -13076,6 +12844,7 @@ export const SPECIES: Species[] = [
     name: "Defense Unit",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/EndTank_Character_BP_ExpG.EndTank_Character_BP_ExpG",
+    variants: ["Boss", "Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [924.000061, 0.2, 0.27, 0.5, 0],
       [2000, 0.1, 0.1, 0, 0],
@@ -13095,6 +12864,7 @@ export const SPECIES: Species[] = [
     name: "Experimental Giganotosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Gigant_Character_BP_ExpG.Gigant_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [215000, 0.01, 0.002, 0, 0],
       [800, 0, 0, 0, 0],
@@ -13114,6 +12884,7 @@ export const SPECIES: Species[] = [
     name: "VR Kaprosuchus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Kaprosuchus_Character_BP_ExpG.Kaprosuchus_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -13133,6 +12904,7 @@ export const SPECIES: Species[] = [
     name: "Kaprosuchus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Kaprosuchus_Character_BP_ExpG_Pod.Kaprosuchus_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -13152,6 +12924,7 @@ export const SPECIES: Species[] = [
     name: "VR Megatherium",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Megatherium_Character_BP_ExpG.Megatherium_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [740, 0.2, 0.27, 0.5, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -13171,6 +12944,7 @@ export const SPECIES: Species[] = [
     name: "R-Megatherium",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Megatherium_Character_BP_ExpG_Pod.Megatherium_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [740, 0.2, 0.27, 0.5, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -13190,6 +12964,7 @@ export const SPECIES: Species[] = [
     name: "VR Lymantria",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Moth_Character_BP_ExpG.Moth_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [260, 0.2, 0.27, 0.5, 0],
       [150, 0.05, 0.06, 0, 0],
@@ -13209,6 +12984,7 @@ export const SPECIES: Species[] = [
     name: "VR Pachy",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Pachy_Character_BP_ExpG.Pachy_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [165, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -13228,6 +13004,7 @@ export const SPECIES: Species[] = [
     name: "Pachyrhinosaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Pachyrhino_Character_BP_ExpG_Pod.Pachyrhino_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [375, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -13247,6 +13024,7 @@ export const SPECIES: Species[] = [
     name: "VR Parasaur",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Para_Character_BP_ExpG.Para_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -13266,6 +13044,7 @@ export const SPECIES: Species[] = [
     name: "R-Parasaur",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Para_Character_BP_ExpG_Pod.Para_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -13285,6 +13064,7 @@ export const SPECIES: Species[] = [
     name: "Paraceratherium",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Paracer_Character_BP_ExpG_Pod.Paracer_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [1026, 0.2, 0.172125, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -13304,6 +13084,7 @@ export const SPECIES: Species[] = [
     name: "VR Raptor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Raptor_Character_BP_ExpG.Raptor_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -13323,6 +13104,7 @@ export const SPECIES: Species[] = [
     name: "Raptor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Raptor_Character_BP_ExpG_Pod.Raptor_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -13342,6 +13124,7 @@ export const SPECIES: Species[] = [
     name: "VR Rex",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Rex_Character_BP_ExpG.Rex_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -13361,6 +13144,7 @@ export const SPECIES: Species[] = [
     name: "Rex",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Rex_Character_BP_ExpG_Pod.Rex_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -13380,6 +13164,7 @@ export const SPECIES: Species[] = [
     name: "VR Pulmonoscorpius",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Scorpion_Character_BP_ExpG.Scorpion_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [280, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -13399,6 +13184,7 @@ export const SPECIES: Species[] = [
     name: "VR Araneo",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/SpiderS_Character_BP_ExpG.SpiderS_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [150, 0.2, 0.135, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -13418,6 +13204,7 @@ export const SPECIES: Species[] = [
     name: "Spino",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Spino_Character_BP_ExpG_Pod.Spino_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [700, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -13437,6 +13224,7 @@ export const SPECIES: Species[] = [
     name: "VR Tapejara",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Tapejara_Character_BP_ExpG.Tapejara_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [325, 0.17, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -13456,6 +13244,7 @@ export const SPECIES: Species[] = [
     name: "Tapejara",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Tapejara_Character_BP_ExpG_Pod.Tapejara_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [325, 0.17, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -13475,6 +13264,7 @@ export const SPECIES: Species[] = [
     name: "VR Terror Bird",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/TerrorBird_Character_BP_ExpG.TerrorBird_Character_BP_ExpG",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [270, 0.2, 0.27, 0.5, 0],
       [160, 0.1, 0.1, 0, 0],
@@ -13494,6 +13284,7 @@ export const SPECIES: Species[] = [
     name: "Terror Bird",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/TerrorBird_Character_BP_ExpG_Pod.TerrorBird_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [270, 0.2, 0.27, 0.5, 0],
       [160, 0.1, 0.1, 0, 0],
@@ -13513,6 +13304,7 @@ export const SPECIES: Species[] = [
     name: "Therizinosaur",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Therizino_Character_BP_ExpG_Pod.Therizino_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [870, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -13532,6 +13324,7 @@ export const SPECIES: Species[] = [
     name: "Yutyrannus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Mashup/ExperimentG/DinosAndStructures/Yutyrannus_Character_BP_ExpG_Pod.Yutyrannus_Character_BP_ExpG_Pod",
+    variants: ["Genesis2", "Mashup", "Mission"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -13551,6 +13344,7 @@ export const SPECIES: Species[] = [
     name: "VR Onyc",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/Bat_Character_BP_CorrMaze.Bat_Character_BP_CorrMaze",
+    variants: ["Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -13570,6 +13364,7 @@ export const SPECIES: Species[] = [
     name: "VR Titanoboa",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/BoaFrill_Character_BP_CorrMaze.BoaFrill_Character_BP_CorrMaze",
+    variants: ["Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [170, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -13589,6 +13384,7 @@ export const SPECIES: Species[] = [
     name: "VR Carnotaurus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/Carno_Character_BP_CorrMaze.Carno_Character_BP_CorrMaze",
+    variants: ["Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [420, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -13608,6 +13404,7 @@ export const SPECIES: Species[] = [
     name: "VR Dilophosaur",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/Dilo_Character_BP_CorrMaze.Dilo_Character_BP_CorrMaze",
+    variants: ["Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [130, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -13627,6 +13424,7 @@ export const SPECIES: Species[] = [
     name: "VR Kaprosuchus",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/Kaprosuchus_Character_BP_CorrMaze.Kaprosuchus_Character_BP_CorrMaze",
+    variants: ["Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -13646,6 +13444,7 @@ export const SPECIES: Species[] = [
     name: "VR Mantis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/Mantis_Character_BP_CorrMaze.Mantis_Character_BP_CorrMaze",
+    variants: ["Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [275, 0.2, 0.135, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -13665,6 +13464,7 @@ export const SPECIES: Species[] = [
     name: "VR Megalania",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/Megalania_Character_BP_CorrMaze.Megalania_Character_BP_CorrMaze",
+    variants: ["Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [480, 0.2, 0.27, 0.5, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -13684,6 +13484,7 @@ export const SPECIES: Species[] = [
     name: "VR Lymantria",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/Moth_Character_BP_CorrMaze.Moth_Character_BP_CorrMaze",
+    variants: ["Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [260, 0.2, 0.27, 0.5, 0],
       [150, 0.05, 0.06, 0, 0],
@@ -13703,6 +13504,7 @@ export const SPECIES: Species[] = [
     name: "VR Raptor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/Raptor_Character_BP_CorrMaze.Raptor_Character_BP_CorrMaze",
+    variants: ["Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -13722,6 +13524,7 @@ export const SPECIES: Species[] = [
     name: "VR Pulmonoscorpius",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/Scorpion_Character_BP_CorrMaze.Scorpion_Character_BP_CorrMaze",
+    variants: ["Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [280, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -13741,6 +13544,7 @@ export const SPECIES: Species[] = [
     name: "VR Araneo",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/SpiderS_Character_BP_CorrMaze.SpiderS_Character_BP_CorrMaze",
+    variants: ["Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [150, 0.2, 0.135, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -13760,6 +13564,7 @@ export const SPECIES: Species[] = [
     name: "Macro-Summoner",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/Summoner_Character_BP_CorruptedMaze.Summoner_Character_BP_CorruptedMaze",
+    variants: ["Corrupted", "Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [8000, 0.02, 0.27, 0.5, 0],
       [100, 0, 0, 0, 0],
@@ -13779,6 +13584,7 @@ export const SPECIES: Species[] = [
     name: "Summoner",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/Summoner_Character_BP_CorruptedMazeMinion.Summoner_Character_BP_CorruptedMazeMinion",
+    variants: ["Corrupted", "Genesis2", "Maze", "Minion", "Mission"],
     fullStatsRaw: [
       [200, 0.004, 0.27, 0.5, 0],
       [100, 0, 0, 0, 0],
@@ -13798,6 +13604,7 @@ export const SPECIES: Species[] = [
     name: "VR Tapejara",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Maze/CorruptedZone/Dinos/Tapejara_Character_BP_CorrMaze.Tapejara_Character_BP_CorrMaze",
+    variants: ["Genesis2", "Maze", "Mission"],
     fullStatsRaw: [
       [325, 0.17, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -13817,6 +13624,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Survivor",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Shmup/WhaleRescue/Dinos/CorruptHuman_WithTekRifle_Character_BP_WhaleRescue.CorruptHuman_WithTekRifle_Character_BP_WhaleRescue",
+    variants: ["Corrupted", "Genesis2", "Mission", "Shmup"],
     fullStatsRaw: [
       [250, 0.5, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -13836,6 +13644,7 @@ export const SPECIES: Species[] = [
     name: "Attack Drone",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Shmup/WhaleRescue/Dinos/EndDrone_Character_BP_WhaleRescue.EndDrone_Character_BP_WhaleRescue",
+    variants: ["Boss", "Genesis2", "Mission", "Shmup"],
     fullStatsRaw: [
       [145.800003, 0.2, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -13855,6 +13664,7 @@ export const SPECIES: Species[] = [
     name: "Attack Drone",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Shmup/WhaleRescue/Dinos/EndDrone_Character_BP_WhaleRescue_NoFollow.EndDrone_Character_BP_WhaleRescue_NoFollow",
+    variants: ["Boss", "Genesis2", "Mission", "Shmup"],
     fullStatsRaw: [
       [145.800003, 0.2, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -13874,6 +13684,7 @@ export const SPECIES: Species[] = [
     name: "Attack Drone",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Shmup/WhaleRescue/Dinos/EndDrone_Character_BP_WhaleRescue_PassiveSplineFormation.EndDrone_Character_BP_WhaleRescue_PassiveSplineFormation",
+    variants: ["Boss", "Genesis2", "Mission", "Shmup"],
     fullStatsRaw: [
       [145.800003, 0.2, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -13893,6 +13704,7 @@ export const SPECIES: Species[] = [
     name: "Attack Drone",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Shmup/WhaleRescue/Dinos/EndDrone_Character_BP_WhaleRescue_SlowAggressive.EndDrone_Character_BP_WhaleRescue_SlowAggressive",
+    variants: ["Boss", "Genesis2", "Mission", "Shmup"],
     fullStatsRaw: [
       [145.800003, 0.2, 0.27, 0.5, 0],
       [250, 0.05, 0.06, 0, 0],
@@ -13912,6 +13724,7 @@ export const SPECIES: Species[] = [
     name: "Astrodelphis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Shmup/WhaleRescue/Dinos/SpaceDolphin_Character_BP_WhaleRescue.SpaceDolphin_Character_BP_WhaleRescue",
+    variants: ["Genesis2", "Mission", "Shmup"],
     fullStatsRaw: [
       [2400, 0.085, 0.2025, 0, 0],
       [1000, 0.05, 0.05, 0, 0],
@@ -13931,6 +13744,7 @@ export const SPECIES: Species[] = [
     name: "Astrodelphis",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Shmup/WhaleRescue/Dinos/SpaceDolphin_Character_BP_WhaleRescue_Bot.SpaceDolphin_Character_BP_WhaleRescue_Bot",
+    variants: ["Genesis2", "Mission", "Shmup"],
     fullStatsRaw: [
       [160, 0.2, 0.27, 0.5, 0],
       null,
@@ -13947,28 +13761,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Astrocetus",
-    blueprintPath:
-      "/Game/Genesis2/Missions/ModularMission/Shmup/WhaleRescue/Dinos/SpaceWhale_Character_BP_WhaleRescue.SpaceWhale_Character_BP_WhaleRescue",
-    fullStatsRaw: [
-      [18000, 0.005, 0, -495, 0],
-      [1000, 0, 0, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0, 0, 0, 0],
-      [100, 0, 0, 0, 0],
-      null,
-      null,
-      [1000, 0, 0, 0, 0],
-      [1, 0, 0, 0.5, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Corrupted Master Controller",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Shmup/WhaleRescue/Dinos/VRBoss/VRMainBoss_Character_WhaleRescue_Alpha.VRMainBoss_Character_WhaleRescue_Alpha",
+    variants: ["Alpha", "Boss", "Genesis2", "Minion", "Mission", "Shmup", "VR"],
     fullStatsRaw: [
       [42000, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -13988,6 +13784,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Master Controller",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Shmup/WhaleRescue/Dinos/VRBoss/VRMainBoss_Character_WhaleRescue_Beta.VRMainBoss_Character_WhaleRescue_Beta",
+    variants: ["Beta", "Boss", "Genesis2", "Minion", "Mission", "Shmup", "VR"],
     fullStatsRaw: [
       [30000, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -14007,6 +13804,7 @@ export const SPECIES: Species[] = [
     name: "Corrupted Master Controller",
     blueprintPath:
       "/Game/Genesis2/Missions/ModularMission/Shmup/WhaleRescue/Dinos/VRBoss/VRMainBoss_Character_WhaleRescue_Gamma.VRMainBoss_Character_WhaleRescue_Gamma",
+    variants: ["Boss", "Gamma", "Genesis2", "Minion", "Mission", "Shmup", "VR"],
     fullStatsRaw: [
       [18000, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -14023,66 +13821,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Enforcer",
-    blueprintPath:
-      "/Game/Genesis2/Missions/Race2/Enforcer/Enforcer_Character_BP_Race.Enforcer_Character_BP_Race",
-    fullStatsRaw: [
-      [1950, 0.085, 0.2025, -1050, 0],
-      [1000, 0.05, 0.05, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [2000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [10000, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Maewing",
-    blueprintPath:
-      "/Game/Genesis2/Missions/Race2/MilkGlider/MilkGlider_Character_BP_Race.MilkGlider_Character_BP_Race",
-    fullStatsRaw: [
-      [1950, 0.085, 0.2025, -1050, 0],
-      [1000, 0.05, 0.05, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [2000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [10000, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Astrodelphis",
-    blueprintPath:
-      "/Game/Genesis2/Missions/Race2/SpaceDolphin/SpaceDolphin_Character_BP_Race.SpaceDolphin_Character_BP_Race",
-    fullStatsRaw: [
-      [180, 0.085, 0.2025, 0, 0],
-      [1000, 0, 0, 0, 0],
-      [100, 0.06, 0, 0.5, 0],
-      [150, 0, 0, 0, 0],
-      [2000, 0, 0, 0, 0],
-      null,
-      null,
-      [10000, 0, 0, 0, 0],
-      [1, 0, 0, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Scout",
     blueprintPath:
       "/Game/Genesis2/Structures/RemoteCamera/RemoteCamera_Character_BP.RemoteCamera_Character_BP",
+    variants: ["Genesis2"],
     fullStatsRaw: [
       [3, 0.075, 0, 0.5, 0],
       [90, 2, 0, 0, 0],
@@ -14102,6 +13844,7 @@ export const SPECIES: Species[] = [
     name: "Dinopithecus King",
     blueprintPath:
       "/Game/LostIsland/Boss/BossDinopithecus_Character_BP_Easy.BossDinopithecus_Character_BP_Easy",
+    variants: ["Boss", "Gamma", "LostIsland"],
     fullStatsRaw: [
       [375000, 0.2, 0.27, 0.5, 0],
       [2000, 0, 0, 0, 0],
@@ -14121,6 +13864,7 @@ export const SPECIES: Species[] = [
     name: "Dinopithecus King",
     blueprintPath:
       "/Game/LostIsland/Boss/BossDinopithecus_Character_BP_Hard.BossDinopithecus_Character_BP_Hard",
+    variants: ["Alpha", "Boss", "LostIsland"],
     fullStatsRaw: [
       [825000, 0.25, 0.27, 0.5, 0],
       [2000, 0, 0, 0, 0],
@@ -14140,6 +13884,7 @@ export const SPECIES: Species[] = [
     name: "Dinopithecus King",
     blueprintPath:
       "/Game/LostIsland/Boss/BossDinopithecus_Character_BP_Medium.BossDinopithecus_Character_BP_Medium",
+    variants: ["Beta", "Boss", "LostIsland"],
     fullStatsRaw: [
       [600000, 0.225, 0.27, 0.5, 0],
       [2000, 0, 0, 0, 0],
@@ -14159,6 +13904,7 @@ export const SPECIES: Species[] = [
     name: "Amargasaurus",
     blueprintPath:
       "/Game/LostIsland/Boss/Minions/Amargasaurus_Character_BP_Minion.Amargasaurus_Character_BP_Minion",
+    variants: ["Boss", "LostIsland", "Minion"],
     fullStatsRaw: [
       [1250, 0.2, 0.27, 0.5, 0],
       [425, 0.1, 0.1, 0, 0],
@@ -14178,6 +13924,7 @@ export const SPECIES: Species[] = [
     name: "Dinopithecus",
     blueprintPath:
       "/Game/LostIsland/Boss/Minions/Dinopithecus_Character_BP_Minion.Dinopithecus_Character_BP_Minion",
+    variants: ["LostIsland", "Minion"],
     fullStatsRaw: [
       [775, 0.2, 0.243, 0.5, 0],
       [800, 0.1, 0.1, 0, 0],
@@ -14197,6 +13944,7 @@ export const SPECIES: Species[] = [
     name: "Sinomacrops",
     blueprintPath:
       "/Game/LostIsland/Boss/Minions/Sinomacrops_Character_BP_Minion.Sinomacrops_Character_BP_Minion",
+    variants: ["LostIsland", "Minion"],
     fullStatsRaw: [
       [110, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -14216,6 +13964,7 @@ export const SPECIES: Species[] = [
     name: "Amargasaurus",
     blueprintPath:
       "/Game/LostIsland/Dinos/Amargasaurus/Amargasaurus_Character_BP.Amargasaurus_Character_BP",
+    variants: ["LostIsland"],
     fullStatsRaw: [
       [1250, 0.2, 0.27, 0.5, 0],
       [425, 0.1, 0.1, 0, 0],
@@ -14235,6 +13984,7 @@ export const SPECIES: Species[] = [
     name: "Dinopithecus",
     blueprintPath:
       "/Game/LostIsland/Dinos/Dinopithecus/Dinopithecus_Character_BP.Dinopithecus_Character_BP",
+    variants: ["LostIsland"],
     fullStatsRaw: [
       [775, 0.2, 0.243, 0.5, 0],
       [800, 0.1, 0.1, 0, 0],
@@ -14254,6 +14004,7 @@ export const SPECIES: Species[] = [
     name: "Sinomacrops",
     blueprintPath:
       "/Game/LostIsland/Dinos/Sinomacrops/Sinomacrops_Character_BP.Sinomacrops_Character_BP",
+    variants: ["LostIsland"],
     fullStatsRaw: [
       [110, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -14270,28 +14021,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Ice Wyvern",
-    blueprintPath:
-      "/Game/Mods/LostIsland/Assets/Dinos/IceWyvern/Ragnarok_Wyvern_Override_Ice.Ragnarok_Wyvern_Override_Ice",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [315, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Dragon",
     blueprintPath:
       "/Game/Mods/Ragnarok/Custom_Assets/Bosses/Dragon_Character_BP_Boss_Easy_Ragnarok.Dragon_Character_BP_Boss_Easy_Ragnarok",
+    variants: ["Boss", "Gamma", "Ragnarok"],
     fullStatsRaw: [
       [432000, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -14311,6 +14044,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/Mods/Ragnarok/Custom_Assets/Bosses/Dragon_Character_BP_Boss_Hard_Ragnarok.Dragon_Character_BP_Boss_Hard_Ragnarok",
+    variants: ["Alpha", "Boss", "Ragnarok"],
     fullStatsRaw: [
       [972000, 0.25, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -14330,6 +14064,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/Mods/Ragnarok/Custom_Assets/Bosses/Dragon_Character_BP_Boss_Medium_Ragnarok.Dragon_Character_BP_Boss_Medium_Ragnarok",
+    variants: ["Beta", "Boss", "Ragnarok"],
     fullStatsRaw: [
       [864000.062, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -14346,28 +14081,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Griffin",
-    blueprintPath:
-      "/Game/Mods/Ragnarok/Custom_Assets/Bosses/Griffin_Character_Minion_BP.Griffin_Character_Minion_BP",
-    fullStatsRaw: [
-      [950, 0.15, 0.216, -900, 0],
-      [225, 0.05, 0.06, 0, 0],
-      [1500, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1600, 0.1, 0.1, 0, 0.15],
-      null,
-      null,
-      [280, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.5, 0.4],
-      [1, 0, 0.01, 0.365, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Dire Bear",
     blueprintPath:
       "/Game/Mods/Ragnarok/Custom_Assets/Bosses/LifeLabyrinth/Bear/Direbear_LL_Character_BP.Direbear_LL_Character_BP",
+    variants: ["Cave", "LifeLabyrinth", "Ragnarok"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -14387,6 +14104,7 @@ export const SPECIES: Species[] = [
     name: "Megaloceros",
     blueprintPath:
       "/Game/Mods/Ragnarok/Custom_Assets/Bosses/LifeLabyrinth/Elk/Stag_LL_Character_BP.Stag_LL_Character_BP",
+    variants: ["Cave", "LifeLabyrinth", "Ragnarok"],
     fullStatsRaw: [
       [300, 0.2, 0.27, 0.5, 0],
       [280, 0.1, 0.1, 0, 0],
@@ -14406,6 +14124,7 @@ export const SPECIES: Species[] = [
     name: "Direwolf",
     blueprintPath:
       "/Game/Mods/Ragnarok/Custom_Assets/Bosses/LifeLabyrinth/Wolf/Direwolf_LL_Character_BP.Direwolf_LL_Character_BP",
+    variants: ["Cave", "LifeLabyrinth", "Ragnarok"],
     fullStatsRaw: [
       [330, 0.2, 0.27, 0.66, 0],
       [260, 0.1, 0.1, 0, 0],
@@ -14425,6 +14144,7 @@ export const SPECIES: Species[] = [
     name: "Manticore",
     blueprintPath:
       "/Game/Mods/Ragnarok/Custom_Assets/Bosses/Manticore_Character_BP_Easy_Ragnarok.Manticore_Character_BP_Easy_Ragnarok",
+    variants: ["Boss", "Gamma", "Ragnarok"],
     fullStatsRaw: [
       [100000, 0.2, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -14444,6 +14164,7 @@ export const SPECIES: Species[] = [
     name: "Manticore",
     blueprintPath:
       "/Game/Mods/Ragnarok/Custom_Assets/Bosses/Manticore_Character_BP_Hard_Ragnarok.Manticore_Character_BP_Hard_Ragnarok",
+    variants: ["Alpha", "Boss", "Ragnarok"],
     fullStatsRaw: [
       [160000, 0.3, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -14463,6 +14184,7 @@ export const SPECIES: Species[] = [
     name: "Manticore",
     blueprintPath:
       "/Game/Mods/Ragnarok/Custom_Assets/Bosses/Manticore_Character_BP_Medium_Ragnarok.Manticore_Character_BP_Medium_Ragnarok",
+    variants: ["Beta", "Boss", "Ragnarok"],
     fullStatsRaw: [
       [130000, 0.25, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -14482,6 +14204,7 @@ export const SPECIES: Species[] = [
     name: "Dire Polar Bear",
     blueprintPath:
       "/Game/Mods/Ragnarok/Custom_Assets/Dinos/Polar_Bear/Polar_Bear.Polar_Bear",
+    variants: ["Ragnarok"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -14498,47 +14221,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Ice Wyvern",
-    blueprintPath:
-      "/Game/Mods/Ragnarok/Custom_Assets/Dinos/Wyvern/Ice_Wyvern/Ragnarok_Wyvern_Override_Ice.Ragnarok_Wyvern_Override_Ice",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [315, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Fire Wyvern",
-    blueprintPath:
-      "/Game/Mods/Ragnarok/Custom_Assets/Dinos/Wyvern/Ragnarok_Wyvern_Override.Ragnarok_Wyvern_Override",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [315, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Iceworm Male",
     blueprintPath:
       "/Game/Mods/Ragnarok/Custom_Assets/JacksonL/Iceworm/Iceworm_Character_Minion_BP_smaller.Iceworm_Character_Minion_BP_smaller",
+    variants: ["Minion", "Ragnarok"],
     fullStatsRaw: [
       [1700, 0.002, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -14558,6 +14244,7 @@ export const SPECIES: Species[] = [
     name: "Iceworm Queen",
     blueprintPath:
       "/Game/Mods/Ragnarok/Custom_Assets/JacksonL/Iceworm/Iceworm_Queen_Character_BP.Iceworm_Queen_Character_BP",
+    variants: ["Boss", "Ragnarok"],
     fullStatsRaw: [
       [27000, 0.002, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -14574,28 +14261,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Lava Elemental",
-    blueprintPath:
-      "/Game/Mods/Ragnarok/Custom_Assets/JacksonL/LavaGolem/LavaGolem_Character_BP.LavaGolem_Character_BP",
-    fullStatsRaw: [
-      [60000, 0.0125, 0.135, -22000, 0],
-      [300, 0.1, 0.1, 0, 0],
-      [5000, 0.02, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [6000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [660, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.125, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Dragon",
     blueprintPath:
       "/Game/Mods/Valguero/Assets/CoreBlueprints/Boss/Dragon_Character_BP_Boss_Easy.Dragon_Character_BP_Boss_Easy",
+    variants: ["Boss", "Gamma", "Valguero"],
     fullStatsRaw: [
       [432000, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -14615,6 +14284,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/Mods/Valguero/Assets/CoreBlueprints/Boss/Dragon_Character_BP_Boss_Hard.Dragon_Character_BP_Boss_Hard",
+    variants: ["Alpha", "Boss", "Valguero"],
     fullStatsRaw: [
       [972000, 0.25, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -14634,6 +14304,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/Mods/Valguero/Assets/CoreBlueprints/Boss/Dragon_Character_BP_Boss_Medium.Dragon_Character_BP_Boss_Medium",
+    variants: ["Beta", "Boss", "Valguero"],
     fullStatsRaw: [
       [864000.062, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -14653,6 +14324,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/Mods/Valguero/Assets/CoreBlueprints/Boss/Gorilla_Character_BP_Easy.Gorilla_Character_BP_Easy",
+    variants: ["Boss", "Gamma", "Valguero"],
     fullStatsRaw: [
       [180000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -14672,6 +14344,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/Mods/Valguero/Assets/CoreBlueprints/Boss/Gorilla_Character_BP_Hard.Gorilla_Character_BP_Hard",
+    variants: ["Alpha", "Boss", "Valguero"],
     fullStatsRaw: [
       [540000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -14691,6 +14364,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/Mods/Valguero/Assets/CoreBlueprints/Boss/Gorilla_Character_BP_Medium.Gorilla_Character_BP_Medium",
+    variants: ["Beta", "Boss", "Valguero"],
     fullStatsRaw: [
       [396000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -14710,6 +14384,7 @@ export const SPECIES: Species[] = [
     name: "Manticore",
     blueprintPath:
       "/Game/Mods/Valguero/Assets/CoreBlueprints/Boss/Manticore_Character_BP_Easy.Manticore_Character_BP_Easy",
+    variants: ["Boss", "Gamma", "Valguero"],
     fullStatsRaw: [
       [100000, 0.2, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -14729,6 +14404,7 @@ export const SPECIES: Species[] = [
     name: "Manticore",
     blueprintPath:
       "/Game/Mods/Valguero/Assets/CoreBlueprints/Boss/Manticore_Character_BP_Hard.Manticore_Character_BP_Hard",
+    variants: ["Alpha", "Boss", "Valguero"],
     fullStatsRaw: [
       [160000, 0.3, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -14748,6 +14424,7 @@ export const SPECIES: Species[] = [
     name: "Manticore",
     blueprintPath:
       "/Game/Mods/Valguero/Assets/CoreBlueprints/Boss/Manticore_Character_BP_Medium.Manticore_Character_BP_Medium",
+    variants: ["Beta", "Boss", "Valguero"],
     fullStatsRaw: [
       [130000, 0.25, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -14767,6 +14444,7 @@ export const SPECIES: Species[] = [
     name: "Iceworm Male",
     blueprintPath:
       "/Game/Mods/Valguero/Assets/Dinos/IceWorm/Iceworm_Character_Minion_BP_smaller.Iceworm_Character_Minion_BP_smaller",
+    variants: ["Minion", "Valguero"],
     fullStatsRaw: [
       [1700, 0.002, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -14786,6 +14464,7 @@ export const SPECIES: Species[] = [
     name: "Dire Polar Bear",
     blueprintPath:
       "/Game/Mods/Valguero/Assets/Dinos/PolarBear/Polar_Bear.Polar_Bear",
+    variants: ["Valguero"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -14802,47 +14481,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Chalk Golem",
-    blueprintPath:
-      "/Game/Mods/Valguero/Assets/Dinos/RockGolem/ChalkGolem/ChalkGolem_Character_BP.ChalkGolem_Character_BP",
-    fullStatsRaw: [
-      [25000, 0.0125, 0.135, -22000, 0],
-      [300, 0.1, 0.1, 0, 0],
-      [5000, 0.02, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [6000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [660, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.125, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Ice Golem",
-    blueprintPath:
-      "/Game/Mods/Valguero/Assets/Dinos/RockGolem/IceGolem/IceGolem_Character_BP.IceGolem_Character_BP",
-    fullStatsRaw: [
-      [25000, 0.0125, 0.135, -22000, 0],
-      [300, 0.1, 0.1, 0, 0],
-      [5000, 0.02, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [6000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [660, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.125, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/Mods/Valguero/Assets/Dinos/SpiderL/SpiderL_VAL_Character_BP.SpiderL_VAL_Character_BP",
+    variants: ["Boss", "Valguero"],
     fullStatsRaw: [
       [324000, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -14881,6 +14523,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Achatina",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Achatina/Achatina_Character_BP_Aberrant.Achatina_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [75, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -14892,25 +14535,6 @@ export const SPECIES: Species[] = [
       [600, 0.02, 0.04, 0, 0],
       [1, 0.05, 0.1, 0.5, 0.4],
       [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Allosaurus",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/Allosaurus/Allo_Character_BP.Allo_Character_BP",
-    fullStatsRaw: [
-      [630, 0.2, 0.27, 0.5, 0],
-      [250, 0.1, 0.1, 0, 0],
-      [1000, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [3000, 0.1, 0.1, 0, 0.15],
-      null,
-      null,
-      [380, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, -0.1, 0],
       null,
       null,
     ],
@@ -14957,6 +14581,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Anglerfish",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Anglerfish/Angler_Character_BP_Aberrant.Angler_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [450, 0.2, 0.27, 0.3, 0],
       [240, 0.1, 0.1, 0, 0],
@@ -14995,6 +14620,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Ankylosaurus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Ankylo/Ankylo_Character_BP_Aberrant.Ankylo_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [700, 0.2, 0.27, 0.5, 0],
       [175, 0.1, 0.1, 0, 0],
@@ -15109,6 +14735,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Arthropluera",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Arthropluera/Arthro_Character_BP_Aberrant.Arthro_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [500, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -15147,6 +14774,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Baryonyx",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Baryonyx/Baryonyx_Character_BP_Aberrant.Baryonyx_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [440, 0.2, 0.27, 0.5, 0],
       [325, 0.1, 0.1, 0, 0],
@@ -15280,6 +14908,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Gigantopithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Bigfoot/Bigfoot_Character_BP_Aberrant.Bigfoot_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [640, 0.1, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -15299,6 +14928,7 @@ export const SPECIES: Species[] = [
     name: "Gigantopithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Bigfoot/Bigfoot_Character_BP_Aggressive.Bigfoot_Character_BP_Aggressive",
+    variants: ["Boss", "Gamma"],
     fullStatsRaw: [
       [640, 0.1, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -15318,6 +14948,7 @@ export const SPECIES: Species[] = [
     name: "Gigantopithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Bigfoot/Bigfoot_Character_BP_Aggressive_Hard.Bigfoot_Character_BP_Aggressive_Hard",
+    variants: ["Alpha", "Boss"],
     fullStatsRaw: [
       [1920, 0.1, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -15337,6 +14968,7 @@ export const SPECIES: Species[] = [
     name: "Gigantopithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Bigfoot/Bigfoot_Character_BP_Aggressive_Med.Bigfoot_Character_BP_Aggressive_Med",
+    variants: ["Beta", "Boss"],
     fullStatsRaw: [
       [1280, 0.1, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -15394,6 +15026,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Titanoboa",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/BoaFrill/BoaFrill_Character_BP_Aberrant.BoaFrill_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [170, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -15410,28 +15043,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Carcharodontosaurus",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/Carcharodontosaurus/Carcha_Character_BP.Carcha_Character_BP",
-    fullStatsRaw: [
-      [70000, 0.0008, 0.004, -54000, 0],
-      [480, 0.006, 0.025, 0, 0],
-      [6000, 0.06, 0, 0, 0],
-      [150, 0.0025, 0.025, 0, 0],
-      [4000, 0.0025, 0.025, 0, 0],
-      null,
-      null,
-      [650, 0.02, 0.01, 0, 0],
-      [1, 0.05, 0.05, -0.8, 0],
-      [1, 0, 0.0031, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Skeletal Carnotaurus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Carno/Bone_MegaCarno_Character_BP.Bone_MegaCarno_Character_BP",
+    variants: ["Skeletal"],
     fullStatsRaw: [
       [6400, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -15470,6 +15085,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Carnotaurus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Carno/Carno_Character_BP_Aberrant.Carno_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [420, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -15489,6 +15105,7 @@ export const SPECIES: Species[] = [
     name: "Alpha Carnotaurus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Carno/MegaCarno_Character_BP.MegaCarno_Character_BP",
+    variants: ["Mega"],
     fullStatsRaw: [
       [6400, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -15546,6 +15163,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Cnidaria",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Cnidaria/Cnidaria_Character_BP_Aberrant.Cnidaria_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [180, 0.2, 0.27, 0.5, 0],
       [120, 0.1, 0.1, 0, 0],
@@ -15584,6 +15202,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Coelacanth",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Coelacanth/Coel_Character_BP_Aberrant.Coel_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [30, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -15603,6 +15222,7 @@ export const SPECIES: Species[] = [
     name: "Coelacanth",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Coelacanth/Coel_Character_BP_IceFishMission.Coel_Character_BP_IceFishMission",
+    variants: ["IceFishing"],
     fullStatsRaw: [
       [30, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -15622,6 +15242,7 @@ export const SPECIES: Species[] = [
     name: "Coelacanth",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Coelacanth/Coel_Character_BP_Ocean.Coel_Character_BP_Ocean",
+    variants: ["Ocean"],
     fullStatsRaw: [
       [30, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -15641,6 +15262,7 @@ export const SPECIES: Species[] = [
     name: "Coelacanth",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Coelacanth/Coel_Character_BP_VDay.Coel_Character_BP_VDay",
+    variants: ["VDay"],
     fullStatsRaw: [
       [30, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -15660,6 +15282,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Coelacanth",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Coelacanth/Coel_Character_BP_VDay_Aberrant.Coel_Character_BP_VDay_Aberrant",
+    variants: ["Aberrant", "VDay"],
     fullStatsRaw: [
       [30, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -15679,6 +15302,7 @@ export const SPECIES: Species[] = [
     name: "Coelacanth",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Coelacanth/Coel_Character_BP_VDay_Ocean.Coel_Character_BP_VDay_Ocean",
+    variants: ["Ocean", "VDay"],
     fullStatsRaw: [
       [30, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -15709,82 +15333,6 @@ export const SPECIES: Species[] = [
       [25, 0.02, 0.04, 0, 0],
       [1, 0.05, 0.1, 1, 0.4],
       [1, 0, 0.01, 1, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Blood Crystal Wyvern",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/CrystalWyvern/CrystalWyvern_Character_BP_Blood.CrystalWyvern_Character_BP_Blood",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [325, 0.05, 0.05, 0, 0],
-      [545, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1500, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [300, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Ember Crystal Wyvern",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/CrystalWyvern/CrystalWyvern_Character_BP_Ember.CrystalWyvern_Character_BP_Ember",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [325, 0.05, 0.05, 0, 0],
-      [545, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1500, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [300, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Alpha Blood Crystal Wyvern",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/CrystalWyvern/CrystalWyvern_Character_BP_Mega.CrystalWyvern_Character_BP_Mega",
-    fullStatsRaw: [
-      [5920, 0.15, 0.162, -785, 0],
-      [710, 0.05, 0.05, 0, 0],
-      [990, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1500, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [300, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Tropical Crystal Wyvern",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/CrystalWyvern/CrystalWyvern_Character_BP_WS.CrystalWyvern_Character_BP_WS",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [325, 0.05, 0.05, 0, 0],
-      [545, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1500, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [300, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
       null,
       null,
     ],
@@ -15850,6 +15398,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Dimetrodon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Dimetrodon/Dimetro_Character_BP_Aberrant.Dimetro_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [350, 0.2, 0.27, 0.65, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -15888,6 +15437,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Dimorphodon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Dimorphodon/Dimorph_Character_BP_Aberrant.Dimorph_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [125, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -15907,6 +15457,7 @@ export const SPECIES: Species[] = [
     name: "Dimorphodon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Dimorphodon/Dimorph_Character_BP_Aggressive_DragonBoss.Dimorph_Character_BP_Aggressive_DragonBoss",
+    variants: ["Boss", "Gamma", "Minion"],
     fullStatsRaw: [
       [264, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -15926,6 +15477,7 @@ export const SPECIES: Species[] = [
     name: "Dimorphodon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Dimorphodon/Dimorph_Character_BP_Aggressive_DragonBoss_Hard.Dimorph_Character_BP_Aggressive_DragonBoss_Hard",
+    variants: ["Alpha", "Boss", "Minion"],
     fullStatsRaw: [
       [792, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -15945,6 +15497,7 @@ export const SPECIES: Species[] = [
     name: "Dimorphodon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Dimorphodon/Dimorph_Character_BP_Aggressive_DragonBoss_Med.Dimorph_Character_BP_Aggressive_DragonBoss_Med",
+    variants: ["Beta", "Boss", "Minion"],
     fullStatsRaw: [
       [528, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -15983,6 +15536,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Diplocaulus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Diplocaulus/Diplocaulus_Character_BP_Aberrant.Diplocaulus_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [165, 0.1, 0.1, 0, 0],
@@ -16021,6 +15575,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Diplodocus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Diplodocus/Diplodocus_Character_BP_Aberrant.Diplodocus_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [1700, 0.2, 0.27, 0.5, 0],
       [550, 0.1, 0.1, 0, 0],
@@ -16059,6 +15614,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Dire Bear",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Direbear/Direbear_Character_BP_Aberrant.Direbear_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -16116,6 +15672,7 @@ export const SPECIES: Species[] = [
     name: "Direwolf Ghost",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Direwolf/Ghost_Direwolf_Character_BP.Ghost_Direwolf_Character_BP",
+    variants: ["Ghost"],
     fullStatsRaw: [
       [330, 0.2, 0.27, 0.66, 0],
       [260, 0.1, 0.1, 0, 0],
@@ -16154,6 +15711,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Dodo",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Dodo/Dodo_Character_BP_Aberrant.Dodo_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [40, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -16249,6 +15807,7 @@ export const SPECIES: Species[] = [
     name: "DodoRex",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/DodoRex/DodoRex_Character_BP.DodoRex_Character_BP",
+    variants: ["Boss"],
     fullStatsRaw: [
       [666666, 0.2, 0.27, 0, 0],
       [1666, 0.1, 0.1, 0, 0],
@@ -16268,6 +15827,7 @@ export const SPECIES: Species[] = [
     name: "DodoRex",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/DodoRex/DodoRex_Character_BP_FearEvolved.DodoRex_Character_BP_FearEvolved",
+    variants: ["Boss"],
     fullStatsRaw: [
       [666666, 0.2, 0.27, 0, 0],
       [1666, 0.1, 0.1, 0, 0],
@@ -16287,6 +15847,7 @@ export const SPECIES: Species[] = [
     name: "DodoRex",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/DodoRex/DodoRex_Character_BP_TurkeyTrials.DodoRex_Character_BP_TurkeyTrials",
+    variants: ["Boss"],
     fullStatsRaw: [
       [666666, 0.2, 0.27, 0, 0],
       [1666, 0.1, 0.1, 0, 0],
@@ -16325,6 +15886,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Doedicurus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Doedicurus/Doed_Character_BP_Aberrant.Doed_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [850, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -16363,6 +15925,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Dragon/Dragon_Character_BP_Boss_Easy.Dragon_Character_BP_Boss_Easy",
+    variants: ["Boss", "Gamma"],
     fullStatsRaw: [
       [432000, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -16382,6 +15945,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Dragon/Dragon_Character_BP_Boss_Hard.Dragon_Character_BP_Boss_Hard",
+    variants: ["Alpha", "Boss"],
     fullStatsRaw: [
       [972000, 0.25, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -16401,6 +15965,7 @@ export const SPECIES: Species[] = [
     name: "Dragon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Dragon/Dragon_Character_BP_Boss_Medium.Dragon_Character_BP_Boss_Medium",
+    variants: ["Beta", "Boss"],
     fullStatsRaw: [
       [864000.062, 0.2, 0.2, 0.3, 0],
       [10000, 0.1, 0.1, 0, 0],
@@ -16439,6 +16004,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Meganeura",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Dragonfly/Dragonfly_Character_BP_Aberrant.Dragonfly_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [45, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -16477,6 +16043,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Dung Beetle",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/DungBeetle/DungBeetle_Character_BP_Aberrant.DungBeetle_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [200, 0.2, 0.135, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -16512,44 +16079,6 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Electrophorus",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/Eel/Eel_Character_BP.Eel_Character_BP",
-    fullStatsRaw: [
-      [180, 0.2, 0.27, -0.2, 0],
-      [165, 0.1, 0.1, 0, 0],
-      [175, 0.06, 0, 0.5, 0],
-      [1050, 0.1, 0.1, 0, 0],
-      [1500, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [150, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.25],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Aberrant Electrophorus",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/Eel/Eel_Character_BP_Aberrant.Eel_Character_BP_Aberrant",
-    fullStatsRaw: [
-      [180, 0.2, 0.27, -0.2, 0],
-      [165, 0.1, 0.1, 0, 0],
-      [175, 0.06, 0, 0.5, 0],
-      [1050, 0.1, 0.1, 0, 0],
-      [1500, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [150, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.25],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Equus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Equus/Equus_Character_BP.Equus_Character_BP",
@@ -16572,6 +16101,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Equus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Equus/Equus_Character_BP_Aberrant.Equus_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [240, 0.2, 0.27, 0.5, 0],
       [560, 0.1, 0.1, 0, 0],
@@ -16645,85 +16175,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Tek Giganotosaurus",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/Giganotosaurus/BionicGigant_Character_BP.BionicGigant_Character_BP",
-    fullStatsRaw: [
-      [80000, 0.0005, 0.002, -63000, 0],
-      [400, 0.0005, 0.01, 0, 0],
-      [10000, 0.06, 0, 0, 0],
-      [150, 0.0025, 0.025, 0, 0],
-      [4000, 0.0025, 0.025, 0, 0],
-      null,
-      null,
-      [700, 0.01, 0.01, 0, 0],
-      [1, 0.05, 0.05, -0.8, 0],
-      [1, 0, 0.0031, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Skeletal Giganotosaurus",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/Giganotosaurus/Bone_Gigant_Character_BP.Bone_Gigant_Character_BP",
-    fullStatsRaw: [
-      [80000, 0.0005, 0.002, -63000, 0],
-      [400, 0.0005, 0.01, 0, 0],
-      [10000, 0.06, 0, 0, 0],
-      [150, 0.0025, 0.025, 0, 0],
-      [4000, 0.0025, 0.025, 0, 0],
-      null,
-      null,
-      [700, 0.01, 0.01, 0, 0],
-      [1, 0.05, 0.05, -0.8, 0],
-      [1, 0, 0.0031, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Giganotosaurus",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/Giganotosaurus/Gigant_Character_BP.Gigant_Character_BP",
-    fullStatsRaw: [
-      [80000, 0.0005, 0.002, -63000, 0],
-      [400, 0.0005, 0.01, 0, 0],
-      [10000, 0.06, 0, 0, 0],
-      [150, 0.0025, 0.025, 0, 0],
-      [4000, 0.0025, 0.025, 0, 0],
-      null,
-      null,
-      [700, 0.01, 0.01, 0, 0],
-      [1, 0.05, 0.05, -0.8, 0],
-      [1, 0, 0.0031, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Giganotosaurus",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/Giganotosaurus/Gigant_Character_BP_TekCave.Gigant_Character_BP_TekCave",
-    fullStatsRaw: [
-      [80000, 0.0005, 0.002, -63000, 0],
-      [400, 0.0005, 0.01, 0, 0],
-      [10000, 0.06, 0, 0, 0],
-      [150, 0.0025, 0.025, 0, 0],
-      [4000, 0.0025, 0.025, 0, 0],
-      null,
-      null,
-      [700, 0.01, 0.01, 0, 0],
-      [1, 0.05, 0.05, -0.8, 0],
-      [1, 0, 0.0031, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Megapithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Gorilla/Gorilla_Character_BP_Easy.Gorilla_Character_BP_Easy",
+    variants: ["Boss", "Gamma"],
     fullStatsRaw: [
       [180000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -16743,6 +16198,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Gorilla/Gorilla_Character_BP_Hard.Gorilla_Character_BP_Hard",
+    variants: ["Alpha", "Boss"],
     fullStatsRaw: [
       [540000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -16762,6 +16218,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Gorilla/Gorilla_Character_BP_Medium.Gorilla_Character_BP_Medium",
+    variants: ["Beta", "Boss"],
     fullStatsRaw: [
       [396000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -16781,6 +16238,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Gorilla/Gorilla_Character_BP_TheCenter.Gorilla_Character_BP_TheCenter",
+    variants: ["Boss", "Gamma", "TheCenter"],
     fullStatsRaw: [
       [144000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -16800,6 +16258,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Gorilla/Gorilla_Character_BP_TheCenter_Hard.Gorilla_Character_BP_TheCenter_Hard",
+    variants: ["Alpha", "Boss", "TheCenter"],
     fullStatsRaw: [
       [224000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -16819,6 +16278,7 @@ export const SPECIES: Species[] = [
     name: "Megapithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Gorilla/Gorilla_Character_BP_TheCenter_Medium.Gorilla_Character_BP_TheCenter_Medium",
+    variants: ["Beta", "Boss", "TheCenter"],
     fullStatsRaw: [
       [160000, 0, 0, 0.3, 0],
       [650, 0, 0, 0, 0],
@@ -16830,25 +16290,6 @@ export const SPECIES: Species[] = [
       [4000, 0.02, 0.02, 0, 0],
       [1, 0, 0, 0.3, 0.3],
       [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Griffin",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/Griffin/Griffin_Character_BP.Griffin_Character_BP",
-    fullStatsRaw: [
-      [950, 0.15, 0.216, -900, 0],
-      [225, 0.05, 0.06, 0, 0],
-      [1500, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1600, 0.1, 0.1, 0, 0.15],
-      null,
-      null,
-      [280, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.5, 0.4],
-      [1, 0, 0.01, 0.365, 0],
       null,
       null,
     ],
@@ -16887,25 +16328,6 @@ export const SPECIES: Species[] = [
       [170, 0.02, 0.04, 0, 0],
       [1, 0.05, 0.1, 0.4, 0.35],
       [1, 0, 0.01, 0.3, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Ice Golem",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/IceGolem/IceGolem_Character_BP.IceGolem_Character_BP",
-    fullStatsRaw: [
-      [25000, 0.0125, 0.135, -22000, 0],
-      [300, 0.1, 0.1, 0, 0],
-      [5000, 0.02, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [6000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [660, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.125, 0.4],
-      [1, 0, 0.01, 0, 0],
       null,
       null,
     ],
@@ -16952,6 +16374,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Iguanodon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Iguanodon/Iguanodon_Character_BP_Aberrant.Iguanodon_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [250, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -17066,6 +16489,7 @@ export const SPECIES: Species[] = [
     name: "Alpha Leedsichthys",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Leedsichthys/Alpha_Leedsichthys_Character_BP.Alpha_Leedsichthys_Character_BP",
+    variants: ["Mega"],
     fullStatsRaw: [
       [4400, 0.12, 0.243, 0.3, 0],
       [500, 0.1, 0.1, 0, 0],
@@ -17142,6 +16566,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Lystrosaurus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Lystrosaurus/Lystro_Character_BP_Aberrant.Lystro_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [90, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -17199,6 +16624,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Manta",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Manta/Manta_Character_BP_Aberrant.Manta_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [320, 0.05, 0.0675, 0.5, 0],
       [270, 0.2, 0.2, 0, 0],
@@ -17237,6 +16663,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Megalania",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Megalania/Megalania_Character_BP_Aberrant.Megalania_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [480, 0.2, 0.27, 0.5, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -17256,6 +16683,7 @@ export const SPECIES: Species[] = [
     name: "Alpha Megalodon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Megalodon/MEgaMegalodon_Character_BP.MegaMegalodon_Character_BP",
+    variants: ["Mega"],
     fullStatsRaw: [
       [9600, 0.2, 0.27, 0.3, 0],
       [320, 0.1, 0.1, 0, 0],
@@ -17313,6 +16741,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Megalosaurus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Megalosaurus/Megalosaurus_Character_BP_Aberrant.Megalosaurus_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [1025, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -17332,6 +16761,7 @@ export const SPECIES: Species[] = [
     name: "Megalosaurus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Megalosaurus/Megalosaurus_Character_BP_TekCave.Megalosaurus_Character_BP_TekCave",
+    variants: ["Cave", "TekCave"],
     fullStatsRaw: [
       [1025, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -17408,6 +16838,7 @@ export const SPECIES: Species[] = [
     name: "Mesopithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Monkey/Monkey_Character_BP_Aggressive.Monkey_Character_BP_Aggressive",
+    variants: ["Boss", "Gamma"],
     fullStatsRaw: [
       [115, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -17427,6 +16858,7 @@ export const SPECIES: Species[] = [
     name: "Mesopithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Monkey/Monkey_Character_BP_Aggressive_Hard.Monkey_Character_BP_Aggressive_Hard",
+    variants: ["Alpha", "Boss"],
     fullStatsRaw: [
       [345, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -17446,6 +16878,7 @@ export const SPECIES: Species[] = [
     name: "Mesopithecus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Monkey/Monkey_Character_BP_Aggressive_Med.Monkey_Character_BP_Aggressive_Med",
+    variants: ["Beta", "Boss"],
     fullStatsRaw: [
       [230, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -17484,6 +16917,7 @@ export const SPECIES: Species[] = [
     name: "Mosasaurus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Mosasaurus/Mosa_Character_BP_Cave.Mosa_Character_BP_Cave",
+    variants: ["Cave"],
     fullStatsRaw: [
       [3600, 0.12, 0.21, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -17503,6 +16937,7 @@ export const SPECIES: Species[] = [
     name: "Alpha Mosasaur",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Mosasaurus/Mosa_Character_BP_Mega.Mosa_Character_BP_Mega",
+    variants: ["Mega"],
     fullStatsRaw: [
       [54000, 0.12, 0.21, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -17522,6 +16957,7 @@ export const SPECIES: Species[] = [
     name: "Alpha Mosasaur",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Mosasaurus/Mosa_Character_BP_Mega_Cave.Mosa_Character_BP_Mega_Cave",
+    variants: ["Cave", "Mega"],
     fullStatsRaw: [
       [54000, 0.12, 0.21, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -17560,6 +16996,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Moschops",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Moschops/Moschops_Character_BP_Aberrant.Moschops_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [375, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -17598,6 +17035,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Otter",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Otter/Otter_Character_BP_Aberrant.Otter_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [40, 0.2, 0.27, 0.5, 0],
       [180, 0.1, 0.1, 0, 0],
@@ -17731,6 +17169,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Parasaur",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Para/Para_Character_BP_Aberrant.Para_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -17769,6 +17208,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Paraceratherium",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Paraceratherium/Paracer_Character_BP_Aberrant.Paracer_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [1026, 0.2, 0.172125, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -17864,6 +17304,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Piranha",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Piranha/Piranha_Character_BP_Aberrant.Piranha_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [150, 0.2, 0.27, 0.5, 0],
       [120, 0.1, 0.1, 0, 0],
@@ -17883,6 +17324,7 @@ export const SPECIES: Species[] = [
     name: "Piranha",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Piranha/Piranha_Character_BP_BreakNet.Piranha_Character_BP_BreakNet",
+    variants: ["BreakNet", "Mission"],
     fullStatsRaw: [
       [150, 0.2, 0.27, 0.5, 0],
       [120, 0.1, 0.1, 0, 0],
@@ -17902,6 +17344,7 @@ export const SPECIES: Species[] = [
     name: "Piranha",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Piranha/Piranha_Character_BP_IceFishMission.Piranha_Character_BP_IceFishMission",
+    variants: ["IceFishing", "Mission"],
     fullStatsRaw: [
       [150, 0.2, 0.27, 0.5, 0],
       [120, 0.1, 0.1, 0, 0],
@@ -17978,6 +17421,7 @@ export const SPECIES: Species[] = [
     name: "Pteranodon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Ptero/Ptero_Minion_Character_BP.Ptero_Minion_Character_BP",
+    variants: ["Boss", "Gamma", "Minion"],
     fullStatsRaw: [
       [520, 0.2, 0.15, 0.5, 0],
       [150, 0.05, 0.04, 0, 0],
@@ -17997,6 +17441,7 @@ export const SPECIES: Species[] = [
     name: "Pteranodon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Ptero/Ptero_Minion_Character_Hard.Ptero_Minion_Character_Hard",
+    variants: ["Alpha", "Boss", "Minion"],
     fullStatsRaw: [
       [1560, 0.2, 0.15, 0.5, 0],
       [150, 0.05, 0.04, 0, 0],
@@ -18016,6 +17461,7 @@ export const SPECIES: Species[] = [
     name: "Pteranodon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Ptero/Ptero_Minion_Character_Med.Ptero_Minion_Character_Med",
+    variants: ["Beta", "Boss", "Minion"],
     fullStatsRaw: [
       [1040, 0.2, 0.15, 0.5, 0],
       [150, 0.05, 0.04, 0, 0],
@@ -18054,6 +17500,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Purlovia",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Purlovia/Purlovia_Character_BP_Aberrant.Purlovia_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [275, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -18111,6 +17558,7 @@ export const SPECIES: Species[] = [
     name: "Skeletal Quetzal",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Quetzalcoatlus/Bone_Quetz_Character_BP.Bone_Quetz_Character_BP",
+    variants: ["Skeletal"],
     fullStatsRaw: [
       [18000, 0.2, 0.27, 0.5, 0],
       [750, 0.1, 0.1, 0, 0],
@@ -18168,6 +17616,7 @@ export const SPECIES: Species[] = [
     name: "Skeletal Raptor",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Raptor/Bone_MegaRaptor_Character_BP.Bone_MegaRaptor_Character_BP",
+    variants: ["Skeletal"],
     fullStatsRaw: [
       [3600, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -18187,6 +17636,7 @@ export const SPECIES: Species[] = [
     name: "Alpha Raptor",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Raptor/MegaRaptor_Character_BP.MegaRaptor_Character_BP",
+    variants: ["Mega"],
     fullStatsRaw: [
       [3600, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -18225,6 +17675,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Raptor",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Raptor/Raptor_Character_BP_Aberrant.Raptor_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -18244,6 +17695,7 @@ export const SPECIES: Species[] = [
     name: "Deinonychus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Raptor/Uberraptor/Deinonychus_Character_BP.Deinonychus_Character_BP",
+    variants: ["Valguero"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -18282,6 +17734,7 @@ export const SPECIES: Species[] = [
     name: "Skeletal Rex",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Rex/Bone_MegaRex_Character_BP.Bone_MegaRex_Character_BP",
+    variants: ["Skeletal"],
     fullStatsRaw: [
       [17500, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -18301,6 +17754,7 @@ export const SPECIES: Species[] = [
     name: "Rex Ghost",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Rex/Ghost_Rex_Character_BP.Ghost_Rex_Character_BP",
+    variants: ["Ghost"],
     fullStatsRaw: [
       [1100, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -18320,6 +17774,7 @@ export const SPECIES: Species[] = [
     name: "Alpha T-Rex",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Rex/MegaRex_Character_BP.MegaRex_Character_BP",
+    variants: ["Mega"],
     fullStatsRaw: [
       [17500, 0.2, 0.27, 0.5, 0],
       [420, 0.1, 0.1, 0, 0],
@@ -18396,6 +17851,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Salmon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Salmon/Salmon_Character_Aberrant.Salmon_Character_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [65, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -18434,6 +17890,7 @@ export const SPECIES: Species[] = [
     name: "Sabertooth Salmon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Salmon/Salmon_Character_BP_IceFishMission.Salmon_Character_BP_IceFishMission",
+    variants: ["IceFishing"],
     fullStatsRaw: [
       [65, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -18453,6 +17910,7 @@ export const SPECIES: Species[] = [
     name: "Sabertooth Salmon",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Salmon/Salmon_Character_Rare_BP.Salmon_Character_Rare_BP",
+    variants: ["Rare"],
     fullStatsRaw: [
       [65, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -18491,6 +17949,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Sarco",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Sarco/Sarco_Character_BP_Aberrant.Sarco_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.65, 0],
       [450, 0.1, 0.1, 0, 0],
@@ -18510,6 +17969,7 @@ export const SPECIES: Species[] = [
     name: "Skeletal Bronto",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Sauropod/Bone_Sauropod_Character_BP.Bone_Sauropod_Character_BP",
+    variants: ["Skeletal"],
     fullStatsRaw: [
       [34500, 0.2, 0.27, 0.5, 0],
       [240, 0.1, 0.1, 0, 0],
@@ -18567,6 +18027,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Pulmonoscorpius",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Scorpion/Scorpion_Character_BP_Aberrant.Scorpion_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [280, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -18605,6 +18066,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Ovis",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Sheep/Sheep_Character_BP_Aberrant.Sheep_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [100, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -18624,6 +18086,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Large/SpiderL_Character_BP_Easy.SpiderL_Character_BP_Easy",
+    variants: ["Boss", "Gamma"],
     fullStatsRaw: [
       [324000, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -18643,6 +18106,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Large/SpiderL_Character_BP_Hard.SpiderL_Character_BP_Hard",
+    variants: ["Alpha", "Boss"],
     fullStatsRaw: [
       [972000.062, 0.25, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -18662,6 +18126,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Large/SpiderL_Character_BP_Medium.SpiderL_Character_BP_Medium",
+    variants: ["Beta", "Boss"],
     fullStatsRaw: [
       [648000, 0.15, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -18681,6 +18146,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Large/SpiderL_Character_BP_TheCenter.SpiderL_Character_BP_TheCenter",
+    variants: ["Boss", "Gamma", "TheCenter"],
     fullStatsRaw: [
       [356400, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -18700,6 +18166,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Large/SpiderL_Character_BP_TheCenterHard.SpiderL_Character_BP_TheCenterHard",
+    variants: ["Alpha", "Boss", "TheCenter"],
     fullStatsRaw: [
       [486000, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -18719,6 +18186,7 @@ export const SPECIES: Species[] = [
     name: "Broodmother Lysrix",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Large/SpiderL_Character_BP_TheCenterMedium.SpiderL_Character_BP_TheCenterMedium",
+    variants: ["Beta", "Boss", "TheCenter"],
     fullStatsRaw: [
       [421200, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -18757,6 +18225,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Araneo",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Small/SpiderS_Character_BP_Aberrant.SpiderS_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [150, 0.2, 0.135, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -18776,6 +18245,7 @@ export const SPECIES: Species[] = [
     name: "Araneo",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Small/SpiderS_Character_BP_Aggressive.SpiderS_Character_BP_Aggressive",
+    variants: ["Boss", "Gamma"],
     fullStatsRaw: [
       [150, 0.2, 0.135, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -18795,6 +18265,7 @@ export const SPECIES: Species[] = [
     name: "Araneo",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Small/SpiderS_Character_BP_Aggressive_Hard.SpiderS_Character_BP_Aggressive_Hard",
+    variants: ["Alpha", "Boss"],
     fullStatsRaw: [
       [450, 0.2, 0.135, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -18814,6 +18285,7 @@ export const SPECIES: Species[] = [
     name: "Araneo",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Small/SpiderS_Character_BP_Aggressive_Med.SpiderS_Character_BP_Aggressive_Med",
+    variants: ["Beta", "Boss"],
     fullStatsRaw: [
       [300, 0.2, 0.135, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -18852,6 +18324,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Spino",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spino/Spino_Character_BP_Aberrant.Spino_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [700, 0.2, 0.27, 0.5, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -18909,6 +18382,7 @@ export const SPECIES: Species[] = [
     name: "Skeletal Stego",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Stego/Bone_Stego_Character_BP.Bone_Stego_Character_BP",
+    variants: ["Skeletal"],
     fullStatsRaw: [
       [8550, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -18947,6 +18421,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Stegosaurus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Stego/Stego_Character_BP_Aberrant.Stego_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [650, 0.2, 0.27, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -19039,25 +18514,6 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Titanosaur",
-    blueprintPath:
-      "/Game/PrimalEarth/Dinos/Titanosaur/Titanosaur_Character_BP.Titanosaur_Character_BP",
-    fullStatsRaw: [
-      [230000, 0, 0, -80000, 0],
-      [2000, 0, 0, 0, 0],
-      [25000, 0.06, 0, 0.5, 0],
-      [600, 0, 0, 0, 0],
-      [8640, 0, 0, 0, 0],
-      null,
-      null,
-      [50000, 0, 0, 0, 0],
-      [1, 0, 0, 0, 0],
-      [1, 0, 0, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Beelzebufo",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Toad/Toad_Character_BP.Toad_Character_BP",
@@ -19080,6 +18536,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Beelzebufo",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Toad/Toad_Character_BP_Aberrant.Toad_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [220, 0.2, 0.27, 0.5, 0],
       [190, 0.1, 0.1, 0, 0],
@@ -19118,6 +18575,7 @@ export const SPECIES: Species[] = [
     name: "Skeletal Trike",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Trike/Bone_Trike_Character_BP.Bone_Trike_Character_BP",
+    variants: ["Skeletal"],
     fullStatsRaw: [
       [5625, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -19156,6 +18614,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Triceratops",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Trike/Trike_Character_BP_Aberrant.Trike_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [375, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -19194,6 +18653,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Trilobite",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Trilobite/Trilobite_Character_Aberrant.Trilobite_Character_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [160, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -19232,6 +18692,7 @@ export const SPECIES: Species[] = [
     name: "Tropeognathus",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Tropeognathus/Tropeognathus_Character_BP.Tropeognathus_Character_BP",
+    variants: ["CrystalIsles"],
     fullStatsRaw: [
       [360, 0.2, 0.243, 0.5, 0],
       [250, 0.05, 0.05, 0, 0],
@@ -19270,6 +18731,7 @@ export const SPECIES: Species[] = [
     name: "Aberrant Carbonemys",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Turtle/Turtle_Character_BP_Aberrant.Turtle_Character_BP_Aberrant",
+    variants: ["Aberrant"],
     fullStatsRaw: [
       [700, 0.2, 0.27, 0.5, 0],
       [200, 0.1, 0.1, 0, 0],
@@ -19289,6 +18751,7 @@ export const SPECIES: Species[] = [
     name: "Alpha Tusoteuthis",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Tusoteuthis/Mega_Tusoteuthis_Character_BP.Mega_Tusoteuthis_Character_BP",
+    variants: ["Mega"],
     fullStatsRaw: [
       [30000, 0.2, 0.2025, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -19327,6 +18790,7 @@ export const SPECIES: Species[] = [
     name: "Tusoteuthis",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Tusoteuthis/Tusoteuthis_Character_BP_Caves.Tusoteuthis_Character_BP_Caves",
+    variants: ["Cave"],
     fullStatsRaw: [
       [2700, 0.2, 0.2025, 0.5, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -19384,6 +18848,7 @@ export const SPECIES: Species[] = [
     name: "Morellatops",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Camelsaurus/camelsaurus_Character_BP.camelsaurus_Character_BP",
+    variants: ["ScorchedEarth"],
     fullStatsRaw: [
       [400, 0.2, 0.27, 0.5, 0],
       [220, 0.1, 0.1, 0, 0],
@@ -19403,6 +18868,7 @@ export const SPECIES: Species[] = [
     name: "Deathworm",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Deathworm/Deathworm_Character_BP.Deathworm_Character_BP",
+    variants: ["ScorchedEarth"],
     fullStatsRaw: [
       [20000, 0.002, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -19422,6 +18888,7 @@ export const SPECIES: Species[] = [
     name: "Alpha Deathworm",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Deathworm/MegaDeathworm_Character_BP.MegaDeathworm_Character_BP",
+    variants: ["Mega", "ScorchedEarth"],
     fullStatsRaw: [
       [27000, 0.002, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -19441,6 +18908,7 @@ export const SPECIES: Species[] = [
     name: "Dodo Wyvern",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/DodoWyvern/DodoWyvern_Character_BP.DodoWyvern_Character_BP",
+    variants: ["Boss", "ScorchedEarth"],
     fullStatsRaw: [
       [666666, 0.2, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -19460,6 +18928,7 @@ export const SPECIES: Species[] = [
     name: "Skeletal Jerboa",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Jerboa/Bone_Jerboa_Character_BP.Bone_Jerboa_Character_BP",
+    variants: ["ScorchedEarth", "Skeletal"],
     fullStatsRaw: [
       [825, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -19479,6 +18948,7 @@ export const SPECIES: Species[] = [
     name: "Jerboa",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Jerboa/Jerboa_Character_BP.Jerboa_Character_BP",
+    variants: ["ScorchedEarth"],
     fullStatsRaw: [
       [55, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -19498,6 +18968,7 @@ export const SPECIES: Species[] = [
     name: "Oil Jug Bug",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/JugBug/Jugbug_Oil_Character_BP.Jugbug_Oil_Character_BP",
+    variants: ["ScorchedEarth"],
     fullStatsRaw: [
       [75, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -19517,6 +18988,7 @@ export const SPECIES: Species[] = [
     name: "Water Jug Bug",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/JugBug/Jugbug_Water_Character_BP.Jugbug_Water_Character_BP",
+    variants: ["ScorchedEarth"],
     fullStatsRaw: [
       [75, 0.2, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -19536,6 +19008,7 @@ export const SPECIES: Species[] = [
     name: "Manticore",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Manticore/Manticore_Character_BP_Easy.Manticore_Character_BP_Easy",
+    variants: ["Boss", "Gamma", "ScorchedEarth"],
     fullStatsRaw: [
       [100000, 0.2, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -19555,6 +19028,7 @@ export const SPECIES: Species[] = [
     name: "Manticore",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Manticore/Manticore_Character_BP_Hard.Manticore_Character_BP_Hard",
+    variants: ["Alpha", "Boss", "ScorchedEarth"],
     fullStatsRaw: [
       [160000, 0.3, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -19574,6 +19048,7 @@ export const SPECIES: Species[] = [
     name: "Manticore",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Manticore/Manticore_Character_BP_Medium.Manticore_Character_BP_Medium",
+    variants: ["Beta", "Boss", "ScorchedEarth"],
     fullStatsRaw: [
       [130000, 0.25, 0.2, 0.3, 0],
       [400, 0.1, 0.1, 0, 0],
@@ -19593,6 +19068,7 @@ export const SPECIES: Species[] = [
     name: "Deathworm",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Manticore/Minions/Deathworm_Character_Minion_BP.Deathworm_Character_Minion_BP",
+    variants: ["Minion", "ScorchedEarth"],
     fullStatsRaw: [
       [8000, 0.002, 0.27, 0.5, 0],
       [100, 0.1, 0.1, 0, 0],
@@ -19609,28 +19085,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Rock Elemental",
-    blueprintPath:
-      "/Game/ScorchedEarth/Dinos/Manticore/RockGolem_Character_Minion_BP.RockGolem_Character_Minion_BP",
-    fullStatsRaw: [
-      [50000, 0.0125, 0.135, -22000, 0],
-      [1000, 0.1, 0.1, 0, 0],
-      [5000, 0.02, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [6000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [660, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.125, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Mantis Ghost",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Mantis/Ghost_Mantis_Character_BP.Ghost_Mantis_Character_BP",
+    variants: ["Ghost", "ScorchedEarth"],
     fullStatsRaw: [
       [275, 0.2, 0.135, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -19650,6 +19108,7 @@ export const SPECIES: Species[] = [
     name: "Mantis",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Mantis/Mantis_Character_BP.Mantis_Character_BP",
+    variants: ["ScorchedEarth"],
     fullStatsRaw: [
       [275, 0.2, 0.135, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -19669,6 +19128,7 @@ export const SPECIES: Species[] = [
     name: "Lymantria",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Moth/Moth_Character_BP.Moth_Character_BP",
+    variants: ["ScorchedEarth"],
     fullStatsRaw: [
       [260, 0.2, 0.27, 0.5, 0],
       [150, 0.05, 0.06, 0, 0],
@@ -19688,6 +19148,7 @@ export const SPECIES: Species[] = [
     name: "Phoenix",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Phoenix/Phoenix_Character_BP.Phoenix_Character_BP",
+    variants: ["ScorchedEarth"],
     fullStatsRaw: [
       [640, 0.2, 0.27, 0.5, 0],
       [352, 0.1, 0.1, 0, 0],
@@ -19704,28 +19165,10 @@ export const SPECIES: Species[] = [
     ],
   },
   {
-    name: "Rock Elemental",
-    blueprintPath:
-      "/Game/ScorchedEarth/Dinos/RockGolem/RockGolem_Character_BP.RockGolem_Character_BP",
-    fullStatsRaw: [
-      [25000, 0.0125, 0.135, -22000, 0],
-      [300, 0.1, 0.1, 0, 0],
-      [5000, 0.02, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [6000, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [660, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, 0.125, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
     name: "Rubble Golem",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/RockGolem/RubbleGolem_Character_BP.RubbleGolem_Character_BP",
+    variants: ["ScorchedEarth"],
     fullStatsRaw: [
       [4000, 0.0125, 0.135, 0, 0],
       [300, 0.1, 0.1, 0, 0],
@@ -19745,6 +19188,7 @@ export const SPECIES: Species[] = [
     name: "Thorny Dragon",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/SpineyLizard/SpineyLizard_Character_BP.SpineyLizard_Character_BP",
+    variants: ["ScorchedEarth"],
     fullStatsRaw: [
       [260, 0.2, 0.27, 0.66, 0],
       [350, 0.1, 0.1, 0, 0],
@@ -19764,6 +19208,7 @@ export const SPECIES: Species[] = [
     name: "Vulture",
     blueprintPath:
       "/Game/ScorchedEarth/Dinos/Vulture/Vulture_Character_BP.Vulture_Character_BP",
+    variants: ["ScorchedEarth"],
     fullStatsRaw: [
       [125, 0.2, 0.27, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
@@ -19774,158 +19219,6 @@ export const SPECIES: Species[] = [
       null,
       [50, 0.02, 0.04, 0, 0],
       [1, 0.05, 0.1, 0.5, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Bone Fire Wyvern",
-    blueprintPath:
-      "/Game/ScorchedEarth/Dinos/Wyvern/Bone_MegaWyvern_Character_BP_Fire.Bone_MegaWyvern_Character_BP_Fire",
-    fullStatsRaw: [
-      [8000, 0.15, 0.162, -785, 0],
-      [600, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Alpha Fire Wyvern",
-    blueprintPath:
-      "/Game/ScorchedEarth/Dinos/Wyvern/MegaWyvern_Character_BP_Fire.MegaWyvern_Character_BP_Fire",
-    fullStatsRaw: [
-      [8000, 0.15, 0.162, -785, 0],
-      [600, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Fire Wyvern",
-    blueprintPath:
-      "/Game/ScorchedEarth/Dinos/Wyvern/Wyvern_Character_BP_Fire.Wyvern_Character_BP_Fire",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [315, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Lightning Wyvern",
-    blueprintPath:
-      "/Game/ScorchedEarth/Dinos/Wyvern/Wyvern_Character_BP_Lightning.Wyvern_Character_BP_Lightning",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [315, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Poison Wyvern",
-    blueprintPath:
-      "/Game/ScorchedEarth/Dinos/Wyvern/Wyvern_Character_BP_Poison.Wyvern_Character_BP_Poison",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [315, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Zombie Fire Wyvern",
-    blueprintPath:
-      "/Game/ScorchedEarth/Dinos/Wyvern/Wyvern_Character_BP_ZombieFire.Wyvern_Character_BP_ZombieFire",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [315, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Zombie Lightning Wyvern",
-    blueprintPath:
-      "/Game/ScorchedEarth/Dinos/Wyvern/Wyvern_Character_BP_ZombieLightning.Wyvern_Character_BP_ZombieLightning",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [315, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
-      [1, 0, 0.01, 0, 0],
-      null,
-      null,
-    ],
-  },
-  {
-    name: "Zombie Poison Wyvern",
-    blueprintPath:
-      "/Game/ScorchedEarth/Dinos/Wyvern/Wyvern_Character_BP_ZombiePoison.Wyvern_Character_BP_ZombiePoison",
-    fullStatsRaw: [
-      [1295, 0.15, 0.162, -785, 0],
-      [315, 0.05, 0.05, 0, 0],
-      [725, 0.06, 0, 0.5, 0],
-      [150, 0.1, 0.1, 0, 0],
-      [1800, 0.1, 0.1, 0, 0],
-      null,
-      null,
-      [400, 0.02, 0.04, 0, 0],
-      [1, 0.05, 0.1, -0.25, 0.4],
       [1, 0, 0.01, 0, 0],
       null,
       null,

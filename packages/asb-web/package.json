@@ -27,7 +27,7 @@
     "@tanstack/react-router": "^1.157.18",
     "@tanstack/react-router-devtools": "^1.157.18",
     "asb-ts": "workspace:*",
-    "fuse.js": "^7.1.0",
+    "fuse.js": "catalog:",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "recharts": "^3.8.0",

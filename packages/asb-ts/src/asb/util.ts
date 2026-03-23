@@ -1,19 +1,23 @@
+import Fuse from "fuse.js";
 import * as v from "valibot";
-import { DICT, NAMES } from "./names.js";
-import { type Name, NameSchema } from "./types.js";
+import { NAME_DICT } from "./name-dict.js";
+import { type Name, NameSchema } from "./values/index.js";
 
-function deleteDuplicate(list: typeof DICT) {
-  const tmpList = Array.from(
-    new Map(list.map((obj) => [obj.en, obj])).values(),
-  );
-  return Array.from(new Map(tmpList.map((obj) => [obj.ja, obj])).values());
-}
+const fuse = new Fuse(
+  NAME_DICT.flatMap((n) => Object.values(n)),
+  {
+    threshold: 1,
+  },
+);
 
-export const SAFE_DICT = deleteDuplicate(DICT.filter((d) => NAMES.has(d.en)));
-
-export function getName(name: string): Name | null {
-  const target = SAFE_DICT.find((d) => d.ja === name)?.en ?? name;
-  const result = v.safeParse(NameSchema, target);
+export function searchNameFromDict(name: string): Name | null {
+  const hits = fuse.search(name);
+  const hit = hits.at(0)?.item;
+  const found =
+    NAME_DICT.find((d) => Object.values(d).some((n) => n === hit))?.en ??
+    hit ??
+    name;
+  const result = v.safeParse(NameSchema, found);
   if (result.success) return result.output;
   else return null;
 }
