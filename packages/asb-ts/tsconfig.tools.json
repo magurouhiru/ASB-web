@@ -1,7 +1,7 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tools.tsbuildinfo",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
