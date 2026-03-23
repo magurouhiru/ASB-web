@@ -22,6 +22,7 @@
     "biome:fix": "biome check --write --unsafe ."
   },
   "devDependencies": {
-    "@biomejs/biome": "catalog:"
+    "@biomejs/biome": "catalog:",
+    "vitest": "^4.1.0"
   }
 }
