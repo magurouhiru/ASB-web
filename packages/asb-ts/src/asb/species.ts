@@ -1,7 +1,6 @@
 import * as v from "valibot";
 import {
   type Species,
-  type SpeciesIn,
   SpeciesSchema,
   type SpeciesStat,
   type SpeciesStatIn,
@@ -12,10 +11,10 @@ import {
 } from "./types/index.js";
 import {
   AllModSpecies,
-  type Name,
-  type StatsRow,
   type FullStatsRaw,
   type ModName,
+  type Name,
+  type StatsRow,
 } from "./values/index.js";
 import { VARIANT_DEFAULT_UNSELECTED, type Variant } from "./variants/index.js";
 
@@ -38,7 +37,7 @@ const SpeedMultiplier = 9;
 const TemperatureFortitude = 10;
 const CraftingSpeedMultiplier = 11;
 
-export function getStats(
+export function getSpecies(
   name: Name,
   options: {
     targetVariants: Variant[];
@@ -76,7 +75,7 @@ export function getStats(
         .map((s) => ({
           name: s.name,
           blueprintPath: s.blueprintPath,
-          variants: s.variants ?? [],
+          variants: s.variants,
           mod: ms.mod,
           stats:
             s.fullStatsRaw !== undefined && s.fullStatsRaw !== null
@@ -86,7 +85,8 @@ export function getStats(
     )
     .reduce(
       (acc, current) => {
-        acc.variants = current.variants;
+        if (current.variants !== undefined && acc.variants !== null)
+          acc.variants = current.variants;
         acc.mod = current.mod;
         if (current.stats !== null) acc.stats = current.stats;
         return acc;

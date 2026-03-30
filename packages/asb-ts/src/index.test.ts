@@ -72,8 +72,11 @@ test.each([
     [26, 25, 24, 21, 25, 18, 139],
   ],
 ])("calcL - $name", (inputs, expected) => {
-  const result = calcL(inputs);
-  if (!result) throw new Error("なんかへん");
+  const r = calcL(inputs);
+  if (!r) throw new Error("なんかへん");
+  const { species, result } = r;
+  console.log(species);
+
   expect(result.health.wild).toBe(expected[0]);
   expect(result.stamina.wild).toBe(expected[1]);
   expect(result.oxygen.wild).toBe(expected[2]);

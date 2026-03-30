@@ -1,7 +1,7 @@
 import * as v from "valibot";
-import { PositiveValueSchema } from "./common.js";
 import { ModNameSchema, NameSchema } from "../values/index.js";
 import { VariantSchema } from "../variants/index.js";
+import { PositiveValueSchema } from "./common.js";
 
 /**
  * packages/asb-ts/ARKStatsExtractor/ARKBreedingStats/species/SpeciesStat.cs

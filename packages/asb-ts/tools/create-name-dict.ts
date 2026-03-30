@@ -4,7 +4,7 @@
 */
 
 import fs from "node:fs";
-import { ALL_SPECIES } from "../src/asb/values/index.js";
+import { AllModSpecies } from "../src/asb/values/index.js";
 
 function deleteDuplicate(list: typeof DICT) {
   const tmpList1 = Array.from(
@@ -17,7 +17,7 @@ function deleteDuplicate(list: typeof DICT) {
 }
 
 function getNames() {
-  const valuesNames = ALL_SPECIES.flatMap((s) => s.species)
+  const valuesNames = AllModSpecies.flatMap((s) => s.species)
     .map((species) => species.name)
     .filter((s) => s !== null && s !== undefined);
   const safeDict = DICT.filter((d) => valuesNames.includes(d.en));

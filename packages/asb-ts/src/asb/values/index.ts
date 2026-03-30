@@ -1,6 +1,6 @@
 import * as v from "valibot";
-import type { ValueSpecies } from "./types.js";
 import { VALUE_SPECIES as ASA_VALUE_SPECIES } from "./ASA-values.js";
+import type { ValueSpecies } from "./types.js";
 import { VALUE_SPECIES as BASE_VALUE_SPECIES } from "./values.js";
 
 export * from "./types.js";
