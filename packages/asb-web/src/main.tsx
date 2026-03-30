@@ -50,5 +50,4 @@ if (rootElement && !rootElement.innerHTML) {
     </StrictMode>,
   );
 } else {
-  console.error("Root element not found or already has content");
 }

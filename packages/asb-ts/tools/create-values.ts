@@ -5,10 +5,13 @@
 
 import fs from "node:fs";
 import * as v from "valibot";
-import { type Species, SpeciesSchema } from "../src/asb/types/index.js";
+import {
+  type ValueSpecies,
+  ValueSpeciesSchema,
+} from "../src/asb/values/types.js";
 
 /**
- * この関数は、指定したパスのjsonファイルを読み込み、必要な情報だけを抜き出し、Species[] 型の配列を返します。
+ * この関数は、指定したパスのjsonファイルを読み込み、必要な情報だけを抜き出し、ValueSpecies[] 型の配列を返します。
  * 読み込むjsonファイルには以下のような構造が必要です。
  * {
  *   "species": [
@@ -26,15 +29,15 @@ import { type Species, SpeciesSchema } from "../src/asb/types/index.js";
  * }
  * @param path jsonファイルのパス
  */
-function extractValues(path: string): Species[] {
+function extractValues(path: string): ValueSpecies[] {
   // ファイルの読み込み
   const rawData = fs.readFileSync(path, "utf-8");
   const data = JSON.parse(rawData);
 
-  // species フィールドから Species 配列を作成
+  // species フィールドから ValueSpecies 配列を作成
   const speciesList = (data.species as [])
     .map((item) => {
-      const result = v.safeParse(SpeciesSchema, item);
+      const result = v.safeParse(ValueSpeciesSchema, item);
       return result.success ? result.output : null;
     })
     .filter((s) => s !== null);
@@ -43,9 +46,9 @@ function extractValues(path: string): Species[] {
 }
 
 /**
- * この関数は、Species[] 型の配列を受け取り、values.ts を作成します。
+ * この関数は、Values[] 型の配列を受け取り、values.ts を作成します。
  * 作成される values.ts には、以下のような内容が含まれます。
- * export const species: Species[] = [
+ * export const values: Values[] = [
  *   {
  *     name: "SpeciesName",
  *     fullStatsRaw: [
@@ -60,23 +63,23 @@ function extractValues(path: string): Species[] {
  * @param species 種族値の配列
  * @param outputPath 出力ファイルのパス
  */
-function createConstTs(species: Species[], outputPath: string) {
+function createConstTs(values: ValueSpecies[], outputPath: string) {
   // values.ts の内容を作成
   const content = `
 // このファイルは機械的に出力されました。
 
-  import type { Species } from "../types/index.js";
+  import type { ValueSpecies } from "./types.js";
 
-  export const SPECIES: Species[] = [\n  ${species
-    .map((s) => {
+  export const VALUE_SPECIES: ValueSpecies[] = [\n  ${values
+    .map((v) => {
       const field = [];
-      if (s.name) field.push(`name:"${s.name}"`);
-      field.push(`blueprintPath:"${s.blueprintPath}"`);
-      if (s.variants) field.push(`variants:${JSON.stringify(s.variants)}`);
-      if (s.fullStatsRaw)
-        field.push(`fullStatsRaw: ${JSON.stringify(s.fullStatsRaw)}`);
-      if (s.mutationMult)
-        field.push(`mutationMult: ${JSON.stringify(s.mutationMult)}`);
+      if (v.name) field.push(`name:"${v.name}"`);
+      field.push(`blueprintPath:"${v.blueprintPath}"`);
+      if (v.variants) field.push(`variants:${JSON.stringify(v.variants)}`);
+      if (v.fullStatsRaw)
+        field.push(`fullStatsRaw: ${JSON.stringify(v.fullStatsRaw)}`);
+      if (v.mutationMult)
+        field.push(`mutationMult: ${JSON.stringify(v.mutationMult)}`);
 
       return `{${field.join(",")}},`;
     })

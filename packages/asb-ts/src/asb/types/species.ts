@@ -1,4 +1,6 @@
 import * as v from "valibot";
+import { ModNameSchema, NameSchema } from "../values/index.js";
+import { VariantSchema } from "../variants/index.js";
 import { PositiveValueSchema } from "./common.js";
 
 /**
@@ -61,4 +63,14 @@ export const StatsSchema = v.object({
   torpidity: v.nullable(
     v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/torpidity")),
   ),
+});
+
+export type Species = v.InferOutput<typeof SpeciesSchema>;
+export type SpeciesIn = v.InferInput<typeof SpeciesSchema>;
+export const SpeciesSchema = v.object({
+  name: NameSchema,
+  blueprintPath: v.string(),
+  variants: v.array(VariantSchema),
+  mod: ModNameSchema,
+  stats: StatsSchema,
 });

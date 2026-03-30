@@ -1,10 +1,6 @@
 import { expect, test } from "vitest";
 import { calcL } from "./index.js";
 
-test("check", () => {
-  console.log("Hello, World!");
-});
-
 test.each([
   [
     {
@@ -17,7 +13,7 @@ test.each([
       meleeDamageMultiplier: 1.3,
       torpidity: 985.0,
     },
-    [6, 10, 5, 11, 11, 6, 49],
+    [6, 10, 5, 11, 11, 6, 49, [], "ASA"],
   ],
   [
     {
@@ -30,7 +26,7 @@ test.each([
       meleeDamageMultiplier: 1.85,
       torpidity: 1148.0,
     },
-    [20, 14, 0, 12, 16, 17, 79],
+    [20, 14, 0, 12, 16, 17, 79, [], "ASA"],
   ],
   [
     {
@@ -43,7 +39,7 @@ test.each([
       meleeDamageMultiplier: 2.5,
       torpidity: 14942.0,
     },
-    [21, 27, 27, 14, 25, 30, 144],
+    [21, 27, 27, 14, 25, 30, 144, [], "ASA"],
   ],
   [
     {
@@ -56,7 +52,7 @@ test.each([
       meleeDamageMultiplier: 1.45,
       torpidity: 3152.0,
     },
-    [9, 6, 8, 9, 8, 9, 49],
+    [9, 6, 8, 9, 8, 9, 49, ["Extinction"], "ASA"],
   ],
   [
     {
@@ -69,11 +65,13 @@ test.each([
       meleeDamageMultiplier: 1.9,
       torpidity: 5604.0,
     },
-    [26, 25, 24, 21, 25, 18, 139],
+    [26, 25, 24, 21, 25, 18, 139, ["Extinction"], "ASA"],
   ],
 ])("calcL - $name", (inputs, expected) => {
-  const result = calcL(inputs);
-  if (!result) throw new Error("なんかへん");
+  const r = calcL(inputs);
+  if (!r) throw new Error("なんかへん");
+  const { species, result } = r;
+
   expect(result.health.wild).toBe(expected[0]);
   expect(result.stamina.wild).toBe(expected[1]);
   expect(result.oxygen.wild).toBe(expected[2]);
@@ -89,4 +87,7 @@ test.each([
   expect(result.weight.error).toBe(null);
   expect(result.meleeDamageMultiplier.error).toBe(null);
   expect(result.torpidity.error).toBe(null);
+
+  expect(species.variants).toStrictEqual(expected[7]);
+  expect(species.mod).toBe(expected[8]);
 });

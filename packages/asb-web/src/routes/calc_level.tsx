@@ -1,6 +1,7 @@
 import type { Key } from "@heroui/react";
 import {
   Autocomplete,
+  Chip,
   EmptyState,
   Label,
   ListBox,
@@ -65,6 +66,8 @@ const { useAppForm } = createFormHook({
 
 function CalcLevelComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
+  const [variants, setVariants] = useState<string[]>([]);
+  const [mod, setMod] = useState<string>("");
   const [levels, setLevels] = useState<Levels | null>(null);
   const { n, h, s, o, f, w, m, t } = Route.useSearch();
   const items = [...NAME_DICT.values()].map((n) => ({
@@ -100,7 +103,11 @@ function CalcLevelComponent() {
   };
 
   const updateLevels = ({ value }: { value: typeof defaultValues }) => {
-    const result = calcL(value);
+    const r = calcL(value);
+    if (!r) return;
+    const { species, result } = r;
+    setVariants(species.variants);
+    if (species.mod !== "BASE") setMod(species.mod);
     setLevels(result);
   };
 
@@ -166,6 +173,12 @@ function CalcLevelComponent() {
             </field.Autocomplete>
           )}
         </form.AppField>
+        <div>
+          {variants.map((v) => (
+            <Chip key={v}>{v}</Chip>
+          ))}
+          {mod && <Chip color="accent">{mod}</Chip>}
+        </div>
 
         <form.AppField name="health">
           {(field) => (
