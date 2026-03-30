@@ -12,7 +12,7 @@ import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   calculateValue,
-  getStats,
+  getSpecies,
   type LevelsIn,
   LevelsSchema,
   NAME_DICT,
@@ -61,7 +61,7 @@ function CalcValueComponent() {
       onChange: ({ value }) => {
         const name = searchNameFromDict(value.name);
         if (!name) return;
-        const stats = getStats(name);
+        const species = getSpecies(name);
         const parsed = v.safeParse(LevelsSchema, {
           health: { wild: value.Health_wild },
           stamina: { wild: value.Stamina_wild },
@@ -77,7 +77,7 @@ function CalcValueComponent() {
           torpidity: { wild: value.Torpidity_wild },
         } satisfies LevelsIn);
         if (!parsed.success) return;
-        const result = calculateValue(stats, parsed.output);
+        const result = calculateValue(species.stats, parsed.output);
         setValues(result);
       },
     },
