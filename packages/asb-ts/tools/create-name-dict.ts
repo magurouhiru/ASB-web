@@ -17,9 +17,9 @@ function deleteDuplicate(list: typeof DICT) {
 }
 
 function getNames() {
-  const valuesNames = ALL_SPECIES.map((s) => s.name).filter(
-    (s) => s !== null && s !== undefined,
-  );
+  const valuesNames = ALL_SPECIES.flatMap((s) => s.species)
+    .map((species) => species.name)
+    .filter((s) => s !== null && s !== undefined);
   const safeDict = DICT.filter((d) => valuesNames.includes(d.en));
   return deleteDuplicate(safeDict).sort((a, b) => a.ja.localeCompare(b.ja));
 }

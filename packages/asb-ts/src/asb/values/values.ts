@@ -1,8 +1,8 @@
 // このファイルは機械的に出力されました。
 
-import type { Species } from "../types/index.js";
+import type { ValueSpecies } from "./types.js";
 
-export const SPECIES: Species[] = [
+export const VALUE_SPECIES: ValueSpecies[] = [
   {
     name: "Rockwell",
     blueprintPath:

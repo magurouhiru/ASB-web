@@ -1,14 +1,15 @@
 import * as v from "valibot";
 import { calculateLevel } from "./asb/calculator.js";
-import { getStats } from "./asb/stats.js";
+import { getStats } from "./asb/species.js";
 import { type Levels, type ValuesIn, ValuesSchema } from "./asb/types/io.js";
 import { searchNameFromDict } from "./asb/util.js";
 
 export * from "./asb/calculator.js";
 export * from "./asb/name-dict.js";
-export * from "./asb/stats.js";
+export * from "./asb/species.js";
 export * from "./asb/types/index.js";
 export * from "./asb/util.js";
+export * from "./asb/variants/index.js";
 
 export function calcL(value: {
   name: string;

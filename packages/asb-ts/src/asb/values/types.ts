@@ -1,5 +1,5 @@
 import * as v from "valibot";
-import { PositiveValueSchema } from "./common.js";
+import { PositiveValueSchema } from "../types/common.js";
 
 /*
   元のARKStatsExtractorベースの定義
@@ -96,9 +96,9 @@ export const MutationMultSchema = v.tuple([
   PositiveValueSchema,
 ]);
 
-export type Species = v.InferOutput<typeof SpeciesSchema>;
-export type SpeciesIn = v.InferInput<typeof SpeciesSchema>;
-export const SpeciesSchema = v.pipe(
+export type ValueSpecies = v.InferOutput<typeof ValueSpeciesSchema>;
+export type ValueSpeciesIn = v.InferInput<typeof ValueSpeciesSchema>;
+export const ValueSpeciesSchema = v.pipe(
   v.object({
     name: v.nullish(v.string()),
     blueprintPath: v.string(),
