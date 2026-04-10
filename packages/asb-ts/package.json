@@ -28,7 +28,7 @@
   "devDependencies": {
     "@biomejs/biome": "catalog:",
     "@types/bun": "latest",
-    "@types/node": "^25.5.0",
+    "@types/node": "^25.5.2",
     "license-checker-rseidelsohn": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

@@ -42,10 +42,15 @@ export default defineConfig({
   build: {
     // asb-ts が大きいのでごまかす
     chunkSizeWarningLimit: 700,
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        manualChunks: {
-          asb_ts: ["asb-ts"],
+        codeSplitting: {
+          groups: [
+            {
+              name: "asb-ts",
+              test: "asb-ts",
+            },
+          ],
         },
       },
     },
