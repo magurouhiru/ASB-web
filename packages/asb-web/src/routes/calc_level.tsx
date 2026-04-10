@@ -13,10 +13,10 @@ import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   calcL,
+  getSpeciesList,
   type Levels,
-  NAME_DICT,
   PositiveValueSchema,
-  searchNameFromDict,
+  searchSpecies,
 } from "asb-ts";
 import { useMemo, useState } from "react";
 import {
@@ -30,13 +30,7 @@ import * as v from "valibot";
 
 const searchSchema = v.pipe(
   v.object({
-    n: v.fallback(
-      v.pipe(
-        v.string(),
-        v.transform((input) => searchNameFromDict(input) ?? input),
-      ),
-      "",
-    ),
+    n: v.fallback(v.string(), ""),
     h: v.fallback(PositiveValueSchema, 0),
     s: v.fallback(PositiveValueSchema, 0),
     o: v.fallback(PositiveValueSchema, 0),
@@ -66,13 +60,16 @@ const { useAppForm } = createFormHook({
 
 function CalcLevelComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
-  const [variants, setVariants] = useState<string[]>([]);
-  const [mod, setMod] = useState<string>("");
+  const [_variants, setVariants] = useState<string[]>([]);
+  const [_mod, _setMod] = useState<string>("");
   const [levels, setLevels] = useState<Levels | null>(null);
   const { n, h, s, o, f, w, m, t } = Route.useSearch();
-  const items = [...NAME_DICT.values()].map((n) => ({
-    id: n.en as Key,
-    name: n.ja,
+  const speciesList = getSpeciesList();
+  const items = speciesList.map((s) => ({
+    id: s.blueprintPath as Key,
+    name: s.name,
+    variants: s.variants,
+    mod: s.mod,
   }));
 
   const data = useMemo(() => {
@@ -107,7 +104,6 @@ function CalcLevelComponent() {
     if (!r) return;
     const { species, result } = r;
     setVariants(species.variants);
-    if (species.mod !== "BASE") setMod(species.mod);
     setLevels(result);
   };
 
@@ -130,7 +126,10 @@ function CalcLevelComponent() {
         <form.AppField name="name">
           {(field) => (
             <field.Autocomplete
-              defaultValue={searchNameFromDict(field.state.value)}
+              defaultValue={
+                searchSpecies(speciesList, field.state.value)?.blueprintPath ||
+                ""
+              }
               placeholder="選択してね"
               selectionMode="single"
               onChange={(key) => field.setValue(key as string)}
@@ -164,6 +163,10 @@ function CalcLevelComponent() {
                         textValue={item.name}
                       >
                         {item.name}
+                        {item.variants.map((v) => (
+                          <Chip key={v}>{v}</Chip>
+                        ))}
+                        {item.mod && <Chip color="accent">{item.mod}</Chip>}
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
                     ))}
@@ -173,12 +176,6 @@ function CalcLevelComponent() {
             </field.Autocomplete>
           )}
         </form.AppField>
-        <div>
-          {variants.map((v) => (
-            <Chip key={v}>{v}</Chip>
-          ))}
-          {mod && <Chip color="accent">{mod}</Chip>}
-        </div>
 
         <form.AppField name="health">
           {(field) => (

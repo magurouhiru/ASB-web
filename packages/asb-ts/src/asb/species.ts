@@ -1,6 +1,9 @@
+import Fuse from "fuse.js";
 import * as v from "valibot";
+import { NAME_DICT } from "./name-dict.js";
 import {
   type Species,
+  type SpeciesIn,
   SpeciesSchema,
   type SpeciesStat,
   type SpeciesStatIn,
@@ -13,7 +16,6 @@ import {
   AllModSpecies,
   type FullStatsRaw,
   type ModName,
-  type Name,
   type StatsRow,
 } from "./values/index.js";
 import { VARIANT_DEFAULT_UNSELECTED, type Variant } from "./variants/index.js";
@@ -37,69 +39,91 @@ const SpeedMultiplier = 9;
 const TemperatureFortitude = 10;
 const CraftingSpeedMultiplier = 11;
 
-export function getSpecies(
-  name: Name,
+export function getSpeciesList(
   options: {
-    targetVariants: Variant[];
     variantsUnselected: Variant[];
     mods: ModName[];
+    nameDict: typeof NAME_DICT;
   } = {
-    targetVariants: [],
     variantsUnselected: VARIANT_DEFAULT_UNSELECTED,
-    mods: ["BASE", "ASA"],
+    mods: ["ASA"],
+    nameDict: NAME_DICT,
   },
-): Species {
-  const searchTarget = AllModSpecies.filter((ms) =>
-    options.mods.includes(ms.mod),
+): Species[] {
+  const searchTarget = AllModSpecies.filter(
+    (ms) => ms.mod === null || options.mods.includes(ms.mod),
   );
-
-  const foundList = searchTarget.map((ms) =>
-    ms.species
-      .filter((s) => s.name === name)
-      .filter(
-        (s) =>
-          !(s.variants ?? []).some((v) =>
-            options.variantsUnselected.includes(v),
-          ),
-      ),
-  );
-  const lastBP = foundList
-    .flatMap((ms) => ms.map((s) => s.blueprintPath))
-    .at(-1);
-  if (!lastBP) throw new Error(`${name}が見つからなんだ`);
-
-  const tmp = searchTarget
-    .flatMap((ms) =>
-      ms.species
-        .filter((s) => s.blueprintPath === lastBP)
-        .map((s) => ({
-          name: s.name,
+  const tmpMap = new Map<
+    string,
+    {
+      name: string;
+      blueprintPath: string;
+      variants: Variant[];
+      mod: ModName | null;
+      stats: FullStatsRaw | null;
+    }
+  >();
+  searchTarget.forEach((ms) => {
+    ms.species.forEach((s) => {
+      const value = tmpMap.get(s.blueprintPath);
+      if (value) {
+        if (s.variants && s.variants.length > 0) value.variants = s.variants;
+        value.mod = ms.mod;
+        if (s.fullStatsRaw) value.stats = s.fullStatsRaw;
+      } else {
+        const nameEntry = options.nameDict.find((n) => n.en === s.name);
+        if (!nameEntry) return;
+        tmpMap.set(s.blueprintPath, {
+          name: `${nameEntry.ja}(${nameEntry.en})`,
           blueprintPath: s.blueprintPath,
-          variants: s.variants,
+          variants: s.variants ?? [],
           mod: ms.mod,
-          stats:
-            s.fullStatsRaw !== undefined && s.fullStatsRaw !== null
-              ? toStats(s.fullStatsRaw)
-              : null,
-        })),
+          stats: s.fullStatsRaw ?? null,
+        });
+      }
+    });
+  });
+  return Array.from(tmpMap.values())
+    .filter(
+      (s) => !s.variants.some((v) => options.variantsUnselected.includes(v)),
     )
-    .reduce(
-      (acc, current) => {
-        if (current.variants !== undefined && acc.variants !== null)
-          acc.variants = current.variants;
-        acc.mod = current.mod;
-        if (current.stats !== null) acc.stats = current.stats;
-        return acc;
-      },
-      {
-        name,
-        blueprintPath: lastBP,
-        variants: [],
-        mod: "BASE",
-        stats: null,
-      },
-    );
-  return v.parse(SpeciesSchema, tmp);
+    .map((s) => {
+      if (s.stats === null) return null;
+      const result = v.safeParse(SpeciesSchema, {
+        ...s,
+        stats: toStats(s.stats),
+      } satisfies SpeciesIn);
+      return result.success ? result.output : null;
+    })
+    .filter((s) => s !== null)
+    .sort((a, b) => a.name.localeCompare(b.name, "ja"));
+}
+
+export function searchSpecies(
+  species: Species[],
+  name: string,
+  variants: Variant[] = [],
+): Species | null {
+  const fuse = new Fuse(
+    species.map((s) => s.name),
+    {
+      threshold: 1,
+    },
+  );
+  const hit = fuse.search(name).at(0)?.item;
+  if (!hit) return null;
+  const found = species
+    .filter((s) => s.name === hit)
+    .sort((a, b) => a.variants.length - b.variants.length)
+    .sort((a, b) => {
+      const aHasVariant = variants.some((v) => a.variants.includes(v));
+      const bHasVariant = variants.some((v) => b.variants.includes(v));
+      if (aHasVariant && !bHasVariant) return -1;
+      if (!aHasVariant && bHasVariant) return 1;
+      return 0;
+    });
+
+  return found[0] || null;
 }
 
 function toStats(fullStatsRaw: FullStatsRaw): Stats {

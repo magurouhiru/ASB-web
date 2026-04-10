@@ -1,5 +1,5 @@
 import * as v from "valibot";
-import { ModNameSchema, NameSchema } from "../values/index.js";
+import { ModNameSchema } from "../values/index.js";
 import { VariantSchema } from "../variants/index.js";
 import { PositiveValueSchema } from "./common.js";
 
@@ -26,51 +26,46 @@ export type Stats = v.InferOutput<typeof StatsSchema>;
 export type StatsIn = v.InferInput<typeof StatsSchema>;
 export const StatsSchema = v.object({
   health: v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/health")),
-  stamina: v.nullable(
-    v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/stamina")),
+  stamina: v.pipe(
+    v.nullable(SpeciesStatSchema),
+    v.brand("StatsSchema/stamina"),
   ),
   oxygen: v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/oxygen")),
   food: v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/food")),
   water: v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/water")),
-  temperature: v.nullable(
-    v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/temperature")),
+  temperature: v.pipe(
+    v.nullable(SpeciesStatSchema),
+    v.brand("StatsSchema/temperature"),
   ),
   weight: v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/eight")),
-  meleeDamageMultiplier: v.nullable(
-    v.pipe(
-      v.nullable(SpeciesStatSchema),
-      v.brand("StatsSchema/meleeDamageMultiplier"),
-    ),
+  meleeDamageMultiplier: v.pipe(
+    v.nullable(SpeciesStatSchema),
+    v.brand("StatsSchema/meleeDamageMultiplier"),
   ),
-  speedMultiplier: v.nullable(
-    v.pipe(
-      v.nullable(SpeciesStatSchema),
-      v.brand("StatsSchema/speedMultiplier"),
-    ),
+  speedMultiplier: v.pipe(
+    v.nullable(SpeciesStatSchema),
+    v.brand("StatsSchema/speedMultiplier"),
   ),
-  temperatureFortitude: v.nullable(
-    v.pipe(
-      v.nullable(SpeciesStatSchema),
-      v.brand("StatsSchema/temperatureFortitude"),
-    ),
+  temperatureFortitude: v.pipe(
+    v.nullable(SpeciesStatSchema),
+    v.brand("StatsSchema/temperatureFortitude"),
   ),
-  craftingSpeedMultiplier: v.nullable(
-    v.pipe(
-      v.nullable(SpeciesStatSchema),
-      v.brand("StatsSchema/craftingSpeedMultiplier"),
-    ),
+  craftingSpeedMultiplier: v.pipe(
+    v.nullable(SpeciesStatSchema),
+    v.brand("StatsSchema/craftingSpeedMultiplier"),
   ),
-  torpidity: v.nullable(
-    v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/torpidity")),
+  torpidity: v.pipe(
+    v.nullable(SpeciesStatSchema),
+    v.brand("StatsSchema/torpidity"),
   ),
 });
 
 export type Species = v.InferOutput<typeof SpeciesSchema>;
 export type SpeciesIn = v.InferInput<typeof SpeciesSchema>;
 export const SpeciesSchema = v.object({
-  name: NameSchema,
-  blueprintPath: v.string(),
+  name: v.string(),
+  blueprintPath: v.pipe(v.string(), v.brand("SpeciesSchema/blueprintPath")),
   variants: v.array(VariantSchema),
-  mod: ModNameSchema,
+  mod: v.nullable(ModNameSchema),
   stats: StatsSchema,
 });
