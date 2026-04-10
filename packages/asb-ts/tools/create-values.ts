@@ -35,12 +35,9 @@ function extractValues(path: string): ValueSpecies[] {
   const data = JSON.parse(rawData);
 
   // species フィールドから ValueSpecies 配列を作成
-  const speciesList = (data.species as [])
-    .map((item) => {
-      const result = v.safeParse(ValueSpeciesSchema, item);
-      return result.success ? result.output : null;
-    })
-    .filter((s) => s !== null);
+  const speciesList = (data.species as []).map((item) =>
+    v.parse(ValueSpeciesSchema, item),
+  );
 
   return speciesList;
 }

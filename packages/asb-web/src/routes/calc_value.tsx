@@ -1,6 +1,7 @@
 import type { Key } from "@heroui/react";
 import {
   Autocomplete,
+  Chip,
   EmptyState,
   Label,
   ListBox,
@@ -12,11 +13,10 @@ import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   calculateValue,
-  getSpecies,
+  getSpeciesList,
   type LevelsIn,
   LevelsSchema,
-  NAME_DICT,
-  searchNameFromDict,
+  searchSpecies,
   type Values,
 } from "asb-ts";
 import { useState } from "react";
@@ -40,9 +40,12 @@ const { useAppForm } = createFormHook({
 
 function CalcValueComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
-  const items = [...NAME_DICT.values()].map((n) => ({
-    id: n.en as Key,
-    name: n.ja,
+  const speciesList = getSpeciesList();
+  const items = speciesList.map((s) => ({
+    id: s.blueprintPath as Key,
+    name: s.name,
+    variants: s.variants,
+    mod: s.mod,
   }));
   const [values, setValues] = useState<Values | null>(null);
 
@@ -59,9 +62,9 @@ function CalcValueComponent() {
     },
     validators: {
       onChange: ({ value }) => {
-        const name = searchNameFromDict(value.name);
-        if (!name) return;
-        const species = getSpecies(name);
+        const speciesList = getSpeciesList();
+        const s = searchSpecies(speciesList, value.name);
+        if (!s) return;
         const parsed = v.safeParse(LevelsSchema, {
           health: { wild: value.Health_wild },
           stamina: { wild: value.Stamina_wild },
@@ -77,7 +80,7 @@ function CalcValueComponent() {
           torpidity: { wild: value.Torpidity_wild },
         } satisfies LevelsIn);
         if (!parsed.success) return;
-        const result = calculateValue(species.stats, parsed.output);
+        const result = calculateValue(s.stats, parsed.output);
         setValues(result);
       },
     },
@@ -127,6 +130,10 @@ function CalcValueComponent() {
                         textValue={item.name}
                       >
                         {item.name}
+                        {item.variants.map((v) => (
+                          <Chip key={v}>{v}</Chip>
+                        ))}
+                        {item.mod && <Chip color="accent">{item.mod}</Chip>}
                         <ListBox.ItemIndicator />
                       </ListBox.Item>
                     ))}

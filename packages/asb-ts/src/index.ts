@@ -1,9 +1,8 @@
 import * as v from "valibot";
 import { calculateLevel } from "./asb/calculator.js";
-import { getSpecies } from "./asb/species.js";
+import { getSpeciesList, searchSpecies } from "./asb/species.js";
 import { type Levels, type ValuesIn, ValuesSchema } from "./asb/types/io.js";
 import type { Species } from "./asb/types/species.js";
-import { searchNameFromDict } from "./asb/util.js";
 
 export * from "./asb/calculator.js";
 export * from "./asb/name-dict.js";
@@ -22,9 +21,9 @@ export function calcL(value: {
   meleeDamageMultiplier: number;
   torpidity: number;
 }): { species: Species; result: Levels } | null {
-  const n = searchNameFromDict(value.name);
-  if (!n) return null;
-  const species = getSpecies(n);
+  const speciesList = getSpeciesList();
+  const s = searchSpecies(speciesList, value.name);
+  if (!s) return null;
   const valuesParsed = v.safeParse(ValuesSchema, {
     health: value.health,
     stamina: value.stamina,
@@ -40,6 +39,6 @@ export function calcL(value: {
     torpidity: value.torpidity,
   } satisfies ValuesIn);
   if (!valuesParsed.success) return null;
-  const result = calculateLevel(species.stats, valuesParsed.output);
-  return { species, result };
+  const result = calculateLevel(s.stats, valuesParsed.output);
+  return { species: s, result };
 }

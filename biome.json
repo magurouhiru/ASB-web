@@ -29,7 +29,7 @@
         "useSortedClasses": "error"
       },
       "suspicious": {
-        "noConsole": "error"
+        "noConsole": "warn"
       }
     }
   },

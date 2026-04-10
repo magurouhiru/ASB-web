@@ -1,5 +1,4 @@
 import * as v from "valibot";
-import { PositiveValueSchema } from "../types/common.js";
 
 /*
   元のARKStatsExtractorベースの定義
@@ -16,11 +15,11 @@ import { PositiveValueSchema } from "../types/common.js";
 export type StatsRow = v.InferOutput<typeof StatsRowSchema>;
 export type StatsRowIn = v.InferInput<typeof StatsRowSchema>;
 export const StatsRowSchema = v.tuple([
-  PositiveValueSchema,
-  PositiveValueSchema,
-  PositiveValueSchema,
-  PositiveValueSchema,
-  PositiveValueSchema,
+  v.number(),
+  v.number(),
+  v.number(),
+  v.number(),
+  v.number(),
 ]);
 
 /**
@@ -80,20 +79,20 @@ export const FullStatsRawSchema = v.tuple([
 export type MutationMult = v.InferOutput<typeof MutationMultSchema>;
 export type MutationMultIn = v.InferInput<typeof MutationMultSchema>;
 export const MutationMultSchema = v.tuple([
-  PositiveValueSchema,
-  PositiveValueSchema,
-  PositiveValueSchema,
-  PositiveValueSchema,
+  v.number(),
+  v.number(),
+  v.number(),
+  v.number(),
 
-  PositiveValueSchema,
-  PositiveValueSchema,
-  PositiveValueSchema,
-  PositiveValueSchema,
+  v.number(),
+  v.number(),
+  v.number(),
+  v.number(),
 
-  PositiveValueSchema,
-  PositiveValueSchema,
-  PositiveValueSchema,
-  PositiveValueSchema,
+  v.number(),
+  v.number(),
+  v.number(),
+  v.number(),
 ]);
 
 export type ValueSpecies = v.InferOutput<typeof ValueSpeciesSchema>;
