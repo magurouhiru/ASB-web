@@ -1,6 +1,5 @@
 import * as v from "valibot";
 import { calculateLevel } from "./asb/calculator.js";
-import { getSpeciesList, searchSpecies } from "./asb/species.js";
 import { type Levels, type ValuesIn, ValuesSchema } from "./asb/types/io.js";
 import type { Species } from "./asb/types/species.js";
 
@@ -11,18 +10,20 @@ export * from "./asb/types/index.js";
 export * from "./asb/util.js";
 export * from "./asb/variants/index.js";
 
-export function calcL(value: {
-  name: string;
-  health: number;
-  stamina: number;
-  oxygen: number;
-  food: number;
-  weight: number;
-  meleeDamageMultiplier: number;
-  torpidity: number;
-}): { species: Species; result: Levels } | null {
-  const speciesList = getSpeciesList();
-  const s = searchSpecies(speciesList, value.name);
+export function calcL(
+  speciesList: Species[],
+  value: {
+    bp: string;
+    health: number;
+    stamina: number;
+    oxygen: number;
+    food: number;
+    weight: number;
+    meleeDamageMultiplier: number;
+    torpidity: number;
+  },
+): { species: Species; result: Levels } | null {
+  const s = speciesList.find((s) => s.blueprintPath === value.bp);
   if (!s) return null;
   const valuesParsed = v.safeParse(ValuesSchema, {
     health: value.health,

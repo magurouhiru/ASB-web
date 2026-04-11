@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { calcL } from "./index.js";
+import { calcL, getSpeciesList, searchSpecies } from "./index.js";
 
 test.each([
   [
@@ -68,7 +68,10 @@ test.each([
     [26, 25, 24, 21, 25, 18, 139, ["Extinction"], "ASA"],
   ],
 ])("calcL - $name", (inputs, expected) => {
-  const r = calcL(inputs);
+  const speciesList = getSpeciesList();
+  const s = searchSpecies(speciesList, inputs.name);
+  if (!s) throw new Error("なんかへん");
+  const r = calcL(speciesList, { ...inputs, bp: s.blueprintPath });
   if (!r) throw new Error("なんかへん");
   const { species, result } = r;
 

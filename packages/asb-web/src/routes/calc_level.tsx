@@ -89,7 +89,7 @@ function CalcLevelComponent() {
   }, [levels]);
 
   const defaultValues = {
-    name: n,
+    bp: searchSpecies(speciesList, n)?.blueprintPath || "",
     health: h,
     stamina: s,
     oxygen: o,
@@ -100,7 +100,9 @@ function CalcLevelComponent() {
   };
 
   const updateLevels = ({ value }: { value: typeof defaultValues }) => {
-    const r = calcL(value);
+    const s = speciesList.find((s) => s.blueprintPath === value.bp);
+    if (!s) return;
+    const r = calcL(speciesList, value);
     if (!r) return;
     const { species, result } = r;
     setVariants(species.variants);
@@ -123,13 +125,10 @@ function CalcLevelComponent() {
           e.stopPropagation();
         }}
       >
-        <form.AppField name="name">
+        <form.AppField name="bp">
           {(field) => (
             <field.Autocomplete
-              defaultValue={
-                searchSpecies(speciesList, field.state.value)?.blueprintPath ||
-                ""
-              }
+              defaultValue={field.state.value}
               placeholder="選択してね"
               selectionMode="single"
               onChange={(key) => field.setValue(key as string)}
@@ -137,13 +136,18 @@ function CalcLevelComponent() {
             >
               <Label>🦖いきものの種類</Label>
               <Autocomplete.Trigger>
-                <Autocomplete.Value />
+                <Autocomplete.Value className="flex gap-2" />
                 <Autocomplete.ClearButton />
                 <Autocomplete.Indicator />
               </Autocomplete.Trigger>
-              <Autocomplete.Popover>
+              <Autocomplete.Popover className="w-96">
                 <Autocomplete.Filter filter={contains}>
-                  <SearchField autoFocus name="search" variant="secondary">
+                  <SearchField
+                    autoFocus
+                    name="search"
+                    variant="secondary"
+                    aria-label="search field"
+                  >
                     <SearchField.Group>
                       <SearchField.SearchIcon />
                       <SearchField.Input placeholder="Search..." />
@@ -152,6 +156,7 @@ function CalcLevelComponent() {
                   </SearchField>
                   <ListBox
                     aria-label="listbox"
+                    className="h-96 overflow-y-auto"
                     renderEmptyState={() => (
                       <EmptyState>見つからなんだ</EmptyState>
                     )}
@@ -161,6 +166,7 @@ function CalcLevelComponent() {
                         key={item.id}
                         id={item.id}
                         textValue={item.name}
+                        className="flex gap-2"
                       >
                         {item.name}
                         {item.variants.map((v) => (

@@ -100,19 +100,19 @@ export function getSpeciesList(
 }
 
 export function searchSpecies(
-  species: Species[],
+  speciesList: Species[],
   name: string,
   variants: Variant[] = [],
 ): Species | null {
   const fuse = new Fuse(
-    species.map((s) => s.name),
+    speciesList.map((s) => s.name),
     {
       threshold: 1,
     },
   );
   const hit = fuse.search(name).at(0)?.item;
   if (!hit) return null;
-  const found = species
+  const found = speciesList
     .filter((s) => s.name === hit)
     .sort((a, b) => a.variants.length - b.variants.length)
     .sort((a, b) => {

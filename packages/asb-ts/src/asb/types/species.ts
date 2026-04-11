@@ -60,11 +60,18 @@ export const StatsSchema = v.object({
   ),
 });
 
+export type BlueprintPath = v.InferOutput<typeof BlueprintPathSchema>;
+export type BlueprintPathIn = v.InferInput<typeof BlueprintPathSchema>;
+export const BlueprintPathSchema = v.pipe(
+  v.string(),
+  v.brand("SpeciesSchema/blueprintPath"),
+);
+
 export type Species = v.InferOutput<typeof SpeciesSchema>;
 export type SpeciesIn = v.InferInput<typeof SpeciesSchema>;
 export const SpeciesSchema = v.object({
   name: v.string(),
-  blueprintPath: v.pipe(v.string(), v.brand("SpeciesSchema/blueprintPath")),
+  blueprintPath: BlueprintPathSchema,
   variants: v.array(VariantSchema),
   mod: v.nullable(ModNameSchema),
   stats: StatsSchema,
