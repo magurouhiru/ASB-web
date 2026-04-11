@@ -12,7 +12,7 @@ export * from "./asb/variants/index.js";
 
 export function calcL(
   speciesList: Species[],
-  value: {
+  values: {
     bp: string;
     health: number;
     stamina: number;
@@ -23,21 +23,21 @@ export function calcL(
     torpidity: number;
   },
 ): { species: Species; result: Levels } | null {
-  const s = speciesList.find((s) => s.blueprintPath === value.bp);
+  const s = speciesList.find((s) => s.blueprintPath === values.bp);
   if (!s) return null;
   const valuesParsed = v.safeParse(ValuesSchema, {
-    health: value.health,
-    stamina: value.stamina,
-    oxygen: value.oxygen,
-    food: value.food,
+    health: values.health,
+    stamina: values.stamina,
+    oxygen: values.oxygen,
+    food: values.food,
     water: 0,
     temperature: 0,
-    weight: value.weight,
-    meleeDamageMultiplier: value.meleeDamageMultiplier,
+    weight: values.weight,
+    meleeDamageMultiplier: values.meleeDamageMultiplier,
     speedMultiplier: 0,
     temperatureFortitude: 0,
     craftingSpeedMultiplier: 0,
-    torpidity: value.torpidity,
+    torpidity: values.torpidity,
   } satisfies ValuesIn);
   if (!valuesParsed.success) return null;
   const result = calculateLevel(s.stats, valuesParsed.output);

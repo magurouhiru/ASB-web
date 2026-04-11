@@ -26,6 +26,9 @@ const StatsRawIndexBase = 0;
 // Index of the increase per wild level value in fullStatsRaw.
 const StatsRawIndexIncPerWildLevel = 1;
 
+// Index of the increase per dom level value in fullStatsRaw.
+const StatsRawIndexIncPerDomLevel = 2;
+
 const Health = 0;
 const Stamina = 1;
 const Torpidity = 2;
@@ -161,5 +164,6 @@ function toSpeciesStat(row: StatsRow): SpeciesStat {
   return v.parse(SpeciesStatSchema, {
     baseValue: row[StatsRawIndexBase],
     incPerWildLevel: row[StatsRawIndexIncPerWildLevel],
+    incPerDomLevel: row[StatsRawIndexIncPerDomLevel],
   } satisfies SpeciesStatIn);
 }

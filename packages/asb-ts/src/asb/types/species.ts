@@ -17,6 +17,10 @@ export const SpeciesStatSchema = v.strictObject({
     PositiveValueSchema,
     v.brand("SpeciesStatSchema/incPerWildLevel"),
   ),
+  incPerDomLevel: v.pipe(
+    PositiveValueSchema,
+    v.brand("SpeciesStatSchema/incPerDomLevel"),
+  ),
 });
 
 /**

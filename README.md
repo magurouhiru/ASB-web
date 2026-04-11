@@ -4,7 +4,7 @@ This project is a web-based rewrite of the excellent desktop application [ARK Sm
 # ASB-web
 
 このリポジトリは[ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor) の一部機能をTypescript で書き直し、web アプリとして公開するために作成されました。  
-[ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor)の方が機能は非常に多く、実績もあるため、興味を持った方は本家を使用することをお勧めします。
+[ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor)の方が機能が非常に多く、実績もあるため、興味を持った方は本家を使用することをお勧めします。
 
 [ASB-web を試してみる(GitHub Pages)](https://magurouhiru.github.io/ASB-web/)
 
