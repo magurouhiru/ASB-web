@@ -71,6 +71,17 @@ export const BlueprintPathSchema = v.pipe(
   v.brand("SpeciesSchema/blueprintPath"),
 );
 
+export type TamedBaseHealthMultiplier = v.InferOutput<
+  typeof TamedBaseHealthMultiplierSchema
+>;
+export type TamedBaseHealthMultiplierIn = v.InferInput<
+  typeof TamedBaseHealthMultiplierSchema
+>;
+export const TamedBaseHealthMultiplierSchema = v.pipe(
+  v.number(),
+  v.brand("SpeciesSchema/TamedBaseHealthMultiplier"),
+);
+
 export type Species = v.InferOutput<typeof SpeciesSchema>;
 export type SpeciesIn = v.InferInput<typeof SpeciesSchema>;
 export const SpeciesSchema = v.object({
@@ -79,4 +90,5 @@ export const SpeciesSchema = v.object({
   variants: v.array(VariantSchema),
   mod: v.nullable(ModNameSchema),
   stats: StatsSchema,
+  TamedBaseHealthMultiplier: v.nullish(v.number()),
 });
