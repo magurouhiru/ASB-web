@@ -72,7 +72,7 @@
         },
         "editor.formatOnSave": true,
         // なんか拡張機能が動かないので、直接パスを指定してみる
-        "biome.lsp.bin": "/home/vscode/app/node_modules/.bun/@biomejs+cli-linux-x64@2.3.13/node_modules/@biomejs/cli-linux-x64/biome"
+        "biome.lsp.bin": "/home/vscode/app/node_modules/.bun/@biomejs+cli-linux-x64@2.4.10/node_modules/@biomejs/cli-linux-x64/biome"
       }
     }
   },

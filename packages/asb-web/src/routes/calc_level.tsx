@@ -16,6 +16,7 @@ import {
   getSpeciesList,
   type Levels,
   PositiveValueSchema,
+  SettingsSchema,
   searchSpecies,
 } from "asb-ts";
 import { useMemo, useState } from "react";
@@ -64,7 +65,8 @@ function CalcLevelComponent() {
   const [_mod, _setMod] = useState<string>("");
   const [levels, setLevels] = useState<Levels | null>(null);
   const { n, h, s, o, f, w, m, t } = Route.useSearch();
-  const speciesList = getSpeciesList();
+  const defaultSettings = v.parse(SettingsSchema, {});
+  const speciesList = getSpeciesList(defaultSettings);
   const items = speciesList.map((s) => ({
     id: s.blueprintPath as Key,
     name: s.name,
@@ -89,7 +91,7 @@ function CalcLevelComponent() {
   }, [levels]);
 
   const defaultValues = {
-    bp: searchSpecies(speciesList, n)?.blueprintPath || "",
+    bp: searchSpecies(speciesList, n, defaultSettings)?.blueprintPath || "",
     health: h,
     stamina: s,
     oxygen: o,
