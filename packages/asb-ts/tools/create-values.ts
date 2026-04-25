@@ -8,7 +8,7 @@ import * as v from "valibot";
 import {
   type ValueSpecies,
   ValueSpeciesSchema,
-} from "../src/asb/values/types.js";
+} from "../src/asb/migration/values/types.js";
 
 /**
  * この関数は、指定したパスのjsonファイルを読み込み、必要な情報だけを抜き出し、ValueSpecies[] 型の配列を返します。
@@ -92,12 +92,12 @@ function main() {
   const species = extractValues(
     "./ARKStatsExtractor/ARKBreedingStats/json/values/values.json",
   );
-  createConstTs(species, "./src/asb/values/values.ts");
+  createConstTs(species, "./src/asb/migration/values/values.ts");
 
   const ASA_species = extractValues(
     "./ARKStatsExtractor/ARKBreedingStats/json/values/ASA-values.json",
   );
-  createConstTs(ASA_species, "./src/asb/values/ASA-values.ts");
+  createConstTs(ASA_species, "./src/asb/migration/values/ASA-values.ts");
 }
 
 main();

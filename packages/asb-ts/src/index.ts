@@ -4,11 +4,11 @@ import { type Levels, type ValuesIn, ValuesSchema } from "./asb/types/io.js";
 import type { Species } from "./asb/types/species.js";
 
 export * from "./asb/calculator.js";
-export * from "./asb/name-dict.js";
+export * from "./asb/migration/name-dict/index.js";
+export * from "./asb/migration/variants/index.js";
 export * from "./asb/species.js";
 export * from "./asb/types/index.js";
 export * from "./asb/util.js";
-export * from "./asb/variants/index.js";
 
 export function calcL(
   speciesList: Species[],
