@@ -1,11 +1,11 @@
+import * as v from "valibot";
 import { expect, test } from "vitest";
 import {
   calcL,
   getSpeciesList,
-  searchSpecies,
   SettingsSchema,
+  searchSpecies,
 } from "./index.js";
-import * as v from "valibot";
 
 test.each([
   [
