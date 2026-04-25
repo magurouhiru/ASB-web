@@ -3,12 +3,14 @@ import { PositiveValueSchema } from "./common.js";
 
 /**
  * wild: 野生のレベル
+ * dom: 飼育のレベル
  * error: 実際の値と算出した値の誤差
  */
 export type LevelDetail = v.InferOutput<typeof LevelDetailSchema>;
 export type LevelDetailIn = v.InferInput<typeof LevelDetailSchema>;
 export const LevelDetailSchema = v.object({
   wild: v.pipe(PositiveValueSchema, v.brand("LevelDetailSchema/wild")),
+  dom: v.nullish(v.pipe(PositiveValueSchema, v.brand("LevelDetailSchema/dom"))),
   error: v.pipe(
     v.nullish(PositiveValueSchema),
     v.brand("LevelDetailSchema/error"),
@@ -72,3 +74,10 @@ export const ValuesSchema = v.object({
   ),
   torpidity: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/torpidity")),
 });
+
+export type Imprinting = v.InferOutput<typeof ImprintingSchema>;
+export type ImprintingIn = v.InferInput<typeof ImprintingSchema>;
+export const ImprintingSchema = v.pipe(
+  PositiveValueSchema,
+  v.brand("ImprintingSchema"),
+);

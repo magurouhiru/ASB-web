@@ -104,5 +104,6 @@ export const ValueSpeciesSchema = v.pipe(
     variants: v.nullish(v.array(v.string())),
     fullStatsRaw: v.nullish(FullStatsRawSchema),
     mutationMult: v.nullish(MutationMultSchema),
+    TamedBaseHealthMultiplier: v.nullish(v.number()),
   }),
 );

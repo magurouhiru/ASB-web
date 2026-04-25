@@ -72,7 +72,7 @@
         },
         "editor.formatOnSave": true,
         // なんか拡張機能が動かないので、直接パスを指定してみる
-        "biome.lsp.bin": "/home/vscode/app/node_modules/.bun/@biomejs+cli-linux-x64@2.3.13/node_modules/@biomejs/cli-linux-x64/biome"
+        "biome.lsp.bin": "/home/vscode/app/node_modules/.bun/@biomejs+cli-linux-x64@2.4.10/node_modules/@biomejs/cli-linux-x64/biome"
       }
     }
   },
@@ -112,8 +112,8 @@
     // 権限問題を回避
     "chown": "sudo chown -R vscode:vscode /home/vscode/app",
     "bun ci": "bun ci",
-    "build asb-ts": "bun build:asb-ts"
-    // "ollama pull llama3.1": "curl http://ollama:11434/api/pull -d '{\"model\": \"llama3.1\", \"stream\": false}'"
+    "build asb-ts": "bun build:asb-ts",
+    "ollama pull gemma4": "curl http://ollama:11434/api/pull -d '{\"model\": \"gemma4:e4b\", \"stream\": false}'"
   }
   // "postAttachCommand": [],
   // "waitFor": "updateContentCommand"

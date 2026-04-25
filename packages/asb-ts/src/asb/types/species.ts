@@ -1,6 +1,6 @@
 import * as v from "valibot";
-import { ModNameSchema } from "../values/index.js";
-import { VariantSchema } from "../variants/index.js";
+import { ModNameSchema } from "../migration/values/index.js";
+import { VariantSchema } from "../migration/variants/index.js";
 import { PositiveValueSchema } from "./common.js";
 
 /**
@@ -8,7 +8,7 @@ import { PositiveValueSchema } from "./common.js";
  */
 export type SpeciesStat = v.InferOutput<typeof SpeciesStatSchema>;
 export type SpeciesStatIn = v.InferInput<typeof SpeciesStatSchema>;
-export const SpeciesStatSchema = v.strictObject({
+export const SpeciesStatSchema = v.object({
   baseValue: v.pipe(
     PositiveValueSchema,
     v.brand("SpeciesStatSchema/baseValue"),
@@ -16,6 +16,10 @@ export const SpeciesStatSchema = v.strictObject({
   incPerWildLevel: v.pipe(
     PositiveValueSchema,
     v.brand("SpeciesStatSchema/incPerWildLevel"),
+  ),
+  incPerDomLevel: v.pipe(
+    PositiveValueSchema,
+    v.brand("SpeciesStatSchema/incPerDomLevel"),
   ),
 });
 
@@ -37,7 +41,7 @@ export const StatsSchema = v.object({
     v.nullable(SpeciesStatSchema),
     v.brand("StatsSchema/temperature"),
   ),
-  weight: v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/eight")),
+  weight: v.pipe(v.nullable(SpeciesStatSchema), v.brand("StatsSchema/weight")),
   meleeDamageMultiplier: v.pipe(
     v.nullable(SpeciesStatSchema),
     v.brand("StatsSchema/meleeDamageMultiplier"),
@@ -60,12 +64,32 @@ export const StatsSchema = v.object({
   ),
 });
 
+export type BlueprintPath = v.InferOutput<typeof BlueprintPathSchema>;
+export type BlueprintPathIn = v.InferInput<typeof BlueprintPathSchema>;
+export const BlueprintPathSchema = v.pipe(
+  v.string(),
+  v.minLength(1),
+  v.brand("SpeciesSchema/blueprintPath"),
+);
+
+export type TamedBaseHealthMultiplier = v.InferOutput<
+  typeof TamedBaseHealthMultiplierSchema
+>;
+export type TamedBaseHealthMultiplierIn = v.InferInput<
+  typeof TamedBaseHealthMultiplierSchema
+>;
+export const TamedBaseHealthMultiplierSchema = v.pipe(
+  v.number(),
+  v.brand("SpeciesSchema/TamedBaseHealthMultiplier"),
+);
+
 export type Species = v.InferOutput<typeof SpeciesSchema>;
 export type SpeciesIn = v.InferInput<typeof SpeciesSchema>;
 export const SpeciesSchema = v.object({
   name: v.string(),
-  blueprintPath: v.pipe(v.string(), v.brand("SpeciesSchema/blueprintPath")),
+  blueprintPath: BlueprintPathSchema,
   variants: v.array(VariantSchema),
   mod: v.nullable(ModNameSchema),
   stats: StatsSchema,
+  TamedBaseHealthMultiplier: v.nullish(v.number()),
 });

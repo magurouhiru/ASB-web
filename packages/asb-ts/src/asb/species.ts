@@ -1,7 +1,15 @@
 import Fuse from "fuse.js";
 import * as v from "valibot";
-import { NAME_DICT } from "./name-dict.js";
+import { NameDicts } from "./migration/name-dict/index.js";
 import {
+  AllModSpecies,
+  type FullStatsRaw,
+  type ModName,
+  type StatsRow,
+} from "./migration/values/index.js";
+import type { Variant } from "./migration/variants/index.js";
+import {
+  type Settings,
   type Species,
   type SpeciesIn,
   SpeciesSchema,
@@ -12,19 +20,15 @@ import {
   type StatsIn,
   StatsSchema,
 } from "./types/index.js";
-import {
-  AllModSpecies,
-  type FullStatsRaw,
-  type ModName,
-  type StatsRow,
-} from "./values/index.js";
-import { VARIANT_DEFAULT_UNSELECTED, type Variant } from "./variants/index.js";
 
 // Index of the base value in fullStatsRaw.
 const StatsRawIndexBase = 0;
 
 // Index of the increase per wild level value in fullStatsRaw.
 const StatsRawIndexIncPerWildLevel = 1;
+
+// Index of the increase per dom level value in fullStatsRaw.
+const StatsRawIndexIncPerDomLevel = 2;
 
 const Health = 0;
 const Stamina = 1;
@@ -39,19 +43,9 @@ const SpeedMultiplier = 9;
 const TemperatureFortitude = 10;
 const CraftingSpeedMultiplier = 11;
 
-export function getSpeciesList(
-  options: {
-    variantsUnselected: Variant[];
-    mods: ModName[];
-    nameDict: typeof NAME_DICT;
-  } = {
-    variantsUnselected: VARIANT_DEFAULT_UNSELECTED,
-    mods: ["ASA"],
-    nameDict: NAME_DICT,
-  },
-): Species[] {
+export function getSpeciesList(settings: Settings): Species[] {
   const searchTarget = AllModSpecies.filter(
-    (ms) => ms.mod === null || options.mods.includes(ms.mod),
+    (ms) => ms.mod === null || settings.mods.includes(ms.mod),
   );
   const tmpMap = new Map<
     string,
@@ -71,10 +65,10 @@ export function getSpeciesList(
         value.mod = ms.mod;
         if (s.fullStatsRaw) value.stats = s.fullStatsRaw;
       } else {
-        const nameEntry = options.nameDict.find((n) => n.en === s.name);
+        const nameEntry = NameDicts.ja.find((n) => n.source === s.name);
         if (!nameEntry) return;
         tmpMap.set(s.blueprintPath, {
-          name: `${nameEntry.ja}(${nameEntry.en})`,
+          name: `${nameEntry.translation}(${nameEntry.source})`,
           blueprintPath: s.blueprintPath,
           variants: s.variants ?? [],
           mod: ms.mod,
@@ -85,7 +79,7 @@ export function getSpeciesList(
   });
   return Array.from(tmpMap.values())
     .filter(
-      (s) => !s.variants.some((v) => options.variantsUnselected.includes(v)),
+      (s) => !s.variants.some((v) => settings.variantsUnselected.includes(v)),
     )
     .map((s) => {
       if (s.stats === null) return null;
@@ -100,24 +94,24 @@ export function getSpeciesList(
 }
 
 export function searchSpecies(
-  species: Species[],
+  speciesList: Species[],
   name: string,
-  variants: Variant[] = [],
+  settings: Settings,
 ): Species | null {
   const fuse = new Fuse(
-    species.map((s) => s.name),
+    speciesList.map((s) => s.name),
     {
       threshold: 1,
     },
   );
   const hit = fuse.search(name).at(0)?.item;
   if (!hit) return null;
-  const found = species
+  const found = speciesList
     .filter((s) => s.name === hit)
     .sort((a, b) => a.variants.length - b.variants.length)
     .sort((a, b) => {
-      const aHasVariant = variants.some((v) => a.variants.includes(v));
-      const bHasVariant = variants.some((v) => b.variants.includes(v));
+      const aHasVariant = settings.variants.some((v) => a.variants.includes(v));
+      const bHasVariant = settings.variants.some((v) => b.variants.includes(v));
       if (aHasVariant && !bHasVariant) return -1;
       if (!aHasVariant && bHasVariant) return 1;
       return 0;
@@ -161,5 +155,6 @@ function toSpeciesStat(row: StatsRow): SpeciesStat {
   return v.parse(SpeciesStatSchema, {
     baseValue: row[StatsRawIndexBase],
     incPerWildLevel: row[StatsRawIndexIncPerWildLevel],
+    incPerDomLevel: row[StatsRawIndexIncPerDomLevel],
   } satisfies SpeciesStatIn);
 }

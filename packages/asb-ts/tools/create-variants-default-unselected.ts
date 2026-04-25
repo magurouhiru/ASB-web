@@ -29,7 +29,7 @@ function main() {
   const variants = extractValues(
     "./ARKStatsExtractor/ARKBreedingStats/json/variantsDefaultUnselected.txt",
   );
-  createConstTs(variants, "./src/asb/variants/default-unselected.ts");
+  createConstTs(variants, "./src/asb/migration/variants/default-unselected.ts");
 }
 
 main();

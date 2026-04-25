@@ -16,6 +16,7 @@ import {
   getSpeciesList,
   type LevelsIn,
   LevelsSchema,
+  SettingsSchema,
   searchSpecies,
   type Values,
 } from "asb-ts";
@@ -40,7 +41,8 @@ const { useAppForm } = createFormHook({
 
 function CalcValueComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
-  const speciesList = getSpeciesList();
+  const defaultSettings = v.parse(SettingsSchema, {});
+  const speciesList = getSpeciesList(defaultSettings);
   const items = speciesList.map((s) => ({
     id: s.blueprintPath as Key,
     name: s.name,
@@ -62,8 +64,8 @@ function CalcValueComponent() {
     },
     validators: {
       onChange: ({ value }) => {
-        const speciesList = getSpeciesList();
-        const s = searchSpecies(speciesList, value.name);
+        const speciesList = getSpeciesList(defaultSettings);
+        const s = searchSpecies(speciesList, value.name, defaultSettings);
         if (!s) return;
         const parsed = v.safeParse(LevelsSchema, {
           health: { wild: value.Health_wild },
