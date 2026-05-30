@@ -5,6 +5,7 @@ import {
   EmptyState,
   Label,
   ListBox,
+  ListBoxItem,
   NumberField,
   SearchField,
   useFilter,
@@ -12,12 +13,16 @@ import {
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  calculateValue,
+  calculateValueController,
+  DefaultSettings,
   getSpeciesList,
+  ImprintingSchema,
   type LevelsIn,
   LevelsSchema,
-  SettingsSchema,
   searchSpecies,
+  TameEffectivenessSchema,
+  type Type,
+  Types,
   type Values,
 } from "asb-ts";
 import { useState } from "react";
@@ -33,6 +38,7 @@ const { useAppForm } = createFormHook({
   fieldComponents: {
     Autocomplete,
     NumberField,
+    ListBox,
   },
   formComponents: {},
   fieldContext,
@@ -41,7 +47,7 @@ const { useAppForm } = createFormHook({
 
 function CalcValueComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
-  const defaultSettings = v.parse(SettingsSchema, {});
+  const defaultSettings = DefaultSettings;
   const speciesList = getSpeciesList(defaultSettings);
   const items = speciesList.map((s) => ({
     id: s.blueprintPath as Key,
@@ -50,6 +56,8 @@ function CalcValueComponent() {
     mod: s.mod,
   }));
   const [values, setValues] = useState<Values | null>(null);
+  const [_imprinting, _setImprinting] = useState<number>(0);
+  const [_tameEffectiveness, _setTameEffectiveness] = useState<number>(0);
 
   const form = useAppForm({
     defaultValues: {
@@ -61,6 +69,9 @@ function CalcValueComponent() {
       Weight_wild: 0,
       MeleeDamageMultiplier_wild: 0,
       Torpidity_wild: 0,
+      imprinting: 0,
+      tameEffectiveness: 0,
+      type: "wild" as Type,
     },
     validators: {
       onChange: ({ value }) => {
@@ -81,8 +92,28 @@ function CalcValueComponent() {
           craftingSpeedMultiplier: { wild: 0 },
           torpidity: { wild: value.Torpidity_wild },
         } satisfies LevelsIn);
-        if (!parsed.success) return;
-        const result = calculateValue(s.stats, parsed.output);
+        const parsedImprinting = v.safeParse(
+          ImprintingSchema,
+          value.imprinting,
+        );
+        const parsedTameEffectiveness = v.safeParse(
+          TameEffectivenessSchema,
+          value.tameEffectiveness,
+        );
+        if (
+          !parsed.success ||
+          !parsedImprinting.success ||
+          !parsedTameEffectiveness.success
+        )
+          return;
+        const result = calculateValueController(
+          s,
+          parsed.output,
+          parsedImprinting.output,
+          parsedTameEffectiveness.output,
+          value.type as Type,
+          defaultSettings,
+        );
         setValues(result);
       },
     },
@@ -251,6 +282,7 @@ function CalcValueComponent() {
             <field.NumberField
               defaultValue={0}
               minValue={0}
+              formatOptions={{ style: "percent" }}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🤺近接攻撃力[%]</Label>
@@ -260,9 +292,6 @@ function CalcValueComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
-                <output>
-                  {Math.round((values?.meleeDamageMultiplier ?? 0) * 100)}%
-                </output>
               </div>
             </field.NumberField>
           )}
@@ -285,6 +314,78 @@ function CalcValueComponent() {
                 <output>{values?.torpidity}</output>
               </div>
             </field.NumberField>
+          )}
+        </form.AppField>
+
+        <form.AppField name="imprinting">
+          {(field) => (
+            <field.NumberField
+              defaultValue={0}
+              minValue={0}
+              formatOptions={{ style: "percent" }}
+              onChange={(v) => field.setValue(v)}
+            >
+              <Label>刷り込み[%]</Label>
+              <div className="flex items-center gap-2">
+                <NumberField.Group>
+                  <NumberField.DecrementButton />
+                  <NumberField.Input />
+                  <NumberField.IncrementButton />
+                </NumberField.Group>
+              </div>
+            </field.NumberField>
+          )}
+        </form.AppField>
+
+        <form.AppField name="tameEffectiveness">
+          {(field) => (
+            <field.NumberField
+              defaultValue={0}
+              minValue={0}
+              formatOptions={{ style: "percent" }}
+              onChange={(v) => field.setValue(v)}
+            >
+              <Label>テイム効果[%]</Label>
+              <div className="flex items-center gap-2">
+                <NumberField.Group>
+                  <NumberField.DecrementButton />
+                  <NumberField.Input />
+                  <NumberField.IncrementButton />
+                </NumberField.Group>
+              </div>
+            </field.NumberField>
+          )}
+        </form.AppField>
+
+        <form.AppField name="type">
+          {(field) => (
+            <field.ListBox
+              aria-label="type"
+              selectionMode="single"
+              defaultSelectedKeys={["wild"]}
+              onSelectionChange={(key) => {
+                if (key !== "all") {
+                  Types.forEach((t) => {
+                    if (key.has(t)) {
+                      field.setValue(t);
+                    }
+                  });
+                }
+              }}
+            >
+              <ListBoxItem id="wild" textValue="wild">
+                野生
+                <ListBox.ItemIndicator />
+              </ListBoxItem>
+              <ListBoxItem id="dom" textValue="dom">
+                テイム
+                <ListBox.ItemIndicator />
+              </ListBoxItem>
+              <ListBoxItem id="bred" textValue="bred">
+                ブリ
+                <ListBox.ItemIndicator />
+              </ListBoxItem>
+            </field.ListBox>
           )}
         </form.AppField>
       </form>

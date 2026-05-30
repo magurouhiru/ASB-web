@@ -83,8 +83,8 @@ export const ImprintingSchema = v.pipe(
   v.brand("ImprintingSchema"),
 );
 
-export type Type = (typeof types)[number];
-export const types = ["wild", "dom", "bred"] as const;
+export type Type = (typeof Types)[number];
+export const Types = ["wild", "dom", "bred"] as const;
 
 export type TameEffectiveness = v.InferOutput<typeof TameEffectivenessSchema>;
 export type TameEffectivenessIn = v.InferInput<typeof TameEffectivenessSchema>;
