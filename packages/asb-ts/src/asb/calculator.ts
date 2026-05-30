@@ -85,7 +85,7 @@ function calculateValueWild(
     weight: round10(
       cVw(stats.weight, levels.weight, settings.statMultipliers.weight),
     ),
-    meleeDamageMultiplier: round10(
+    meleeDamageMultiplier: round1000(
       cVw(
         stats.meleeDamageMultiplier,
         levels.meleeDamageMultiplier,
@@ -202,7 +202,7 @@ function calculateValueDom(
         settings,
       ),
     ),
-    meleeDamageMultiplier: round10(
+    meleeDamageMultiplier: round1000(
       cVpt(
         tameEffectiveness,
         stats.meleeDamageMultiplier,
@@ -259,6 +259,11 @@ function round10(num: number): number {
   return Math.round(num * 10) / 10;
 }
 
+// 近接攻撃力は%で表示されるので小数点以下3桁まで表示する。
+function round1000(num: number): number {
+  return Math.round(num * 1000) / 1000;
+}
+
 function cVw(
   stat: SpeciesStat | null,
   level: LevelDetail,
@@ -267,7 +272,7 @@ function cVw(
   if (!stat) return 0;
   return (
     stat.baseValue *
-    (1 + level.wild * stat.incPerWildLevel * statMultiplierItem.TaM)
+    (1 + level.wild * stat.incPerWildLevel * statMultiplierItem.IwM)
   );
 }
 
@@ -285,7 +290,7 @@ function cVpt(
   return (
     (vw * tbhm * (1 + imprinting * 0.2 * IBM) +
       stat.additiveBonus * statMultiplierItem.TaM) *
-    (1 * te * stat.multiplicativeBonus * statMultiplierItem.TmM)
+    (1 + te * stat.multiplicativeBonus * statMultiplierItem.TmM)
   );
 }
 

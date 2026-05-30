@@ -19,7 +19,6 @@ import {
   ImprintingSchema,
   type LevelsIn,
   LevelsSchema,
-  searchSpecies,
   TameEffectivenessSchema,
   type Type,
   Types,
@@ -76,7 +75,7 @@ function CalcValueComponent() {
     validators: {
       onChange: ({ value }) => {
         const speciesList = getSpeciesList(defaultSettings);
-        const s = searchSpecies(speciesList, value.name, defaultSettings);
+        const s = speciesList.find((s) => s.blueprintPath === value.name);
         if (!s) return;
         const parsed = v.safeParse(LevelsSchema, {
           health: { wild: value.Health_wild },
@@ -124,7 +123,7 @@ function CalcValueComponent() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          form.handleSubmit();
+          e.stopPropagation();
         }}
       >
         <form.AppField name="name">
@@ -282,7 +281,6 @@ function CalcValueComponent() {
             <field.NumberField
               defaultValue={0}
               minValue={0}
-              formatOptions={{ style: "percent" }}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🤺近接攻撃力[%]</Label>
@@ -292,6 +290,11 @@ function CalcValueComponent() {
                   <NumberField.Input />
                   <NumberField.IncrementButton />
                 </NumberField.Group>
+                <output>
+                  {values?.meleeDamageMultiplier
+                    ? `${Math.round(values.meleeDamageMultiplier * 1000) / 10}%`
+                    : ""}
+                </output>
               </div>
             </field.NumberField>
           )}

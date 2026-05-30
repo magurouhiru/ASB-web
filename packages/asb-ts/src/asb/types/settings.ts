@@ -49,14 +49,14 @@ export const SettingsSchema = v.object({
 
 export const DefaultSettings: Settings = {
   statMultipliers: {
-    health: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
+    health: { TaM: 0.14, TmM: 0.44, IdM: 0.2, IwM: 1 },
     stamina: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
     oxygen: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
     food: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
     water: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
     temperature: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
     weight: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
-    meleeDamageMultiplier: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
+    meleeDamageMultiplier: { TaM: 0.14, TmM: 0.44, IdM: 0.17, IwM: 1 },
     speedMultiplier: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
     temperatureFortitude: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
     craftingSpeedMultiplier: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
