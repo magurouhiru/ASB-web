@@ -10,6 +10,7 @@ export type LevelDetail = v.InferOutput<typeof LevelDetailSchema>;
 export type LevelDetailIn = v.InferInput<typeof LevelDetailSchema>;
 export const LevelDetailSchema = v.object({
   wild: v.pipe(PositiveValueSchema, v.brand("LevelDetailSchema/wild")),
+  mut: v.nullish(v.pipe(PositiveValueSchema, v.brand("LevelDetailSchema/mut"))),
   dom: v.nullish(v.pipe(PositiveValueSchema, v.brand("LevelDetailSchema/dom"))),
   error: v.pipe(
     v.nullish(PositiveValueSchema),
@@ -84,3 +85,10 @@ export const ImprintingSchema = v.pipe(
 
 export type Type = (typeof types)[number];
 export const types = ["wild", "dom", "bred"] as const;
+
+export type TameEffectiveness = v.InferOutput<typeof TameEffectivenessSchema>;
+export type TameEffectivenessIn = v.InferInput<typeof TameEffectivenessSchema>;
+export const TameEffectivenessSchema = v.pipe(
+  PositiveValueSchema,
+  v.brand("TameEffectivenessSchema"),
+);

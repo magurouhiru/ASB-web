@@ -1,42 +1,292 @@
 import * as v from "valibot";
 import {
+  DefaultSettings,
+  type Imprinting,
   type LevelDetail,
   type LevelDetailIn,
   LevelDetailSchema,
   type Levels,
   type LevelsIn,
   LevelsSchema,
+  type Settings,
+  type Species,
   type SpeciesStat,
+  type StatMultiplierItem,
   type Stats,
+  type TameEffectiveness,
+  type Type,
   type Values,
   type ValuesIn,
   ValuesSchema,
 } from "./types/index.js";
 
-export function calculateValue(stats: Stats, levels: Levels): Values {
+export function calculateValueController(
+  species: Species,
+  levels: Levels,
+  imprinting: Imprinting,
+  tameEffectiveness: TameEffectiveness,
+  type: Type,
+  settings: Settings = DefaultSettings,
+): Values {
+  switch (type) {
+    case "wild": {
+      return calculateValueWild(species.stats, levels, settings);
+    }
+    case "dom": {
+      return calculateValueDom(
+        species,
+        levels,
+        imprinting,
+        tameEffectiveness,
+        settings,
+      );
+    }
+    case "bred": {
+      return calculateValueDom(
+        species,
+        levels,
+        imprinting,
+        1 as TameEffectiveness, // 飼育はテイム効果なしで計算する。
+        settings,
+      );
+    }
+    default: {
+      throw new Error("invalid type");
+    }
+  }
+}
+
+function calculateValueWild(
+  stats: Stats,
+  levels: Levels,
+  settings: Settings,
+): Values {
   return v.parse(ValuesSchema, {
-    health: calcV(stats.health, levels.health),
-    stamina: calcV(stats.stamina, levels.stamina),
-    oxygen: calcV(stats.oxygen, levels.oxygen),
-    food: calcV(stats.food, levels.food),
-    water: calcV(stats.water, levels.water),
-    temperature: calcV(stats.temperature, levels.temperature),
-    weight: calcV(stats.weight, levels.weight),
-    meleeDamageMultiplier: calcV(
-      stats.meleeDamageMultiplier,
-      levels.meleeDamageMultiplier,
+    health: round10(
+      cVw(stats.health, levels.health, settings.statMultipliers.health),
     ),
-    speedMultiplier: calcV(stats.speedMultiplier, levels.speedMultiplier),
-    temperatureFortitude: calcV(
-      stats.temperatureFortitude,
-      levels.temperatureFortitude,
+    stamina: round10(
+      cVw(stats.stamina, levels.stamina, settings.statMultipliers.stamina),
     ),
-    craftingSpeedMultiplier: calcV(
-      stats.craftingSpeedMultiplier,
-      levels.craftingSpeedMultiplier,
+    oxygen: round10(
+      cVw(stats.oxygen, levels.oxygen, settings.statMultipliers.oxygen),
     ),
-    torpidity: calcV(stats.torpidity, levels.torpidity),
+    food: round10(cVw(stats.food, levels.food, settings.statMultipliers.food)),
+    water: round10(
+      cVw(stats.water, levels.water, settings.statMultipliers.water),
+    ),
+    temperature: round10(
+      cVw(
+        stats.temperature,
+        levels.temperature,
+        settings.statMultipliers.temperature,
+      ),
+    ),
+    weight: round10(
+      cVw(stats.weight, levels.weight, settings.statMultipliers.weight),
+    ),
+    meleeDamageMultiplier: round10(
+      cVw(
+        stats.meleeDamageMultiplier,
+        levels.meleeDamageMultiplier,
+        settings.statMultipliers.meleeDamageMultiplier,
+      ),
+    ),
+    speedMultiplier: round10(
+      cVw(
+        stats.speedMultiplier,
+        levels.speedMultiplier,
+        settings.statMultipliers.speedMultiplier,
+      ),
+    ),
+    temperatureFortitude: round10(
+      cVw(
+        stats.temperatureFortitude,
+        levels.temperatureFortitude,
+        settings.statMultipliers.temperatureFortitude,
+      ),
+    ),
+    craftingSpeedMultiplier: round10(
+      cVw(
+        stats.craftingSpeedMultiplier,
+        levels.craftingSpeedMultiplier,
+        settings.statMultipliers.craftingSpeedMultiplier,
+      ),
+    ),
+    torpidity: round10(
+      cVw(
+        stats.torpidity,
+        levels.torpidity,
+        settings.statMultipliers.torpidity,
+      ),
+    ),
   } satisfies ValuesIn);
+}
+
+function calculateValueDom(
+  { stats, tamedBaseHealthMultiplier }: Species,
+  levels: Levels,
+  imprinting: Imprinting,
+  tameEffectiveness: TameEffectiveness,
+  settings: Settings = DefaultSettings,
+): Values {
+  return v.parse(ValuesSchema, {
+    health: round10(
+      cVpt(
+        tameEffectiveness,
+        stats.health,
+        levels.health,
+        imprinting,
+        settings.statMultipliers.health,
+        settings,
+        tamedBaseHealthMultiplier,
+      ),
+    ),
+    stamina: round10(
+      cVpt(
+        tameEffectiveness,
+        stats.stamina,
+        levels.stamina,
+        imprinting,
+        settings.statMultipliers.stamina,
+        settings,
+      ),
+    ),
+    oxygen: round10(
+      cVpt(
+        tameEffectiveness,
+        stats.oxygen,
+        levels.oxygen,
+        imprinting,
+        settings.statMultipliers.oxygen,
+        settings,
+      ),
+    ),
+    food: round10(
+      cVpt(
+        tameEffectiveness,
+        stats.food,
+        levels.food,
+        imprinting,
+        settings.statMultipliers.food,
+        settings,
+      ),
+    ),
+    water: round10(
+      cVpt(
+        tameEffectiveness,
+        stats.water,
+        levels.water,
+        imprinting,
+        settings.statMultipliers.water,
+        settings,
+      ),
+    ),
+    temperature: round10(
+      cVpt(
+        tameEffectiveness,
+        stats.temperature,
+        levels.temperature,
+        imprinting,
+        settings.statMultipliers.temperature,
+        settings,
+      ),
+    ),
+    weight: round10(
+      cVpt(
+        tameEffectiveness,
+        stats.weight,
+        levels.weight,
+        imprinting,
+        settings.statMultipliers.weight,
+        settings,
+      ),
+    ),
+    meleeDamageMultiplier: round10(
+      cVpt(
+        tameEffectiveness,
+        stats.meleeDamageMultiplier,
+        levels.meleeDamageMultiplier,
+        imprinting,
+        settings.statMultipliers.meleeDamageMultiplier,
+        settings,
+      ),
+    ),
+    speedMultiplier: round10(
+      cVpt(
+        tameEffectiveness,
+        stats.speedMultiplier,
+        levels.speedMultiplier,
+        imprinting,
+        settings.statMultipliers.speedMultiplier,
+        settings,
+      ),
+    ),
+    temperatureFortitude: round10(
+      cVpt(
+        tameEffectiveness,
+        stats.temperatureFortitude,
+        levels.temperatureFortitude,
+        imprinting,
+        settings.statMultipliers.temperatureFortitude,
+        settings,
+      ),
+    ),
+    craftingSpeedMultiplier: round10(
+      cVpt(
+        tameEffectiveness,
+        stats.craftingSpeedMultiplier,
+        levels.craftingSpeedMultiplier,
+        imprinting,
+        settings.statMultipliers.craftingSpeedMultiplier,
+        settings,
+      ),
+    ),
+    torpidity: round10(
+      cVpt(
+        tameEffectiveness,
+        stats.torpidity,
+        levels.torpidity,
+        imprinting,
+        settings.statMultipliers.torpidity,
+        settings,
+      ),
+    ),
+  } satisfies ValuesIn);
+}
+
+function round10(num: number): number {
+  return Math.round(num * 10) / 10;
+}
+
+function cVw(
+  stat: SpeciesStat | null,
+  level: LevelDetail,
+  statMultiplierItem: StatMultiplierItem,
+): number {
+  if (!stat) return 0;
+  return (
+    stat.baseValue *
+    (1 + level.wild * stat.incPerWildLevel * statMultiplierItem.TaM)
+  );
+}
+
+function cVpt(
+  te: TameEffectiveness,
+  stat: SpeciesStat | null,
+  level: LevelDetail,
+  imprinting: Imprinting,
+  statMultiplierItem: StatMultiplierItem,
+  { IBM }: Settings,
+  tbhm: number | undefined = 1,
+): number {
+  if (!stat) return 0;
+  const vw = cVw(stat, level, statMultiplierItem);
+  return (
+    (vw * tbhm * (1 + imprinting * 0.2 * IBM) +
+      stat.additiveBonus * statMultiplierItem.TaM) *
+    (1 * te * stat.multiplicativeBonus * statMultiplierItem.TmM)
+  );
 }
 
 // 2進数による誤差をなくすための値、これより小さい値は四捨五入する。

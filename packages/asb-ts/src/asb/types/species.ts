@@ -21,6 +21,11 @@ export const SpeciesStatSchema = v.object({
     PositiveValueSchema,
     v.brand("SpeciesStatSchema/incPerDomLevel"),
   ),
+  additiveBonus: v.pipe(v.number(), v.brand("SpeciesStatSchema/additiveBonus")),
+  multiplicativeBonus: v.pipe(
+    PositiveValueSchema,
+    v.brand("SpeciesStatSchema/multiplicativeBonus"),
+  ),
 });
 
 /**
@@ -91,5 +96,5 @@ export const SpeciesSchema = v.object({
   variants: v.array(VariantSchema),
   mod: v.nullable(ModNameSchema),
   stats: StatsSchema,
-  TamedBaseHealthMultiplier: v.nullish(v.number()),
+  tamedBaseHealthMultiplier: v.optional(v.number()),
 });

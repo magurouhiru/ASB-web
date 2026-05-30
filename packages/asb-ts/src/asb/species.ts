@@ -31,6 +31,12 @@ const StatsRawIndexIncPerWildLevel = 1;
 // Index of the increase per dom level value in fullStatsRaw.
 const StatsRawIndexIncPerDomLevel = 2;
 
+// Index of the additive bonus value in fullStatsRaw.
+const StatsRawIndexAdditiveBonus = 3;
+
+// Index of the multiplicative bonus value in fullStatsRaw.
+const StatsRawIndexMultiplicativeBonus = 4;
+
 export function getSpeciesList(
   settings: Settings = DefaultSettings,
 ): Species[] {
@@ -148,5 +154,7 @@ function toSpeciesStat(row: StatsRow | null): SpeciesStat | null {
     baseValue: row[StatsRawIndexBase],
     incPerWildLevel: row[StatsRawIndexIncPerWildLevel],
     incPerDomLevel: row[StatsRawIndexIncPerDomLevel],
+    additiveBonus: row[StatsRawIndexAdditiveBonus],
+    multiplicativeBonus: row[StatsRawIndexMultiplicativeBonus],
   } satisfies SpeciesStatIn);
 }
