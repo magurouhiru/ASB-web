@@ -14,7 +14,7 @@ import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   calcL,
-  DefaultSettings,
+  DEFAULT_SETTINGS,
   getSpeciesList,
   type Levels,
   PositiveValueSchema,
@@ -70,8 +70,8 @@ function CalcLevelComponent() {
   const [_mod, _setMod] = useState<string>("");
   const [levels, setLevels] = useState<Levels | null>(null);
   const { type, n, h, s, o, f, w, m, t, i } = Route.useSearch();
-  const defaultSettings = DefaultSettings;
-  const speciesList = getSpeciesList();
+  const defaultSettings = DEFAULT_SETTINGS;
+  const speciesList = getSpeciesList(defaultSettings);
   const items = speciesList.map((s) => ({
     id: s.blueprintPath as Key,
     name: s.name,
@@ -112,7 +112,7 @@ function CalcLevelComponent() {
   const updateLevels = ({ value }: { value: typeof defaultValues }) => {
     const s = speciesList.find((s) => s.blueprintPath === value.bp);
     if (!s) return;
-    const r = calcL(speciesList, value);
+    const r = calcL(speciesList, value, defaultSettings);
     if (!r) return;
     setVariants(r.species.variants);
     setLevels(r.levels);
