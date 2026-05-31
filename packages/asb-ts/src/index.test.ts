@@ -92,13 +92,28 @@ test.each([
     },
     [46, 49, 53, 44, 43, 43, 278, [], "ASA"],
   ],
+  [
+    {
+      type: "dom" as Type,
+      imprinting: 0,
+      name: "ベロナサウルス",
+      health: 2024.1,
+      stamina: 1267.0,
+      oxygen: 742.5,
+      food: 5175.0,
+      weight: 461.5,
+      meleeDamageMultiplier: 2.552,
+      torpidity: 3424.5,
+    },
+    [18, 29, 23, 13, 21, 22, 126, ["Extinction"], "ASA", 1],
+  ],
 ])("calcL - $name", (inputs, expected) => {
   const speciesList = getSpeciesList();
   const s = searchSpecies(speciesList, inputs.name);
   if (!s) throw new Error("なんかへん");
   const r = calcL(speciesList, { ...inputs, bp: s.blueprintPath });
   if (!r) throw new Error("なんかへん");
-  const { species, levels } = r;
+  const { species, levels, tameEffectiveness } = r;
 
   expect(levels.health.wild).toBe(expected[0]);
   expect(levels.stamina.wild).toBe(expected[1]);
@@ -121,4 +136,8 @@ test.each([
 
   expect(species.variants).toStrictEqual(expected[7]);
   expect(species.mod).toBe(expected[8]);
+
+  if (inputs.type === "dom") {
+    expect(tameEffectiveness).toBe(expected[9]);
+  }
 });
