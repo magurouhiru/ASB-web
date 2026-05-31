@@ -285,11 +285,22 @@ function cVpt(
 ): number {
   if (!stat) return 0;
   const vw = cVw(stat, level, statMultiplierItem);
-  return (
-    (vw * tbhm * (1 + imprinting * 0.2 * IBM) +
-      stat.additiveBonus * statMultiplierItem.TaM) *
-    (1 + te * stat.multiplicativeBonus * statMultiplierItem.TmM)
-  );
+  const tmp1 = vw * tbhm * (1 + imprinting * 0.2 * IBM);
+  // テイム時の加算ボーナスがマイナスの時はTaM(サーバーの設定)を掛けない。
+  // 公式の計算式にはないけどARKStatsExtractor/ARKBreedingStats/values/Values.cs:576行付近にコメントとして記述してある
+  const addBounus =
+    stat.additiveBonus > 0
+      ? stat.additiveBonus * statMultiplierItem.TaM
+      : stat.additiveBonus;
+  const tmp2 = addBounus;
+  // テイム時の乗算ボーナスがマイナスの時はTmM(サーバーの設定)を掛けない。
+  // 公式の計算式にはないけどARKStatsExtractor/ARKBreedingStats/values/Values.cs:580行付近にコメントとして記述してある
+  const multiplicativeBonus =
+    stat.multiplicativeBonus > 0
+      ? stat.multiplicativeBonus * statMultiplierItem.TmM
+      : stat.multiplicativeBonus;
+  const tmp3 = 1 + te * multiplicativeBonus;
+  return (tmp1 + tmp2) * tmp3;
 }
 
 export function calculateLevelController(
@@ -387,7 +398,7 @@ function calculateLevelDom(
     const error = sumError(tmp);
     if (error === 0) {
       return [tmp, (te / 100) as TameEffectiveness];
-    } else if (error < bufError) {
+    } else if (error <= bufError) {
       bufError = error;
       bufLevels = tmp;
       bufTe = (te / 100) as TameEffectiveness;
