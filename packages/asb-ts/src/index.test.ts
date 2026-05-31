@@ -152,6 +152,51 @@ test.each([
     },
     [29, 41, 29, 39, 34, 35, 207, [], "ASA", 1],
   ],
+  [
+    {
+      type: "bred" as Type,
+      imprinting: 1,
+      name: "山りばは(カマキリ)",
+      health: 2838.1,
+      stamina: 975.0,
+      oxygen: 690.0,
+      food: 5616.0,
+      weight: 491.0,
+      meleeDamageMultiplier: 3.222,
+      torpidity: 7048.1,
+    },
+    [38, 55, 36, 42, 43, 49, 263, ["ScorchedEarth"], "ASA", 1],
+  ],
+  [
+    {
+      type: "bred" as Type,
+      imprinting: 0,
+      name: "ギカントラブトル",
+      health: 5082.1,
+      stamina: 1925.0,
+      oxygen: 450.0,
+      food: 14490.0,
+      weight: 595.2,
+      meleeDamageMultiplier: 3.904,
+      torpidity: 13091.5,
+    },
+    [28, 45, 20, 32, 43, 45, 213, [], "ASA", 1],
+  ],
+  [
+    {
+      type: "dom" as Type,
+      imprinting: Math.random(), // dom であればインプリントは関係ないはず
+      name: "69り44川47(アロサウルス)",
+      health: 4536.1,
+      stamina: 1500.0,
+      oxygen: 645.0,
+      food: 18630.0,
+      weight: 630.8,
+      meleeDamageMultiplier: 4.022,
+      torpidity: 15280.5,
+    },
+    [31, 50, 33, 44, 33, 47, 238, [], "ASA", 1],
+  ],
 ])("calcL - $name", (inputs, expected) => {
   const speciesList = getSpeciesList();
   const s = searchSpecies(speciesList, inputs.name);
