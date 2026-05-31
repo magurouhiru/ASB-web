@@ -1,6 +1,11 @@
 import * as v from "valibot";
-import { calculateLevel } from "./asb/calculator.js";
-import { type Levels, type ValuesIn, ValuesSchema } from "./asb/types/io.js";
+import { calculateLevelController } from "./asb/calculator.js";
+import {
+  ImprintingSchema,
+  type Levels,
+  type ValuesIn,
+  ValuesSchema,
+} from "./asb/types/io.js";
 import type { Species } from "./asb/types/species.js";
 
 export * from "./asb/calculator.js";
@@ -12,6 +17,8 @@ export * from "./asb/types/index.js";
 export function calcL(
   speciesList: Species[],
   values: {
+    type: "wild" | "dom" | "bred";
+    imprinting: number;
     bp: string;
     health: number;
     stamina: number;
@@ -38,7 +45,13 @@ export function calcL(
     craftingSpeedMultiplier: 0,
     torpidity: values.torpidity,
   } satisfies ValuesIn);
-  if (!valuesParsed.success) return null;
-  const result = calculateLevel(s.stats, valuesParsed.output);
+  const imprintingParsed = v.safeParse(ImprintingSchema, values.imprinting);
+  if (!valuesParsed.success || !imprintingParsed.success) return null;
+  const result = calculateLevelController(
+    s,
+    valuesParsed.output,
+    imprintingParsed.output,
+    values.type,
+  );
   return { species: s, result };
 }

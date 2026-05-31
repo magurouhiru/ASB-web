@@ -2,9 +2,7 @@ import * as v from "valibot";
 import {
   DefaultSettings,
   type Imprinting,
-  type LevelDetail,
   type LevelDetailIn,
-  LevelDetailSchema,
   type Levels,
   type LevelsIn,
   LevelsSchema,
@@ -36,7 +34,7 @@ export function calculateValueController(
       return calculateValueDom(
         species,
         levels,
-        imprinting,
+        0 as Imprinting, // テイム後のレベル計算ではインプリントは考慮しない。
         tameEffectiveness,
         settings,
       );
@@ -46,7 +44,7 @@ export function calculateValueController(
         species,
         levels,
         imprinting,
-        1 as TameEffectiveness, // 飼育はテイム効果なしで計算する。
+        1 as TameEffectiveness, // ブリはテイム効果なしで計算する。
         settings,
       );
     }
@@ -62,58 +60,59 @@ function calculateValueWild(
   settings: Settings,
 ): Values {
   return v.parse(ValuesSchema, {
-    health: round10(
+    health: round(
       cVw(stats.health, levels.health, settings.statMultipliers.health),
     ),
-    stamina: round10(
+    stamina: round(
       cVw(stats.stamina, levels.stamina, settings.statMultipliers.stamina),
     ),
-    oxygen: round10(
+    oxygen: round(
       cVw(stats.oxygen, levels.oxygen, settings.statMultipliers.oxygen),
     ),
-    food: round10(cVw(stats.food, levels.food, settings.statMultipliers.food)),
-    water: round10(
+    food: round(cVw(stats.food, levels.food, settings.statMultipliers.food)),
+    water: round(
       cVw(stats.water, levels.water, settings.statMultipliers.water),
     ),
-    temperature: round10(
+    temperature: round(
       cVw(
         stats.temperature,
         levels.temperature,
         settings.statMultipliers.temperature,
       ),
     ),
-    weight: round10(
+    weight: round(
       cVw(stats.weight, levels.weight, settings.statMultipliers.weight),
     ),
-    meleeDamageMultiplier: round1000(
+    meleeDamageMultiplier: round(
       cVw(
         stats.meleeDamageMultiplier,
         levels.meleeDamageMultiplier,
         settings.statMultipliers.meleeDamageMultiplier,
       ),
+      PRECISION_1000,
     ),
-    speedMultiplier: round10(
+    speedMultiplier: round(
       cVw(
         stats.speedMultiplier,
         levels.speedMultiplier,
         settings.statMultipliers.speedMultiplier,
       ),
     ),
-    temperatureFortitude: round10(
+    temperatureFortitude: round(
       cVw(
         stats.temperatureFortitude,
         levels.temperatureFortitude,
         settings.statMultipliers.temperatureFortitude,
       ),
     ),
-    craftingSpeedMultiplier: round10(
+    craftingSpeedMultiplier: round(
       cVw(
         stats.craftingSpeedMultiplier,
         levels.craftingSpeedMultiplier,
         settings.statMultipliers.craftingSpeedMultiplier,
       ),
     ),
-    torpidity: round10(
+    torpidity: round(
       cVw(
         stats.torpidity,
         levels.torpidity,
@@ -131,7 +130,7 @@ function calculateValueDom(
   settings: Settings = DefaultSettings,
 ): Values {
   return v.parse(ValuesSchema, {
-    health: round10(
+    health: round(
       cVpt(
         tameEffectiveness,
         stats.health,
@@ -142,7 +141,7 @@ function calculateValueDom(
         tamedBaseHealthMultiplier,
       ),
     ),
-    stamina: round10(
+    stamina: round(
       cVpt(
         tameEffectiveness,
         stats.stamina,
@@ -152,7 +151,7 @@ function calculateValueDom(
         settings,
       ),
     ),
-    oxygen: round10(
+    oxygen: round(
       cVpt(
         tameEffectiveness,
         stats.oxygen,
@@ -162,7 +161,7 @@ function calculateValueDom(
         settings,
       ),
     ),
-    food: round10(
+    food: round(
       cVpt(
         tameEffectiveness,
         stats.food,
@@ -172,7 +171,7 @@ function calculateValueDom(
         settings,
       ),
     ),
-    water: round10(
+    water: round(
       cVpt(
         tameEffectiveness,
         stats.water,
@@ -182,7 +181,7 @@ function calculateValueDom(
         settings,
       ),
     ),
-    temperature: round10(
+    temperature: round(
       cVpt(
         tameEffectiveness,
         stats.temperature,
@@ -192,7 +191,7 @@ function calculateValueDom(
         settings,
       ),
     ),
-    weight: round10(
+    weight: round(
       cVpt(
         tameEffectiveness,
         stats.weight,
@@ -202,7 +201,7 @@ function calculateValueDom(
         settings,
       ),
     ),
-    meleeDamageMultiplier: round1000(
+    meleeDamageMultiplier: round(
       cVpt(
         tameEffectiveness,
         stats.meleeDamageMultiplier,
@@ -211,8 +210,9 @@ function calculateValueDom(
         settings.statMultipliers.meleeDamageMultiplier,
         settings,
       ),
+      PRECISION_1000,
     ),
-    speedMultiplier: round10(
+    speedMultiplier: round(
       cVpt(
         tameEffectiveness,
         stats.speedMultiplier,
@@ -222,7 +222,7 @@ function calculateValueDom(
         settings,
       ),
     ),
-    temperatureFortitude: round10(
+    temperatureFortitude: round(
       cVpt(
         tameEffectiveness,
         stats.temperatureFortitude,
@@ -232,7 +232,7 @@ function calculateValueDom(
         settings,
       ),
     ),
-    craftingSpeedMultiplier: round10(
+    craftingSpeedMultiplier: round(
       cVpt(
         tameEffectiveness,
         stats.craftingSpeedMultiplier,
@@ -242,7 +242,7 @@ function calculateValueDom(
         settings,
       ),
     ),
-    torpidity: round10(
+    torpidity: round(
       cVpt(
         tameEffectiveness,
         stats.torpidity,
@@ -255,18 +255,16 @@ function calculateValueDom(
   } satisfies ValuesIn);
 }
 
-function round10(num: number): number {
-  return Math.round(num * 10) / 10;
-}
+const PRECISION_10 = 10;
+const PRECISION_1000 = 1000; // 近接攻撃力は%で表示されるので小数点以下3桁まで表示する。
 
-// 近接攻撃力は%で表示されるので小数点以下3桁まで表示する。
-function round1000(num: number): number {
-  return Math.round(num * 1000) / 1000;
+function round(num: number, precision: number = PRECISION_10): number {
+  return Math.round(num * precision) / precision;
 }
 
 function cVw(
   stat: SpeciesStat | null,
-  level: LevelDetail,
+  level: LevelDetailIn,
   statMultiplierItem: StatMultiplierItem,
 ): number {
   if (!stat) return 0;
@@ -279,7 +277,7 @@ function cVw(
 function cVpt(
   te: TameEffectiveness,
   stat: SpeciesStat | null,
-  level: LevelDetail,
+  level: LevelDetailIn,
   imprinting: Imprinting,
   statMultiplierItem: StatMultiplierItem,
   { IBM }: Settings,
@@ -294,69 +292,316 @@ function cVpt(
   );
 }
 
-// 2進数による誤差をなくすための値、これより小さい値は四捨五入する。
-const ROUND_DOWN = 10000;
-function calcV(stat: SpeciesStat | null, level: LevelDetail): number {
-  if (!stat) return 0;
-  return (
-    // 2進数による誤差をなくす
-    Math.round(
-      stat.baseValue * (1 + stat.incPerWildLevel * level.wild) * ROUND_DOWN,
-    ) / ROUND_DOWN
-  );
+export function calculateLevelController(
+  species: Species,
+  values: Values,
+  imprinting: Imprinting,
+  type: Type,
+  settings: Settings = DefaultSettings,
+): Levels {
+  switch (type) {
+    case "wild": {
+      return calculateLevelWild(species.stats, values, settings);
+    }
+    case "dom": {
+      return calculateLevelDom(species, values, settings);
+    }
+    case "bred": {
+      return calculateLevelBred(species, values, settings, imprinting);
+    }
+    default: {
+      throw new Error("invalid type");
+    }
+  }
 }
 
-export function calculateLevel(stats: Stats, values: Values): Levels {
+function calculateLevelWild(
+  stats: Stats,
+  values: Values,
+  settings: Settings,
+): Levels {
   return v.parse(LevelsSchema, {
-    health: calcL(stats.health, values.health),
-    stamina: calcL(stats.stamina, values.stamina),
-    oxygen: calcL(stats.oxygen, values.oxygen),
-    food: calcL(stats.food, values.food),
-    water: calcL(stats.water, values.water),
-    temperature: calcL(stats.temperature, values.temperature),
-    weight: calcL(stats.weight, values.weight),
-    meleeDamageMultiplier: calcL(
+    health: cLw(stats.health, values.health, settings.statMultipliers.health),
+    stamina: cLw(
+      stats.stamina,
+      values.stamina,
+      settings.statMultipliers.stamina,
+    ),
+    oxygen: cLw(stats.oxygen, values.oxygen, settings.statMultipliers.oxygen),
+    food: cLw(stats.food, values.food, settings.statMultipliers.food),
+    water: cLw(stats.water, values.water, settings.statMultipliers.water),
+    temperature: cLw(
+      stats.temperature,
+      values.temperature,
+      settings.statMultipliers.temperature,
+    ),
+    weight: cLw(stats.weight, values.weight, settings.statMultipliers.weight),
+    meleeDamageMultiplier: cLw(
       stats.meleeDamageMultiplier,
       values.meleeDamageMultiplier,
+      settings.statMultipliers.meleeDamageMultiplier,
+      PRECISION_1000,
     ),
-    speedMultiplier: calcL(stats.speedMultiplier, values.speedMultiplier),
-    temperatureFortitude: calcL(
+    speedMultiplier: cLw(
+      stats.speedMultiplier,
+      values.speedMultiplier,
+      settings.statMultipliers.speedMultiplier,
+    ),
+    temperatureFortitude: cLw(
       stats.temperatureFortitude,
       values.temperatureFortitude,
+      settings.statMultipliers.temperatureFortitude,
     ),
-    craftingSpeedMultiplier: calcL(
+    craftingSpeedMultiplier: cLw(
       stats.craftingSpeedMultiplier,
       values.craftingSpeedMultiplier,
+      settings.statMultipliers.craftingSpeedMultiplier,
     ),
-    torpidity: calcL(stats.torpidity, values.torpidity),
+    torpidity: cLw(
+      stats.torpidity,
+      values.torpidity,
+      settings.statMultipliers.torpidity,
+    ),
   } satisfies LevelsIn);
 }
 
-/** 丸める */
-const ROUND = 10;
-function calcL(stat: SpeciesStat | null, value: number): LevelDetail {
-  if (!stat || value === 0)
-    return v.parse(LevelDetailSchema, {
-      wild: 0,
-      error: null,
-    } satisfies LevelDetailIn);
-  if (stat.baseValue === 0 || stat.incPerWildLevel === 0)
-    throw new Error("データがおかしくて0で割ろうとしてるよ");
-  const tmpV = Math.round(
-    (value - stat.baseValue) / stat.baseValue / stat.incPerWildLevel,
+function calculateLevelDom(
+  species: Species,
+  values: Values,
+  settings: Settings,
+): Levels {
+  let bufError = Number.MAX_SAFE_INTEGER;
+  let bufLevels: Levels | null = null;
+  for (let te = 0; te <= 1; te += 0.01) {
+    const tmp = calculateLevelDomCore(
+      species,
+      te as TameEffectiveness,
+      values,
+      0 as Imprinting, // テイム後のレベル計算ではインプリントは考慮しない。
+      settings,
+    );
+    const error = sumError(tmp);
+    if (error === 0) {
+      return tmp;
+    } else if (error < bufError) {
+      bufError = error;
+      bufLevels = tmp;
+    }
+  }
+  if (!bufLevels) throw new Error("calculateLevelDomがなんかへん");
+  return bufLevels;
+}
+
+function calculateLevelBred(
+  species: Species,
+  values: Values,
+  settings: Settings,
+  imprinting: Imprinting,
+): Levels {
+  return calculateLevelDomCore(
+    species,
+    1 as TameEffectiveness, // ブリはテイム効果1で計算する。
+    values,
+    imprinting,
+    settings,
   );
-  const cLevel = Math.max(tmpV, 0); // マイナスになるとあれなので最小値0にする。
-  const cValue = calcV(
-    stat,
-    v.parse(LevelDetailSchema, { wild: cLevel } satisfies LevelDetailIn),
+}
+
+function sumError(levels: Levels): number {
+  return (
+    Math.abs(levels.health.error ?? 0) +
+    Math.abs(levels.stamina.error ?? 0) +
+    Math.abs(levels.oxygen.error ?? 0) +
+    Math.abs(levels.food.error ?? 0) +
+    Math.abs(levels.water.error ?? 0) +
+    Math.abs(levels.temperature.error ?? 0) +
+    Math.abs(levels.weight.error ?? 0) +
+    Math.abs(levels.meleeDamageMultiplier.error ?? 0) +
+    Math.abs(levels.speedMultiplier.error ?? 0) +
+    Math.abs(levels.temperatureFortitude.error ?? 0) +
+    Math.abs(levels.craftingSpeedMultiplier.error ?? 0) +
+    Math.abs(levels.torpidity.error ?? 0)
   );
-  // 2進数による誤差をなくす
-  const tmpE =
-    Math.round((Math.abs(value - cValue) / value) * cLevel * ROUND_DOWN) /
-    ROUND_DOWN;
-  const error = Math.ceil(tmpE * ROUND) / ROUND; // あれなので丸める。
-  return v.parse(LevelDetailSchema, {
-    wild: cLevel,
-    error: error !== 0 ? error : null,
-  } satisfies LevelDetailIn);
+}
+
+function calculateLevelDomCore(
+  { stats, tamedBaseHealthMultiplier }: Species,
+  te: TameEffectiveness,
+  values: Values,
+  imprinting: Imprinting,
+  settings: Settings,
+): Levels {
+  return v.parse(LevelsSchema, {
+    health: cLpt(
+      te,
+      stats.health,
+      values.health,
+      imprinting,
+      settings.statMultipliers.health,
+      settings,
+      tamedBaseHealthMultiplier,
+    ),
+    stamina: cLpt(
+      te,
+      stats.stamina,
+      values.stamina,
+      imprinting,
+      settings.statMultipliers.stamina,
+      settings,
+    ),
+    oxygen: cLpt(
+      te,
+      stats.oxygen,
+      values.oxygen,
+      imprinting,
+      settings.statMultipliers.oxygen,
+      settings,
+    ),
+    food: cLpt(
+      te,
+      stats.food,
+      values.food,
+      imprinting,
+      settings.statMultipliers.food,
+      settings,
+    ),
+    water: cLpt(
+      te,
+      stats.water,
+      values.water,
+      imprinting,
+      settings.statMultipliers.water,
+      settings,
+    ),
+    temperature: cLpt(
+      te,
+      stats.temperature,
+      values.temperature,
+      imprinting,
+      settings.statMultipliers.temperature,
+      settings,
+    ),
+    weight: cLpt(
+      te,
+      stats.weight,
+      values.weight,
+      imprinting,
+      settings.statMultipliers.weight,
+      settings,
+    ),
+    meleeDamageMultiplier: cLpt(
+      te,
+      stats.meleeDamageMultiplier,
+      values.meleeDamageMultiplier,
+      imprinting,
+      settings.statMultipliers.meleeDamageMultiplier,
+      settings,
+      undefined,
+      PRECISION_1000,
+    ),
+    speedMultiplier: cLpt(
+      te,
+      stats.speedMultiplier,
+      values.speedMultiplier,
+      imprinting,
+      settings.statMultipliers.speedMultiplier,
+      settings,
+    ),
+    temperatureFortitude: cLpt(
+      te,
+      stats.temperatureFortitude,
+      values.temperatureFortitude,
+      imprinting,
+      settings.statMultipliers.temperatureFortitude,
+      settings,
+    ),
+    craftingSpeedMultiplier: cLpt(
+      te,
+      stats.craftingSpeedMultiplier,
+      values.craftingSpeedMultiplier,
+      imprinting,
+      settings.statMultipliers.craftingSpeedMultiplier,
+      settings,
+    ),
+    torpidity: cLpt(
+      te,
+      stats.torpidity,
+      values.torpidity,
+      imprinting,
+      settings.statMultipliers.torpidity,
+      settings,
+    ),
+  } satisfies LevelsIn);
+}
+
+function cLw(
+  stat: SpeciesStat | null,
+  value: number,
+  statMultiplierItem: StatMultiplierItem,
+  precision: number = PRECISION_10,
+): LevelDetailIn {
+  if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
+    return { wild: 0, error: null };
+  let bufVw = 0;
+  for (let level = 0; level <= 255; level++) {
+    const tmpVw = round(
+      cVw(stat, { wild: level }, statMultiplierItem),
+      precision,
+    );
+    if (tmpVw === value) {
+      return { wild: level, error: null };
+    } else if (tmpVw > value) {
+      const bufDiff = value - bufVw;
+      const tmpDiff = tmpVw - value;
+      if (bufDiff < tmpDiff) {
+        return { wild: level - 1, error: bufDiff };
+      } else {
+        return { wild: level, error: tmpDiff };
+      }
+    }
+    bufVw = tmpVw;
+  }
+  throw new Error("value is too high");
+}
+
+function cLpt(
+  te: TameEffectiveness,
+  stat: SpeciesStat | null,
+  value: number,
+  imprinting: Imprinting,
+  statMultiplierItem: StatMultiplierItem,
+  settings: Settings,
+  tbhm: number | undefined = 1,
+  precision: number = PRECISION_10,
+): LevelDetailIn {
+  if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
+    return { wild: 0, error: null };
+  let bufVpt = 0;
+  for (let level = 0; level <= 255; level++) {
+    const tmpVpt = round(
+      cVpt(
+        te,
+        stat,
+        { wild: level },
+        imprinting,
+        statMultiplierItem,
+        settings,
+        tbhm,
+      ),
+      precision,
+    );
+    if (tmpVpt === value) {
+      return { wild: level, error: null };
+    } else if (tmpVpt > value) {
+      const bufDiff = value - bufVpt;
+      const tmpDiff = tmpVpt - value;
+      if (bufDiff < tmpDiff) {
+        return { wild: level - 1, error: bufDiff };
+      } else {
+        return { wild: level, error: tmpDiff };
+      }
+    }
+    bufVpt = tmpVpt;
+  }
+  throw new Error("value is too high");
 }

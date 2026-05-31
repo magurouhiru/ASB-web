@@ -47,6 +47,7 @@ export const SettingsSchema = v.object({
   lang: v.picklist(Langs),
 });
 
+// asbのデフォルト
 export const DefaultSettings: Settings = {
   statMultipliers: {
     health: { TaM: 0.14, TmM: 0.44, IdM: 0.2, IwM: 1 },

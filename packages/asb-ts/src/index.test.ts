@@ -1,9 +1,11 @@
 import { expect, test } from "vitest";
-import { calcL, getSpeciesList, searchSpecies } from "./index.js";
+import { calcL, getSpeciesList, searchSpecies, type Type } from "./index.js";
 
 test.each([
   [
     {
+      type: "wild" as Type,
+      imprinting: 0,
       name: "ハキリノサウルス",
       health: 825.0,
       stamina: 300.0,
@@ -17,6 +19,8 @@ test.each([
   ],
   [
     {
+      type: "wild" as Type,
+      imprinting: 0,
       name: "カブロスクス",
       health: 1000.0,
       stamina: 840.0,
@@ -30,6 +34,8 @@ test.each([
   ],
   [
     {
+      type: "wild" as Type,
+      imprinting: 0,
       name: "ティラノサウルス",
       health: 5720.0,
       stamina: 1554.0,
@@ -43,6 +49,8 @@ test.each([
   ],
   [
     {
+      type: "wild" as Type,
+      imprinting: 0,
       name: "マナガルム",
       health: 2310.0,
       stamina: 480.0,
@@ -56,6 +64,8 @@ test.each([
   ],
   [
     {
+      type: "wild" as Type,
+      imprinting: 0,
       name: "雪フクロウ",
       health: 2015.0,
       stamina: 1225.0,
