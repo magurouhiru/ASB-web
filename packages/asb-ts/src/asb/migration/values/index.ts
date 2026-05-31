@@ -6,8 +6,8 @@ import { VALUE_SPECIES as BASE_VALUE_SPECIES } from "./values.js";
 export * from "./types.js";
 export { BASE_VALUE_SPECIES };
 
-export const ModNameSchema = v.picklist(["ASA"]);
 export type ModName = v.InferOutput<typeof ModNameSchema>;
+export const ModNameSchema = v.picklist(["ASA"]);
 
 export interface ModValueSpecies {
   mod: ModName | null;

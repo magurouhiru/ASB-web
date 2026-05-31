@@ -1,5 +1,5 @@
 **Acknowledgments**  
-This project is a web-based rewrite of the excellent desktop application [ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor) by cadon.
+このプロジェクトは、素晴らしいデスクトップアプリケーションである [ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor)（作者: cadon様）のWebベースのリライト版です。
 
 # asb-web
 

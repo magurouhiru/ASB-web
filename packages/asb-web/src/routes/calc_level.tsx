@@ -5,6 +5,7 @@ import {
   EmptyState,
   Label,
   ListBox,
+  ListBoxItem,
   NumberField,
   SearchField,
   useFilter,
@@ -13,10 +14,12 @@ import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   calcL,
+  DefaultSettings,
   getSpeciesList,
   type Levels,
   PositiveValueSchema,
   searchSpecies,
+  Types,
 } from "asb-ts";
 import { useMemo, useState } from "react";
 import {
@@ -30,6 +33,7 @@ import * as v from "valibot";
 
 const searchSchema = v.pipe(
   v.object({
+    type: v.fallback(v.picklist(Types), "wild"),
     n: v.fallback(v.string(), ""),
     h: v.fallback(PositiveValueSchema, 0),
     s: v.fallback(PositiveValueSchema, 0),
@@ -38,6 +42,7 @@ const searchSchema = v.pipe(
     w: v.fallback(PositiveValueSchema, 0),
     m: v.fallback(PositiveValueSchema, 0),
     t: v.fallback(PositiveValueSchema, 0),
+    i: v.fallback(PositiveValueSchema, 0),
   }),
 );
 
@@ -52,6 +57,7 @@ const { useAppForm } = createFormHook({
   fieldComponents: {
     Autocomplete,
     NumberField,
+    ListBox,
   },
   formComponents: {},
   fieldContext,
@@ -63,7 +69,8 @@ function CalcLevelComponent() {
   const [_variants, setVariants] = useState<string[]>([]);
   const [_mod, _setMod] = useState<string>("");
   const [levels, setLevels] = useState<Levels | null>(null);
-  const { n, h, s, o, f, w, m, t } = Route.useSearch();
+  const { type, n, h, s, o, f, w, m, t, i } = Route.useSearch();
+  const defaultSettings = DefaultSettings;
   const speciesList = getSpeciesList();
   const items = speciesList.map((s) => ({
     id: s.blueprintPath as Key,
@@ -71,6 +78,7 @@ function CalcLevelComponent() {
     variants: s.variants,
     mod: s.mod,
   }));
+  const [tameEffectiveness, setTameEffectiveness] = useState<number>(0);
 
   const data = useMemo(() => {
     if (!levels) return [];
@@ -89,7 +97,8 @@ function CalcLevelComponent() {
   }, [levels]);
 
   const defaultValues = {
-    name: n,
+    type,
+    bp: searchSpecies(speciesList, n, defaultSettings)?.blueprintPath || "",
     health: h,
     stamina: s,
     oxygen: o,
@@ -97,14 +106,17 @@ function CalcLevelComponent() {
     weight: w,
     meleeDamageMultiplier: m,
     torpidity: t,
+    imprinting: i,
   };
 
   const updateLevels = ({ value }: { value: typeof defaultValues }) => {
-    const r = calcL(value);
+    const s = speciesList.find((s) => s.blueprintPath === value.bp);
+    if (!s) return;
+    const r = calcL(speciesList, value);
     if (!r) return;
-    const { species, result } = r;
-    setVariants(species.variants);
-    setLevels(result);
+    setVariants(r.species.variants);
+    setLevels(r.levels);
+    setTameEffectiveness(r.tameEffectiveness);
   };
 
   const form = useAppForm({
@@ -123,13 +135,41 @@ function CalcLevelComponent() {
           e.stopPropagation();
         }}
       >
-        <form.AppField name="name">
+        <form.AppField name="type">
+          {(field) => (
+            <field.ListBox
+              aria-label="type"
+              selectionMode="single"
+              defaultSelectedKeys={[type]}
+              onSelectionChange={(key) => {
+                if (key !== "all") {
+                  Types.forEach((t) => {
+                    if (key.has(t)) {
+                      field.setValue(t);
+                    }
+                  });
+                }
+              }}
+            >
+              <ListBoxItem id="wild" textValue="wild">
+                野生
+                <ListBox.ItemIndicator />
+              </ListBoxItem>
+              <ListBoxItem id="dom" textValue="dom">
+                テイム
+                <ListBox.ItemIndicator />
+              </ListBoxItem>
+              <ListBoxItem id="bred" textValue="bred">
+                ブリ
+                <ListBox.ItemIndicator />
+              </ListBoxItem>
+            </field.ListBox>
+          )}
+        </form.AppField>
+        <form.AppField name="bp">
           {(field) => (
             <field.Autocomplete
-              defaultValue={
-                searchSpecies(speciesList, field.state.value)?.blueprintPath ||
-                ""
-              }
+              defaultValue={field.state.value}
               placeholder="選択してね"
               selectionMode="single"
               onChange={(key) => field.setValue(key as string)}
@@ -137,13 +177,18 @@ function CalcLevelComponent() {
             >
               <Label>🦖いきものの種類</Label>
               <Autocomplete.Trigger>
-                <Autocomplete.Value />
+                <Autocomplete.Value className="flex gap-2" />
                 <Autocomplete.ClearButton />
                 <Autocomplete.Indicator />
               </Autocomplete.Trigger>
-              <Autocomplete.Popover>
+              <Autocomplete.Popover className="w-96">
                 <Autocomplete.Filter filter={contains}>
-                  <SearchField autoFocus name="search" variant="secondary">
+                  <SearchField
+                    autoFocus
+                    name="search"
+                    variant="secondary"
+                    aria-label="search field"
+                  >
                     <SearchField.Group>
                       <SearchField.SearchIcon />
                       <SearchField.Input placeholder="Search..." />
@@ -152,6 +197,7 @@ function CalcLevelComponent() {
                   </SearchField>
                   <ListBox
                     aria-label="listbox"
+                    className="h-96 overflow-y-auto"
                     renderEmptyState={() => (
                       <EmptyState>見つからなんだ</EmptyState>
                     )}
@@ -161,6 +207,7 @@ function CalcLevelComponent() {
                         key={item.id}
                         id={item.id}
                         textValue={item.name}
+                        className="flex gap-2"
                       >
                         {item.name}
                         {item.variants.map((v) => (
@@ -176,7 +223,6 @@ function CalcLevelComponent() {
             </field.Autocomplete>
           )}
         </form.AppField>
-
         <form.AppField name="health">
           {(field) => (
             <field.NumberField
@@ -199,7 +245,6 @@ function CalcLevelComponent() {
             </field.NumberField>
           )}
         </form.AppField>
-
         <form.AppField name="stamina">
           {(field) => (
             <field.NumberField
@@ -222,7 +267,6 @@ function CalcLevelComponent() {
             </field.NumberField>
           )}
         </form.AppField>
-
         <form.AppField name="oxygen">
           {(field) => (
             <field.NumberField
@@ -245,7 +289,6 @@ function CalcLevelComponent() {
             </field.NumberField>
           )}
         </form.AppField>
-
         <form.AppField name="food">
           {(field) => (
             <field.NumberField
@@ -268,7 +311,6 @@ function CalcLevelComponent() {
             </field.NumberField>
           )}
         </form.AppField>
-
         <form.AppField name="weight">
           {(field) => (
             <field.NumberField
@@ -291,7 +333,6 @@ function CalcLevelComponent() {
             </field.NumberField>
           )}
         </form.AppField>
-
         <form.AppField name="meleeDamageMultiplier">
           {(field) => (
             <field.NumberField
@@ -317,7 +358,6 @@ function CalcLevelComponent() {
             </field.NumberField>
           )}
         </form.AppField>
-
         <form.AppField name="torpidity">
           {(field) => (
             <field.NumberField
@@ -342,6 +382,31 @@ function CalcLevelComponent() {
             </field.NumberField>
           )}
         </form.AppField>
+
+        <form.AppField name="imprinting">
+          {(field) => (
+            <field.NumberField
+              defaultValue={0}
+              minValue={0}
+              formatOptions={{ style: "percent" }}
+              onChange={(v) => field.setValue(v)}
+            >
+              <Label>刷り込み[%]</Label>
+              <div className="flex items-center gap-2">
+                <NumberField.Group>
+                  <NumberField.DecrementButton />
+                  <NumberField.Input />
+                  <NumberField.IncrementButton />
+                </NumberField.Group>
+              </div>
+            </field.NumberField>
+          )}
+        </form.AppField>
+
+        <div>
+          <Label>刷り込み[%]</Label>
+          <output>{`${Math.round(tameEffectiveness * 100)} %`}</output>
+        </div>
       </form>
 
       <RadarChart

@@ -1,492 +1,9 @@
-/*
-    このファイルは、検索に使用する名前一覧を生成するためのツールです。
-    create-values で生成したSpecies と辞書から日本語名の紐づけを行います。
-*/
-
-import fs from "node:fs";
-import type { NameDict } from "../src/asb/migration/name-dict/types.js";
-import { AllModSpecies } from "../src/asb/migration/values/index.js";
-
-function deleteDuplicate(list: NameDict) {
-  const tmpList1 = Array.from(
-    new Map(list.map((obj) => [obj.source, obj])).values(),
-  );
-  const tmpList2 = Array.from(
-    new Map(tmpList1.map((obj) => [obj.translation, obj])).values(),
-  );
-  return tmpList2;
-}
-
-function getNames(dict: NameDict, lang: string) {
-  const valuesNames = AllModSpecies.flatMap((s) => s.species)
-    .map((species) => species.name)
-    .filter((s) => s !== null && s !== undefined);
-  const safeDict = dict.filter((d) => valuesNames.includes(d.source));
-  return deleteDuplicate(safeDict).sort((a, b) =>
-    a.translation.localeCompare(b.translation, lang),
-  );
-}
-
-/**
- * この関数は、いきものの名前の一覧を出力します。
- * @param outputPath 出力ファイルのパス
- */
-function createConstTs(dict: NameDict, lang: string) {
-  // values.ts の内容を作成
-  const content = `
 // このファイルは機械的に出力されました。
 
-  import type { NameDict } from "./types.js";
+import type { NameDict } from "./types.js";
 
-  export const NAME_DICT: NameDict = [\n  ${dict
-    .map((d) => `{source:"${d.source}",translation:"${d.translation}"},`)
-    .join("\n")
-    .trim()}\n] as const;
-    `;
-
-  // ファイルを出力
-  fs.writeFileSync(
-    `./src/asb/migration/name-dict/${lang}.ts`,
-    content,
-    "utf-8",
-  );
-}
-
-function main() {
-  const dict = getNames(DICT_JA, "ja");
-  createConstTs(dict, "ja");
-}
-
-const DICT_JA: NameDict = [
-  {
-    source: "Argentustus",
-    translation: "Argentustus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Beelzemorbus",
-    translation: "Beelzemorbus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Broodgenetrix",
-    translation: "Broodgenetrix (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Cubozoa Multis",
-    translation: "Cubozoa Multis (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Doedicurus Vastus",
-    translation: "Doedicurus Vastus (ARK: Survival Evolved Mobile)",
-  },
-  { source: "Dragon Guardian", translation: "Dragon Guardian" },
-  {
-    source: "Eerie Achatina",
-    translation: "Eerie Achatina (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Allosaurus",
-    translation: "Eerie Allosaurus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Alpha Carno",
-    translation: "Eerie Alpha Carno (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Alpha Mosasaur",
-    translation: "Eerie Alpha Mosasaur (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Alpha Raptor",
-    translation: "Eerie Alpha Raptor (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Alpha T-Rex",
-    translation: "Eerie Alpha T-Rex (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Ammonite",
-    translation: "Eerie Ammonite (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Angler",
-    translation: "Eerie Angler (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Ankylo",
-    translation: "Eerie Ankylo (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Araneo",
-    translation: "Eerie Araneo (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Archaeopteryx",
-    translation: "Eerie Archaeopteryx (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Argentavis",
-    translation: "Eerie Argentavis (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Arthropluera",
-    translation: "Eerie Arthropluera (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Baryonyx",
-    translation: "Eerie Baryonyx (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Basilosaurus",
-    translation: "Eerie Basilosaurus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Beelzebufo",
-    translation: "Eerie Beelzebufo (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Bronto",
-    translation: "Eerie Bronto (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Carbonemys",
-    translation: "Eerie Carbonemys (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Carno",
-    translation: "Eerie Carno (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Castoroides",
-    translation: "Eerie Castoroides (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Chalicotherium",
-    translation: "Eerie Chalicotherium (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Coelacanth",
-    translation: "Eerie Coelacanth (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Compy",
-    translation: "Eerie Compy (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Daeodon",
-    translation: "Eerie Daeodon (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Dilophosaurus",
-    translation: "Eerie Dilophosaurus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Dimetrodon",
-    translation: "Eerie Dimetrodon (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Dimorphodon",
-    translation: "Eerie Dimorphodon (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Diplocaulus",
-    translation: "Eerie Diplocaulus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Diplodocus",
-    translation: "Eerie Diplodocus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Dire Bear",
-    translation: "Eerie Dire Bear (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Dire Wolf",
-    translation: "Eerie Dire Wolf (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Diseased Leech",
-    translation: "Eerie Diseased Leech (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Dodo",
-    translation: "Eerie Dodo (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Doedicurus",
-    translation: "Eerie Doedicurus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Dung Beetle",
-    translation: "Eerie Dung Beetle (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Dunkleosteus",
-    translation: "Eerie Dunkleosteus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Equus",
-    translation: "Eerie Equus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Eurypterid",
-    translation: "Eerie Eurypterid (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Gallimimus",
-    translation: "Eerie Gallimimus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Giganotosaurus",
-    translation: "Eerie Giganotosaurus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Gigantopithecus",
-    translation: "Eerie Gigantopithecus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Griffin",
-    translation: "Eerie Griffin (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Ichthyosaurus",
-    translation: "Eerie Ichthyosaurus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Iguanodon",
-    translation: "Eerie Iguanodon (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Jerboa",
-    translation: "Eerie Jerboa (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Kairuku",
-    translation: "Eerie Kairuku (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Kaprosuchus",
-    translation: "Eerie Kaprosuchus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Leech",
-    translation: "Eerie Leech (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Leedsichthys",
-    translation: "Eerie Leedsichthys (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Liopleurodon",
-    translation: "Eerie Liopleurodon (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Lystrosaurus",
-    translation: "Eerie Lystrosaurus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Mammoth",
-    translation: "Eerie Mammoth (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Manta",
-    translation: "Eerie Manta (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Megaloceros",
-    translation: "Eerie Megaloceros (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Megalodon",
-    translation: "Eerie Megalodon (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Megalosaurus",
-    translation: "Eerie Megalosaurus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Meganeura",
-    translation: "Eerie Meganeura (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Megapiranha",
-    translation: "Eerie Megapiranha (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Megatherium",
-    translation: "Eerie Megatherium (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Mesopithecus",
-    translation: "Eerie Mesopithecus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Mosasaur",
-    translation: "Eerie Mosasaur (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Moschops",
-    translation: "Eerie Moschops (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Onyc",
-    translation: "Eerie Onyc (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Otter",
-    translation: "Eerie Otter (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Oviraptor",
-    translation: "Eerie Oviraptor (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Pachy",
-    translation: "Eerie Pachy (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Pachyrhinosaurus",
-    translation: "Eerie Pachyrhinosaurus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Parasaur",
-    translation: "Eerie Parasaur (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Pegomastax",
-    translation: "Eerie Pegomastax (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Pelagornis",
-    translation: "Eerie Pelagornis (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Phiomia",
-    translation: "Eerie Phiomia (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Plesiosaur",
-    translation: "Eerie Plesiosaur (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Procoptodon",
-    translation: "Eerie Procoptodon (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Pteranodon",
-    translation: "Eerie Pteranodon (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Pulmonoscorpius",
-    translation: "Eerie Pulmonoscorpius (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Purlovia",
-    translation: "Eerie Purlovia (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Quetzal",
-    translation: "Eerie Quetzal (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Raptor",
-    translation: "Eerie Raptor (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Rex",
-    translation: "Eerie Rex (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Sabertooth",
-    translation: "Eerie Sabertooth (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Sabertooth Salmon",
-    translation: "Eerie Sabertooth Salmon (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Sarco",
-    translation: "Eerie Sarco (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Spino",
-    translation: "Eerie Spino (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Stego",
-    translation: "Eerie Stego (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Tapejara",
-    translation: "Eerie Tapejara (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Terror Bird",
-    translation: "Eerie Terror Bird (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Therizinosaur",
-    translation: "Eerie Therizinosaur (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Titanoboa",
-    translation: "Eerie Titanoboa (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Titanomyrma Drone",
-    translation: "Eerie Titanomyrma Drone (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Titanomyrma Soldier",
-    translation: "Eerie Titanomyrma Soldier (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Titanosaur",
-    translation: "Eerie Titanosaur (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Triceratops",
-    translation: "Eerie Triceratops (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Trilobite",
-    translation: "Eerie Trilobite (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Troodon",
-    translation: "Eerie Troodon (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Tusoteuthis",
-    translation: "Eerie Tusoteuthis (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Woolly Rhinoceros",
-    translation: "Eerie Woolly Rhinoceros (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Eerie Yeti",
-    translation: "Eerie Yeti (ARK: Survival Evolved Mobile)",
-  },
-  { source: "Giant Worker Bee", translation: "Giant Worker Bee" },
-  {
-    source: "Gula Beetle",
-    translation: "Gula Beetle (ARK: Survival Evolved Mobile)",
-  },
-  { source: "en", translation: "ja" },
-  {
-    source: "Megapithecus Pestis",
-    translation: "Megapithecus Pestis (ARK: Survival Evolved Mobile)",
-  },
+export const NAME_DICT: NameDict = [
   { source: "Mek", translation: "MEK" },
-  { source: "Noctis", translation: "Noctis (ARK: Survival Evolved Mobile)" },
-  {
-    source: "Obsidioequus",
-    translation: "Obsidioequus (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "Royal Griffin",
-    translation: "Royal Griffin (ARK: Survival Evolved Mobile)",
-  },
   { source: "R-Allosaurus", translation: "Rアロサウルス" },
   { source: "R-Equus", translation: "Rエクウス" },
   { source: "R-Gasbags", translation: "Rガスバッグ" },
@@ -515,7 +32,6 @@ const DICT_JA: NameDict = [
   { source: "Tek Triceratops", translation: "TEKトリケラトプス" },
   { source: "Tek Parasaur", translation: "TEKパラサウロロフス" },
   { source: "Tek Raptor", translation: "TEKユタラプトル" },
-  { source: "VR Arthropluera", translation: "VRアースロプレウラ" },
   { source: "VR Astrodelphis", translation: "VRアストロデルフィス" },
   { source: "VR Araneo", translation: "VRアラネオモーフス" },
   { source: "VR Argentavis", translation: "VRアルゲンタヴィス" },
@@ -582,12 +98,10 @@ const DICT_JA: NameDict = [
   { source: "Aberrant Achatina", translation: "アフリカマイマイ変種" },
   { source: "Amargasaurus", translation: "アマルガサウルス" },
   { source: "Araneo", translation: "アラネオモーフス" },
-  { source: "Spider", translation: "アラネオモーフス" },
   { source: "Aberrant Araneo", translation: "アラネオモーフス変種" },
   { source: "Argentavis", translation: "アルゲンタヴィス" },
   { source: "Alpha X-Triceratops", translation: "アルファ・Xトリケラトプス" },
   { source: "Alpha Karkinos", translation: "アルファ・カルキノス" },
-  { source: "Alpha Carno", translation: "アルファ・カルノタウルス" },
   { source: "Alpha Carnotaurus", translation: "アルファ・カルノタウルス" },
   { source: "Alpha King Titan", translation: "アルファ・コロッサル・タイタン" },
   {
@@ -604,15 +118,12 @@ const DICT_JA: NameDict = [
   },
   { source: "Alpha Megalodon", translation: "アルファ・メガロドン" },
   { source: "Alpha Mosasaur", translation: "アルファ・モササウルス" },
-  { source: "Alpha Mosasaurus", translation: "アルファ・モササウルス" },
   { source: "Alpha Raptor", translation: "アルファ・ラプトル" },
   { source: "Alpha Leedsichthys", translation: "アルファ・リードシクティス" },
   { source: "Alpha T-Rex", translation: "アルファ・レックス" },
   { source: "Allosaurus", translation: "アロサウルス" },
-  { source: "Ankylo", translation: "アンキロサウルス" },
   { source: "Ankylosaurus", translation: "アンキロサウルス" },
   { source: "Aberrant Ankylosaurus", translation: "アンキロサウルス変種" },
-  { source: "Angler", translation: "アンコウ" },
   { source: "Anglerfish", translation: "アンコウ" },
   { source: "Aberrant Anglerfish", translation: "アンコウ変種" },
   { source: "Andrewsarchus", translation: "アンドリューサルクス" },
@@ -620,7 +131,6 @@ const DICT_JA: NameDict = [
   { source: "Yeti", translation: "イエティ" },
   { source: "Iguanodon", translation: "イグアノドン" },
   { source: "Aberrant Iguanodon", translation: "イグアノドン変種" },
-  { source: "Ichthy", translation: "イクチオサウルス" },
   { source: "Ichthyosaurus", translation: "イクチオサウルス" },
   { source: "Ichthyornis", translation: "イクチオルニス" },
   { source: "Voidwyrm", translation: "ヴォイドワーム" },
@@ -695,10 +205,8 @@ const DICT_JA: NameDict = [
   { source: "Enforcer", translation: "エンフォーサー" },
   { source: "Oviraptor", translation: "オヴィラプトル" },
   { source: "Onyc", translation: "オニコニクテリス" },
-  { source: "Onychonycteris", translation: "オニコニクテリス" },
   { source: "Kairuku", translation: "カイルクペンギン" },
   { source: "Castoroides", translation: "カストロイデス" },
-  { source: "Gasbag", translation: "ガスバッグ" },
   { source: "Gasbags", translation: "ガスバッグ" },
   { source: "Gacha", translation: "ガチャ" },
   { source: "GachaClaus", translation: "ガチャクロース" },
@@ -707,12 +215,7 @@ const DICT_JA: NameDict = [
   { source: "Chalicotherium", translation: "カリコテリウム" },
   { source: "Gallimimus", translation: "ガリミムス" },
   { source: "Carcharodontosaurus", translation: "カルカロドントサウルス" },
-  {
-    source: "ファイル:Carcharodonto.png Carcharodonto",
-    translation: "カルカロドントサウルス",
-  },
   { source: "Karkinos", translation: "カルキノス" },
-  { source: "Carno", translation: "カルノタウルス" },
   { source: "Carnotaurus", translation: "カルノタウルス" },
   { source: "Aberrant Carnotaurus", translation: "カルノタウルス変種" },
   { source: "Carbonemys", translation: "カルボネミス" },
@@ -725,30 +228,11 @@ const DICT_JA: NameDict = [
   { source: "Aberrant Gigantopithecus", translation: "ギガントピテクス変種" },
   { source: "Cnidaria", translation: "クニダリア" },
   { source: "Aberrant Cnidaria", translation: "クニダリア変種" },
-  { source: "Crystal Wyvern", translation: "クリスタルワイバーン" },
-  {
-    source: "Crystal Wyvern Queen",
-    translation: "クリスタルワイバーンクイーン",
-  },
-  {
-    source: "Crystal Wyvern Queen (Alpha)",
-    translation: "クリスタルワイバーンクイーン(アルファ)",
-  },
-  {
-    source: "Crystal Wyvern Queen (Gamma)",
-    translation: "クリスタルワイバーンクイーン(ガンマ)",
-  },
-  {
-    source: "Crystal Wyvern Queen (Beta)",
-    translation: "クリスタルワイバーンクイーン(ベータ)",
-  },
   { source: "Griffin", translation: "グリフィン" },
   { source: "Glowtail", translation: "グローテール" },
   { source: "Glowbug", translation: "グローバグ" },
   { source: "Quetzal", translation: "ケツァルコアトルス" },
-  { source: "Quetzalcoatlus", translation: "ケツァルコアトルス" },
   { source: "Woolly Rhino", translation: "ケブカサイ" },
-  { source: "Woolly Rhinoceros", translation: "ケブカサイ" },
   { source: "Kentrosaurus", translation: "ケントロサウルス" },
   { source: "Mantis Ghost", translation: "ゴーストカマキリ" },
   {
@@ -761,11 +245,9 @@ const DICT_JA: NameDict = [
   { source: "Bulbdog Ghost", translation: "ゴーストバルブドッグ" },
   { source: "Snow Owl Ghost", translation: "ゴースト雪フクロウ" },
   { source: "King Titan", translation: "コロッサル・タイタン" },
-  { source: "Compsognathus", translation: "コンプソグナトゥス" },
   { source: "Compy", translation: "コンプソグナトゥス" },
   { source: "Surface Reaper King", translation: "サーフェス・リーパーキング" },
   { source: "Sabertooth", translation: "サーベルタイガー" },
-  { source: "Smilodon", translation: "サーベルタイガー" },
   { source: "Aberrant Salmon", translation: "サーモン変種" },
   {
     source: "Subterranean Reaper King",
@@ -773,15 +255,12 @@ const DICT_JA: NameDict = [
   },
   { source: "Summoner", translation: "サモナー" },
   { source: "Sarco", translation: "サルコスクス" },
-  { source: "Sarcosuchus", translation: "サルコスクス" },
   { source: "Aberrant Sarco", translation: "サルコスクス変種" },
   { source: "Seeker", translation: "シーカー" },
   { source: "Coelacanth", translation: "シーラカンス" },
-  { source: "Abberant Coelacanth", translation: "シーラカンス変種" },
   { source: "Aberrant Coelacanth", translation: "シーラカンス変種" },
   { source: "Sinomacrops", translation: "シノマクロプス" },
   { source: "Shinehorn", translation: "シャインホーン" },
-  { source: "Jug Bug", translation: "ジャグ・バグ" },
   { source: "Oil Jug Bug", translation: "ジャグ・バグ(原油)" },
   { source: "Shadowmane", translation: "シャドウメイン" },
   { source: "Dire Bear", translation: "ショートフェイスベア" },
@@ -802,26 +281,11 @@ const DICT_JA: NameDict = [
   { source: "Skeletal Raptor", translation: "スケルタル・ユタラプトル" },
   { source: "Sköll", translation: "スコル" },
   { source: "Steinbjörn", translation: "スタインヨルン" },
-  { source: "Stygimoloch", translation: "スティギモロク" },
-  { source: "Styracosaurus", translation: "スティラコサウルス" },
   { source: "Stegosaurus", translation: "ステゴサウルス" },
   { source: "Aberrant Stegosaurus", translation: "ステゴサウルス変種" },
   { source: "Spino", translation: "スピノサウルス" },
   { source: "Aberrant Spino", translation: "スピノサウルス変種" },
-  {
-    source: "Spirit Dire Bear",
-    translation: "スピリット・ショートフェイスベア",
-  },
-  {
-    source: "Spirit Direbear",
-    translation: "スピリット・ショートフェイスベア",
-  },
-  { source: "Spirit Direwolf", translation: "スピリット・ダイアウルフ" },
   { source: "Sabertooth Salmon", translation: "セイバートゥース・サーモン" },
-  {
-    source: "Aberrant Sabertooth Salmon",
-    translation: "セイバートゥース・サーモン変種",
-  },
   { source: "Zomdodo", translation: "ゾンビドードー" },
   { source: "Zombie Fire Wyvern", translation: "ゾンビファイアワイバーン" },
   { source: "Zombie Poison Wyvern", translation: "ゾンビポイズンワイバーン" },
@@ -829,36 +293,20 @@ const DICT_JA: NameDict = [
     source: "Zombie Lightning Wyvern",
     translation: "ゾンビライトニングワイバーン",
   },
-  { source: "Zombie Wyvern", translation: "ゾンビワイバーン" },
   { source: "Direwolf", translation: "ダイアウルフ" },
   { source: "Dire Polar Bear", translation: "ダイアホッキョクグマ" },
-  { source: "Titans", translation: "タイタン" },
   { source: "Daeodon", translation: "ダエオドン" },
   { source: "Tapejara", translation: "タペヤラ" },
   { source: "Dunkleosteus", translation: "ダンクルオステウス" },
-  { source: "ファイル:Dunkle.png Dunkle", translation: "ダンクルオステウス" },
   { source: "Chalk Golem", translation: "チョークエレメンタル" },
   { source: "Titanosaur", translation: "ティタノサウルス" },
   { source: "Titanoboa", translation: "ティタノボア" },
   { source: "Aberrant Titanoboa", translation: "ティタノボア変種" },
-  { source: "Titanomyrma", translation: "ティタノミルマ" },
   { source: "Titanomyrma Soldier", translation: "ティタノミルマ・ソルジャー" },
   { source: "Titanomyrma Drone", translation: "ティタノミルマ・ドローン" },
   { source: "Deinonychus", translation: "デイノニクス" },
   { source: "Dinopithecus", translation: "ディノピテクス" },
   { source: "Dinopithecus King", translation: "ディノピテクスキング" },
-  {
-    source: "Dinopithecus King (Alpha)",
-    translation: "ディノピテクスキング(アルファ)",
-  },
-  {
-    source: "Dinopithecus King (Gamma)",
-    translation: "ディノピテクスキング(ガンマ)",
-  },
-  {
-    source: "Dinopithecus King (Beta)",
-    translation: "ディノピテクスキング(ベータ)",
-  },
   { source: "Diplocaulus", translation: "ディプロカウルス" },
   { source: "Aberrant Diplocaulus", translation: "ディプロカウルス変種" },
   { source: "Diplodocus", translation: "ディプロドクス" },
@@ -869,20 +317,13 @@ const DICT_JA: NameDict = [
   { source: "Aberrant Dimorphodon", translation: "ディモルフォドン変種" },
   { source: "Thylacoleo", translation: "ティラコレオ" },
   { source: "Rex", translation: "ティラノサウルス" },
-  { source: "Tyrannosaurus Rex", translation: "ティラノサウルス" },
-  { source: "Dilo", translation: "ディロフォサウルス" },
   { source: "Dilophosaur", translation: "ディロフォサウルス" },
   { source: "Desert Titan", translation: "デザート・タイタン" },
   { source: "Desert Titan Flock", translation: "デザート・タイタンの群れ" },
   { source: "Desmodus", translation: "デスモダス" },
   { source: "Deathworm", translation: "デスワーム" },
-  {
-    source: "ファイル:Deathworm (Minion).png Deathworm (Minion)",
-    translation: "デスワーム (ミニオン)",
-  },
   { source: "Terror Bird", translation: "テラーバード" },
   { source: "Therizinosaur", translation: "テリジノサウルス" },
-  { source: "Therizinosaurus", translation: "テリジノサウルス" },
   { source: "Electrophorus", translation: "デンキウナギ" },
   { source: "Aberrant Electrophorus", translation: "デンキウナギ変種" },
   { source: "Tusoteuthis", translation: "トゥソテウティス" },
@@ -894,11 +335,7 @@ const DICT_JA: NameDict = [
   { source: "Aberrant Dodo", translation: "ドードー変種" },
   { source: "Jerboa", translation: "トビネズミ" },
   { source: "Dragon", translation: "ドラゴン" },
-  { source: "Dragon (Alpha)", translation: "ドラゴン(アルファ)" },
-  { source: "Dragon (Gamma)", translation: "ドラゴン(ガンマ)" },
-  { source: "Dragon (Beta)", translation: "ドラゴン(ベータ)" },
   { source: "Triceratops", translation: "トリケラトプス" },
-  { source: "Trike", translation: "トリケラトプス" },
   { source: "Aberrant Triceratops", translation: "トリケラトプス変種" },
   { source: "Troodon", translation: "トロオドン" },
   {
@@ -910,22 +347,17 @@ const DICT_JA: NameDict = [
   { source: "Noglin", translation: "ノグリン" },
   { source: "Party Dodo", translation: "パーティードードー" },
   { source: "Pachy", translation: "パキケファロサウルス" },
-  { source: "Pachycephalosaurus", translation: "パキケファロサウルス" },
-  { source: "Pachyrhino", translation: "パキリノサウルス" },
   { source: "Pachyrhinosaurus", translation: "パキリノサウルス" },
   { source: "Vulture", translation: "ハゲワシ" },
   { source: "Basilisk", translation: "バジリスク" },
   { source: "Basilosaurus", translation: "バシロサウルス" },
   { source: "Hati", translation: "ハティ" },
-  { source: "Hati and Sköll", translation: "ハティとスコル" },
   { source: "Bunny Oviraptor", translation: "バニーオヴィラプトル" },
   { source: "Bunny Dodo", translation: "バニードードー" },
   { source: "Parakeet Fish School", translation: "パラキートの魚群" },
-  { source: "Paracer", translation: "パラケラテリウム" },
   { source: "Paraceratherium", translation: "パラケラテリウム" },
   { source: "Aberrant Paraceratherium", translation: "パラケラテリウム変種" },
   { source: "Parasaur", translation: "パラサウロロフス" },
-  { source: "Parasaurolophus", translation: "パラサウロロフス" },
   { source: "Aberrant Parasaur", translation: "パラサウロロフス変種" },
   { source: "Baryonyx", translation: "バリオニクス" },
   { source: "Aberrant Baryonyx", translation: "バリオニクス変種" },
@@ -935,28 +367,6 @@ const DICT_JA: NameDict = [
   { source: "Aberrant Ovis", translation: "ヒツジ変種" },
   { source: "Leech", translation: "ヒル" },
   { source: "Fire Wyvern", translation: "ファイアワイバーン" },
-  {
-    source: "ファイル:Broodmother Guardian.png Broodmother Guardian",
-    translation: "ファイル:Broodmother Guardian.png Broodmother Guardian",
-  },
-  {
-    source: "ファイル:Megapithecus Guardian.png Megapithecus Guardian",
-    translation: "ファイル:Megapithecus Guardian.png Megapithecus Guardian",
-  },
-  {
-    source: "ファイル:Eerie Leech (Diseased).png Eerie Leech (Diseased)",
-    translation:
-      "ファイル:Mobile Eerie Leech (Diseased).png Eerie Leech (Diseased) (ARK: Survival Evolved Mobile)",
-  },
-  {
-    source: "ファイル:Iceworm Queen Arena.png Iceworm Queen Arena",
-    translation:
-      "ファイル:アイスワーム(女王) (アリーナ).png アイスワーム(女王) (アリーナ)",
-  },
-  {
-    source: "ファイル:Surface Seeker.png Surface Seeker",
-    translation: "ファイル:サーフェス・シーカー.png サーフェス・シーカー",
-  },
   {
     source: "Water Jug Bug",
     translation: "ファイル:ジャグバグ(水).png ジャグバグ(水)",
@@ -971,12 +381,8 @@ const DICT_JA: NameDict = [
   { source: "Featherlight", translation: "フェザーライト" },
   { source: "Phoenix", translation: "フェニックス" },
   { source: "Ferox", translation: "フェロクス" },
-  { source: "Ferox (Large)", translation: "フェロクス (大)" },
   { source: "Fenrir", translation: "フェンリル" },
   { source: "Fenrisúlfr", translation: "フェンリル (ボス)" },
-  { source: "Fenrisúlfr (Alpha)", translation: "フェンリル(アルファ)" },
-  { source: "Fenrisúlfr (Gamma)", translation: "フェンリル(ガンマ)" },
-  { source: "Fenrisúlfr (Beta)", translation: "フェンリル(ベータ)" },
   { source: "Forest Titan", translation: "フォレスト・タイタン" },
   { source: "Forest Wyvern", translation: "フォレストワイバーン" },
   { source: "Pteranodon", translation: "プテラノドン" },
@@ -985,21 +391,7 @@ const DICT_JA: NameDict = [
     translation: "ブラッド・クリスタルワイバーン",
   },
   { source: "Bloodstalker", translation: "ブラッドストーカー" },
-  { source: "Broodmother", translation: "ブルードマザー" },
   { source: "Broodmother Lysrix", translation: "ブルードマザー" },
-  {
-    source: "Broodmother Lysrix (Alpha)",
-    translation: "ブルードマザー(アルファ)",
-  },
-  {
-    source: "Broodmother Lysrix (Gamma)",
-    translation: "ブルードマザー(ガンマ)",
-  },
-  {
-    source: "Broodmother Lysrix (Beta)",
-    translation: "ブルードマザー(ベータ)",
-  },
-  { source: "Pulmonoscorpius", translation: "プルモノスコルピウス" },
   { source: "Scorpion", translation: "プルモノスコルピウス" },
   {
     source: "Aberrant Pulmonoscorpius",
@@ -1010,7 +402,6 @@ const DICT_JA: NameDict = [
   { source: "Aberrant Purlovia", translation: "プルロヴィア変種" },
   { source: "Plesiosaur", translation: "プレシオサウルス" },
   { source: "Procoptodon", translation: "プロコプトドン" },
-  { source: "Bronto", translation: "ブロントサウルス" },
   { source: "Brontosaurus", translation: "ブロントサウルス" },
   { source: "Dung Beetle", translation: "フンコロガシ" },
   { source: "Aberrant Dung Beetle", translation: "フンコロガシ変種" },
@@ -1024,7 +415,6 @@ const DICT_JA: NameDict = [
   { source: "Pelagornis", translation: "ペラゴルニス" },
   { source: "Velonasaur", translation: "ベロナサウルス" },
   { source: "Poison Wyvern", translation: "ポイズンワイバーン" },
-  { source: "Bosses", translation: "ボス" },
   { source: "Polar Bear", translation: "ホッキョクグマ" },
   { source: "Magmasaur", translation: "マグマサウルス" },
   { source: "Macro-Summoner", translation: "マクロ・サモナー" },
@@ -1033,9 +423,6 @@ const DICT_JA: NameDict = [
   { source: "Manta", translation: "マンタ" },
   { source: "Aberrant Manta", translation: "マンタ変種" },
   { source: "Manticore", translation: "マンティコア" },
-  { source: "Manticore (Alpha)", translation: "マンティコア(アルファ)" },
-  { source: "Manticore (Gamma)", translation: "マンティコア(ガンマ)" },
-  { source: "Manticore (Beta)", translation: "マンティコア(ベータ)" },
   { source: "Mammoth", translation: "マンモス" },
   { source: "Microraptor", translation: "ミクロラプトル" },
   { source: "Maewing", translation: "メイウィング" },
@@ -1045,10 +432,6 @@ const DICT_JA: NameDict = [
   { source: "Meganeura", translation: "メガネウラ" },
   { source: "Aberrant Meganeura", translation: "メガネウラ変種" },
   { source: "Megapithecus", translation: "メガピテクス" },
-  { source: "Megapithecus (Alpha)", translation: "メガピテクス(アルファ)" },
-  { source: "Megapithecus (Gamma)", translation: "メガピテクス(ガンマ)" },
-  { source: "Megapithecus (Beta)", translation: "メガピテクス(ベータ)" },
-  { source: "Megapiranha", translation: "メガピラニア" },
   { source: "Piranha", translation: "メガピラニア" },
   { source: "Aberrant Piranha", translation: "メガピラニア変種" },
   { source: "Megalania", translation: "メガラニア" },
@@ -1062,75 +445,31 @@ const DICT_JA: NameDict = [
   { source: "Moschops", translation: "モスコプス" },
   { source: "Aberrant Moschops", translation: "モスコプス変種" },
   { source: "Morellatops", translation: "モレラトプス" },
-  {
-    source: "ファイル:Camelsaurus.png Camelsaurus",
-    translation: "モレラトプス",
-  },
   { source: "Thorny Dragon", translation: "モロクトカゲ" },
   { source: "Lamprey", translation: "ヤツメウナギ" },
   { source: "Yutyrannus", translation: "ユウティラヌス" },
   { source: "Raptor", translation: "ユタラプトル" },
-  { source: "Utahraptor", translation: "ユタラプトル" },
   { source: "Aberrant Raptor", translation: "ユタラプトル変種" },
   { source: "Unicorn", translation: "ユニコーン" },
   { source: "Lightning Wyvern", translation: "ライトニングワイバーン" },
   { source: "Lava Elemental", translation: "ラヴァエレメンタル" },
-  { source: "Raptor Claus", translation: "ラプトルクロース" },
   { source: "Rubble Bear", translation: "ラブル・ベアー" },
   { source: "Rubble Golem", translation: "ラブルゴーレム" },
   { source: "Ravager", translation: "ラベジャー" },
   { source: "Leedsichthys", translation: "リードシクティス" },
-  { source: "Reaper", translation: "リーパー" },
   { source: "Reaper King", translation: "リーパーキング" },
   { source: "Reaper Queen", translation: "リーパークイーン" },
-  { source: "Reaper Prince", translation: "リーパープリンス" },
   { source: "Liopleurodon", translation: "リオプレウロドン" },
   { source: "Lystrosaurus", translation: "リストロサウルス" },
   { source: "Aberrant Lystrosaurus", translation: "リストロサウルス変種" },
   { source: "Lymantria", translation: "リマントリア" },
-  {
-    source: "Rare X-Sabertooth Salmon",
-    translation: "レアXセイバートゥース・サーモン",
-  },
   { source: "Roll Rat", translation: "ロールラット" },
   { source: "Rockwell", translation: "ロックウェル" },
   { source: "Rockwell Node", translation: "ロックウェル・ノード" },
   { source: "Rockwell Prime", translation: "ロックウェル・プライム" },
-  {
-    source: "Rockwell Prime (Alpha)",
-    translation: "ロックウェル・プライム(アルファ)",
-  },
-  {
-    source: "Rockwell Prime (Gamma)",
-    translation: "ロックウェル・プライム(ガンマ)",
-  },
-  {
-    source: "Rockwell Prime (Beta)",
-    translation: "ロックウェル・プライム(ベータ)",
-  },
-  {
-    source: "ファイル:Rockwell Prime Tentacle.png Rockwell Prime Tentacle",
-    translation: "ロックウェル・プライムの触手",
-  },
-  { source: "Rockwell (Alpha)", translation: "ロックウェル(アルファ)" },
-  { source: "Rockwell (Gamma)", translation: "ロックウェル(ガンマ)" },
-  { source: "Rockwell (Beta)", translation: "ロックウェル(ベータ)" },
   { source: "Rockwell Tentacle", translation: "ロックウェルの触手" },
-  {
-    source: "RockwellTentacle (Alpha)",
-    translation: "ロックウェルの触手(アルファ)",
-  },
-  {
-    source: "RockwellTentacle (Gamma)",
-    translation: "ロックウェルの触手(ガンマ)",
-  },
-  {
-    source: "RockwellTentacle (Beta)",
-    translation: "ロックウェルの触手(ベータ)",
-  },
   { source: "Rock Elemental", translation: "ロックエレメンタル" },
   { source: "Rock Drake", translation: "ロックドレイク" },
-  { source: "Wyvern", translation: "ワイバーン" },
   {
     source: "Corrupted Arthropluera",
     translation: "汚染されたアースロプレウラ",
@@ -1169,24 +508,8 @@ const DICT_JA: NameDict = [
   { source: "Corrupted Rock Drake", translation: "汚染されたロックドレイク" },
   { source: "Corrupted Wyvern", translation: "汚染されたワイバーン" },
   { source: "Corrupted Master Controller", translation: "汚染された支配者" },
-  {
-    source: "Alpha Corrupted Master Controller",
-    translation: "汚染された支配者(アルファ)",
-  },
-  {
-    source: "Gamma Corrupted Master Controller",
-    translation: "汚染された支配者(ガンマ)",
-  },
-  {
-    source: "Beta Corrupted Master Controller",
-    translation: "汚染された支配者(ベータ)",
-  },
   { source: "Corrupt Tumor", translation: "汚染された腫瘍" },
-  { source: "Corrupted Creatures", translation: "汚染された生物" },
   { source: "Overseer", translation: "監督者" },
-  { source: "Overseer (Alpha)", translation: "監督者(アルファ)" },
-  { source: "Overseer (Gamma)", translation: "監督者(ガンマ)" },
-  { source: "Overseer (Beta)", translation: "監督者(ベータ)" },
   { source: "Giant Bee", translation: "巨大ハチ" },
   { source: "Giant Queen Bee", translation: "巨大女王バチ" },
   { source: "Brute X-Allosaurus", translation: "凶暴なXアロサウルス" },
@@ -1202,7 +525,6 @@ const DICT_JA: NameDict = [
   },
   { source: "Brute Astrocetus", translation: "凶暴なアストロセタス" },
   { source: "Brute Araneo", translation: "凶暴なアラネオモーフス" },
-  { source: "Brute Araneo", translation: "凶暴なアラネオモーフス" },
   { source: "Brute Sarco", translation: "凶暴なサルコスクス" },
   { source: "Brute Seeker", translation: "凶暴なシーカー" },
   { source: "Brute Tusoteuthis", translation: "凶暴なトゥソテウティス" },
@@ -1215,7 +537,6 @@ const DICT_JA: NameDict = [
   { source: "Brute Mammoth", translation: "凶暴なマンモス" },
   { source: "Brute Megaloceros", translation: "凶暴なメガロケロス" },
   { source: "Brute Leedsichthys", translation: "凶暴なリードシクティス" },
-  { source: "Brute Reaper King", translation: "凶暴なリーパーキング" },
   { source: "Golden Striped Megalodon", translation: "金縞のメガロドン" },
   {
     source: "Golden Striped Brute Megalodon",
@@ -1226,12 +547,10 @@ const DICT_JA: NameDict = [
     source: "Enraged Corrupted Rex",
     translation: "激怒した汚染されたティラノサウルス",
   },
-  { source: "Enraged Creatures", translation: "激怒した生物" },
   { source: "Trilobite", translation: "三葉虫" },
   { source: "Aberrant Trilobite", translation: "三葉虫変種" },
   { source: "Archaeopteryx", translation: "始祖鳥" },
   { source: "Eel Minion", translation: "子ウナギ (ミニオン)" },
-  { source: "Turkey", translation: "七面鳥" },
   {
     source: "Experimental Giganotosaurus",
     translation: "実験体ギガノトサウルス",
@@ -1240,29 +559,8 @@ const DICT_JA: NameDict = [
     source: "Moeder, Master of the Ocean",
     translation: "深海の女王・ムーダー",
   },
-  {
-    source: "Alpha Moeder, Master of the Ocean",
-    translation: "深海の女王・ムーダー(アルファ)",
-  },
-  {
-    source: "Gamma Moeder, Master of the Ocean",
-    translation: "深海の女王・ムーダー(ガンマ)",
-  },
-  {
-    source: "Beta Moeder, Master of the Ocean",
-    translation: "深海の女王・ムーダー(ベータ)",
-  },
-  { source: "Human", translation: "人間" },
-  { source: "Human (Female)", translation: "人間 (女)" },
-  { source: "Human (Male)", translation: "人間 (男)" },
   { source: "Snow Owl", translation: "雪フクロウ" },
   { source: "Insect Swarm", translation: "虫の大群" },
   { source: "Diseased Leech", translation: "病気持ちのヒル" },
-  {
-    source: "Injured Brute Reaper King",
-    translation: "負傷した凶暴なリーパーキング",
-  },
   { source: "Defense Unit", translation: "防御ユニット" },
-];
-
-main();
+] as const;
