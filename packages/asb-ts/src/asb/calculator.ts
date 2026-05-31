@@ -53,7 +53,6 @@ export function calculateValueController(
     }
   }
 }
-
 function calculateValueWild(
   stats: Stats,
   levels: Levels,
