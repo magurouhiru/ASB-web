@@ -1,5 +1,8 @@
 import * as v from "valibot";
 import { PositiveValueSchema } from "./common.js";
+import { SettingsSchema } from "./settings.js";
+import { SpeciesSchema } from "./species.js";
+import { StatsNames } from "./stats-name.js";
 
 /**
  * wild: 野生のレベル
@@ -9,75 +12,25 @@ import { PositiveValueSchema } from "./common.js";
 export type LevelDetail = v.InferOutput<typeof LevelDetailSchema>;
 export type LevelDetailIn = v.InferInput<typeof LevelDetailSchema>;
 export const LevelDetailSchema = v.object({
-  wild: v.pipe(PositiveValueSchema, v.brand("LevelDetailSchema/wild")),
-  mut: v.nullish(v.pipe(PositiveValueSchema, v.brand("LevelDetailSchema/mut"))),
-  dom: v.nullish(v.pipe(PositiveValueSchema, v.brand("LevelDetailSchema/dom"))),
-  error: v.pipe(
-    v.nullish(PositiveValueSchema),
-    v.brand("LevelDetailSchema/error"),
-  ),
+  wild: PositiveValueSchema,
+  mut: v.nullish(PositiveValueSchema),
+  dom: v.nullish(PositiveValueSchema),
+  error: v.nullish(PositiveValueSchema),
 });
 
 export type Levels = v.InferOutput<typeof LevelsSchema>;
 export type LevelsIn = v.InferInput<typeof LevelsSchema>;
-export const LevelsSchema = v.object({
-  health: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/health")),
-  stamina: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/stamina")),
-  oxygen: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/oxygen")),
-  food: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/food")),
-  water: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/water")),
-  temperature: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/temperature")),
-  weight: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/weight")),
-  meleeDamageMultiplier: v.pipe(
-    LevelDetailSchema,
-    v.brand("LevelsSchema/meleeDamageMultiplier"),
-  ),
-  speedMultiplier: v.pipe(
-    LevelDetailSchema,
-    v.brand("LevelsSchema/speedMultiplier"),
-  ),
-  temperatureFortitude: v.pipe(
-    LevelDetailSchema,
-    v.brand("LevelsSchema/temperatureFortitude"),
-  ),
-  craftingSpeedMultiplier: v.pipe(
-    LevelDetailSchema,
-    v.brand("LevelsSchema/craftingSpeedMultiplier"),
-  ),
-  torpidity: v.pipe(LevelDetailSchema, v.brand("LevelsSchema/torpidity")),
-});
+export const LevelsSchema = v.object(
+  v.entriesFromList(StatsNames, LevelDetailSchema),
+);
 
 export type Values = v.InferOutput<typeof ValuesSchema>;
 export type ValuesIn = v.InferInput<typeof ValuesSchema>;
-export const ValuesSchema = v.object({
-  health: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/health")),
-  stamina: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/stamina")),
-  oxygen: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/oxygen")),
-  food: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/food")),
-  water: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/water")),
-  temperature: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/temperature")),
-  weight: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/weight")),
-  meleeDamageMultiplier: v.pipe(
-    PositiveValueSchema,
-    v.brand("ValuesSchema/meleeDamageMultiplier"),
-  ),
-  speedMultiplier: v.pipe(
-    PositiveValueSchema,
-    v.brand("ValuesSchema/speedMultiplier"),
-  ),
-  temperatureFortitude: v.pipe(
-    PositiveValueSchema,
-    v.brand("ValuesSchema/temperatureFortitude"),
-  ),
-  craftingSpeedMultiplier: v.pipe(
-    PositiveValueSchema,
-    v.brand("ValuesSchema/craftingSpeedMultiplier"),
-  ),
-  torpidity: v.pipe(PositiveValueSchema, v.brand("ValuesSchema/torpidity")),
-});
+export const ValuesSchema = v.object(
+  v.entriesFromList(StatsNames, PositiveValueSchema),
+);
 
 export type Imprinting = v.InferOutput<typeof ImprintingSchema>;
-export type ImprintingIn = v.InferInput<typeof ImprintingSchema>;
 export const ImprintingSchema = v.pipe(
   PositiveValueSchema,
   v.brand("ImprintingSchema"),
@@ -87,8 +40,30 @@ export type Type = (typeof Types)[number];
 export const Types = ["wild", "dom", "bred"] as const;
 
 export type TameEffectiveness = v.InferOutput<typeof TameEffectivenessSchema>;
-export type TameEffectivenessIn = v.InferInput<typeof TameEffectivenessSchema>;
 export const TameEffectivenessSchema = v.pipe(
   PositiveValueSchema,
   v.brand("TameEffectivenessSchema"),
 );
+
+export type CalculateValueInputPack = v.InferOutput<
+  typeof CalculateValueInputPackSchema
+>;
+export const CalculateValueInputPackSchema = v.object({
+  type: v.picklist(Types),
+  levels: LevelsSchema,
+  tameEffectiveness: TameEffectivenessSchema,
+  imprinting: ImprintingSchema,
+  species: SpeciesSchema,
+  settings: SettingsSchema,
+});
+
+export type CalculateLevelInputPack = v.InferOutput<
+  typeof CalculateLevelInputPackSchema
+>;
+export const CalculateLevelInputPackSchema = v.object({
+  type: v.picklist(Types),
+  values: ValuesSchema,
+  imprinting: ImprintingSchema,
+  species: SpeciesSchema,
+  settings: SettingsSchema,
+});

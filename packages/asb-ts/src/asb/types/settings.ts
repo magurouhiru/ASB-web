@@ -4,11 +4,9 @@ import {
   VARIANT_DEFAULT_UNSELECTED,
   VariantSchema,
 } from "../migration/variants/index.js";
+import { StatsNames } from "./stats-name.js";
 
 export type StatMultiplierItem = v.InferOutput<typeof StatMultiplierItemSchema>;
-export type StatMultiplierItemIn = v.InferInput<
-  typeof StatMultiplierItemSchema
->;
 export const StatMultiplierItemSchema = v.object({
   TaM: v.number(),
   TmM: v.number(),
@@ -17,27 +15,14 @@ export const StatMultiplierItemSchema = v.object({
 });
 
 export type StatMultiplier = v.InferOutput<typeof StatMultiplierSchema>;
-export type StatMultiplierIn = v.InferInput<typeof StatMultiplierSchema>;
-export const StatMultiplierSchema = v.object({
-  health: StatMultiplierItemSchema,
-  stamina: StatMultiplierItemSchema,
-  oxygen: StatMultiplierItemSchema,
-  food: StatMultiplierItemSchema,
-  water: StatMultiplierItemSchema,
-  temperature: StatMultiplierItemSchema,
-  weight: StatMultiplierItemSchema,
-  meleeDamageMultiplier: StatMultiplierItemSchema,
-  speedMultiplier: StatMultiplierItemSchema,
-  temperatureFortitude: StatMultiplierItemSchema,
-  craftingSpeedMultiplier: StatMultiplierItemSchema,
-  torpidity: StatMultiplierItemSchema,
-});
+export const StatMultiplierSchema = v.object(
+  v.entriesFromList(StatsNames, StatMultiplierItemSchema),
+);
 
 export type Lang = (typeof Langs)[number];
 export const Langs = ["ja"] as const;
 
 export type Settings = v.InferOutput<typeof SettingsSchema>;
-export type SettingsIn = v.InferInput<typeof SettingsSchema>;
 export const SettingsSchema = v.object({
   statMultipliers: StatMultiplierSchema,
   IBM: v.number(),
@@ -48,7 +33,7 @@ export const SettingsSchema = v.object({
 });
 
 // asbのデフォルト
-export const DefaultSettings: Settings = {
+export const DEFAULT_SETTINGS: Settings = {
   statMultipliers: {
     health: { TaM: 0.14, TmM: 0.44, IdM: 0.2, IwM: 1 },
     stamina: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },

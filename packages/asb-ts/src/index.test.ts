@@ -1,5 +1,11 @@
 import { expect, test } from "vitest";
-import { calcL, getSpeciesList, searchSpecies, type Type } from "./index.js";
+import {
+  calcL,
+  DEFAULT_SETTINGS,
+  getSpeciesList,
+  searchSpecies,
+  type Type,
+} from "./index.js";
 
 test.each([
   [
@@ -198,10 +204,14 @@ test.each([
     [31, 50, 33, 44, 33, 47, 238, [], "ASA", 1],
   ],
 ])("calcL - $name", (inputs, expected) => {
-  const speciesList = getSpeciesList();
-  const s = searchSpecies(speciesList, inputs.name);
+  const speciesList = getSpeciesList(DEFAULT_SETTINGS);
+  const s = searchSpecies(speciesList, inputs.name, DEFAULT_SETTINGS);
   if (!s) throw new Error("なんかへん");
-  const r = calcL(speciesList, { ...inputs, bp: s.blueprintPath });
+  const r = calcL(
+    speciesList,
+    { ...inputs, bp: s.blueprintPath },
+    DEFAULT_SETTINGS,
+  );
   if (!r) throw new Error("なんかへん");
   const { species, levels, tameEffectiveness } = r;
 

@@ -10,19 +10,14 @@ import {
 } from "./migration/values/index.js";
 import type { Variant } from "./migration/variants/index.js";
 import {
-  DefaultSettings,
   type Settings,
   type Species,
-  type SpeciesIn,
   SpeciesSchema,
   type SpeciesStat,
-  type SpeciesStatIn,
   SpeciesStatSchema,
-  type StatImprintMultiplier,
-  type StatImprintMultiplierIn,
-  StatImprintMultiplierSchema,
   type Stats,
-  type StatsIn,
+  type StatsImprintMultiplier,
+  StatsImprintMultiplierSchema,
   StatsSchema,
 } from "./types/index.js";
 
@@ -41,9 +36,7 @@ const StatsRawIndexAdditiveBonus = 3;
 // Index of the multiplicative bonus value in fullStatsRaw.
 const StatsRawIndexMultiplicativeBonus = 4;
 
-export function getSpeciesList(
-  settings: Settings = DefaultSettings,
-): Species[] {
+export function getSpeciesList(settings: Settings): Species[] {
   const searchTarget = AllModSpecies.filter(
     (ms) => ms.mod === null || settings.mods.includes(ms.mod),
   );
@@ -99,7 +92,7 @@ export function getSpeciesList(
           ? toStatImprintMultiplier(s.statImprintMults)
           : undefined,
         tamedBaseHealthMultiplier: s.tamedBaseHealthMultiplier ?? undefined,
-      } satisfies SpeciesIn);
+      } satisfies v.InferInput<typeof SpeciesSchema>);
       return result.success ? result.output : null;
     })
     .filter((s) => s !== null)
@@ -109,7 +102,7 @@ export function getSpeciesList(
 export function searchSpecies(
   speciesList: Species[],
   name: string,
-  settings: Settings = DefaultSettings,
+  settings: Settings,
 ): Species | null {
   const fuse = new Fuse(
     speciesList.map((s) => s.name),
@@ -160,7 +153,7 @@ function toStats([
     temperatureFortitude: toSpeciesStat(temperatureFortitude),
     craftingSpeedMultiplier: toSpeciesStat(craftingSpeedMultiplier),
     torpidity: toSpeciesStat(torpidity),
-  } satisfies StatsIn);
+  } satisfies v.InferInput<typeof StatsSchema>);
 }
 
 function toSpeciesStat(row: StatsRow | null): SpeciesStat | null {
@@ -171,7 +164,7 @@ function toSpeciesStat(row: StatsRow | null): SpeciesStat | null {
     incPerDomLevel: row[StatsRawIndexIncPerDomLevel],
     additiveBonus: row[StatsRawIndexAdditiveBonus],
     multiplicativeBonus: row[StatsRawIndexMultiplicativeBonus],
-  } satisfies SpeciesStatIn);
+  } satisfies v.InferInput<typeof SpeciesStatSchema>);
 }
 
 function toStatImprintMultiplier([
@@ -187,8 +180,8 @@ function toStatImprintMultiplier([
   speedMultiplier,
   temperatureFortitude,
   craftingSpeedMultiplier,
-]: StatImprintMult): StatImprintMultiplier {
-  return v.parse(StatImprintMultiplierSchema, {
+]: StatImprintMult): StatsImprintMultiplier {
+  return v.parse(StatsImprintMultiplierSchema, {
     health,
     stamina,
     oxygen,
@@ -201,5 +194,5 @@ function toStatImprintMultiplier([
     temperatureFortitude,
     craftingSpeedMultiplier,
     torpidity,
-  } satisfies StatImprintMultiplierIn);
+  } satisfies v.InferInput<typeof StatsImprintMultiplierSchema>);
 }
