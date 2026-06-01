@@ -36,7 +36,7 @@ const StatsRawIndexAdditiveBonus = 3;
 // Index of the multiplicative bonus value in fullStatsRaw.
 const StatsRawIndexMultiplicativeBonus = 4;
 
-export function getSpeciesList(settings: Settings): Species[] {
+export function createSpeciesList(settings: Settings): Species[] {
   const searchTarget = AllModSpecies.filter(
     (ms) => ms.mod === null || settings.mods.includes(ms.mod),
   );
@@ -131,10 +131,12 @@ function toStats([
   stamina,
   torpidity,
   oxygen,
+
   food,
   water,
   temperature,
   weight,
+
   meleeDamageMultiplier,
   speedMultiplier,
   temperatureFortitude,
@@ -145,10 +147,12 @@ function toStats([
     stamina: toSpeciesStat(stamina),
     oxygen: toSpeciesStat(oxygen),
     food: toSpeciesStat(food),
+
     water: toSpeciesStat(water),
     temperature: toSpeciesStat(temperature),
     weight: toSpeciesStat(weight),
     meleeDamageMultiplier: toSpeciesStat(meleeDamageMultiplier),
+
     speedMultiplier: toSpeciesStat(speedMultiplier),
     temperatureFortitude: toSpeciesStat(temperatureFortitude),
     craftingSpeedMultiplier: toSpeciesStat(craftingSpeedMultiplier),
@@ -172,10 +176,12 @@ function toStatImprintMultiplier([
   stamina,
   torpidity,
   oxygen,
+
   food,
   water,
   temperature,
   weight,
+
   meleeDamageMultiplier,
   speedMultiplier,
   temperatureFortitude,
@@ -186,10 +192,12 @@ function toStatImprintMultiplier([
     stamina,
     oxygen,
     food,
+
     water,
     temperature,
     weight,
     meleeDamageMultiplier,
+
     speedMultiplier,
     temperatureFortitude,
     craftingSpeedMultiplier,

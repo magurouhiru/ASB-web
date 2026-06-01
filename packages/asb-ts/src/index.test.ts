@@ -1,8 +1,8 @@
 import { expect, test } from "vitest";
 import {
-  calcL,
-  DEFAULT_SETTINGS,
-  getSpeciesList,
+  calculateLevel,
+  createSettings,
+  createSpeciesList,
   searchSpecies,
   type Type,
 } from "./index.js";
@@ -203,17 +203,27 @@ test.each([
     },
     [31, 50, 33, 44, 33, 47, 238, [], "ASA", 1],
   ],
-])("calcL - $name", (inputs, expected) => {
-  const speciesList = getSpeciesList(DEFAULT_SETTINGS);
-  const s = searchSpecies(speciesList, inputs.name, DEFAULT_SETTINGS);
-  if (!s) throw new Error("なんかへん");
-  const r = calcL(
-    speciesList,
-    { ...inputs, bp: s.blueprintPath },
-    DEFAULT_SETTINGS,
-  );
+])("calcL - $type:$name", (inputs, expected) => {
+  const settings = createSettings();
+  const speciesList = createSpeciesList(settings);
+  const s = searchSpecies(speciesList, inputs.name, settings);
+  if (!s) throw new Error("生物が見つからなんだ");
+
+  const r = calculateLevel({
+    type: inputs.type,
+    h_v: inputs.health,
+    s_v: inputs.stamina,
+    o_v: inputs.oxygen,
+    f_v: inputs.food,
+    w_v: inputs.weight,
+    m_v: inputs.meleeDamageMultiplier,
+    t_v: inputs.torpidity,
+    imp: inputs.imprinting,
+    species: s,
+    settings,
+  });
   if (!r) throw new Error("なんかへん");
-  const { species, levels, tameEffectiveness } = r;
+  const [levels, tameEffectiveness] = r;
 
   expect(levels.health.wild).toBe(expected[0]);
   expect(levels.stamina.wild).toBe(expected[1]);
@@ -234,8 +244,8 @@ test.each([
     expect(levels.torpidity.error).toBe(null);
   }
 
-  expect(species.variants).toStrictEqual(expected[7]);
-  expect(species.mod).toBe(expected[8]);
+  expect(s.variants).toStrictEqual(expected[7]);
+  expect(s.mod).toBe(expected[8]);
 
   if (inputs.type === "dom") {
     expect(tameEffectiveness).toBe(expected[9]);

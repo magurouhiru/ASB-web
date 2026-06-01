@@ -71,10 +71,12 @@ export const DEFAULT_STAT_IMPRINT_MULTIPLIER = {
   stamina: 0,
   torpidity: 0.2,
   oxygen: 0,
+
   food: 0.2,
   water: 0.2,
   temperature: 0,
   weight: 0.2,
+
   meleeDamageMultiplier: 0.2,
   speedMultiplier: 0.2,
   temperatureFortitude: 0,

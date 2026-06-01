@@ -1,65 +1,192 @@
 import * as v from "valibot";
-import { calculateLevelController } from "./asb/calculator.js";
 import {
-  ImprintingSchema,
+  calculateLevelController,
+  calculateValueController,
+} from "./asb/calculator.js";
+import {
+  type CalculateLevelInputPack,
+  CalculateLevelInputPackSchema,
+  type CalculateValueInputPack,
+  CalculateValueInputPackSchema,
+  DEFAULT_SETTINGS,
   type Levels,
+  type Settings,
+  type Species,
   type TameEffectiveness,
-  type ValuesIn,
-  ValuesSchema,
-} from "./asb/types/io.js";
-import type { Settings } from "./asb/types/settings.js";
-import type { Species } from "./asb/types/species.js";
+  type Type,
+  type Values,
+} from "./asb/types/index.js";
 
-export * from "./asb/calculator.js";
-export * from "./asb/migration/name-dict/index.js";
-export * from "./asb/migration/variants/index.js";
-export * from "./asb/species.js";
 export * from "./asb/types/index.js";
 
-export function calcL(
-  speciesList: Species[],
-  values: {
-    type: "wild" | "dom" | "bred";
-    imprinting: number;
-    bp: string;
-    health: number;
-    stamina: number;
-    oxygen: number;
-    food: number;
-    weight: number;
-    meleeDamageMultiplier: number;
-    torpidity: number;
-  },
-  settings: Settings,
-): {
+export function createSettings(settings?: Partial<Settings>): Settings {
+  return { ...DEFAULT_SETTINGS, ...settings };
+}
+
+export { createSpeciesList, searchSpecies } from "./asb/species.js";
+
+/**
+ * レベル→個体値の算出に必要な情報をまとめたもの
+ */
+export interface InputForCalculateValue {
+  /** 個体のタイプ(wild:野生の個体, dom:野生をテイムした個体, bred:ブリーディングした個体) */
+  type: Type;
+
+  /** 体力の野生のレベル */
+  h_l_w: number;
+  /** 体力の変異のレベル @alpha 未実装機能向け */
+  h_l_m: number;
+  /** 体力のテイム後に割り振ったレベル @alpha 未実装機能向け */
+  h_l_d: number;
+
+  /** スタミナの野生のレベル */
+  s_l_w: number;
+  /** スタミナの変異のレベル @alpha 未実装機能向け */
+  s_l_m: number;
+  /** スタミナのテイム後に割り振ったレベル @alpha 未実装機能向け */
+  s_l_d: number;
+
+  /** 酸素量の野生のレベル */
+  o_l_w: number;
+  /** 酸素量の変異のレベル @alpha 未実装機能向け */
+  o_l_m: number;
+  /** 酸素量のテイム後に割り振ったレベル @alpha 未実装機能向け */
+  o_l_d: number;
+
+  /** 食料の野生のレベル */
+  f_l_w: number;
+  /** 食料の変異のレベル @alpha 未実装機能向け */
+  f_l_m: number;
+  /** 食料のテイム後に割り振ったレベル @alpha 未実装機能向け */
+  f_l_d: number;
+
+  /** 重量の野生のレベル */
+  w_l_w: number;
+  /** 重量の変異のレベル @alpha 未実装機能向け */
+  w_l_m: number;
+  /** 重量のテイム後に割り振ったレベル @alpha 未実装機能向け */
+  w_l_d: number;
+
+  /** 近接攻撃力の野生のレベル */
+  m_l_w: number;
+  /** 近接攻撃力の変異のレベル @alpha 未実装機能向け */
+  m_l_m: number;
+  /** 近接攻撃力のテイム後に割り振ったレベル @alpha 未実装機能向け */
+  m_l_d: number;
+
+  /** 気絶値の野生のレベル */
+  t_l_w: number;
+  /** 気絶値の変異のレベル @alpha 未実装機能向け */
+  t_l_m: number;
+  /** 気絶値のテイム後に割り振ったレベル @alpha 未実装機能向け */
+  t_l_d: number;
+
+  /** テイム効果(0~1) type が "dom" の場合にのみ有効 */
+  te: number;
+
+  /** 刷り込みボーナス(0~1) type が "bred" の場合にのみ有効 */
+  imp: number;
+
   species: Species;
-  levels: Levels;
-  tameEffectiveness: TameEffectiveness;
-} | null {
-  const s = speciesList.find((s) => s.blueprintPath === values.bp);
-  if (!s) return null;
-  const valuesParsed = v.safeParse(ValuesSchema, {
-    health: values.health,
-    stamina: values.stamina,
-    oxygen: values.oxygen,
-    food: values.food,
-    water: 0,
-    temperature: 0,
-    weight: values.weight,
-    meleeDamageMultiplier: values.meleeDamageMultiplier,
-    speedMultiplier: 0,
-    temperatureFortitude: 0,
-    craftingSpeedMultiplier: 0,
-    torpidity: values.torpidity,
-  } satisfies ValuesIn);
-  const imprintingParsed = v.safeParse(ImprintingSchema, values.imprinting);
-  if (!valuesParsed.success || !imprintingParsed.success) return null;
-  const [levels, tameEffectiveness] = calculateLevelController({
-    type: values.type,
-    values: valuesParsed.output,
-    imprinting: imprintingParsed.output,
-    species: s,
-    settings,
+  settings: Settings;
+}
+
+function toCalculateValueInputPack(
+  input: InputForCalculateValue,
+): CalculateValueInputPack {
+  return v.parse(CalculateValueInputPackSchema, {
+    type: input.type,
+    levels: {
+      health: { wild: input.h_l_w, mut: input.h_l_m, dom: input.h_l_d },
+      stamina: { wild: input.s_l_w, mut: input.s_l_m, dom: input.s_l_d },
+      oxygen: { wild: input.o_l_w, mut: input.o_l_m, dom: input.o_l_d },
+      food: { wild: input.f_l_w, mut: input.f_l_m, dom: input.f_l_d },
+
+      water: { wild: 0, mut: 0, dom: 0 }, // 無視
+      temperature: { wild: 0, mut: 0, dom: 0 }, // 無視
+      weight: { wild: input.w_l_w, mut: input.w_l_m, dom: input.w_l_d },
+      meleeDamageMultiplier: {
+        wild: input.m_l_w,
+        mut: input.m_l_m,
+        dom: input.m_l_d,
+      },
+
+      speedMultiplier: { wild: 0, mut: 0, dom: 0 }, // 無視
+      temperatureFortitude: { wild: 0, mut: 0, dom: 0 }, // 無視
+      craftingSpeedMultiplier: { wild: 0, mut: 0, dom: 0 }, // 無視
+      torpidity: { wild: input.t_l_w, mut: input.t_l_m, dom: input.t_l_d },
+    },
+    te: input.te,
+    imprinting: input.imp,
+    species: input.species,
+    settings: input.settings,
   });
-  return { species: s, levels, tameEffectiveness };
+}
+
+export function calculateValue(input: InputForCalculateValue): Values {
+  return calculateValueController(toCalculateValueInputPack(input));
+}
+
+/**
+ * 個体値→レベルの算出に必要な情報をまとめたもの
+ */
+export interface InputForCalculateLevel {
+  /** 個体のタイプ(wild:野生の個体, dom:野生をテイムした個体, bred:ブリーディングした個体) */
+  type: Type;
+
+  /** 体力の値 */
+  h_v: number;
+  /** スタミナの値 */
+  s_v: number;
+  /** 酸素量の値 */
+  o_v: number;
+
+  /** 食料の値 */
+  f_v: number;
+  /** 重量の値 */
+  w_v: number;
+  /** 近接攻撃力の値 */
+  m_v: number;
+
+  /** 気絶値の値 */
+  t_v: number;
+
+  /** 刷り込みボーナス(0~1) type が "bred" の場合にのみ有効 */
+  imp: number;
+
+  species: Species;
+  settings: Settings;
+}
+
+function toCalculateLevelInputPack(
+  input: InputForCalculateLevel,
+): CalculateLevelInputPack {
+  return v.parse(CalculateLevelInputPackSchema, {
+    type: input.type,
+    values: {
+      health: input.h_v,
+      stamina: input.s_v,
+      oxygen: input.o_v,
+      food: input.f_v,
+
+      water: 0, // 無視
+      temperature: 0, // 無視
+      weight: input.w_v,
+      meleeDamageMultiplier: input.m_v,
+
+      speedMultiplier: 0, // 無視
+      temperatureFortitude: 0, // 無視
+      craftingSpeedMultiplier: 0, // 無視
+      torpidity: input.t_v,
+    } satisfies Values,
+    imprinting: input.imp,
+    species: input.species,
+    settings: input.settings,
+  });
+}
+
+export function calculateLevel(
+  input: InputForCalculateLevel,
+): [Levels, TameEffectiveness] {
+  return calculateLevelController(toCalculateLevelInputPack(input));
 }
