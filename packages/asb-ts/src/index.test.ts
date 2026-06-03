@@ -219,10 +219,10 @@ describe("calculateLevel", () => {
     const bp = searchBP(speciesList, inputs.name, settings);
 
     // 4. calculateLevel にぶち込む
-    const { levels, te, meta } = calculateLevel({
+    const result = calculateLevel({
       bp,
       type: inputs.type,
-      imp: inputs.imprinting,
+      imprinting: inputs.imprinting,
       speciesList: speciesList,
       settings,
       values: {
@@ -233,8 +233,17 @@ describe("calculateLevel", () => {
         weight: inputs.weight,
         meleeDamageMultiplier: inputs.meleeDamageMultiplier,
         torpidity: inputs.torpidity,
+        water: 0, // 無視
+        temperature: 0, // 無視
+        speedMultiplier: 0, // 無視
+        temperatureFortitude: 0, // 無視
+        craftingSpeedMultiplier: 0, // 無視
       },
     });
+
+    // 5. ステータスを確認して対応する処理を行う
+    if (result.status === "failure") expect.fail(JSON.stringify(result));
+    const { levels, tameEffectiveness, meta } = result;
 
     expect(levels.health.wild).toBe(expected[0]);
     expect(levels.stamina.wild).toBe(expected[1]);
@@ -256,13 +265,13 @@ describe("calculateLevel", () => {
     }
 
     const species = speciesList.find((s) => s.blueprintPath === bp);
-    if (!species) throw new Error("生物が見つからなんだ");
+    if (!species) throw expect.fail("生物が見つからなんだ");
 
     expect(species.variants).toStrictEqual(expected[7]);
     expect(species.mod).toBe(expected[8]);
 
     if (inputs.type === "dom") {
-      expect(te).toBe(expected[9]);
+      expect(tameEffectiveness).toBe(expected[9]);
     }
   });
 });

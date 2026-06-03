@@ -4,21 +4,14 @@ import { SettingsSchema } from "./settings.js";
 import { SpeciesSchema } from "./species.js";
 import { type StatsName, StatsNames } from "./stats-name.js";
 
-export const LevelSchema = v.message(
-  v.pipe(v.number(""), v.integer(), v.minValue(0)),
-  (issue) =>
-    `Level には0 以上の整数を指定してください。入力値 ${issue.input} は${issue.message}`,
-);
+export const LevelSchema = v.pipe(v.number(), v.integer(), v.minValue(0));
 
 export type LevelDetail = v.InferOutput<typeof LevelDetailSchema>;
-export const LevelDetailSchema = v.message(
-  v.object({
-    wild: LevelSchema,
-    mut: LevelSchema,
-    dom: LevelSchema,
-  }),
-  (issue) => (issue.type === "object" ? `Levelは` : issue.message),
-);
+export const LevelDetailSchema = v.object({
+  wild: LevelSchema,
+  mut: LevelSchema,
+  dom: LevelSchema,
+});
 
 export type Levels = v.InferOutput<typeof LevelsSchema>;
 export const LevelsSchema = v.object(
@@ -40,7 +33,7 @@ export const TameEffectivenessSchema = v.pipe(
   v.number(),
   v.minValue(TE_MIN),
   v.maxValue(TE_MAX),
-  v.brand("" as "TameEffectivenessSchema"),
+  v.brand("" as "TameEffectivenessSchema"), // 単品で使いそうなので、v.brandする
 );
 
 export type Imprinting = v.InferOutput<typeof ImprintingSchema>;
@@ -50,7 +43,7 @@ export const ImprintingSchema = v.pipe(
   v.number(),
   v.minValue(IMP_MIN),
   v.maxValue(IMP_MAX),
-  v.brand("" as "ImprintingSchema"),
+  v.brand("" as "ImprintingSchema"), // 単品で使いそうなので、v.brandする
 );
 
 // 野生はテイム効果なしで計算する。
@@ -138,13 +131,50 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
   }),
 ]);
 
-export type StatsMetaDetail = {
-  schemaError?: string;
+export interface StatsMetaDetail {
   valueDiff?: number;
-};
+}
 export type StatsMeta = Partial<Record<StatsName, StatsMetaDetail>>;
 
 export interface Meta {
-  hasError: boolean;
   statsMeta: StatsMeta;
 }
+
+export type ErrorType = ["input_error", "internal_error"][number];
+
+export interface ASBError {
+  path: string;
+  message: string;
+}
+
+export interface OutputPackSuccess {
+  status: "success";
+  meta: Meta;
+}
+
+export interface OutputPackFailure {
+  status: "failure";
+  errorType: ErrorType;
+  errors: ASBError[];
+}
+
+export type CalculateValueOutputPack =
+  | CalculateValueOutputPackSuccess
+  | CalculateValueOutputPackFailure;
+
+export interface CalculateValueOutputPackSuccess extends OutputPackSuccess {
+  values: Values;
+}
+
+export interface CalculateValueOutputPackFailure extends OutputPackFailure {}
+
+export type CalculateLevelOutputPack =
+  | CalculateLevelOutputPackSuccess
+  | CalculateLevelOutputPackFailure;
+
+export interface CalculateLevelOutputPackSuccess extends OutputPackSuccess {
+  levels: Levels;
+  tameEffectiveness: TameEffectiveness;
+}
+
+export interface CalculateLevelOutputPackFailure extends OutputPackFailure {}

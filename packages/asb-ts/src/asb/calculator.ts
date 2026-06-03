@@ -1,14 +1,16 @@
 import * as v from "valibot";
+import { toOutputPackFailure } from "../util.js";
 import {
   BRED_TE,
   type CalculateLevelInputPack,
+  type CalculateLevelOutputPack,
   type CalculateValueInputPack,
+  type CalculateValueOutputPack,
   DEFAULT_STAT_IMPRINT_MULTIPLIER,
   DEFAULT_TBHM,
   type Imprinting,
   type LevelDetail,
   LevelDetailSchema,
-  type Levels,
   LevelsSchema,
   type Meta,
   type Settings,
@@ -21,15 +23,15 @@ import {
   type TameEffectiveness,
   TameEffectivenessSchema,
   TE_MAX,
-  type Values,
   ValuesSchema,
+  WILD_TE,
 } from "./types/index.js";
 
 export function calculateValueController(
   ip: CalculateValueInputPack,
-): [Values, Meta] {
+): CalculateValueOutputPack {
   let result: { [k: string]: number } | null = null;
-  const meta: Meta = { hasError: false, statsMeta: {} };
+  const meta = createMeta();
   switch (ip.type) {
     case "wild": {
       result = calculateValueWild(ip);
@@ -42,14 +44,12 @@ export function calculateValueController(
     }
   }
 
-  const values = v.parse(
-    v.message(
-      ValuesSchema,
-      `error in calculateValueController: result: ${JSON.stringify(result)}, ip: ${JSON.stringify(ip)}`,
-    ),
-    result,
-  );
-  return [values, meta];
+  const parsed = v.safeParse(ValuesSchema, result);
+  if (parsed.success) {
+    return { status: "success", values: parsed.output, meta };
+  } else {
+    return toOutputPackFailure("internal_error", parsed.issues);
+  }
 }
 
 function calculateValueWild(
@@ -149,14 +149,14 @@ function cVpt(
 
 export function calculateLevelController(
   ip: CalculateLevelInputPack,
-): [Levels, TameEffectiveness, Meta] {
+): CalculateLevelOutputPack {
   let levels: { [k: string]: LevelDetail } | null = null;
-  let te = NaN;
+  let te: TameEffectiveness | null = null;
   let meta: Meta | null = null;
   switch (ip.type) {
     case "wild": {
       [levels, meta] = calculateLevelWild(ip);
-      te = 0;
+      te = WILD_TE;
       break;
     }
     case "dom": {
@@ -170,29 +170,23 @@ export function calculateLevelController(
     }
   }
 
-  return [
-    v.parse(
-      v.message(
-        LevelsSchema,
-        `error in calculateLevelController: levels: ${JSON.stringify(levels)}, ip: ${JSON.stringify(ip)}`,
-      ),
-      levels,
-    ),
-    v.parse(
-      v.message(
-        TameEffectivenessSchema,
-        `error in calculateLevelController: te: ${te}, ip: ${JSON.stringify(ip)}`,
-      ),
-      te,
-    ),
-    meta,
-  ];
+  const parsed = v.safeParse(LevelsSchema, levels);
+  if (parsed.success) {
+    return {
+      status: "success",
+      levels: parsed.output,
+      tameEffectiveness: te,
+      meta,
+    };
+  } else {
+    return toOutputPackFailure("internal_error", parsed.issues);
+  }
 }
 
 function calculateLevelWild(
   ip: Extract<CalculateLevelInputPack, { type: "wild" }>,
 ): [{ [k: string]: LevelDetail }, Meta] {
-  const meta: Meta = { hasError: false, statsMeta: {} };
+  const meta = createMeta();
   const result = StatsNames.map((sn) => {
     const [ld, smd] = cLw(sn, ip);
     return { sn, ld, smd };
@@ -218,10 +212,7 @@ function calculateLevelDom(
   let buffTe: TameEffectiveness | null = null;
   let buffMeta: Meta | null = null;
   for (const te of TARGET_TE_LIST) {
-    const [tmpLevels, tmpMeta] = calculateLevelDomCore(te, ip, {
-      hasError: false,
-      statsMeta: {},
-    });
+    const [tmpLevels, tmpMeta] = calculateLevelDomCore(te, ip, createMeta());
     const tmpSumDiff = StatsNames.reduce(
       (acc, sn) =>
         acc +
@@ -244,7 +235,7 @@ function calculateLevelDom(
 function calculateLevelBred(
   ip: Extract<CalculateLevelInputPack, { type: "bred" }>,
 ): [{ [k: string]: LevelDetail }, Meta] {
-  const meta: Meta = { hasError: false, statsMeta: {} };
+  const meta = createMeta();
   return calculateLevelDomCore(BRED_TE, ip, meta);
 }
 
@@ -320,4 +311,8 @@ function cLpt(
   }
   if (!buffLd) throw new Error();
   return [buffLd, { valueDiff: buffDiff }];
+}
+
+function createMeta(): Meta {
+  return { statsMeta: {} };
 }
