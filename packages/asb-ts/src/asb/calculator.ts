@@ -1,688 +1,341 @@
 import * as v from "valibot";
+import { toOutputPackFailure } from "../util.js";
 import {
-  DefaultSettings,
+  BRED_TE,
+  type CalculateLevelInputPack,
+  type CalculateLevelOutputPack,
+  type CalculateValueInputPack,
+  type CalculateValueOutputPack,
+  DEFAULT_STAT_IMPRINT_MULTIPLIER,
+  DEFAULT_TBHM,
   type Imprinting,
-  type LevelDetailIn,
-  type Levels,
-  type LevelsIn,
+  type LevelDetail,
+  LevelDetailSchema,
   LevelsSchema,
+  type Meta,
   type Settings,
   type Species,
-  type SpeciesStat,
-  type StatImprintMultDetailIn,
-  type StatImprintMultiplier,
   type StatMultiplierItem,
   type Stats,
+  type StatsMeta,
+  type StatsName,
+  StatsNames,
   type TameEffectiveness,
-  type Type,
-  type Values,
-  type ValuesIn,
+  TameEffectivenessSchema,
+  TE_MAX,
   ValuesSchema,
+  WILD_TE,
 } from "./types/index.js";
 
-// Default values for the stat imprint multipliers in ASE
-const DEFAULT_STAT_IMPRINT_MULTIPLIER = {
-  health: 0.2,
-  stamina: 0,
-  torpidity: 0.2,
-  oxygen: 0,
-  food: 0.2,
-  water: 0.2,
-  temperature: 0,
-  weight: 0.2,
-  meleeDamageMultiplier: 0.2,
-  speedMultiplier: 0.2,
-  temperatureFortitude: 0,
-  craftingSpeedMultiplier: 0,
-} as const as StatImprintMultiplier;
-
 export function calculateValueController(
-  species: Species,
-  levels: Levels,
-  imprinting: Imprinting,
-  tameEffectiveness: TameEffectiveness,
-  type: Type,
-  settings: Settings = DefaultSettings,
-): Values {
-  switch (type) {
+  ip: CalculateValueInputPack,
+): CalculateValueOutputPack {
+  let result: { [k: string]: number } | null = null;
+  const meta = createMeta();
+  switch (ip.type) {
     case "wild": {
-      return calculateValueWild(species.stats, levels, settings);
+      result = calculateValueWild(ip);
+      break;
     }
-    case "dom": {
-      return calculateValueDom(
-        species,
-        levels,
-        0 as Imprinting, // テイム後のレベル計算ではインプリントは考慮しない。
-        tameEffectiveness,
-        settings,
-      );
-    }
+    case "dom":
     case "bred": {
-      return calculateValueDom(
-        species,
-        levels,
-        imprinting,
-        1 as TameEffectiveness, // ブリはテイム効果なしで計算する。
-        settings,
-      );
+      result = calculateValueDom(ip);
+      break;
     }
-    default: {
-      throw new Error("invalid type");
-    }
+  }
+
+  const parsed = v.safeParse(ValuesSchema, result);
+  if (parsed.success) {
+    return { status: "success", values: parsed.output, meta };
+  } else {
+    return toOutputPackFailure("internal_error", parsed.issues);
   }
 }
 
 function calculateValueWild(
-  stats: Stats,
-  levels: Levels,
-  settings: Settings,
-): Values {
-  return v.parse(ValuesSchema, {
-    health: round(
-      cVw(stats.health, levels.health, settings.statMultipliers.health),
-    ),
-    stamina: round(
-      cVw(stats.stamina, levels.stamina, settings.statMultipliers.stamina),
-    ),
-    oxygen: round(
-      cVw(stats.oxygen, levels.oxygen, settings.statMultipliers.oxygen),
-    ),
-    food: round(cVw(stats.food, levels.food, settings.statMultipliers.food)),
-    water: round(
-      cVw(stats.water, levels.water, settings.statMultipliers.water),
-    ),
-    temperature: round(
-      cVw(
-        stats.temperature,
-        levels.temperature,
-        settings.statMultipliers.temperature,
+  ip: Extract<CalculateValueInputPack, { type: "wild" }>,
+) {
+  return Object.fromEntries(
+    StatsNames.map((sn) => [
+      sn,
+      round(
+        cVw(
+          ip.levels[sn],
+          ip.species.stats[sn],
+          ip.settings.statMultipliers[sn],
+        ),
+        sn,
       ),
-    ),
-    weight: round(
-      cVw(stats.weight, levels.weight, settings.statMultipliers.weight),
-    ),
-    meleeDamageMultiplier: round(
-      cVw(
-        stats.meleeDamageMultiplier,
-        levels.meleeDamageMultiplier,
-        settings.statMultipliers.meleeDamageMultiplier,
-      ),
-      PRECISION_1000,
-    ),
-    speedMultiplier: round(
-      cVw(
-        stats.speedMultiplier,
-        levels.speedMultiplier,
-        settings.statMultipliers.speedMultiplier,
-      ),
-    ),
-    temperatureFortitude: round(
-      cVw(
-        stats.temperatureFortitude,
-        levels.temperatureFortitude,
-        settings.statMultipliers.temperatureFortitude,
-      ),
-    ),
-    craftingSpeedMultiplier: round(
-      cVw(
-        stats.craftingSpeedMultiplier,
-        levels.craftingSpeedMultiplier,
-        settings.statMultipliers.craftingSpeedMultiplier,
-      ),
-    ),
-    torpidity: round(
-      cVw(
-        stats.torpidity,
-        levels.torpidity,
-        settings.statMultipliers.torpidity,
-      ),
-    ),
-  } satisfies ValuesIn);
+    ]),
+  );
 }
 
 function calculateValueDom(
-  { stats, tamedBaseHealthMultiplier, statImprintMultiplier }: Species,
-  levels: Levels,
-  imprinting: Imprinting,
-  tameEffectiveness: TameEffectiveness,
-  settings: Settings = DefaultSettings,
-): Values {
-  return v.parse(ValuesSchema, {
-    health: round(
-      cVpt(
-        tameEffectiveness,
-        stats.health,
-        levels.health,
-        imprinting,
-        statImprintMultiplier?.health ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.health,
-        settings.statMultipliers.health,
-        settings,
-        tamedBaseHealthMultiplier,
+  ip: Exclude<CalculateValueInputPack, { type: "wild" }>,
+) {
+  return Object.fromEntries(
+    StatsNames.map((sn) => [
+      sn,
+      round(
+        cVpt(
+          sn,
+          ip.levels[sn],
+          ip.tameEffectiveness,
+          ip.imprinting,
+          ip.species,
+          ip.settings,
+        ),
+        sn,
       ),
-    ),
-    stamina: round(
-      cVpt(
-        tameEffectiveness,
-        stats.stamina,
-        levels.stamina,
-        imprinting,
-        statImprintMultiplier?.stamina ??
-          DEFAULT_STAT_IMPRINT_MULTIPLIER.stamina,
-        settings.statMultipliers.stamina,
-        settings,
-      ),
-    ),
-    oxygen: round(
-      cVpt(
-        tameEffectiveness,
-        stats.oxygen,
-        levels.oxygen,
-        imprinting,
-        statImprintMultiplier?.oxygen ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.oxygen,
-        settings.statMultipliers.oxygen,
-        settings,
-      ),
-    ),
-    food: round(
-      cVpt(
-        tameEffectiveness,
-        stats.food,
-        levels.food,
-        imprinting,
-        statImprintMultiplier?.food ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.food,
-        settings.statMultipliers.food,
-        settings,
-      ),
-    ),
-    water: round(
-      cVpt(
-        tameEffectiveness,
-        stats.water,
-        levels.water,
-        imprinting,
-        statImprintMultiplier?.water ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.water,
-        settings.statMultipliers.water,
-        settings,
-      ),
-    ),
-    temperature: round(
-      cVpt(
-        tameEffectiveness,
-        stats.temperature,
-        levels.temperature,
-        imprinting,
-        statImprintMultiplier?.temperature ??
-          DEFAULT_STAT_IMPRINT_MULTIPLIER.temperature,
-        settings.statMultipliers.temperature,
-        settings,
-      ),
-    ),
-    weight: round(
-      cVpt(
-        tameEffectiveness,
-        stats.weight,
-        levels.weight,
-        imprinting,
-        statImprintMultiplier?.weight ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.weight,
-        settings.statMultipliers.weight,
-        settings,
-      ),
-    ),
-    meleeDamageMultiplier: round(
-      cVpt(
-        tameEffectiveness,
-        stats.meleeDamageMultiplier,
-        levels.meleeDamageMultiplier,
-        imprinting,
-        statImprintMultiplier?.meleeDamageMultiplier ??
-          DEFAULT_STAT_IMPRINT_MULTIPLIER.meleeDamageMultiplier,
-        settings.statMultipliers.meleeDamageMultiplier,
-        settings,
-      ),
-      PRECISION_1000,
-    ),
-    speedMultiplier: round(
-      cVpt(
-        tameEffectiveness,
-        stats.speedMultiplier,
-        levels.speedMultiplier,
-        imprinting,
-        statImprintMultiplier?.speedMultiplier ??
-          DEFAULT_STAT_IMPRINT_MULTIPLIER.speedMultiplier,
-        settings.statMultipliers.speedMultiplier,
-        settings,
-      ),
-    ),
-    temperatureFortitude: round(
-      cVpt(
-        tameEffectiveness,
-        stats.temperatureFortitude,
-        levels.temperatureFortitude,
-        imprinting,
-        statImprintMultiplier?.temperatureFortitude ??
-          DEFAULT_STAT_IMPRINT_MULTIPLIER.temperatureFortitude,
-        settings.statMultipliers.temperatureFortitude,
-        settings,
-      ),
-    ),
-    craftingSpeedMultiplier: round(
-      cVpt(
-        tameEffectiveness,
-        stats.craftingSpeedMultiplier,
-        levels.craftingSpeedMultiplier,
-        imprinting,
-        statImprintMultiplier?.craftingSpeedMultiplier ??
-          DEFAULT_STAT_IMPRINT_MULTIPLIER.craftingSpeedMultiplier,
-        settings.statMultipliers.craftingSpeedMultiplier,
-        settings,
-      ),
-    ),
-    torpidity: round(
-      cVpt(
-        tameEffectiveness,
-        stats.torpidity,
-        levels.torpidity,
-        imprinting,
-        statImprintMultiplier?.torpidity ??
-          DEFAULT_STAT_IMPRINT_MULTIPLIER.torpidity,
-        settings.statMultipliers.torpidity,
-        settings,
-      ),
-    ),
-  } satisfies ValuesIn);
+    ]),
+  );
 }
 
 const PRECISION_10 = 10;
 const PRECISION_1000 = 1000; // 近接攻撃力は%で表示されるので小数点以下3桁まで表示する。
+const PRECISION_1000_TARGET: StatsName[] = ["meleeDamageMultiplier"];
 
-function round(num: number, precision: number = PRECISION_10): number {
+function round(num: number, sn: StatsName): number {
+  const precision = PRECISION_1000_TARGET.includes(sn)
+    ? PRECISION_1000
+    : PRECISION_10;
   return Math.round(num * precision) / precision;
 }
 
 function cVw(
-  stat: SpeciesStat | null,
-  level: LevelDetailIn,
-  statMultiplierItem: StatMultiplierItem,
+  ld: LevelDetail,
+  stat: Stats[StatsName],
+  smi: StatMultiplierItem,
 ): number {
   if (!stat) return 0;
-  return (
-    stat.baseValue *
-    (1 + level.wild * stat.incPerWildLevel * statMultiplierItem.IwM)
-  );
+  return stat.baseValue * (1 + ld.wild * stat.incPerWildLevel * smi.IwM);
 }
 
 function cVpt(
+  sn: StatsName,
+  ld: LevelDetail,
   te: TameEffectiveness,
-  stat: SpeciesStat | null,
-  level: LevelDetailIn,
   imprinting: Imprinting,
-  statImprintMultiplier: StatImprintMultDetailIn,
-  statMultiplierItem: StatMultiplierItem,
-  { IBM }: Settings,
-  tbhm: number | undefined = 1,
+  species: Species,
+  settings: Settings,
 ): number {
+  const stat = species.stats[sn];
   if (!stat) return 0;
-  const vw = cVw(stat, level, statMultiplierItem);
-  const tmp1 = vw * tbhm * (1 + imprinting * statImprintMultiplier * IBM);
+  const tbhm =
+    sn === "health"
+      ? (species.tamedBaseHealthMultiplier ?? DEFAULT_TBHM)
+      : DEFAULT_TBHM;
+  const statImprintMultiplier =
+    species.statImprintMultiplier?.[sn] ?? DEFAULT_STAT_IMPRINT_MULTIPLIER[sn];
+  const smi = settings.statMultipliers[sn];
+
+  const vw = cVw(ld, stat, smi);
+  const tmp1 =
+    vw * tbhm * (1 + imprinting * statImprintMultiplier * settings.IBM);
   // テイム時の加算ボーナスがマイナスの時はTaM(サーバーの設定)を掛けない。
   // 公式の計算式にはないけどARKStatsExtractor/ARKBreedingStats/values/Values.cs:576行付近にコメントとして記述してある
   const addBounus =
-    stat.additiveBonus > 0
-      ? stat.additiveBonus * statMultiplierItem.TaM
-      : stat.additiveBonus;
+    stat.additiveBonus > 0 ? stat.additiveBonus * smi.TaM : stat.additiveBonus;
   const tmp2 = addBounus;
   // テイム時の乗算ボーナスがマイナスの時はTmM(サーバーの設定)を掛けない。
   // 公式の計算式にはないけどARKStatsExtractor/ARKBreedingStats/values/Values.cs:580行付近にコメントとして記述してある
   const multiplicativeBonus =
     stat.multiplicativeBonus > 0
-      ? stat.multiplicativeBonus * statMultiplierItem.TmM
+      ? stat.multiplicativeBonus * smi.TmM
       : stat.multiplicativeBonus;
   const tmp3 = 1 + te * multiplicativeBonus;
   return (tmp1 + tmp2) * tmp3;
 }
 
 export function calculateLevelController(
-  species: Species,
-  values: Values,
-  imprinting: Imprinting,
-  type: Type,
-  settings: Settings = DefaultSettings,
-): [Levels, TameEffectiveness] {
-  switch (type) {
-    case "wild": {
-      return [
-        calculateLevelWild(species.stats, values, settings),
-        0 as TameEffectiveness,
-      ];
+  ip: CalculateLevelInputPack,
+): CalculateLevelOutputPack {
+  try {
+    let levels: { [k: string]: LevelDetail } | null = null;
+    let te: TameEffectiveness | null = null;
+    let meta: Meta | null = null;
+    switch (ip.type) {
+      case "wild": {
+        [levels, meta] = calculateLevelWild(ip);
+        te = WILD_TE;
+        break;
+      }
+      case "dom": {
+        [levels, te, meta] = calculateLevelDom(ip);
+        break;
+      }
+      case "bred": {
+        [levels, meta] = calculateLevelBred(ip);
+        te = BRED_TE;
+        break;
+      }
     }
-    case "dom": {
-      return calculateLevelDom(species, values, settings);
+
+    const parsed = v.safeParse(LevelsSchema, levels);
+    if (parsed.success) {
+      return {
+        status: "success",
+        levels: parsed.output,
+        tameEffectiveness: te,
+        meta,
+      };
+    } else {
+      return toOutputPackFailure("internal_error", parsed.issues);
     }
-    case "bred": {
-      return calculateLevelBred(species, values, settings, imprinting);
-    }
-    default: {
-      throw new Error("invalid type");
+  } catch (e) {
+    if (e instanceof Error) {
+      return {
+        status: "failure",
+        errorType: "internal_error",
+        errors: [
+          {
+            path: typeof e.cause === "string" ? e.cause : "root",
+            message: e.message,
+          },
+        ],
+      };
+    } else {
+      return {
+        status: "failure",
+        errorType: "internal_error",
+        errors: [{ path: "root", message: JSON.stringify(e) }],
+      };
     }
   }
 }
 
 function calculateLevelWild(
-  stats: Stats,
-  values: Values,
-  settings: Settings,
-): Levels {
-  return v.parse(LevelsSchema, {
-    health: cLw(stats.health, values.health, settings.statMultipliers.health),
-    stamina: cLw(
-      stats.stamina,
-      values.stamina,
-      settings.statMultipliers.stamina,
-    ),
-    oxygen: cLw(stats.oxygen, values.oxygen, settings.statMultipliers.oxygen),
-    food: cLw(stats.food, values.food, settings.statMultipliers.food),
-    water: cLw(stats.water, values.water, settings.statMultipliers.water),
-    temperature: cLw(
-      stats.temperature,
-      values.temperature,
-      settings.statMultipliers.temperature,
-    ),
-    weight: cLw(stats.weight, values.weight, settings.statMultipliers.weight),
-    meleeDamageMultiplier: cLw(
-      stats.meleeDamageMultiplier,
-      values.meleeDamageMultiplier,
-      settings.statMultipliers.meleeDamageMultiplier,
-      PRECISION_1000,
-    ),
-    speedMultiplier: cLw(
-      stats.speedMultiplier,
-      values.speedMultiplier,
-      settings.statMultipliers.speedMultiplier,
-    ),
-    temperatureFortitude: cLw(
-      stats.temperatureFortitude,
-      values.temperatureFortitude,
-      settings.statMultipliers.temperatureFortitude,
-    ),
-    craftingSpeedMultiplier: cLw(
-      stats.craftingSpeedMultiplier,
-      values.craftingSpeedMultiplier,
-      settings.statMultipliers.craftingSpeedMultiplier,
-    ),
-    torpidity: cLw(
-      stats.torpidity,
-      values.torpidity,
-      settings.statMultipliers.torpidity,
-    ),
-  } satisfies LevelsIn);
+  ip: Extract<CalculateLevelInputPack, { type: "wild" }>,
+): [{ [k: string]: LevelDetail }, Meta] {
+  const meta = createMeta();
+  const result = StatsNames.map((sn) => {
+    const [ld, smd] = cLw(sn, ip);
+    return { sn, ld, smd };
+  });
+  const levels = Object.fromEntries(result.map(({ sn, ld }) => [sn, ld]));
+  result.forEach(({ sn, smd }) => {
+    if (!smd) return;
+    else meta.statsMeta[sn] = smd;
+  });
+  return [levels, meta];
 }
 
+const TARGET_TE_LIST_SIZE = 100;
+const TARGET_TE_LIST = Array.from(
+  { length: TE_MAX * TARGET_TE_LIST_SIZE + 1 },
+  (_, i) => v.parse(TameEffectivenessSchema, i / TARGET_TE_LIST_SIZE),
+);
 function calculateLevelDom(
-  species: Species,
-  values: Values,
-  settings: Settings,
-): [Levels, TameEffectiveness] {
-  let bufError = Number.MAX_SAFE_INTEGER;
-  let bufLevels: Levels | null = null;
-  let bufTe: TameEffectiveness | null = null;
-  for (let te = 0; te <= 100; te += 1) {
-    const tmp = calculateLevelDomCore(
-      species,
-      (te / 100) as TameEffectiveness,
-      values,
-      0 as Imprinting, // テイム後のレベル計算ではインプリントは考慮しない。
-      settings,
+  ip: Extract<CalculateLevelInputPack, { type: "dom" }>,
+): [{ [k: string]: LevelDetail }, TameEffectiveness, Meta] {
+  let buffDiff = Number.MAX_SAFE_INTEGER;
+  let buffLevels: { [k: string]: LevelDetail } | null = null;
+  let buffTe: TameEffectiveness | null = null;
+  let buffMeta: Meta | null = null;
+  for (const te of TARGET_TE_LIST) {
+    const [tmpLevels, tmpMeta] = calculateLevelDomCore(te, ip, createMeta());
+    const tmpSumDiff = StatsNames.reduce(
+      (acc, sn) =>
+        acc +
+        Math.abs(tmpMeta.statsMeta[sn]?.valueDiff ?? 0) /
+          (ip.species.stats[sn]?.baseValue ?? 1),
+      0,
     );
-    const error = sumError(tmp);
-    if (error === 0) {
-      return [tmp, (te / 100) as TameEffectiveness];
-    } else if (error <= bufError) {
-      bufError = error;
-      bufLevels = tmp;
-      bufTe = (te / 100) as TameEffectiveness;
+    if (tmpSumDiff <= buffDiff) {
+      buffDiff = tmpSumDiff;
+      buffLevels = tmpLevels;
+      buffTe = te;
+      buffMeta = tmpMeta;
     }
   }
-  if (!bufLevels || !bufTe) throw new Error("calculateLevelDomがなんかへん");
-  return [bufLevels, bufTe];
+  if (buffLevels === null || buffTe === null || buffMeta === null)
+    throw new Error("calculateLevelDom で失敗しました。", { cause: "root" });
+  return [buffLevels, buffTe, buffMeta];
 }
 
 function calculateLevelBred(
-  species: Species,
-  values: Values,
-  settings: Settings,
-  imprinting: Imprinting,
-): [Levels, TameEffectiveness] {
-  const te = 1 as TameEffectiveness; // ブリードはテイム効果1で計算する。
-  return [calculateLevelDomCore(species, te, values, imprinting, settings), te];
-}
-
-function sumError(levels: Levels): number {
-  return (
-    (levels.health.error ?? 0) +
-    (levels.stamina.error ?? 0) +
-    (levels.oxygen.error ?? 0) +
-    (levels.food.error ?? 0) +
-    (levels.water.error ?? 0) +
-    (levels.temperature.error ?? 0) +
-    (levels.weight.error ?? 0) +
-    (levels.meleeDamageMultiplier.error ?? 0) +
-    (levels.speedMultiplier.error ?? 0) +
-    (levels.temperatureFortitude.error ?? 0) +
-    (levels.craftingSpeedMultiplier.error ?? 0) +
-    (levels.torpidity.error ?? 0)
-  );
+  ip: Extract<CalculateLevelInputPack, { type: "bred" }>,
+): [{ [k: string]: LevelDetail }, Meta] {
+  const meta = createMeta();
+  return calculateLevelDomCore(BRED_TE, ip, meta);
 }
 
 function calculateLevelDomCore(
-  { stats, tamedBaseHealthMultiplier, statImprintMultiplier }: Species,
   te: TameEffectiveness,
-  values: Values,
-  imprinting: Imprinting,
-  settings: Settings,
-): Levels {
-  return v.parse(LevelsSchema, {
-    health: cLpt(
-      te,
-      stats.health,
-      values.health,
-      imprinting,
-      statImprintMultiplier?.health ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.health,
-      settings.statMultipliers.health,
-      settings,
-      tamedBaseHealthMultiplier,
-    ),
-    stamina: cLpt(
-      te,
-      stats.stamina,
-      values.stamina,
-      imprinting,
-      statImprintMultiplier?.stamina ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.stamina,
-      settings.statMultipliers.stamina,
-      settings,
-    ),
-    oxygen: cLpt(
-      te,
-      stats.oxygen,
-      values.oxygen,
-      imprinting,
-      statImprintMultiplier?.oxygen ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.oxygen,
-      settings.statMultipliers.oxygen,
-      settings,
-    ),
-    food: cLpt(
-      te,
-      stats.food,
-      values.food,
-      imprinting,
-      statImprintMultiplier?.food ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.food,
-      settings.statMultipliers.food,
-      settings,
-    ),
-    water: cLpt(
-      te,
-      stats.water,
-      values.water,
-      imprinting,
-      statImprintMultiplier?.water ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.water,
-      settings.statMultipliers.water,
-      settings,
-    ),
-    temperature: cLpt(
-      te,
-      stats.temperature,
-      values.temperature,
-      imprinting,
-      statImprintMultiplier?.temperature ??
-        DEFAULT_STAT_IMPRINT_MULTIPLIER.temperature,
-      settings.statMultipliers.temperature,
-      settings,
-    ),
-    weight: cLpt(
-      te,
-      stats.weight,
-      values.weight,
-      imprinting,
-      statImprintMultiplier?.weight ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.weight,
-      settings.statMultipliers.weight,
-      settings,
-    ),
-    meleeDamageMultiplier: cLpt(
-      te,
-      stats.meleeDamageMultiplier,
-      values.meleeDamageMultiplier,
-      imprinting,
-      statImprintMultiplier?.meleeDamageMultiplier ??
-        DEFAULT_STAT_IMPRINT_MULTIPLIER.meleeDamageMultiplier,
-      settings.statMultipliers.meleeDamageMultiplier,
-      settings,
-      undefined,
-      PRECISION_1000,
-    ),
-    speedMultiplier: cLpt(
-      te,
-      stats.speedMultiplier,
-      values.speedMultiplier,
-      imprinting,
-      statImprintMultiplier?.speedMultiplier ??
-        DEFAULT_STAT_IMPRINT_MULTIPLIER.speedMultiplier,
-      settings.statMultipliers.speedMultiplier,
-      settings,
-    ),
-    temperatureFortitude: cLpt(
-      te,
-      stats.temperatureFortitude,
-      values.temperatureFortitude,
-      imprinting,
-      statImprintMultiplier?.temperatureFortitude ??
-        DEFAULT_STAT_IMPRINT_MULTIPLIER.temperatureFortitude,
-      settings.statMultipliers.temperatureFortitude,
-      settings,
-    ),
-    craftingSpeedMultiplier: cLpt(
-      te,
-      stats.craftingSpeedMultiplier,
-      values.craftingSpeedMultiplier,
-      imprinting,
-      statImprintMultiplier?.craftingSpeedMultiplier ??
-        DEFAULT_STAT_IMPRINT_MULTIPLIER.craftingSpeedMultiplier,
-      settings.statMultipliers.craftingSpeedMultiplier,
-      settings,
-    ),
-    torpidity: cLpt(
-      te,
-      stats.torpidity,
-      values.torpidity,
-      imprinting,
-      statImprintMultiplier?.torpidity ??
-        DEFAULT_STAT_IMPRINT_MULTIPLIER.torpidity,
-      settings.statMultipliers.torpidity,
-      settings,
-    ),
-  } satisfies LevelsIn);
+  ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
+  meta: Meta,
+): [{ [k: string]: LevelDetail }, Meta] {
+  const result = StatsNames.map((sn) => {
+    const [ld, smd] = cLpt(sn, te, ip);
+    return { sn, ld, smd };
+  });
+  const levels = Object.fromEntries(result.map(({ sn, ld }) => [sn, ld]));
+  result.forEach(({ sn, smd }) => {
+    if (smd) meta.statsMeta[sn] = smd;
+  });
+  return [levels, meta];
 }
 
-const MAX_LEVEL = 500; // とりあえずレベル500まで計算する。これ以上は現実的に存在しないと思うので。
+const TARGET_LEVEL_DETAIL_LIST_SIZE = 500; // とりあえずレベル500まで計算する。これ以上は現実的に存在しないと思うので。
+const TARGET_LEVEL_DETAIL_LIST = Array.from(
+  { length: TARGET_LEVEL_DETAIL_LIST_SIZE + 1 },
+  (_, i) => v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: 0 }),
+);
+const LEVEL_DETAIL_0 = { wild: 0, mut: 0, dom: 0 } satisfies LevelDetail;
 
 function cLw(
-  stat: SpeciesStat | null,
-  value: number,
-  statMultiplierItem: StatMultiplierItem,
-  precision: number = PRECISION_10,
-): LevelDetailIn {
+  sn: StatsName,
+  ip: Extract<CalculateLevelInputPack, { type: "wild" }>,
+): [LevelDetail, StatsMeta[StatsName]] {
+  const stat = ip.species.stats[sn];
+  const value = ip.values[sn];
   if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
-    return { wild: 0, error: null };
-  let bufVw = 0;
-  for (let level = 0; level <= MAX_LEVEL; level++) {
+    return [LEVEL_DETAIL_0, undefined];
+  let buffLd: LevelDetail | null = null;
+  let buffDiff = Number.MAX_SAFE_INTEGER;
+  for (const ld of TARGET_LEVEL_DETAIL_LIST) {
     const tmpVw = round(
-      cVw(stat, { wild: level }, statMultiplierItem),
-      precision,
+      cVw(ld, ip.species.stats[sn], ip.settings.statMultipliers[sn]),
+      sn,
     );
-    if (tmpVw === value) {
-      return { wild: level, error: null };
-    } else if (tmpVw > value) {
-      const bufDiff = calculateError(value, bufVw, stat.baseValue);
-      const tmpDiff = calculateError(value, tmpVw, stat.baseValue);
-      if (bufDiff < tmpDiff) {
-        return { wild: level - 1, error: bufDiff };
-      } else {
-        return { wild: level, error: tmpDiff };
-      }
+    const tmpDiff = value - tmpVw;
+    if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
+      buffLd = ld;
+      buffDiff = tmpDiff;
     }
-    bufVw = tmpVw;
   }
-  throw new Error("value is too high");
+  if (buffLd === null)
+    throw new Error("cLw で失敗しました。", { cause: `levels.${sn}` });
+  return [buffLd, buffDiff === 0 ? undefined : { valueDiff: buffDiff }];
 }
 
 function cLpt(
+  sn: StatsName,
   te: TameEffectiveness,
-  stat: SpeciesStat | null,
-  value: number,
-  imprinting: Imprinting,
-  statImprintMultiplier: StatImprintMultDetailIn,
-  statMultiplierItem: StatMultiplierItem,
-  settings: Settings,
-  tbhm: number | undefined = 1,
-  precision: number = PRECISION_10,
-): LevelDetailIn {
+  ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
+): [LevelDetail, StatsMeta[StatsName]] {
+  const stat = ip.species.stats[sn];
+  const value = ip.values[sn];
   if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
-    return { wild: 0, error: null };
-  let bufVpt = 0;
-  for (let level = 0; level <= MAX_LEVEL; level++) {
+    return [LEVEL_DETAIL_0, undefined];
+  let buffLd: LevelDetail | null = null;
+  let buffDiff = Number.MAX_SAFE_INTEGER;
+  for (const ld of TARGET_LEVEL_DETAIL_LIST) {
     const tmpVpt = round(
-      cVpt(
-        te,
-        stat,
-        { wild: level },
-        imprinting,
-        statImprintMultiplier,
-        statMultiplierItem,
-        settings,
-        tbhm,
-      ),
-      precision,
+      cVpt(sn, ld, te, ip.imprinting, ip.species, ip.settings),
+      sn,
     );
-    if (tmpVpt === value) {
-      return { wild: level, error: null };
-    } else if (tmpVpt > value) {
-      const bufDiff = calculateError(value, bufVpt, stat.baseValue);
-      const tmpDiff = calculateError(value, tmpVpt, stat.baseValue);
-      if (bufDiff < tmpDiff) {
-        return { wild: level - 1, error: bufDiff };
-      } else {
-        return { wild: level, error: tmpDiff };
-      }
+    const tmpDiff = value - tmpVpt;
+    if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
+      buffLd = ld;
+      buffDiff = tmpDiff;
     }
-    bufVpt = tmpVpt;
   }
-  throw new Error("value is too high");
+  if (buffLd === null)
+    throw new Error("cLpt で失敗しました。", { cause: `levels.${sn}` });
+  return [buffLd, { valueDiff: buffDiff }];
 }
 
-// 誤差はいったんbaseValueで割って正規化する。これも誤差の比較のためだけの値なので、厳密に計算する必要はない。
-// もしうまく計算できなかったら、incPerWildLevelで割る方法を試す。
-function calculateError(
-  except: number,
-  actual: number,
-  baseValue: number,
-): number {
-  return Math.abs(except - actual) / baseValue;
+function createMeta(): Meta {
+  return { statsMeta: {} };
 }
