@@ -25,6 +25,7 @@ import {
   type TameEffectiveness,
   TameEffectivenessSchema,
   TE_MAX,
+  type Type,
   ValuesSchema,
   WILD_TE,
 } from "./types/index.js";
@@ -39,12 +40,9 @@ export function calculateValueController(
       result = calculateValueWild(ip);
       break;
     }
-    case "dom": {
-      result = calculateValueDom(ip);
-      break;
-    }
+    case "dom":
     case "bred": {
-      result = calculateValueBred(ip);
+      result = calculateValueDomBred(ip);
       break;
     }
   }
@@ -66,6 +64,7 @@ function calculateValueWild(
       sn,
       round(
         cVw(
+          ip.type,
           ip.levels[sn],
           ip.species.stats[sn],
           (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn],
@@ -77,35 +76,15 @@ function calculateValueWild(
   );
 }
 
-function calculateValueDom(
-  ip: Extract<CalculateValueInputPack, { type: "dom" }>,
-) {
-  return Object.fromEntries(
-    StatsNames.map((sn) => [
-      sn,
-      round(
-        cVpt(
-          sn,
-          ip.levels[sn],
-          ip.tameEffectiveness,
-          ip.imprinting,
-          ip.species,
-          ip.settings,
-        ),
-        sn,
-      ),
-    ]),
-  );
-}
-
-function calculateValueBred(
-  ip: Extract<CalculateValueInputPack, { type: "bred" }>,
+function calculateValueDomBred(
+  ip: Exclude<CalculateValueInputPack, { type: "wild" }>,
 ) {
   return Object.fromEntries(
     StatsNames.map((sn) => [
       sn,
       round(
         cV(
+          ip.type,
           sn,
           ip.levels[sn],
           ip.tameEffectiveness,
@@ -131,19 +110,26 @@ function round(num: number, sn: StatsName): number {
 }
 
 function cVw(
+  type: Type,
   ld: LevelDetail,
   stat: Stats[StatsName],
   mm: MutationMultiplier[StatsName],
   smi: StatMultiplierItem,
 ): number {
   if (!stat) return 0;
+  // 公式wikiの計算式にはない？認識だが、変異のレベルは補正があれば補正をかけてLwと同じように計算する
+  // ARKStatsExtractor/ARKBreedingStats/values/Values.cs:594行付近と
+  // ARKStatsExtractor/ARKBreedingStats/Stats.cs:58行付近を参照
+  // 野生で変異はしないので野生では0にする
+  const adjustedMutLevel = type === "wild" ? 0 : ld.mut * mm;
   return (
     stat.baseValue *
-    (1 + (ld.wild + ld.mut * mm) * stat.incPerWildLevel * smi.IwM)
+    (1 + (ld.wild + adjustedMutLevel) * stat.incPerWildLevel * smi.IwM)
   );
 }
 
 function cVpt(
+  type: Type,
   sn: StatsName,
   ld: LevelDetail,
   te: TameEffectiveness,
@@ -162,25 +148,32 @@ function cVpt(
   const smi = settings.statMultipliers[sn];
   const mm = (species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
 
-  const vw = cVw(ld, stat, mm, smi);
-  const tmp1 =
-    vw * tbhm * (1 + imprinting * statImprintMultiplier * settings.IBM);
+  const vw = cVw(type, ld, stat, mm, smi);
   // テイム時の加算ボーナスがマイナスの時はTaM(サーバーの設定)を掛けない。
   // 公式の計算式にはないけどARKStatsExtractor/ARKBreedingStats/values/Values.cs:576行付近にコメントとして記述してある
   const addBounus =
     stat.additiveBonus > 0 ? stat.additiveBonus * smi.TaM : stat.additiveBonus;
-  const tmp2 = addBounus;
+
+  // `Vpt = (Vw × TBHM × (1 + IB × 0.2 × IBM) + Ta × TaM) × (1 + TE × Tm × TmM)` の
+  //         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ここの部分
+  const tmp1 =
+    vw * tbhm * (1 + imprinting * statImprintMultiplier * settings.IBM) +
+    addBounus;
+
   // テイム時の乗算ボーナスがマイナスの時はTmM(サーバーの設定)を掛けない。
   // 公式の計算式にはないけどARKStatsExtractor/ARKBreedingStats/values/Values.cs:580行付近にコメントとして記述してある
   const multiplicativeBonus =
     stat.multiplicativeBonus > 0
       ? stat.multiplicativeBonus * smi.TmM
       : stat.multiplicativeBonus;
-  const tmp3 = 1 + te * multiplicativeBonus;
-  return (tmp1 + tmp2) * tmp3;
+  // `Vpt = (Vw × TBHM × (1 + IB × 0.2 × IBM) + Ta × TaM) × (1 + TE × Tm × TmM)` の
+  //                                                         ^^^^^^^^^^^^^^^^^ ここの部分
+  const tmp2 = 1 + te * multiplicativeBonus;
+  return tmp1 * tmp2;
 }
 
 function cV(
+  type: Type,
   sn: StatsName,
   ld: LevelDetail,
   te: TameEffectiveness,
@@ -190,7 +183,7 @@ function cV(
 ): number {
   const stat = species.stats[sn];
   if (!stat) return 0;
-  const vpt = cVpt(sn, ld, te, imprinting, species, settings);
+  const vpt = cVpt(type, sn, ld, te, imprinting, species, settings);
 
   return (
     vpt * (1 + ld.dom * stat.incPerDomLevel * settings.statMultipliers[sn].IdM)
@@ -317,7 +310,7 @@ function calculateLevelDomCore(
   meta: Meta,
 ): [{ [k: string]: LevelDetail }, Meta] {
   const result = StatsNames.map((sn) => {
-    const [ld, smd] = cLpt(sn, te, ip);
+    const [ld, smd] = cLpt(ip.type, sn, te, ip);
     return { sn, ld, smd };
   });
   const levels = Object.fromEntries(result.map(({ sn, ld }) => [sn, ld]));
@@ -347,6 +340,7 @@ function cLw(
   for (const ld of TARGET_LEVEL_DETAIL_LIST) {
     const tmpVw = round(
       cVw(
+        ip.type,
         ld,
         ip.species.stats[sn],
         (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn],
@@ -366,6 +360,7 @@ function cLw(
 }
 
 function cLpt(
+  type: Type,
   sn: StatsName,
   te: TameEffectiveness,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
@@ -378,7 +373,7 @@ function cLpt(
   let buffDiff = Number.MAX_SAFE_INTEGER;
   for (const ld of TARGET_LEVEL_DETAIL_LIST) {
     const tmpVpt = round(
-      cVpt(sn, ld, te, ip.imprinting, ip.species, ip.settings),
+      cVpt(type, sn, ld, te, ip.imprinting, ip.species, ip.settings),
       sn,
     );
     const tmpDiff = value - tmpVpt;
