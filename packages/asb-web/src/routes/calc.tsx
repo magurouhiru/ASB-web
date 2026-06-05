@@ -192,6 +192,9 @@ function CalcComponent() {
           dontValidate: true,
         });
       });
+      form.setFieldValue("tameEffectiveness", opcl.tameEffectiveness, {
+        dontValidate: true,
+      });
       setMeta(opcl.meta);
     }
   }, [form, opcl]);
@@ -374,7 +377,14 @@ function CalcComponent() {
             : `diff: ${sign} ${value} ${sn === "meleeDamageMultiplier" ? "%" : ""}`;
         return (
           <div key={sn}>
-            <Label className="col-span-full">{sn}</Label>
+            <div className="flex gap-2">
+              <Label className="col-span-full">{sn}</Label>
+              {meta?.statsMeta[sn]?.hasMissingStatsForCalculation && (
+                <ErrorMessage>
+                  計算に必要な値がないので計算できませんでした
+                </ErrorMessage>
+              )}
+            </div>
             <div className="flex flex-wrap gap-x-1 sm:flex-nowrap">
               <div className="grow">
                 <form.AppField name={`values.${sn}`}>
@@ -405,7 +415,7 @@ function CalcComponent() {
                         <NumberField.IncrementButton />
                       </NumberField.Group>
                       <FieldError></FieldError>
-                      <ErrorMessage>{diff}</ErrorMessage>
+                      {diff && <ErrorMessage>{diff}</ErrorMessage>}
                     </field.NumberField>
                   )}
                 </form.AppField>
@@ -470,6 +480,9 @@ function CalcComponent() {
                           {meta?.statsMeta[sn]?.equalWildMutationRates && (
                             <Description>野生と上昇率が同じ</Description>
                           )}
+                          {meta?.statsMeta[sn]?.isMutLevelCalculatedAsZero && (
+                            <Description>0として計算</Description>
+                          )}
                         </field.NumberField>
                       )}
                     </form.AppField>
@@ -499,6 +512,9 @@ function CalcComponent() {
                             <NumberField.Input />
                             <NumberField.IncrementButton className="max-sm:hidden" />
                           </NumberField.Group>
+                          {meta?.statsMeta[sn]?.isDomLevelCalculatedAsZero && (
+                            <Description>0として計算</Description>
+                          )}
                         </field.NumberField>
                       )}
                     </form.AppField>
@@ -516,7 +532,11 @@ function CalcComponent() {
             defaultValue={field.form.options.defaultValues?.tameEffectiveness}
             value={field.state.value}
             onChange={(e) => field.setValue(e)}
-            isDisabled={field.form.state.values.mode === "value->level"}
+            isDisabled={
+              field.form.state.values.mode === "value->level" ||
+              (field.form.state.values.mode === "level->value" &&
+                field.form.state.values.type !== "dom")
+            }
             minValue={0}
             maxValue={1}
             formatOptions={{
@@ -531,6 +551,12 @@ function CalcComponent() {
               <NumberField.Input />
               <NumberField.IncrementButton />
             </NumberField.Group>
+            {meta?.isTameEffectivenessCalculatedAsZero && (
+              <Description>0%として計算</Description>
+            )}
+            {meta?.isTameEffectivenessCalculatedAsOne && (
+              <Description>100%として計算</Description>
+            )}
           </field.NumberField>
         )}
       </form.AppField>
@@ -556,6 +582,9 @@ function CalcComponent() {
               <NumberField.Input />
               <NumberField.IncrementButton />
             </NumberField.Group>
+            {meta?.isImprintingCalculatedAsZero && (
+              <Description>0%として計算</Description>
+            )}
           </field.NumberField>
         )}
       </form.AppField>

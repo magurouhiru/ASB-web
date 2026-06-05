@@ -9,6 +9,7 @@ import {
   DEFAULT_MUTATION_MULTIPLIER,
   DEFAULT_STAT_IMPRINT_MULTIPLIER,
   DEFAULT_TBHM,
+  DOM_IMP,
   type Imprinting,
   type LevelDetail,
   LevelDetailSchema,
@@ -28,6 +29,7 @@ import {
   TE_MAX,
   type Type,
   ValuesSchema,
+  WILD_IMP,
   WILD_TE,
 } from "./types/index.js";
 
@@ -39,19 +41,37 @@ export function calculateValueController(
   const meta = createMeta();
   switch (ip.type) {
     case "wild": {
+      const isTameEffectivenessCalculatedAsZero =
+        ip.tameEffectiveness !== WILD_TE;
+      if (isTameEffectivenessCalculatedAsZero) {
+        ip.tameEffectiveness = WILD_TE;
+        meta.isTameEffectivenessCalculatedAsZero = true;
+      }
+      const isImprintingCalculatedAsZero = ip.imprinting !== WILD_IMP;
+      if (isImprintingCalculatedAsZero) {
+        ip.imprinting = WILD_IMP;
+        meta.isImprintingCalculatedAsZero = true;
+      }
       [result, statsMeta] = calculateValueWild(ip);
-      meta.isTameEffectivenessCalculatedAsZero = true;
-      meta.isImprintingCalculatedAsZero = true;
       break;
     }
     case "dom": {
+      const isImprintingCalculatedAsZero = ip.imprinting !== DOM_IMP;
+      if (isImprintingCalculatedAsZero) {
+        ip.imprinting = DOM_IMP;
+        meta.isImprintingCalculatedAsZero = true;
+      }
       [result, statsMeta] = calculateValueDomBred(ip);
-      meta.isImprintingCalculatedAsZero = true;
       break;
     }
     case "bred": {
+      const isTameEffectivenessCalculatedAsOne =
+        ip.tameEffectiveness !== BRED_TE;
+      if (isTameEffectivenessCalculatedAsOne) {
+        ip.tameEffectiveness = BRED_TE;
+        meta.isTameEffectivenessCalculatedAsOne = true;
+      }
       [result, statsMeta] = calculateValueDomBred(ip);
-      meta.isTameEffectivenessCalculatedAsOne = true;
       break;
     }
   }
@@ -66,7 +86,7 @@ export function calculateValueController(
 }
 
 function calculateValueWild(
-  ip: Extract<CalculateValueInputPack, { type: "wild" }>,
+  ip: Omit<CalculateValueInputPack, "type"> & { type: "wild" },
 ): [{ [k: string]: number }, StatsMeta] {
   const result = StatsNames.map((sn) => {
     const [vw, statsMetaDetail] = cVw(
@@ -89,7 +109,7 @@ function calculateValueWild(
 }
 
 function calculateValueDomBred(
-  ip: Exclude<CalculateValueInputPack, { type: "wild" }>,
+  ip: Omit<CalculateValueInputPack, "type"> & { type: "dom" | "bred" },
 ): [{ [k: string]: number }, StatsMeta] {
   const result = StatsNames.map((sn) => {
     const [v, statsMetaDetail] = cV(
@@ -133,25 +153,33 @@ function cVw(
 ): [number, StatsMetaDetail] {
   const stat = stats[sn];
   if (!stat) return [0, { hasMissingStatsForCalculation: true }];
+  const statsMetaDetail: StatsMetaDetail = {};
+
+  // 計算の準備
   // 公式wikiの計算式にはない？認識だが、変異のレベルは補正があれば補正をかけてLwと同じように計算する
   // ARKStatsExtractor/ARKBreedingStats/values/Values.cs:594行付近と
   // ARKStatsExtractor/ARKBreedingStats/Stats.cs:58行付近を参照
-  const statsMetaDetail: StatsMetaDetail = {};
   const mmi = (mm ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
   if (mmi === 1) {
     statsMetaDetail.equalWildMutationRates = true;
   }
-  // 野生で変異はしないので野生では0にする
-  const adjustedMutLevel = type === "wild" ? 0 : ld.mut * mmi;
-  if (ld.mut !== 0) {
-    statsMetaDetail.isWildLevelCalculatedAsZero = true;
+
+  const isMutLevelCalculatedAsZero =
+    ld.mut !== 0 && (type === "wild" || type === "dom");
+  const mut = isMutLevelCalculatedAsZero ? 0 : ld.mut;
+  if (isMutLevelCalculatedAsZero) {
+    statsMetaDetail.isMutLevelCalculatedAsZero = true;
   }
-  if (ld.dom !== 0) {
+
+  const isDomLevelCalculatedAsZero = ld.dom !== 0 && type === "wild";
+  if (isDomLevelCalculatedAsZero) {
     statsMetaDetail.isDomLevelCalculatedAsZero = true;
   }
+
+  // 計算
   const vw =
     stat.baseValue *
-    (1 + (ld.wild + adjustedMutLevel) * stat.incPerWildLevel * smi.IwM);
+    (1 + (ld.wild + mut * mmi) * stat.incPerWildLevel * smi.IwM);
   return [vw, statsMetaDetail];
 }
 
@@ -166,6 +194,8 @@ function cVpt(
 ): [number, StatsMetaDetail] {
   const stat = species.stats[sn];
   if (!stat) return [0, { hasMissingStatsForCalculation: true }];
+
+  // 計算の準備
   const tbhm =
     sn === "health"
       ? (species.tamedBaseHealthMultiplier ?? DEFAULT_TBHM)
@@ -187,6 +217,7 @@ function cVpt(
   const addBounus =
     stat.additiveBonus > 0 ? stat.additiveBonus * smi.TaM : stat.additiveBonus;
 
+  // 計算
   // `Vpt = (Vw × TBHM × (1 + IB × 0.2 × IBM) + Ta × TaM) × (1 + TE × Tm × TmM)` の
   //         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ここの部分
   const tmp1 =
@@ -216,6 +247,8 @@ function cV(
 ): [number, StatsMetaDetail] {
   const stat = species.stats[sn];
   if (!stat) return [0, { hasMissingStatsForCalculation: true }];
+
+  // 計算の準備
   const [vpt, statsMetaDetail] = cVpt(
     type,
     sn,
@@ -225,7 +258,9 @@ function cV(
     species,
     settings,
   );
-  statsMetaDetail.isDomLevelCalculatedAsZero = true;
+  statsMetaDetail.isDomLevelCalculatedAsZero = false;
+
+  // 計算
   const v =
     vpt * (1 + ld.dom * stat.incPerDomLevel * settings.statMultipliers[sn].IdM);
   return [v, statsMetaDetail];
@@ -240,21 +275,31 @@ export function calculateLevelController(
     let meta: Meta | null = null;
     switch (ip.type) {
       case "wild": {
+        const isImprintingCalculatedAsZero = ip.imprinting !== WILD_IMP;
+        if (isImprintingCalculatedAsZero) {
+          ip.imprinting = WILD_IMP;
+        }
         [levels, meta] = calculateLevelWild(ip);
         te = WILD_TE;
-        meta.isTameEffectivenessCalculatedAsZero = true;
-        meta.isImprintingCalculatedAsZero = true;
+        if (isImprintingCalculatedAsZero) {
+          meta.isImprintingCalculatedAsZero = true;
+        }
         break;
       }
       case "dom": {
+        const isImprintingCalculatedAsZero = ip.imprinting !== DOM_IMP;
+        if (isImprintingCalculatedAsZero) {
+          ip.imprinting = DOM_IMP;
+        }
         [levels, te, meta] = calculateLevelDom(ip);
-        meta.isImprintingCalculatedAsZero = true;
+        if (isImprintingCalculatedAsZero) {
+          meta.isImprintingCalculatedAsZero = true;
+        }
         break;
       }
       case "bred": {
         [levels, meta] = calculateLevelBred(ip);
         te = BRED_TE;
-        meta.isTameEffectivenessCalculatedAsOne = true;
         break;
       }
     }
@@ -407,7 +452,12 @@ function cLw(
   const stat = ip.species.stats[sn];
   const value = ip.values[sn];
   if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
-    return [LEVEL_DETAIL_0, { hasMissingStatsForCalculation: true }];
+    return [
+      LEVEL_DETAIL_0,
+      {
+        hasMissingStatsForCalculation: value > 0,
+      },
+    ];
   let buffLd: LevelDetail | null = null;
   let buffDiff = Number.MAX_SAFE_INTEGER;
   let buffStatsMetaDetail: StatsMetaDetail = {};
