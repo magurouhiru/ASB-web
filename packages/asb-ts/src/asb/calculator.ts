@@ -415,22 +415,28 @@ const TARGET_LEVEL_RANGE = Array.from(
   { length: TARGET_LEVEL_DETAIL_LIST_SIZE + 1 },
   (_, i) => i,
 );
+const TARGET_LEVEL_RANGE_WITHOUT_0 = Array.from(
+  { length: TARGET_LEVEL_DETAIL_LIST_SIZE },
+  (_, i) => i + 1,
+);
 
-const TARGET_LEVEL_DETAIL_LIST_WILD = TARGET_LEVEL_RANGE.map((i) =>
+const TARGET_LEVEL_DETAIL_LIST_WILD = TARGET_LEVEL_RANGE_WITHOUT_0.map((i) =>
   v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: 0 }),
 );
-const TARGET_LEVEL_DETAIL_LIST_WILD_DOM = TARGET_LEVEL_RANGE.flatMap((i) =>
-  TARGET_LEVEL_RANGE.map((k) =>
-    v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: k }),
-  ),
-);
-const TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM = TARGET_LEVEL_RANGE.flatMap((i) =>
-  TARGET_LEVEL_RANGE.flatMap((j) =>
+const TARGET_LEVEL_DETAIL_LIST_WILD_DOM = TARGET_LEVEL_RANGE_WITHOUT_0.flatMap(
+  (i) =>
     TARGET_LEVEL_RANGE.map((k) =>
-      v.parse(LevelDetailSchema, { wild: i, mut: j, dom: k }),
+      v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: k }),
     ),
-  ),
 );
+const TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM =
+  TARGET_LEVEL_RANGE_WITHOUT_0.flatMap((i) =>
+    TARGET_LEVEL_RANGE.flatMap((j) =>
+      TARGET_LEVEL_RANGE.map((k) =>
+        v.parse(LevelDetailSchema, { wild: i, mut: j, dom: k }),
+      ),
+    ),
+  );
 
 // 気絶値とりあえずレベル500まで計算する。これ以上は現実的に存在しないと思うので。
 const TARGET_LEVEL_DETAIL_LIST_SIZE_TORPIDITY = 500;
@@ -512,7 +518,7 @@ function cLpt(
           ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
           : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM;
   for (const ld of targetLevel) {
-    const [tmpVpt, tmpStatsMetaDetail] = cVpt(
+    const [tmpVpt, tmpStatsMetaDetail] = cV(
       ip.type,
       sn,
       ld,
