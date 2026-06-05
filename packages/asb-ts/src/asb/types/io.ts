@@ -46,6 +46,15 @@ export const ImprintingSchema = v.pipe(
   v.brand("" as "ImprintingSchema"), // 単品で使いそうなので、v.brandする
 );
 
+export type TotalLevel = v.InferOutput<typeof TotalLevelSchema>;
+export const TL_MIN = 0;
+export const TotalLevelSchema = v.pipe(
+  v.number(),
+  v.integer(),
+  v.minValue(TL_MIN),
+  v.brand("" as "TotalLevelSchema"), // 単品で使いそうなので、v.brandする
+);
+
 // 野生はテイム効果なしで計算する。
 export const WILD_TE = TE_MIN as TameEffectiveness;
 // 野生は刷り込みボーナスなしで計算する。
@@ -92,6 +101,7 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
   v.object({
     type: v.literal("wild" satisfies Type),
     values: ValuesSchema,
+    totalLevel: TotalLevelSchema,
     imprinting: ImprintingSchema,
     species: SpeciesSchema,
     settings: SettingsSchema,
@@ -99,6 +109,7 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
   v.object({
     type: v.literal("dom" satisfies Type),
     values: ValuesSchema,
+    totalLevel: TotalLevelSchema,
     imprinting: ImprintingSchema,
     species: SpeciesSchema,
     settings: SettingsSchema,
@@ -106,6 +117,7 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
   v.object({
     type: v.literal("bred" satisfies Type),
     values: ValuesSchema,
+    totalLevel: TotalLevelSchema,
     imprinting: ImprintingSchema,
     species: SpeciesSchema,
     settings: SettingsSchema,
@@ -125,6 +137,7 @@ export interface Meta {
   isTameEffectivenessCalculatedAsZero?: boolean;
   isTameEffectivenessCalculatedAsOne?: boolean;
   isImprintingCalculatedAsZero?: boolean;
+  totalLevelDiff?: number;
 }
 
 export type ErrorType = ["input_error", "internal_error"][number];

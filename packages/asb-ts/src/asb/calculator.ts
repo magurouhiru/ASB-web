@@ -350,6 +350,10 @@ function calculateLevelWild(
     if (!smd) return;
     else meta.statsMeta[sn] = smd;
   });
+  const tmpTotalLevelDiff = ip.totalLevel - sumLevels(levels);
+  if (tmpTotalLevelDiff === 0) {
+    meta.totalLevelDiff = tmpTotalLevelDiff;
+  }
   return [levels, meta];
 }
 
@@ -398,14 +402,110 @@ function calculateLevelDomCore(
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
   meta: Meta,
 ): [{ [k: string]: LevelDetail }, Meta] {
-  const result = StatsNames.map((sn) => {
-    const [ld, smd] = cLpt(sn, te, ip);
-    return { sn, ld, smd };
+  const result = {
+    health_result: cLpt("health", te, ip),
+    stamina_result: cLpt("stamina", te, ip),
+    oxygen_result: cLpt("oxygen", te, ip),
+    food_result: cLpt("food", te, ip),
+
+    water_result: cLpt("water", te, ip),
+    temperature_result: cLpt("temperature", te, ip),
+    weight_result: cLpt("weight", te, ip),
+    meleeDamageMultiplier_result: cLpt("meleeDamageMultiplier", te, ip),
+
+    speedMultiplier_result: cLpt("speedMultiplier", te, ip),
+    temperatureFortitude_result: cLpt("temperatureFortitude", te, ip),
+    craftingSpeedMultiplier_result: cLpt("craftingSpeedMultiplier", te, ip),
+    torpidity_result: cLpt("torpidity", te, ip),
+  };
+
+  const objList: Record<
+    StatsName,
+    { levelDetail: LevelDetail; statsMetaDetail: StatsMetaDetail }
+  >[] = [];
+
+  for (const health of result.health_result) {
+    for (const stamina of result.stamina_result) {
+      for (const oxygen of result.oxygen_result) {
+        for (const food of result.food_result) {
+          //
+          for (const water of result.water_result) {
+            for (const temperature of result.temperature_result) {
+              for (const weight of result.weight_result) {
+                for (const meleeDamageMultiplier of result.meleeDamageMultiplier_result) {
+                  //
+                  for (const speedMultiplier of result.speedMultiplier_result) {
+                    for (const temperatureFortitude of result.temperatureFortitude_result) {
+                      for (const craftingSpeedMultiplier of result.craftingSpeedMultiplier_result) {
+                        for (const torpidity of result.torpidity_result) {
+                          objList.push({
+                            health,
+                            stamina,
+                            oxygen,
+                            food,
+
+                            water,
+                            temperature,
+                            weight,
+                            meleeDamageMultiplier,
+
+                            speedMultiplier,
+                            temperatureFortitude,
+                            craftingSpeedMultiplier,
+                            torpidity,
+                          });
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  objList.sort((a, b) => {
+    const aDiff =
+      ip.totalLevel -
+      1 -
+      Object.entries(a).reduce((acc, [sn, { levelDetail }]) => {
+        if (sn === "torpidity") return acc;
+        else return acc + levelDetail.wild + levelDetail.mut + levelDetail.dom;
+      }, 0);
+    const bDiff =
+      ip.totalLevel -
+      1 -
+      Object.entries(b).reduce((acc, [sn, { levelDetail }]) => {
+        if (sn === "torpidity") return acc;
+        else return acc + levelDetail.wild + levelDetail.mut + levelDetail.dom;
+      }, 0);
+    return Math.abs(aDiff) - Math.abs(bDiff);
   });
-  const levels = Object.fromEntries(result.map(({ sn, ld }) => [sn, ld]));
-  result.forEach(({ sn, smd }) => {
-    if (smd) meta.statsMeta[sn] = smd;
-  });
+
+  console.log("objList[0]", objList[0]);
+  console.log("objList[1]", objList[1]);
+
+  console.log(
+    objList.map((a) => {
+      const aDiff =
+        ip.totalLevel -
+        Object.entries(a).reduce((acc, [sn, { levelDetail }]) => {
+          if (sn === "torpidity") return acc;
+          else
+            return acc + levelDetail.wild + levelDetail.mut + levelDetail.dom;
+        }, 0);
+      return aDiff;
+    }),
+  );
+
+  const first = objList[0];
+  if (!first) throw new Error();
+  const levels = Object.fromEntries(
+    Object.entries(first).map(([sn, { levelDetail }]) => [sn, levelDetail]),
+  );
   return [levels, meta];
 }
 
@@ -419,25 +519,24 @@ const TARGET_LEVEL_RANGE_WITHOUT_0 = Array.from(
 const TARGET_LEVEL_DETAIL_LIST_WILD = TARGET_LEVEL_RANGE_WITHOUT_0.map((i) =>
   v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: 0 }),
 );
-// const TARGET_LEVEL_RANGE = Array.from(
-//   { length: TARGET_LEVEL_DETAIL_LIST_SIZE + 1 },
-//   (_, i) => i,
-// );
-// TODO: 値が一致したときにレベルの割り振りを行う仕掛けを考える↓はうまくいかなかったやつ
-// const TARGET_LEVEL_DETAIL_LIST_WILD_DOM = TARGET_LEVEL_RANGE_WITHOUT_0.flatMap(
-//   (i) =>
-//     TARGET_LEVEL_RANGE.map((k) =>
-//       v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: k }),
-//     ),
-// );
-// const TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM =
-//   TARGET_LEVEL_RANGE_WITHOUT_0.flatMap((i) =>
-//     TARGET_LEVEL_RANGE.flatMap((j) =>
-//       TARGET_LEVEL_RANGE.map((k) =>
-//         v.parse(LevelDetailSchema, { wild: i, mut: j, dom: k }),
-//       ),
-//     ),
-//   );
+const TARGET_LEVEL_RANGE = Array.from(
+  { length: TARGET_LEVEL_DETAIL_LIST_SIZE + 1 },
+  (_, i) => i,
+);
+const TARGET_LEVEL_DETAIL_LIST_WILD_DOM = TARGET_LEVEL_RANGE_WITHOUT_0.flatMap(
+  (i) =>
+    TARGET_LEVEL_RANGE.map((k) =>
+      v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: k }),
+    ),
+);
+const TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM =
+  TARGET_LEVEL_RANGE_WITHOUT_0.flatMap((i) =>
+    TARGET_LEVEL_RANGE.flatMap((j) =>
+      TARGET_LEVEL_RANGE.map((k) =>
+        v.parse(LevelDetailSchema, { wild: i, mut: j, dom: k }),
+      ),
+    ),
+  );
 
 // 気絶値とりあえずレベル500まで計算する。これ以上は現実的に存在しないと思うので。
 const TARGET_LEVEL_DETAIL_LIST_SIZE_TORPIDITY = 500;
@@ -500,29 +599,29 @@ function cLpt(
   sn: StatsName,
   te: TameEffectiveness,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
-): [LevelDetail, StatsMetaDetail] {
+): { levelDetail: LevelDetail; statsMetaDetail: StatsMetaDetail }[] {
   const stat = ip.species.stats[sn];
   const value = ip.values[sn];
   if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
-    return [LEVEL_DETAIL_0, { hasMissingStatsForCalculation: value > 0 }];
-  let buffLd: LevelDetail | null = null;
+    return [
+      {
+        levelDetail: LEVEL_DETAIL_0,
+        statsMetaDetail: { hasMissingStatsForCalculation: value > 0 },
+      },
+    ];
   let buffDiff = Number.MAX_SAFE_INTEGER;
-  let buffStatsMetaDetail: StatsMetaDetail = {};
+  let buff: { levelDetail: LevelDetail; statsMetaDetail: StatsMetaDetail }[] =
+    [];
 
+  const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
   const targetLevel =
     sn === "torpidity"
       ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
-      : TARGET_LEVEL_DETAIL_LIST_WILD;
-  // TODO: 値が一致したときにレベルの割り振りを行う仕掛けを考える↓はうまくいかなかったやつ
-  // const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
-  // const targetLevel =
-  //   sn === "torpidity"
-  //     ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
-  //     : ip.type === "dom"
-  //       ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
-  //       : mm === 1
-  //         ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
-  //         : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM;
+      : ip.type === "dom"
+        ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
+        : mm === 1
+          ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
+          : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM;
   for (const ld of targetLevel) {
     const [tmpVpt, tmpStatsMetaDetail] = cV(
       ip.type,
@@ -534,21 +633,30 @@ function cLpt(
       ip.settings,
     );
     const tmpDiff = value - round(tmpVpt, sn);
+    if (tmpDiff !== 0) {
+      tmpStatsMetaDetail.valueDiff = buffDiff;
+    }
+    if (Math.abs(tmpDiff) === Math.abs(buffDiff)) {
+      buff.push({ levelDetail: ld, statsMetaDetail: tmpStatsMetaDetail });
+    }
     if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
-      buffLd = ld;
       buffDiff = tmpDiff;
-      buffStatsMetaDetail = tmpStatsMetaDetail;
+      buff = [{ levelDetail: ld, statsMetaDetail: tmpStatsMetaDetail }];
     }
   }
-  if (buffLd === null) {
+  if (buff.length <= 0) {
     throw new Error("cLpt で失敗しました。", { cause: `levels.${sn}` });
   }
-  if (buffDiff !== 0) {
-    buffStatsMetaDetail.valueDiff = buffDiff;
-  }
-  return [buffLd, buffStatsMetaDetail];
+  return buff;
 }
 
 function createMeta(): Meta {
   return { statsMeta: {} };
+}
+
+function sumLevels(levels: { [k: string]: LevelDetail }) {
+  return Object.values(levels).reduce(
+    (acc, ld) => acc + ld.wild + ld.mut + ld.dom,
+    0,
+  );
 }
