@@ -611,15 +611,15 @@ function cLpt(
       ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
       : ip.withDom
         ? ip.type === "dom"
-          ? TARGET_LEVEL_DETAIL_LIST_WILD
-          : mm === 1
-            ? TARGET_LEVEL_DETAIL_LIST_WILD
-            : TARGET_LEVEL_DETAIL_LIST_WILD_MUT
-        : ip.type === "dom"
           ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
           : mm === 1
             ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
-            : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM;
+            : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM
+        : ip.type === "dom"
+          ? TARGET_LEVEL_DETAIL_LIST_WILD
+          : mm === 1
+            ? TARGET_LEVEL_DETAIL_LIST_WILD
+            : TARGET_LEVEL_DETAIL_LIST_WILD_MUT;
   for (const ld of targetLevel) {
     const [tmpVpt, tmpStatsMetaDetail] = cV(
       ip.type,
