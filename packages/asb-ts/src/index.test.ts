@@ -218,23 +218,7 @@ describe("calculateLevel", () => {
       },
       [31, 50, 33, 44, 33, 47, 238, [], "ASA", 1],
     ],
-    [
-      {
-        type: "bred" as Type,
-        imprinting: 1,
-        name: "ギガノトサウルス",
-        health: 35208.0,
-        stamina: 409.8,
-        oxygen: 169.9,
-        food: 5328.0,
-        weight: 1201.2,
-        meleeDamageMultiplier: 4.424,
-        torpidity: 212160.0,
-        totalLevel: 336,
-      },
-      [46, 49, 53, 44, 43, 43, 278, [], "ASA", 1],
-    ],
-  ])("calculateLevel - $type:$name", (inputs, expected) => {
+  ])("calculateLevel - wild - $type:$name", (inputs, expected) => {
     // 想定する使用方法
     // 1. 設定を作る or LocalStorage みたいなとこから読み込む
     const settings = createSettings();
@@ -286,6 +270,22 @@ describe("calculateLevel", () => {
     expect(levels.meleeDamageMultiplier.wild).toBe(expected[5]);
     expect(levels.torpidity.wild).toBe(expected[6]);
 
+    expect(levels.health.mut).toBe(0);
+    expect(levels.stamina.mut).toBe(0);
+    expect(levels.oxygen.mut).toBe(0);
+    expect(levels.food.mut).toBe(0);
+    expect(levels.weight.mut).toBe(0);
+    expect(levels.meleeDamageMultiplier.mut).toBe(0);
+    expect(levels.torpidity.mut).toBe(0);
+
+    expect(levels.health.dom).toBe(0);
+    expect(levels.stamina.dom).toBe(0);
+    expect(levels.oxygen.dom).toBe(0);
+    expect(levels.food.dom).toBe(0);
+    expect(levels.weight.dom).toBe(0);
+    expect(levels.meleeDamageMultiplier.dom).toBe(0);
+    expect(levels.torpidity.dom).toBe(0);
+
     // 野生のときはエラーがないはず
     if (inputs.type === "wild") {
       expect(meta.statsMeta.health?.valueDiff).toBe(undefined);
@@ -302,6 +302,189 @@ describe("calculateLevel", () => {
 
     if (inputs.type === "dom") {
       expect(tameEffectiveness).toBe(expected[9]);
+    }
+  });
+
+  it.each([
+    [
+      {
+        type: "bred" as Type,
+        imprinting: 1,
+        name: "ギガノトサウルス",
+        health: 35208.0,
+        stamina: 409.8,
+        oxygen: 169.9,
+        food: 5328.0,
+        weight: 1201.2,
+        meleeDamageMultiplier: 4.424,
+        torpidity: 212160.0,
+        totalLevel: 336,
+      },
+      [
+        // health
+        46,
+        0,
+        0,
+        // stamina
+        49,
+        0,
+        0,
+        // oxygen
+        53,
+        0,
+        0,
+        // food
+        44,
+        0,
+        0,
+        // weight
+        43,
+        0,
+        0,
+        // meleeDamageMultiplier
+        43,
+        0,
+        57,
+        // torpidity
+        278,
+        0,
+        0,
+        [],
+        "ASA",
+        1,
+      ],
+    ],
+    [
+      {
+        type: "bred" as Type,
+        imprinting: 1.0,
+        name: "せり田山隊長(カマキリ)",
+        health: 5060.0,
+        stamina: 975.0,
+        oxygen: 720.0,
+        food: 5616.0,
+        weight: 491.0,
+        meleeDamageMultiplier: 4.208,
+        torpidity: 7098.5,
+        totalLevel: 313,
+      },
+      [
+        // health
+        38,
+        0,
+        29,
+        // stamina
+        55,
+        0,
+        0,
+        // oxygen
+        38,
+        0,
+        0,
+        // food
+        42,
+        0,
+        0,
+        // weight
+        43,
+        0,
+        0,
+        // meleeDamageMultiplier
+        49,
+        0,
+        18,
+        // torpidity
+        265,
+        0,
+        0,
+        ["ScorchedEarth"],
+        "ASA",
+        1,
+      ],
+    ],
+  ])("calculateLevel - $type:$name", (inputs, expected) => {
+    // 想定する使用方法
+    // 1. 設定を作る or LocalStorage みたいなとこから読み込む
+    const settings = createSettings();
+
+    // 2. 設定をもとに対象となる生物のリストを作る
+    const speciesList = createSpeciesList(settings);
+
+    // 3. 各種値を設定する
+    // 3.a. Select のような一覧から1つを選択するUIを使う場合: bpをkeyにして、名前とかを表示し、選択されたbpを設定する
+    // 3.b. 名前から検索する場合: searchBP を使ってbpを検索して設定する
+    const bp = searchBP(speciesList, inputs.name, settings);
+
+    // 4. calculateLevel にぶち込む
+    const result = calculateLevel({
+      bp,
+      type: inputs.type,
+      imprinting: inputs.imprinting,
+      speciesList: speciesList,
+      settings,
+      values: {
+        health: inputs.health,
+        stamina: inputs.stamina,
+        oxygen: inputs.oxygen,
+        food: inputs.food,
+        weight: inputs.weight,
+        meleeDamageMultiplier: inputs.meleeDamageMultiplier,
+        torpidity: inputs.torpidity,
+        water: 0, // 無視
+        temperature: 0, // 無視
+        speedMultiplier: 0, // 無視
+        temperatureFortitude: 0, // 無視
+        craftingSpeedMultiplier: 0, // 無視
+      },
+      totalLevel: inputs.totalLevel,
+    });
+
+    // 5. ステータスを確認して対応する処理を行う
+    if (result.status === "failure") expect.fail(JSON.stringify(result));
+    const { levels, tameEffectiveness, meta } = result;
+
+    const species = speciesList.find((s) => s.blueprintPath === bp);
+    if (!species) throw expect.fail("生物が見つからなんだ");
+
+    expect(levels.health.wild).toBe(expected[0]);
+    expect(levels.health.mut).toBe(expected[1]);
+    expect(levels.health.dom).toBe(expected[2]);
+
+    expect(levels.stamina.wild).toBe(expected[3]);
+    expect(levels.stamina.mut).toBe(expected[4]);
+    expect(levels.stamina.dom).toBe(expected[5]);
+
+    expect(levels.oxygen.wild).toBe(expected[6]);
+    expect(levels.oxygen.mut).toBe(expected[7]);
+    expect(levels.oxygen.dom).toBe(expected[8]);
+
+    expect(levels.food.wild).toBe(expected[9]);
+    expect(levels.food.mut).toBe(expected[10]);
+    expect(levels.food.dom).toBe(expected[11]);
+
+    expect(levels.weight.wild).toBe(expected[12]);
+    expect(levels.weight.mut).toBe(expected[13]);
+    expect(levels.weight.dom).toBe(expected[14]);
+
+    expect(levels.meleeDamageMultiplier.wild).toBe(expected[15]);
+    expect(levels.meleeDamageMultiplier.mut).toBe(expected[16]);
+    expect(levels.meleeDamageMultiplier.dom).toBe(expected[17]);
+
+    expect(levels.torpidity.wild).toBe(expected[18]);
+    expect(levels.torpidity.mut).toBe(expected[19]);
+    expect(levels.torpidity.dom).toBe(expected[20]);
+
+    expect(species.variants).toStrictEqual(expected[21]);
+    expect(species.mod).toBe(expected[22]);
+
+    if (inputs.type === "wild") {
+      expect(tameEffectiveness).toBe(0);
+    }
+    if (inputs.type === "dom") {
+      expect(tameEffectiveness).toBe(expected[23]);
+    }
+    if (inputs.type === "bred") {
+      expect(tameEffectiveness).toBe(1);
     }
   });
 });
