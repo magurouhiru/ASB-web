@@ -500,7 +500,13 @@ function CalcComponent() {
                             <NumberField.IncrementButton className="max-sm:hidden" />
                           </NumberField.Group>
                           {meta?.statsMeta[sn]?.equalWildMutationRates && (
-                            <Description>野生と上昇率が同じ</Description>
+                            <Description>
+                              野生と上昇率が同じ
+                              <br />
+                              {field.form.state.values.mode ===
+                                "value->level" &&
+                                "野生と区別付かないので、野生にまとめてます"}
+                            </Description>
                           )}
                           {meta?.statsMeta[sn]?.isMutLevelCalculatedAsZero && (
                             <Description>0として計算</Description>
