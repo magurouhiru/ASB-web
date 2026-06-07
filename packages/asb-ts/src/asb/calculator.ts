@@ -27,6 +27,7 @@ import {
   type TameEffectiveness,
   TameEffectivenessSchema,
   TE_MAX,
+  type TotalLevel,
   type Type,
   ValuesSchema,
   WILD_IMP,
@@ -350,6 +351,10 @@ function calculateLevelWild(
     if (!smd) return;
     else meta.statsMeta[sn] = smd;
   });
+  const tmpTotalLevelDiff = ip.totalLevel - sumLevels(levels);
+  if (tmpTotalLevelDiff === 0) {
+    meta.totalLevelDiff = tmpTotalLevelDiff;
+  }
   return [levels, meta];
 }
 
@@ -361,6 +366,7 @@ const TARGET_TE_LIST = Array.from(
 function calculateLevelDom(
   ip: Extract<CalculateLevelInputPack, { type: "dom" }>,
 ): [{ [k: string]: LevelDetail }, TameEffectiveness, Meta] {
+  let buffTotalLevelDiff = Number.MAX_SAFE_INTEGER;
   let buffDiff = Number.MAX_SAFE_INTEGER;
   let buffLevels: { [k: string]: LevelDetail } | null = null;
   let buffTe: TameEffectiveness | null = null;
@@ -374,7 +380,18 @@ function calculateLevelDom(
           (ip.species.stats[sn]?.baseValue ?? 1),
       0,
     );
-    if (tmpSumDiff <= buffDiff) {
+    const tmpTotalLevelDiff = Math.abs(tmpMeta.totalLevelDiff ?? 0);
+    if (tmpTotalLevelDiff < buffTotalLevelDiff) {
+      buffTotalLevelDiff = tmpTotalLevelDiff;
+      buffDiff = tmpSumDiff;
+      buffLevels = tmpLevels;
+      buffTe = te;
+      buffMeta = tmpMeta;
+    } else if (
+      tmpTotalLevelDiff === buffTotalLevelDiff &&
+      tmpSumDiff <= buffDiff
+    ) {
+      buffTotalLevelDiff = tmpTotalLevelDiff;
       buffDiff = tmpSumDiff;
       buffLevels = tmpLevels;
       buffTe = te;
@@ -396,17 +413,80 @@ function calculateLevelBred(
 function calculateLevelDomCore(
   te: TameEffectiveness,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
-  meta: Meta,
+  _meta: Meta,
 ): [{ [k: string]: LevelDetail }, Meta] {
-  const result = StatsNames.map((sn) => {
-    const [ld, smd] = cLpt(sn, te, ip);
-    return { sn, ld, smd };
+  const tmp = Object.fromEntries(
+    StatsNames.map((sn) => [sn, cLpt(sn, te, ip)]),
+  );
+  type TmpResult = Partial<Record<StatsName, LevelDetail>>;
+  type Obj = { r: TmpResult; m: StatsMeta };
+  const objList: Obj[] = [];
+
+  const flatComb = (i: number, obj: Obj) => {
+    if (i === StatsNames.length) {
+      objList.push(obj);
+      return;
+    }
+    const sn = StatsNames[i];
+    if (!sn) throw new Error("バグです1");
+    const tmpSn = tmp[sn];
+    if (!tmpSn) throw new Error("バグです2");
+    tmpSn.forEach(({ levelDetail, statsMetaDetail }) => {
+      const r = { ...obj.r };
+      r[sn] = levelDetail;
+      const m = { ...obj.m };
+      m[sn] = statsMetaDetail;
+      flatComb(i + 1, { r, m });
+    });
+  };
+
+  flatComb(0, { r: {}, m: {} });
+
+  const minTotalLevelDiff = objList.reduce((acc, { r }) => {
+    const tmpDiff = calcTotalLevelDiff(ip.totalLevel, r);
+    if (tmpDiff < acc) return tmpDiff;
+    else return acc;
+  }, Number.MAX_SAFE_INTEGER);
+  const minDiffObjList = objList.filter(({ r }) => {
+    const tmpDiff = calcTotalLevelDiff(ip.totalLevel, r);
+    return minTotalLevelDiff === tmpDiff;
   });
-  const levels = Object.fromEntries(result.map(({ sn, ld }) => [sn, ld]));
-  result.forEach(({ sn, smd }) => {
-    if (smd) meta.statsMeta[sn] = smd;
-  });
-  return [levels, meta];
+
+  let targetObje = minDiffObjList[0];
+  if (!targetObje) throw new Error("バグです3");
+
+  if (minDiffObjList.length > 1) {
+    // レベルの差が同じものが複数ある場合は、ASBと同様に、各statの野生のレベル平均に近い奴を採用する
+    // ARKStatsExtractor/ARKBreedingStats/Form1.extractor.cs:422行付近を参照
+    const { obj } = minDiffObjList.reduce(
+      (acc, obj) => {
+        const not0 = StatsNames.filter((sn) => (obj.r[sn]?.wild ?? 0) !== 0);
+        const cntNot0 = not0.reduce((acc_1, sn) => {
+          if (sn === "torpidity") return acc_1;
+          else if (obj.r[sn]?.wild === 0) return acc_1;
+          else return acc_1 + 1;
+        }, 0);
+        const sum = sumLevels(obj.r);
+        const meanLevel = sum / cntNot0;
+        const meanLevelDiff = not0.reduce((acc_2, sn) => {
+          const tmpMeanLevel = obj.r[sn]?.wild ?? 0;
+          if (sn === "torpidity") return acc_2;
+          else return acc_2 + Math.abs(meanLevel - tmpMeanLevel);
+        }, 0);
+        if (meanLevelDiff < acc.meanLevelDiff) return { meanLevelDiff, obj };
+        else return acc;
+      },
+      {
+        meanLevelDiff: Number.MAX_SAFE_INTEGER,
+        obj: targetObje,
+      },
+    );
+    targetObje = obj;
+  }
+  return [
+    targetObje.r,
+    { statsMeta: targetObje.m, totalLevelDiff: minTotalLevelDiff ?? undefined },
+  ];
 }
 
 // とりあえずレベル100まで計算する。これ以上は現実的に存在しないと思うので。
@@ -419,25 +499,24 @@ const TARGET_LEVEL_RANGE_WITHOUT_0 = Array.from(
 const TARGET_LEVEL_DETAIL_LIST_WILD = TARGET_LEVEL_RANGE_WITHOUT_0.map((i) =>
   v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: 0 }),
 );
-// const TARGET_LEVEL_RANGE = Array.from(
-//   { length: TARGET_LEVEL_DETAIL_LIST_SIZE + 1 },
-//   (_, i) => i,
-// );
-// TODO: 値が一致したときにレベルの割り振りを行う仕掛けを考える↓はうまくいかなかったやつ
-// const TARGET_LEVEL_DETAIL_LIST_WILD_DOM = TARGET_LEVEL_RANGE_WITHOUT_0.flatMap(
-//   (i) =>
-//     TARGET_LEVEL_RANGE.map((k) =>
-//       v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: k }),
-//     ),
-// );
-// const TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM =
-//   TARGET_LEVEL_RANGE_WITHOUT_0.flatMap((i) =>
-//     TARGET_LEVEL_RANGE.flatMap((j) =>
-//       TARGET_LEVEL_RANGE.map((k) =>
-//         v.parse(LevelDetailSchema, { wild: i, mut: j, dom: k }),
-//       ),
-//     ),
-//   );
+const TARGET_LEVEL_RANGE = Array.from(
+  { length: TARGET_LEVEL_DETAIL_LIST_SIZE + 1 },
+  (_, i) => i,
+);
+const TARGET_LEVEL_DETAIL_LIST_WILD_DOM = TARGET_LEVEL_RANGE_WITHOUT_0.flatMap(
+  (i) =>
+    TARGET_LEVEL_RANGE.map((k) =>
+      v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: k }),
+    ),
+);
+const TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM =
+  TARGET_LEVEL_RANGE_WITHOUT_0.flatMap((i) =>
+    TARGET_LEVEL_RANGE.flatMap((j) =>
+      TARGET_LEVEL_RANGE.map((k) =>
+        v.parse(LevelDetailSchema, { wild: i, mut: j, dom: k }),
+      ),
+    ),
+  );
 
 // 気絶値とりあえずレベル500まで計算する。これ以上は現実的に存在しないと思うので。
 const TARGET_LEVEL_DETAIL_LIST_SIZE_TORPIDITY = 500;
@@ -500,29 +579,29 @@ function cLpt(
   sn: StatsName,
   te: TameEffectiveness,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
-): [LevelDetail, StatsMetaDetail] {
+): { levelDetail: LevelDetail; statsMetaDetail: StatsMetaDetail }[] {
   const stat = ip.species.stats[sn];
   const value = ip.values[sn];
   if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
-    return [LEVEL_DETAIL_0, { hasMissingStatsForCalculation: value > 0 }];
-  let buffLd: LevelDetail | null = null;
+    return [
+      {
+        levelDetail: LEVEL_DETAIL_0,
+        statsMetaDetail: { hasMissingStatsForCalculation: value > 0 },
+      },
+    ];
   let buffDiff = Number.MAX_SAFE_INTEGER;
-  let buffStatsMetaDetail: StatsMetaDetail = {};
+  let buff: { levelDetail: LevelDetail; statsMetaDetail: StatsMetaDetail }[] =
+    [];
 
+  const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
   const targetLevel =
     sn === "torpidity"
       ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
-      : TARGET_LEVEL_DETAIL_LIST_WILD;
-  // TODO: 値が一致したときにレベルの割り振りを行う仕掛けを考える↓はうまくいかなかったやつ
-  // const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
-  // const targetLevel =
-  //   sn === "torpidity"
-  //     ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
-  //     : ip.type === "dom"
-  //       ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
-  //       : mm === 1
-  //         ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
-  //         : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM;
+      : ip.type === "dom"
+        ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
+        : mm === 1
+          ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
+          : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM;
   for (const ld of targetLevel) {
     const [tmpVpt, tmpStatsMetaDetail] = cV(
       ip.type,
@@ -534,21 +613,38 @@ function cLpt(
       ip.settings,
     );
     const tmpDiff = value - round(tmpVpt, sn);
+    if (tmpDiff !== 0) {
+      tmpStatsMetaDetail.valueDiff = buffDiff;
+    }
+    if (Math.abs(tmpDiff) === Math.abs(buffDiff)) {
+      buff.push({ levelDetail: ld, statsMetaDetail: tmpStatsMetaDetail });
+    }
     if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
-      buffLd = ld;
       buffDiff = tmpDiff;
-      buffStatsMetaDetail = tmpStatsMetaDetail;
+      buff = [{ levelDetail: ld, statsMetaDetail: tmpStatsMetaDetail }];
     }
   }
-  if (buffLd === null) {
+  if (buff.length <= 0) {
     throw new Error("cLpt で失敗しました。", { cause: `levels.${sn}` });
   }
-  if (buffDiff !== 0) {
-    buffStatsMetaDetail.valueDiff = buffDiff;
-  }
-  return [buffLd, buffStatsMetaDetail];
+  return buff;
 }
 
 function createMeta(): Meta {
   return { statsMeta: {} };
+}
+
+function sumLevels(levels: { [k: string]: LevelDetail }) {
+  return Object.entries(levels).reduce((acc, [sn, ld]) => {
+    if (sn === "torpidity") return acc;
+    else return acc + ld.wild + ld.mut + ld.dom;
+  }, 0);
+}
+
+function calcTotalLevelDiff(
+  tl: TotalLevel,
+  levels: { [k: string]: LevelDetail },
+) {
+  const sum = sumLevels(levels);
+  return Math.abs(tl - 1 - sum);
 }
