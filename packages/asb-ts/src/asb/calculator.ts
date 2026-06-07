@@ -358,7 +358,7 @@ function calculateLevelWild(
   return [levels, meta];
 }
 
-const TARGET_TE_LIST_SIZE = 100;
+const TARGET_TE_LIST_SIZE = 10;
 const TARGET_TE_LIST = Array.from(
   { length: TE_MAX * TARGET_TE_LIST_SIZE + 1 },
   (_, i) => v.parse(TameEffectivenessSchema, i / TARGET_TE_LIST_SIZE),
@@ -442,15 +442,18 @@ function calculateLevelDomCore(
 
   flatComb(0, { r: {}, m: {} });
 
+  const calcTotalDiff = (r: Obj["r"]) => calcTotalLevelDiff(ip.totalLevel, r);
   const minTotalLevelDiff = objList.reduce((acc, { r }) => {
-    const tmpDiff = calcTotalLevelDiff(ip.totalLevel, r);
+    const tmpDiff = calcTotalDiff(r);
     if (tmpDiff < acc) return tmpDiff;
     else return acc;
   }, Number.MAX_SAFE_INTEGER);
-  const minDiffObjList = objList.filter(({ r }) => {
-    const tmpDiff = calcTotalLevelDiff(ip.totalLevel, r);
+  const minTotalDiffObjList = objList.filter(({ r }) => {
+    const tmpDiff = calcTotalDiff(r);
     return minTotalLevelDiff === tmpDiff;
   });
+
+  const minDiffObjList = minTotalDiffObjList;
 
   let targetObje = minDiffObjList[0];
   if (!targetObje) throw new Error("バグです3");
@@ -485,7 +488,10 @@ function calculateLevelDomCore(
   }
   return [
     targetObje.r,
-    { statsMeta: targetObje.m, totalLevelDiff: minTotalLevelDiff ?? undefined },
+    {
+      statsMeta: targetObje.m,
+      totalLevelDiff: minTotalLevelDiff ?? undefined,
+    },
   ];
 }
 
@@ -640,6 +646,13 @@ function sumLevels(levels: { [k: string]: LevelDetail }) {
     else return acc + ld.wild + ld.mut + ld.dom;
   }, 0);
 }
+
+// function sumWildLevels(levels: { [k: string]: LevelDetail }) {
+//   return Object.entries(levels).reduce((acc, [sn, ld]) => {
+//     if (sn === "torpidity") return acc;
+//     else return acc + ld.wild;
+//   }, 0);
+// }
 
 function calcTotalLevelDiff(
   tl: TotalLevel,

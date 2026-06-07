@@ -28,6 +28,7 @@ import {
   type OutputOfCalculateValue,
   type OutputPackFailure,
   type StatsName,
+  StatsNames,
   searchBP,
   type Type,
   Types,
@@ -242,6 +243,23 @@ function CalcComponent() {
     <form className="grid grid-flow-row gap-1">
       {opcl?.status === "failure" && alert(opcl)}
       {opcv?.status === "failure" && alert(opcv)}
+      {form.state.values.mode === "value->level" &&
+        form.state.values.type === "dom" &&
+        opcl?.status === "success" &&
+        StatsNames.reduce(
+          (acc, sn) => acc + opcl.levels[sn].mut + opcl.levels[sn].dom,
+          0,
+        ) !== 0 && (
+          <Alert status="warning">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>mut,domが出るときはちょっとあれかも</Alert.Title>
+              <Alert.Description>
+                画像からだと値が荒いのでテイム効果がうまく計算できないので、ずれることがある。そのうち治るといいですね。
+              </Alert.Description>
+            </Alert.Content>
+          </Alert>
+        )}
 
       <form.AppField name="mode">
         {(field) => (
