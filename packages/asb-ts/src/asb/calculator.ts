@@ -367,7 +367,6 @@ function calculateLevelDom(
   ip: Extract<CalculateLevelInputPack, { type: "dom" }>,
 ): [{ [k: string]: LevelDetail }, TameEffectiveness, Meta] {
   let buffTotalLevelDiff = Number.MAX_SAFE_INTEGER;
-  let buffWildLevelDiff = Number.MAX_SAFE_INTEGER;
   let buffDiff = Number.MAX_SAFE_INTEGER;
   let buffLevels: { [k: string]: LevelDetail } | null = null;
   let buffTe: TameEffectiveness | null = null;
@@ -382,24 +381,17 @@ function calculateLevelDom(
       0,
     );
     const tmpTotalLevelDiff = Math.abs(tmpMeta.totalLevelDiff ?? 0);
-    const tmpWildLevelDiff = Math.abs(tmpMeta.wildLevelDiff ?? 0);
-    if (
-      tmpTotalLevelDiff < buffTotalLevelDiff &&
-      tmpWildLevelDiff < buffWildLevelDiff
-    ) {
+    if (tmpTotalLevelDiff < buffTotalLevelDiff) {
       buffTotalLevelDiff = tmpTotalLevelDiff;
-      buffWildLevelDiff = tmpWildLevelDiff;
       buffDiff = tmpSumDiff;
       buffLevels = tmpLevels;
       buffTe = te;
       buffMeta = tmpMeta;
     } else if (
       tmpTotalLevelDiff === buffTotalLevelDiff &&
-      tmpWildLevelDiff === buffWildLevelDiff &&
       tmpSumDiff <= buffDiff
     ) {
       buffTotalLevelDiff = tmpTotalLevelDiff;
-      buffWildLevelDiff = tmpWildLevelDiff;
       buffDiff = tmpSumDiff;
       buffLevels = tmpLevels;
       buffTe = te;
@@ -461,17 +453,7 @@ function calculateLevelDomCore(
     return minTotalLevelDiff === tmpDiff;
   });
 
-  const calcWildDiff = (r: Obj["r"]) =>
-    Math.abs((r.torpidity?.wild ?? 0) - sumWildLevels(r));
-  const minWildLevelDiff = minTotalDiffObjList.reduce((acc, { r }) => {
-    const tmpDiff = calcWildDiff(r);
-    if (tmpDiff < acc) return tmpDiff;
-    else return acc;
-  }, Number.MAX_SAFE_INTEGER);
-  const minDiffObjList = minTotalDiffObjList.filter(({ r }) => {
-    const tmpDiff = calcWildDiff(r);
-    return minWildLevelDiff === tmpDiff;
-  });
+  const minDiffObjList = minTotalDiffObjList;
 
   let targetObje = minDiffObjList[0];
   if (!targetObje) throw new Error("バグです3");
@@ -509,7 +491,6 @@ function calculateLevelDomCore(
     {
       statsMeta: targetObje.m,
       totalLevelDiff: minTotalLevelDiff ?? undefined,
-      wildLevelDiff: minWildLevelDiff ?? undefined,
     },
   ];
 }
