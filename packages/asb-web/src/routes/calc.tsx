@@ -71,7 +71,13 @@ const searchSchema = v.pipe(
     t: v.fallback(v.number(), 0),
     i: v.fallback(v.number(), 0),
     level: v.fallback(v.number(), 0),
-    withDom: v.fallback(v.boolean(), true),
+    withDom: v.fallback(
+      v.pipe(
+        v.string(),
+        v.transform((input) => true),
+      ),
+      true,
+    ),
   }),
 );
 
