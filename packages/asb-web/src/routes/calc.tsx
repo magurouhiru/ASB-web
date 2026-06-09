@@ -57,6 +57,7 @@ const DISPLAY_STATS_NAME_LIST = [
   "torpidity",
 ] satisfies StatsName[];
 
+const toTrue = ["true", "True", "TRUE", "1", "on", "On", "ON"];
 const searchSchema = v.pipe(
   v.object({
     mode: v.fallback(v.picklist(MODE_LIST), "value->level"),
@@ -71,7 +72,13 @@ const searchSchema = v.pipe(
     t: v.fallback(v.number(), 0),
     i: v.fallback(v.number(), 0),
     level: v.fallback(v.number(), 0),
-    withDom: v.fallback(v.boolean(), true),
+    withDom: v.fallback(
+      v.pipe(
+        v.string(),
+        v.transform((input) => toTrue.includes(input)),
+      ),
+      false,
+    ),
   }),
 );
 
