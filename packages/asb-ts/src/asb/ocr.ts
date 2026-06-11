@@ -1,4 +1,9 @@
-import { createWorker, type Worker, type WorkerParams } from "tesseract.js";
+import {
+  createWorker,
+  type ImageLike,
+  type Worker,
+  type WorkerParams,
+} from "tesseract.js";
 
 export class OcrQueueManager {
   private queue: Promise<string> = Promise.resolve("");
@@ -27,7 +32,7 @@ export class OcrQueueManager {
    * 💡 呼び出し側は、いつでも・初期化を気にせず、ただ呼ぶだけでOK！
    */
   async process(
-    imageSrc: string,
+    img: ImageLike,
     params: Partial<WorkerParams>,
   ): Promise<string> {
     // 1. 🔥 最初に「初期化が確実に完了していること」を保証する
@@ -36,7 +41,7 @@ export class OcrQueueManager {
     // 2. 列の最後尾に自分を並ばせる
     this.queue = this.queue
       .then(async () => {
-        return await this.executeOcr(worker, imageSrc, params);
+        return await this.executeOcr(worker, img, params);
       })
       .catch((error) => {
         throw error;
@@ -48,13 +53,10 @@ export class OcrQueueManager {
   // 実際にOCRを処理する内部関数
   private async executeOcr(
     worker: Worker,
-    imageSrc: string,
+    img: ImageLike,
     params: Partial<WorkerParams>,
   ): Promise<string> {
-    const img = await this.loadImage(imageSrc);
-
     await worker.setParameters(params);
-
     const response = await worker.recognize(img);
     return response.data.text.trim();
   }
@@ -67,14 +69,57 @@ export class OcrQueueManager {
       this.initPromise = null;
     }
   }
+}
 
-  // --- ヘルパー関数群 ---
-  private loadImage(src: string): Promise<HTMLImageElement> {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => resolve(img);
-      img.onerror = (e) => reject(e);
+interface Region {
+  name: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export function getCropRegions(
+  width: number,
+  height: number,
+  nameLevelYM: number,
+  nameLevelDwM: number,
+  nameLevelDhM: number,
+  statYM: number,
+  statDwM: number,
+  statDhM: number,
+): Region[] {
+  const regions: Region[] = [];
+
+  const nameLevelY = height * nameLevelYM;
+  const nameLevelDw = height * nameLevelDwM;
+  const nameLevelDh = height * nameLevelDhM;
+  regions.push({
+    name: "name",
+    x: (width - nameLevelDw) / 2,
+    y: nameLevelY,
+    width: nameLevelDw,
+    height: nameLevelDh,
+  });
+  regions.push({
+    name: "level",
+    x: (width - nameLevelDw) / 2,
+    y: nameLevelY + nameLevelDh,
+    width: nameLevelDw,
+    height: nameLevelDh,
+  });
+
+  const statY = height * statYM;
+  const statDw = height * statDwM;
+  const statDh = height * statDhM;
+  Array.from({ length: 8 }, (_, i) => i).forEach((i) => {
+    regions.push({
+      name: `stat_value_${i}`,
+      x: width / 2,
+      y: statY + statDh * i,
+      width: statDw / 2,
+      height: statDh,
     });
-  }
+  });
+  return regions;
 }
