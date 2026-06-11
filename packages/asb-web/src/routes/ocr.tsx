@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { createWorker, PSM, type RecognizeOptions } from "tesseract.js";
+import { useOcrQueue } from "@/contexts";
+import { PSM } from "tesseract.js";
 
 export const Route = createFileRoute("/ocr")({
   component: OcrComponent,
@@ -23,7 +24,6 @@ interface RegionWithSrcText extends RegionWithSrc {
 }
 
 function OcrComponent() {
-  const workerRef = useRef<Tesseract.Worker | null>(null);
   const [status, setStatus] = useState<string>("初期化中...");
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
@@ -42,39 +42,14 @@ function OcrComponent() {
   const [statDwM, setStatDwM] = useState<number>(0.27);
   const [statDhM, setStatDhM] = useState<number>(0.0317);
 
+  const ocrQueue = useOcrQueue();
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
       setImageSrc(URL.createObjectURL(files[0]));
     }
   };
-
-  useEffect(() => {
-    async function loadWorker() {
-      try {
-        // 💡 ポイント: オプションオブジェクトに logger を指定する
-        const worker = await createWorker("jpn", 1, {
-          logger: (m) => {
-            // m.status には 'loading tesseract core' や 'recognizing text' などが入ります
-            if (m.status === "recognizing text") {
-              // m.progress は 0.0 〜 1.0 の小数点なので、100倍して丸める
-              setProgress(Math.round(m.progress * 100));
-            }
-          },
-        });
-        workerRef.current = worker;
-        setStatus("準備完了");
-      } catch (error) {
-        console.error(error);
-        setStatus("初期化失敗");
-      }
-    }
-    loadWorker();
-
-    return () => {
-      if (workerRef.current) workerRef.current.terminate();
-    };
-  }, []);
 
   useEffect(() => {
     if (imageSrc && canvasReff.current) {
@@ -168,18 +143,18 @@ function OcrComponent() {
 
   useEffect(() => {
     const read = async (region: RegionWithSrc) => {
-      if (workerRef.current) {
-        await workerRef.current.setParameters({
-          tessedit_pageseg_mode: PSM.SINGLE_LINE,
-          tessedit_char_whitelist: "0123456789/.%",
-        });
-        const {
-          data: { text },
-        } = await workerRef.current.recognize(region.imageSrc, {});
-        return text;
-      } else {
-        return "";
-      }
+      // await workerRef.current.setParameters({
+      //   tessedit_pageseg_mode: PSM.SINGLE_LINE,
+      //   tessedit_char_whitelist: "0123456789/.%",
+      // });
+      // const {
+      //   data: { text },
+      // } = await workerRef.current.recognize(region.imageSrc, {});
+      const text = await ocrQueue.process(region.imageSrc, {
+        tessedit_pageseg_mode: PSM.SINGLE_LINE,
+        tessedit_char_whitelist: "0123456789/.%",
+      });
+      return text;
     };
     const setRegion = async () => {
       for (const region of regionWithSrc) {
@@ -188,7 +163,7 @@ function OcrComponent() {
       }
     };
     setRegion();
-  }, [regionWithSrc]);
+  }, [ocrQueue.process, regionWithSrc]);
 
   return (
     <div className="grid grid-cols-1 gap-2">
