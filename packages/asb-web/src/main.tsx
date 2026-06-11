@@ -13,10 +13,10 @@ import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { StrictMode } from "react";
 import NotFound from "./components/404";
+import { OcrProvider } from "./contexts";
 // biome-ignore lint/suspicious/noTsIgnore: vita でビルド時に作成されるので無視する
 // @ts-ignore
 import { messages } from "./locales/ja/messages";
-import { OcrProvider } from "./contexts";
 
 // デフォルトは日本語
 i18n.load("ja", messages);

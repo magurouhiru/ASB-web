@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { useOcrQueue } from "@/contexts";
 import { PSM } from "tesseract.js";
+import { useOcrQueue } from "@/contexts";
 
 export const Route = createFileRoute("/ocr")({
   component: OcrComponent,
@@ -24,9 +24,9 @@ interface RegionWithSrcText extends RegionWithSrc {
 }
 
 function OcrComponent() {
-  const [status, setStatus] = useState<string>("初期化中...");
-  const [isProcessing, setIsProcessing] = useState<boolean>(false);
-  const [progress, setProgress] = useState<number>(0);
+  const [_status, _setStatus] = useState<string>("初期化中...");
+  const [_isProcessing, _setIsProcessing] = useState<boolean>(false);
+  const [_progress, _setProgress] = useState<number>(0);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const canvasReff = useRef<HTMLCanvasElement | null>(null);
   const [regionWithSrc, setRegionWithSrc] = useState<RegionWithSrc[]>([]);
@@ -143,13 +143,6 @@ function OcrComponent() {
 
   useEffect(() => {
     const read = async (region: RegionWithSrc) => {
-      // await workerRef.current.setParameters({
-      //   tessedit_pageseg_mode: PSM.SINGLE_LINE,
-      //   tessedit_char_whitelist: "0123456789/.%",
-      // });
-      // const {
-      //   data: { text },
-      // } = await workerRef.current.recognize(region.imageSrc, {});
       const text = await ocrQueue.process(region.imageSrc, {
         tessedit_pageseg_mode: PSM.SINGLE_LINE,
         tessedit_char_whitelist: "0123456789/.%",
