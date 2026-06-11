@@ -13,6 +13,7 @@
       "version": "0.1.0",
       "dependencies": {
         "fuse.js": "catalog:",
+        "tesseract.js": "^7.0.0",
         "valibot": "catalog:",
       },
       "devDependencies": {
@@ -43,7 +44,6 @@
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
         "recharts": "^3.8.1",
-        "tesseract.js": "^7.0.0",
         "tone": "^15.1.22",
         "valibot": "catalog:",
       },

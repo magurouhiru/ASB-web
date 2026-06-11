@@ -18,7 +18,7 @@ import {
   type Species,
   type Type,
 } from "./asb/types/index.js";
-import { toOutputPackFailure } from "./util.js";
+import { toOutputPackFailure } from "./asb/util.js";
 
 export * from "./asb/types/index.js";
 
@@ -26,6 +26,7 @@ export function createSettings(settings?: Partial<Settings>): Settings {
   return v.parse(SettingsSchema, { ...DEFAULT_SETTINGS, ...settings });
 }
 
+export { OcrQueueManager } from "./asb/ocr.js";
 export { createSpeciesList } from "./asb/species.js";
 
 export function searchBP(

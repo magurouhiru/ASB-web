@@ -1,13 +1,5 @@
 import { createWorker, type Worker, type WorkerParams } from "tesseract.js";
 
-export interface OcrTaskConfig {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  whitelist: string;
-}
-
 export class OcrQueueManager {
   private queue: Promise<string> = Promise.resolve("");
 

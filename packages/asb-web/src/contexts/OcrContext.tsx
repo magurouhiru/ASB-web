@@ -1,5 +1,5 @@
+import { OcrQueueManager } from "asb-ts";
 import { createContext, useContext, useEffect, useRef } from "react";
-import { OcrQueueManager } from "@/utils/ocrQueueManager";
 
 const OcrContext = createContext<OcrQueueManager | null>(null);
 
