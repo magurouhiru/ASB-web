@@ -140,9 +140,10 @@ function OcrComponent() {
             <NumberField
               value={value}
               onChange={(e) => settter(e)}
+              step={name === "dhmNL" || name === "dhmS" ? 0.00001 : 0.001}
               formatOptions={{
                 maximumFractionDigits: 5,
-                minimumFractionDigits: 1,
+                minimumFractionDigits: 3,
               }}
             >
               <Label>{name}</Label>
