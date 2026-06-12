@@ -1,9 +1,22 @@
 import {
   createWorker,
   type ImageLike,
+  PSM,
   type Worker,
   type WorkerParams,
 } from "tesseract.js";
+import {
+  type ImgPacks_Browser,
+  OCR_LABELS,
+  OCR_STAT_NAME_LABELS,
+  OCR_STAT_VALUE_LABELS,
+  type OcrCommonLabel,
+  type OcrLabel,
+  type OcrText,
+  type OcrTexts,
+  type Region,
+  type Regions,
+} from "./types/index.js";
 
 export class OcrQueueManager {
   private queue: Promise<string> = Promise.resolve("");
@@ -35,14 +48,11 @@ export class OcrQueueManager {
     img: ImageLike,
     params: Partial<WorkerParams>,
   ): Promise<string> {
-    // 1. 🔥 最初に「初期化が確実に完了していること」を保証する
-    const worker = await this.ensureInitialized();
-
-    // 2. 列の最後尾に自分を並ばせる
+    // 列の最後尾に自分を並ばせる
+    // 毎回paramsを変えたいので、数珠つなぎにして、順番が変にならないようにする
     this.queue = this.queue
-      .then(async () => {
-        return await this.executeOcr(worker, img, params);
-      })
+      .then(() => this.ensureInitialized())
+      .then((worker) => this.executeOcr(worker, img, params))
       .catch((error) => {
         throw error;
       });
@@ -71,55 +81,176 @@ export class OcrQueueManager {
   }
 }
 
-interface Region {
-  name: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+export function getRegions(
+  originalWidth: number,
+  originalHeight: number,
+  ymNL: number,
+  dlmNL: number,
+  drmNL: number,
+  dhmNL: number,
+  ymS: number,
+  dlmS: number,
+  drmS: number,
+  dhmS: number,
+): Regions {
+  return {
+    ...getNameLevelRegion(
+      originalWidth,
+      originalHeight,
+      ymNL,
+      dlmNL,
+      drmNL,
+      dhmNL,
+    ),
+    ...getStatsRegions(originalWidth, originalHeight, ymS, dlmS, drmS, dhmS),
+  };
 }
 
-export function getCropRegions(
-  width: number,
-  height: number,
-  nameLevelYM: number,
-  nameLevelDwM: number,
-  nameLevelDhM: number,
-  statYM: number,
-  statDwM: number,
-  statDhM: number,
-): Region[] {
-  const regions: Region[] = [];
+export function getNameLevelRegion(
+  originalWidth: number,
+  originalHeight: number,
+  ym: number,
+  dlm: number,
+  drm: number,
+  dhm: number,
+): Pick<Regions, OcrCommonLabel> {
+  const y = originalHeight * ym;
+  const dl = originalHeight * dlm;
+  const dr = originalHeight * drm;
+  const dh = originalHeight * dhm;
 
-  const nameLevelY = height * nameLevelYM;
-  const nameLevelDw = height * nameLevelDwM;
-  const nameLevelDh = height * nameLevelDhM;
-  regions.push({
-    name: "name",
-    x: (width - nameLevelDw) / 2,
-    y: nameLevelY,
-    width: nameLevelDw,
-    height: nameLevelDh,
-  });
-  regions.push({
-    name: "level",
-    x: (width - nameLevelDw) / 2,
-    y: nameLevelY + nameLevelDh,
-    width: nameLevelDw,
-    height: nameLevelDh,
-  });
+  return {
+    name: {
+      x: originalWidth / 2 - dl,
+      y: y,
+      width: dl + dr,
+      height: dh,
+    },
+    level: {
+      x: originalWidth / 2 - dl,
+      y: y + dh,
+      width: dl + dr,
+      height: dh,
+    },
+  };
+}
 
-  const statY = height * statYM;
-  const statDw = height * statDwM;
-  const statDh = height * statDhM;
-  Array.from({ length: 8 }, (_, i) => i).forEach((i) => {
-    regions.push({
-      name: `stat_value_${i}`,
-      x: width / 2,
-      y: statY + statDh * i,
-      width: statDw / 2,
-      height: statDh,
-    });
-  });
-  return regions;
+export function getStatsRegions(
+  originalWidth: number,
+  originalHeight: number,
+  ym: number,
+  dlm: number,
+  drm: number,
+  dhm: number,
+): Omit<Regions, OcrCommonLabel> {
+  const y = originalHeight * ym;
+  const dl = originalHeight * dlm;
+  const dr = originalHeight * drm;
+  const dh = originalHeight * dhm;
+  return Object.fromEntries([
+    ...OCR_STAT_NAME_LABELS.map((label, i) => [
+      label,
+      getStatNameRegion(originalWidth, y, dl, dh, i),
+    ]),
+    ...OCR_STAT_VALUE_LABELS.map((label, i) => [
+      label,
+      getStatValueRegion(originalWidth, y, dr, dh, i),
+    ]),
+  ]);
+}
+
+export function getStatNameRegion(
+  originalWidth: number,
+  y: number,
+  dl: number,
+  dh: number,
+  i: number,
+): Region {
+  return {
+    x: originalWidth / 2 - dl,
+    y: y + dh * i,
+    width: dl,
+    height: dh,
+  };
+}
+
+export function getStatValueRegion(
+  originalWidth: number,
+  y: number,
+  dr: number,
+  dh: number,
+  i: number,
+): Region {
+  return {
+    x: originalWidth / 2,
+    y: y + dh * i,
+    width: dr,
+    height: dh,
+  };
+}
+
+const defaultParams: Partial<WorkerParams> = {
+  tessedit_pageseg_mode: PSM.SINGLE_LINE,
+  tessedit_char_whitelist: "",
+} as const;
+
+const levelParams: Partial<WorkerParams> = {
+  ...defaultParams,
+  tessedit_char_whitelist: "レベル:0123456789",
+} as const;
+
+const statNameParams: Partial<WorkerParams> = {
+  ...defaultParams,
+  tessedit_char_whitelist:
+    "体力スタミナ酸素量食料重量近接攻撃力気絶値刷り込み中",
+} as const;
+
+const statValueParams: Partial<WorkerParams> = {
+  ...defaultParams,
+  tessedit_char_whitelist: "0123456789./%",
+} as const;
+
+export async function getOcrTexts(
+  manager: OcrQueueManager,
+  imgPacks: ImgPacks_Browser,
+): Promise<OcrTexts> {
+  return Promise.all(
+    OCR_LABELS.map((label) => getOcrText(manager, imgPacks, label)),
+  ).then((v) => Object.fromEntries(v) as OcrTexts);
+}
+
+export async function getOcrText(
+  manager: OcrQueueManager,
+  imgPacks: ImgPacks_Browser,
+  label: OcrLabel,
+): Promise<[OcrLabel, OcrText]> {
+  let params: Partial<WorkerParams> | null = null;
+  switch (label) {
+    case "name":
+      params = defaultParams;
+      break;
+    case "level":
+      params = levelParams;
+      break;
+    default:
+      if (label.includes("stat_name_")) {
+        params = statNameParams;
+        break;
+      } else {
+        params = statValueParams;
+        break;
+      }
+  }
+  return Promise.all([
+    manager.process(imgPacks[label].original, params),
+    manager.process(imgPacks[label].grayscale, params),
+    manager.process(imgPacks[label].binary, params),
+  ]).then(([original, grayscale, binary]) => [
+    label,
+    {
+      original,
+      grayscale,
+      binary,
+    },
+  ]);
 }

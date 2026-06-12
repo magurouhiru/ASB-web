@@ -1,253 +1,140 @@
+import { Label, NumberField } from "@heroui/react";
 import { createFileRoute } from "@tanstack/react-router";
+import {
+  DEFAULT_REGIONS_OPTION,
+  OCR_LABELS,
+  type ReadOutput,
+  type Region,
+  read,
+} from "asb-ts";
+import { IMG_PACK_LABELS } from "asb-ts/src/asb/types/ocr";
 import { useEffect, useRef, useState } from "react";
 import { useOcrQueue } from "@/contexts";
-import { Tesseract } from "asb-ts";
 export const Route = createFileRoute("/ocr")({
   component: OcrComponent,
 });
 
-interface Region {
-  name: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-interface RegionWithSrc extends Region {
-  imageSrc: string;
-}
-
-interface RegionWithSrcText extends RegionWithSrc {
-  text: string;
-}
-
 function OcrComponent() {
-  const [_status, _setStatus] = useState<string>("初期化中...");
-  const [_isProcessing, _setIsProcessing] = useState<boolean>(false);
-  const [_progress, _setProgress] = useState<number>(0);
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [img, setImg] = useState<HTMLImageElement | null>(null);
   const canvasReff = useRef<HTMLCanvasElement | null>(null);
-  const [regionWithSrc, setRegionWithSrc] = useState<RegionWithSrc[]>([]);
-  const [regionWithSrcText, setRegionWithSrcText] = useState<
-    RegionWithSrcText[]
-  >([]);
 
-  const [nameLevelYM, setNameLevelYM] = useState<number>(0.17);
-  const [nameLevelDwM, setNameLevelDwM] = useState<number>(0.2);
-  const [nameLevelDhM, setNameLevelDhM] = useState<number>(0.024);
+  const [ymNL, setYmNL] = useState<number>(DEFAULT_REGIONS_OPTION.ymNL);
+  const [dlmNL, setDlmNL] = useState<number>(DEFAULT_REGIONS_OPTION.dlmNL);
+  const [drmNL, setDrmNL] = useState<number>(DEFAULT_REGIONS_OPTION.drmNL);
+  const [dhmNL, setDhmNL] = useState<number>(DEFAULT_REGIONS_OPTION.dhmNL);
+  const [ymS, setYmS] = useState<number>(DEFAULT_REGIONS_OPTION.ymS);
+  const [dlmS, setDlmS] = useState<number>(DEFAULT_REGIONS_OPTION.dlmS);
+  const [drmS, setDrmS] = useState<number>(DEFAULT_REGIONS_OPTION.drmS);
+  const [dhmS, setDhmS] = useState<number>(DEFAULT_REGIONS_OPTION.dhmS);
 
-  const [statYM, setStatYM] = useState<number>(0.42);
-  const [statDwM, setStatDwM] = useState<number>(0.27);
-  const [statDhM, setStatDhM] = useState<number>(0.0317);
+  const [readOutput, setReadOutput] = useState<ReadOutput | null>(null);
+
+  const regionsOptions: [
+    string,
+    number,
+    React.Dispatch<React.SetStateAction<number>>,
+  ][] = [
+    ["ymNL", ymNL, setYmNL],
+    ["dlmNL", dlmNL, setDlmNL],
+    ["drmNL", drmNL, setDrmNL],
+    ["dhmNL", dhmNL, setDhmNL],
+    ["ymS", ymS, setYmS],
+    ["dlmS", dlmS, setDlmS],
+    ["drmS", drmS, setDrmS],
+    ["dhmS", dhmS, setDhmS],
+  ];
 
   const ocrQueue = useOcrQueue();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
-      setImageSrc(URL.createObjectURL(files[0]));
+      const image = new Image();
+      image.onload = () => {
+        setImg(image);
+      };
+      image.src = URL.createObjectURL(files[0]);
     }
   };
 
   useEffect(() => {
-    if (imageSrc && canvasReff.current) {
-      const canvas = canvasReff.current;
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        const img = new Image();
-        img.onload = () => {
-          canvas.width = img.width;
-          canvas.height = img.height;
-          ctx.drawImage(img, 0, 0);
-          getRegions(
-            img.width,
-            img.height,
-            nameLevelYM,
-            nameLevelDwM,
-            nameLevelDhM,
-            statYM,
-            statDwM,
-            statDhM,
-          ).forEach((region) => {
-            // 切り取り範囲
-            ctx.strokeStyle = "red";
-            ctx.lineWidth = 5;
-            ctx.strokeRect(region.x, region.y, region.width, region.height);
+    if (img && canvasReff.current) {
+      const execute = async () => {
+        const result = await read(
+          ocrQueue,
+          img,
+          ymNL,
+          dlmNL,
+          drmNL,
+          dhmNL,
+          ymS,
+          dlmS,
+          drmS,
+          dhmS,
+        );
+        const canvas = canvasReff.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
 
-            // 切り取り
-            const tmpCanvas = document.createElement("canvas");
-            const tmpCtx = tmpCanvas.getContext("2d");
-            if (tmpCtx) {
-              tmpCanvas.width = region.width;
-              tmpCanvas.height = region.height;
-              tmpCtx.drawImage(
-                img,
-                region.x,
-                region.y,
-                region.width,
-                region.height,
-                0,
-                0,
-                region.width,
-                region.height,
-              );
-
-              // 全ピクセルの色データを取得
-              const imageData = tmpCtx.getImageData(
-                0,
-                0,
-                canvas.width,
-                canvas.height,
-              );
-              const data = imageData.data;
-
-              const threshold = 128;
-              // ピクセルをループ（4要素で1ピクセル: R, G, B, A）
-              for (let i = 0; i < data.length; i += 4) {
-                // 1. 人間の目に合わせた正確な明るさ（輝度）を計算
-                const brightness =
-                  0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
-
-                // 2. 「しきい値」より明るければ白、暗ければ黒にする
-                // 💡 ARKのUIが「明るい文字＋暗い背景」なら、文字を黒(0)・背景を白(255)に反転させるとTesseractの精度が上がります
-                const color = brightness > threshold ? 0 : 255;
-
-                data[i] = color; // Red
-                data[i + 1] = color; // Green
-                data[i + 2] = color; // Blue
-                // data[i+3] (Alpha) はそのまま触らない
-              }
-              // 変換したデータをCanvasに書き戻す
-              tmpCtx.putImageData(imageData, 0, 0);
-            }
-            setRegionWithSrc((v) => [
-              ...v,
-              { ...region, imageSrc: tmpCanvas.toDataURL("image/png") },
-            ]);
-          });
+        // 切り取り範囲
+        const strokeRect = ({ x, y, width, height }: Region) => {
+          ctx.strokeStyle = "red";
+          ctx.lineWidth = 5;
+          ctx.strokeRect(x, y, width, height);
         };
-        img.src = imageSrc;
-      }
-    }
-  }, [
-    imageSrc,
-    nameLevelYM,
-    nameLevelDwM,
-    nameLevelDhM,
-    statYM,
-    statDwM,
-    statDhM,
-  ]);
+        Object.entries(result.regions).forEach(([_label, region]) => {
+          strokeRect(region);
+        });
 
-  useEffect(() => {
-    const setRegion = () => {
-      regionWithSrc.forEach((region) => {
-        ocrQueue
-          .process(region.imageSrc, {
-            tessedit_pageseg_mode: Tesseract.PSM.SINGLE_LINE,
-            tessedit_char_whitelist: "0123456789/.%",
-          })
-          .then((text) => {
-            setRegionWithSrcText((v) => [...v, { ...region, text }]);
-            console.log("end");
-          });
-      });
-    };
-    setRegion();
-  }, [ocrQueue.process, regionWithSrc]);
+        setReadOutput(result);
+      };
+      execute();
+    }
+  }, [ocrQueue, img, ymNL, dlmNL, drmNL, dhmNL, ymS, dlmS, drmS, dhmS]);
 
   return (
     <div className="grid grid-cols-1 gap-2">
       <input type="file" accept="image/*" onChange={handleFileChange} />
       <canvas ref={canvasReff} className="w-full"></canvas>
-      <div>
-        <input
-          type="number"
-          value={nameLevelYM}
-          onChange={(e) => setNameLevelYM(Number(e.target.value))}
-        />
-        <input
-          type="number"
-          value={nameLevelDwM}
-          onChange={(e) => setNameLevelDwM(Number(e.target.value))}
-        />
-        <input
-          type="number"
-          value={nameLevelDhM}
-          onChange={(e) => setNameLevelDhM(Number(e.target.value))}
-        />
-
-        <input
-          type="number"
-          value={statYM}
-          onChange={(e) => setStatYM(Number(e.target.value))}
-        />
-        <input
-          type="number"
-          value={statDwM}
-          onChange={(e) => setStatDwM(Number(e.target.value))}
-        />
-        <input
-          type="number"
-          value={statDhM}
-          onChange={(e) => setStatDhM(Number(e.target.value))}
-        />
-      </div>
-      <div className="grid grid-cols-1 gap-2">
-        {regionWithSrcText.map((r) => (
-          <div key={r.name}>
-            <span>{r.name}</span>
-            <img alt={r.name} src={r.imageSrc}></img>
-            <span>{r.text}</span>
+      <div className="grid grid-cols-4 gap-2">
+        {regionsOptions.map(([name, value, settter]) => (
+          <div key={name}>
+            <NumberField value={value} onChange={(e) => settter(e)}>
+              <Label>{name}</Label>
+              <NumberField.Group>
+                <NumberField.DecrementButton />
+                <NumberField.Input />
+                <NumberField.IncrementButton />
+              </NumberField.Group>
+            </NumberField>
           </div>
         ))}
       </div>
+      <div className="grid grid-cols-[auto_auto_auto_auto] gap-2">
+        <span></span>
+        {IMG_PACK_LABELS.map((ipl) => (
+          <span key={ipl}>{ipl}</span>
+        ))}
+        {readOutput &&
+          OCR_LABELS.map((ol) => (
+            <div key={ol} className="col-span-full grid grid-cols-subgrid">
+              <span>{ol}</span>
+              {IMG_PACK_LABELS.map((ipl) => (
+                <div key={ipl} className="">
+                  <img
+                    src={readOutput.imgPacks[ol][ipl].toDataURL()}
+                    aria-label={`${ol} ${ipl}`}
+                  />
+                  <span>{readOutput.ocrTexts[ol][ipl]}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+      </div>
     </div>
   );
-}
-
-export function getRegions(
-  width: number,
-  height: number,
-  nameLevelYM: number,
-  nameLevelDwM: number,
-  nameLevelDhM: number,
-  statYM: number,
-  statDwM: number,
-  statDhM: number,
-): Region[] {
-  const regions: Region[] = [];
-
-  const nameLevelY = height * nameLevelYM;
-  const nameLevelDw = height * nameLevelDwM;
-  const nameLevelDh = height * nameLevelDhM;
-  regions.push({
-    name: "name",
-    x: (width - nameLevelDw) / 2,
-    y: nameLevelY,
-    width: nameLevelDw,
-    height: nameLevelDh,
-  });
-  regions.push({
-    name: "level",
-    x: (width - nameLevelDw) / 2,
-    y: nameLevelY + nameLevelDh,
-    width: nameLevelDw,
-    height: nameLevelDh,
-  });
-
-  const statY = height * statYM;
-  const statDw = height * statDwM;
-  const statDh = height * statDhM;
-  Array.from({ length: 8 }, (_, i) => i).forEach((i) => {
-    regions.push({
-      name: `stat_value_${i}`,
-      x: width / 2,
-      y: statY + statDh * i,
-      width: statDw / 2,
-      height: statDh,
-    });
-  });
-  return regions;
 }

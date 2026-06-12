@@ -11,8 +11,11 @@ import {
   type CalculateValueInputPack,
   CalculateValueInputPackSchema,
   type CalculateValueOutputPack,
+  DEFAULT_REGIONS_OPTION,
   DEFAULT_SETTINGS,
+  DEFAULT_THRESHOLD,
   type OutputPackFailure,
+  type ReadOutput,
   type Settings,
   SettingsSchema,
   type Species,
@@ -26,10 +29,13 @@ export function createSettings(settings?: Partial<Settings>): Settings {
   return v.parse(SettingsSchema, { ...DEFAULT_SETTINGS, ...settings });
 }
 
-import * as Tesseract from "tesseract.js";
-export { Tesseract };
-export { OcrQueueManager } from "./asb/ocr.js";
+import { PSM as TesseractPsm } from "tesseract.js";
+import { getImgPacks } from "./asb/ocr.browser.js";
+import { getOcrTexts, getRegions, type OcrQueueManager } from "./asb/ocr.js";
+
+export * from "./asb/ocr.js";
 export { createSpeciesList } from "./asb/species.js";
+export { TesseractPsm };
 
 export function searchBP(
   speciesList: Species[],
@@ -152,4 +158,38 @@ export function calculateLevel(
   } else {
     return toOutputPackFailure("input_error", parsed.issues);
   }
+}
+
+export async function read(
+  manager: OcrQueueManager,
+  sourceImg: HTMLImageElement,
+  ymNL = DEFAULT_REGIONS_OPTION.ymNL,
+  dlmNL = DEFAULT_REGIONS_OPTION.dlmNL,
+  drmNL = DEFAULT_REGIONS_OPTION.drmNL,
+  dhmNL = DEFAULT_REGIONS_OPTION.dhmNL,
+  ymS = DEFAULT_REGIONS_OPTION.ymS,
+  dlmS = DEFAULT_REGIONS_OPTION.dlmS,
+  drmS = DEFAULT_REGIONS_OPTION.drmS,
+  dhmS = DEFAULT_REGIONS_OPTION.dhmS,
+  threshold = DEFAULT_THRESHOLD,
+): Promise<ReadOutput> {
+  const regions = getRegions(
+    sourceImg.width,
+    sourceImg.height,
+    ymNL,
+    dlmNL,
+    drmNL,
+    dhmNL,
+    ymS,
+    dlmS,
+    drmS,
+    dhmS,
+  );
+  const imgPacks = getImgPacks(sourceImg, threshold, regions);
+  const ocrTexts = await getOcrTexts(manager, imgPacks);
+  return {
+    regions,
+    imgPacks,
+    ocrTexts,
+  };
 }
