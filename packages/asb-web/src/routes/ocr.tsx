@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { PSM } from "tesseract.js";
 import { useOcrQueue } from "@/contexts";
-
+import { Tesseract } from "asb-ts";
 export const Route = createFileRoute("/ocr")({
   component: OcrComponent,
 });
@@ -123,8 +122,8 @@ function OcrComponent() {
               tmpCtx.putImageData(imageData, 0, 0);
             }
             setRegionWithSrc((v) => [
-              { ...region, imageSrc: tmpCanvas.toDataURL("image/png") },
               ...v,
+              { ...region, imageSrc: tmpCanvas.toDataURL("image/png") },
             ]);
           });
         };
@@ -142,18 +141,18 @@ function OcrComponent() {
   ]);
 
   useEffect(() => {
-    const read = async (region: RegionWithSrc) => {
-      const text = await ocrQueue.process(region.imageSrc, {
-        tessedit_pageseg_mode: PSM.SINGLE_LINE,
-        tessedit_char_whitelist: "0123456789/.%",
+    const setRegion = () => {
+      regionWithSrc.forEach((region) => {
+        ocrQueue
+          .process(region.imageSrc, {
+            tessedit_pageseg_mode: Tesseract.PSM.SINGLE_LINE,
+            tessedit_char_whitelist: "0123456789/.%",
+          })
+          .then((text) => {
+            setRegionWithSrcText((v) => [...v, { ...region, text }]);
+            console.log("end");
+          });
       });
-      return text;
-    };
-    const setRegion = async () => {
-      for (const region of regionWithSrc) {
-        const text = await read(region);
-        setRegionWithSrcText((v) => [{ ...region, text }, ...v]);
-      }
     };
     setRegion();
   }, [ocrQueue.process, regionWithSrc]);
@@ -206,4 +205,49 @@ function OcrComponent() {
       </div>
     </div>
   );
+}
+
+export function getRegions(
+  width: number,
+  height: number,
+  nameLevelYM: number,
+  nameLevelDwM: number,
+  nameLevelDhM: number,
+  statYM: number,
+  statDwM: number,
+  statDhM: number,
+): Region[] {
+  const regions: Region[] = [];
+
+  const nameLevelY = height * nameLevelYM;
+  const nameLevelDw = height * nameLevelDwM;
+  const nameLevelDh = height * nameLevelDhM;
+  regions.push({
+    name: "name",
+    x: (width - nameLevelDw) / 2,
+    y: nameLevelY,
+    width: nameLevelDw,
+    height: nameLevelDh,
+  });
+  regions.push({
+    name: "level",
+    x: (width - nameLevelDw) / 2,
+    y: nameLevelY + nameLevelDh,
+    width: nameLevelDw,
+    height: nameLevelDh,
+  });
+
+  const statY = height * statYM;
+  const statDw = height * statDwM;
+  const statDh = height * statDhM;
+  Array.from({ length: 8 }, (_, i) => i).forEach((i) => {
+    regions.push({
+      name: `stat_value_${i}`,
+      x: width / 2,
+      y: statY + statDh * i,
+      width: statDw / 2,
+      height: statDh,
+    });
+  });
+  return regions;
 }

@@ -26,6 +26,8 @@ export function createSettings(settings?: Partial<Settings>): Settings {
   return v.parse(SettingsSchema, { ...DEFAULT_SETTINGS, ...settings });
 }
 
+import * as Tesseract from "tesseract.js";
+export { Tesseract };
 export { OcrQueueManager } from "./asb/ocr.js";
 export { createSpeciesList } from "./asb/species.js";
 
