@@ -1,8 +1,11 @@
 import {
   createWorker,
   type ImageLike,
+  type Lang,
+  OEM,
   PSM,
   type Worker,
+  type WorkerOptions,
   type WorkerParams,
 } from "tesseract.js";
 import {
@@ -37,13 +40,23 @@ export class OcrQueueManager {
     completeCnt: number,
   ) => void;
 
+  private langs: string | string[] | Lang[] = ["jpn"];
+  private oem: OEM = OEM.LSTM_ONLY;
+  private options: Partial<WorkerOptions> = {};
+
   constructor(
+    langs: string | string[] | Lang[] = ["jpn"],
+    oem: OEM = OEM.LSTM_ONLY,
+    options: Partial<WorkerOptions> = {},
     callBack?: (
       status: OcrQueueManagerStatus,
       requestCnt: number,
       completeCnt: number,
     ) => void,
   ) {
+    this.langs = langs;
+    this.oem = oem;
+    this.options = options;
     if (callBack) this.callBack = callBack;
   }
 
@@ -57,11 +70,13 @@ export class OcrQueueManager {
     }
 
     // 最初の1回目だけ、新しく初期化の Promise を作成して保持する
-    this.initPromise = createWorker("jpn").then((worker) => {
-      if (this.callBack)
-        this.callBack(this.status, this.requestCnt, this.completeCnt);
-      return worker;
-    });
+    this.initPromise = createWorker(this.langs, this.oem, this.options).then(
+      (worker) => {
+        if (this.callBack)
+          this.callBack(this.status, this.requestCnt, this.completeCnt);
+        return worker;
+      },
+    );
 
     return this.initPromise;
   }
