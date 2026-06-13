@@ -191,12 +191,12 @@ export async function read(
   const imgPacks = getImgPacks(sourceImg, threshold, regions);
   const ocrTexts = await getOcrTexts(manager, imgPacks);
   const ocrTextsClone = structuredClone(ocrTexts);
-  const { normalizedTexts, meta } = getNormalizedTexts(ocrTextsClone);
+  const { normalizedTexts, logs } = getNormalizedTexts(ocrTextsClone);
   return {
     regions,
     imgPacks,
     ocrTexts,
     normalizedTexts,
-    meta,
+    logs,
   };
 }

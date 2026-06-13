@@ -1,3 +1,5 @@
+import type { TotalLevel } from "./calculator.js";
+
 export const DEFAULT_REGIONS_OPTION = {
   ymNL: 0.17,
   dlmNL: 0.06,
@@ -64,7 +66,7 @@ export type ReadOutputCommon = {
   regions: Regions;
   ocrTexts: OcrTexts;
   normalizedTexts: NormalizedTexts;
-  meta: OcrMeta;
+  logs: NormalizeLog;
 };
 
 export interface Output_Browser extends ReadOutputCommon {
@@ -79,21 +81,19 @@ export type ImgPack_Browser = Record<ImgPackLabel, HTMLCanvasElement>;
 export type OcrTexts = Record<OcrLabel, OcrText>;
 export type OcrText = Record<ImgPackLabel, string>;
 
-export const NORMALIZED_TEXTS_LABELS = ["name"] as const;
+export const NORMALIZED_TEXTS_LABELS = ["name", "totalLevel"] as const;
 export type NormalizedTextsLabel = (typeof NORMALIZED_TEXTS_LABELS)[number];
 
 export type NormalizedTexts = {
   name: string;
+  totalLevel: TotalLevel | null;
 };
 
-export type OcrMeta = Record<NormalizedTextsLabel, OcrMetaDetail>;
+export type NormalizeLog = Record<NormalizedTextsLabel, LogDetail[]>;
 
-export interface OcrMetaDetail extends Normalize, ReasonForChoice {}
-
-export interface Normalize {
-  removeSpaces?: boolean;
-}
-
-export interface ReasonForChoice {
-  reasonForChoice?: "same_text_3" | "same_text_2" | "fallback_original";
+export interface LogDetail {
+  input: string;
+  output: string;
+  action: string;
+  param?: unknown;
 }

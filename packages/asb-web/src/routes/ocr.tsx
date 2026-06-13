@@ -207,9 +207,9 @@ function OcrComponent() {
             NORMALIZED_TEXTS_LABELS.map((ntl) => (
               <div key={ntl} className="col-span-full grid grid-cols-subgrid">
                 <span>{ntl}</span>
-                <span>{readOutput.normalizedTexts[ntl]}</span>
+                <span>{JSON.stringify(readOutput.normalizedTexts[ntl])}</span>
                 <div>
-                  {Object.entries(readOutput.meta[ntl]).map(([ml, v]) => (
+                  {Object.entries(readOutput.logs[ntl]).map(([ml, v]) => (
                     <div key={ml}>
                       {ml}: {JSON.stringify(v)}
                     </div>

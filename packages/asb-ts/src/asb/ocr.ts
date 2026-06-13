@@ -8,20 +8,23 @@ import {
   type WorkerOptions,
   type WorkerParams,
 } from "tesseract.js";
+import * as v from "valibot";
 import {
+  IMG_PACK_LABELS,
   type ImgPacks_Browser,
+  type LogDetail,
   type NormalizedTexts,
-  type NormalizedTextsLabel,
+  type NormalizeLog,
   OCR_LABELS,
   OCR_STAT_NAME_LABELS,
   OCR_STAT_VALUE_LABELS,
   type OcrCommonLabel,
   type OcrLabel,
-  type OcrMeta,
   type OcrText,
   type OcrTexts,
   type Region,
   type Regions,
+  TotalLevelSchema,
 } from "./types/index.js";
 
 const Status = ["Not initialized", "Suspended", "Running"] as const;
@@ -250,9 +253,11 @@ const defaultParams: Partial<WorkerParams> = {
   tessedit_char_whitelist: "",
 } as const;
 
+const levelWhiteListString = "レベル:" as const;
+const whiteListNumber = "0123456789" as const;
 const levelParams: Partial<WorkerParams> = {
   ...defaultParams,
-  tessedit_char_whitelist: "レベル:0123456789",
+  tessedit_char_whitelist: levelWhiteListString + whiteListNumber,
 } as const;
 
 const statNameParams: Partial<WorkerParams> = {
@@ -261,9 +266,10 @@ const statNameParams: Partial<WorkerParams> = {
     "体力スタミナ酸素量食料重量近接攻撃力気絶値刷り込み中",
 } as const;
 
+const statValueWhiteListString = "./%" as const;
 const statValueParams: Partial<WorkerParams> = {
   ...defaultParams,
-  tessedit_char_whitelist: "0123456789./%",
+  tessedit_char_whitelist: statValueWhiteListString + whiteListNumber,
 } as const;
 
 export async function getOcrTexts(
@@ -313,59 +319,163 @@ export async function getOcrText(
 
 export function getNormalizedTexts(ocrTexts: OcrTexts): {
   normalizedTexts: NormalizedTexts;
-  meta: OcrMeta;
+  logs: NormalizeLog;
 } {
-  const meta: OcrMeta = { name: {} };
-  const name = getNormalizedTextName(ocrTexts, meta);
+  const logs: NormalizeLog = { name: [], totalLevel: [] };
+  const name = getNormalizedTextName(ocrTexts, logs.name);
+  const totalLevel = getNormalizedTextTotalLevel(ocrTexts, logs.totalLevel);
   return {
     normalizedTexts: {
       name,
+      totalLevel,
     },
-    meta,
+    logs,
   };
 }
 
-function getNormalizedTextName(ocrTexts: OcrTexts, meta: OcrMeta): string {
-  normalizeRemoveSpaces(ocrTexts, meta, "name");
-  let result = chooseTextIfSame(ocrTexts, meta, "name");
-  if (!result) {
-    meta.name.reasonForChoice = "fallback_original";
-    result = ocrTexts.name.original;
+// biome-ignore lint/suspicious/noExplicitAny: any以外だと型エラーになるため
+type AnyFunction = (...args: [any, ...any[]]) => any;
+function withLog<Key extends string, F extends AnyFunction>(
+  obj: { [K in Key]: F },
+  args: Parameters<F>,
+  log: LogDetail[],
+): ReturnType<F> {
+  const action = Object.keys(obj)[0];
+  if (!action) throw new Error("");
+  const output = obj[action as Key](args) as ReturnType<F>;
+  log.push(
+    args.length === 1
+      ? {
+          input: JSON.stringify(args[0]),
+          output: JSON.stringify(output),
+          action,
+        }
+      : {
+          input: JSON.stringify(args[0]),
+          output: JSON.stringify(output),
+          action,
+          param: JSON.stringify(args[1]),
+        },
+  );
+  return output;
+}
+
+function getNormalizedTextName(ocrTexts: OcrTexts, log: LogDetail[]): string {
+  const ocrText = ocrTexts.name;
+  const normalizedOcrText = withLog(
+    { normalizeAllRemoveString },
+    [ocrText, spaceString],
+    log,
+  );
+  let selected = withLog({ selectIfSameString }, [normalizedOcrText], log);
+  if (!selected) {
+    selected = withLog({ selectFallback }, [normalizedOcrText], log);
   }
-  return result;
+  return selected;
 }
 
-function normalizeRemoveSpaces(
+function getNormalizedTextTotalLevel(
   ocrTexts: OcrTexts,
-  meta: OcrMeta,
-  label: NormalizedTextsLabel,
+  log: LogDetail[],
+): NormalizedTexts["totalLevel"] {
+  const ocrText = ocrTexts.level;
+  const normalizedOcrText = withLog(
+    { normalizeAllRemoveString },
+    [ocrText, spaceString],
+    log,
+  );
+  let selected = withLog({ selectIfSameString }, [normalizedOcrText], log);
+  if (!selected) {
+    const tmp = withLog(
+      { selectTextIfMatch },
+      [normalizedOcrText, totalLevelRegExp],
+      log,
+    );
+    if (tmp) selected = tmp;
+  }
+  if (!selected) {
+    selected = withLog({ selectFallback }, [normalizedOcrText], log);
+  }
+  const normalized = withLog(
+    { normalizeRemoveString },
+    [selected, levelWhiteListString],
+    log,
+  );
+  const parsed = v.safeParse(
+    v.pipe(v.string(), v.toNumber(), TotalLevelSchema),
+    normalized,
+  );
+  if (parsed.success) {
+    return parsed.output;
+  } else {
+    return withLog(
+      { normalizeFallbackNull },
+      [undefined, v.flatten(parsed.issues)],
+      log,
+    );
+  }
+}
+
+const spaceString = " 　";
+
+function normalizeAllRemoveString(
+  { original, grayscale, binary }: OcrText,
+  param: string,
 ) {
-  ocrTexts[label] = {
-    original: ocrTexts[label].original.replaceAll(" ", ""),
-    grayscale: ocrTexts[label].grayscale.replaceAll(" ", ""),
-    binary: ocrTexts[label].binary.replaceAll(" ", ""),
+  return {
+    original: normalizeRemoveString(original, param),
+    grayscale: normalizeRemoveString(grayscale, param),
+    binary: normalizeRemoveString(binary, param),
   };
-  meta[label].removeSpaces = true;
 }
 
-function chooseTextIfSame(
-  ocrTexts: OcrTexts,
-  meta: OcrMeta,
-  label: NormalizedTextsLabel,
-): string | null {
-  const { original, grayscale, binary } = ocrTexts[label];
+function normalizeRemoveString(text: string, param: string): string {
+  return Array.from(param).reduce((acc, v) => acc.replaceAll(v, ""), text);
+}
+
+function normalizeFallbackNull(
+  _: undefined, // エラー記録よう
+  _param: v.FlatErrors<v.GenericSchema>, // エラー記録よう
+): null {
+  return null;
+}
+
+function selectFallback({ original }: OcrText): string {
+  return original;
+}
+
+function selectIfSameString({
+  original,
+  grayscale,
+  binary,
+}: OcrText): string | null {
   if (original === grayscale && original === binary) {
-    meta[label].reasonForChoice = "same_text_3";
     return original;
   } else if (original === grayscale) {
-    meta[label].reasonForChoice = "same_text_2";
     return original;
   } else if (grayscale === binary) {
-    meta[label].reasonForChoice = "same_text_2";
     return grayscale;
   } else if (binary === original) {
-    meta[label].reasonForChoice = "same_text_2";
     return binary;
+  } else {
+    return null;
+  }
+}
+
+const totalLevelRegExp = /レベル:\d{1,3}/;
+
+function selectTextIfMatch(ocrText: OcrText, param: RegExp): string | null {
+  const matchList = IMG_PACK_LABELS.filter((label) =>
+    param.test(ocrText[label]),
+  );
+  if (matchList.length > 0) {
+    if (matchList.includes("original")) {
+      return ocrText.original;
+    } else if (matchList.includes("grayscale")) {
+      return ocrText.grayscale;
+    } else {
+      return ocrText.binary;
+    }
   } else {
     return null;
   }
