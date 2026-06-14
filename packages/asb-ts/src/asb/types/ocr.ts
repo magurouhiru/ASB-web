@@ -1,3 +1,6 @@
+import * as v from "valibot";
+import type { TotalLevel } from "./calculator.js";
+
 export const DEFAULT_REGIONS_OPTION = {
   ymNL: 0.17,
   dlmNL: 0.06,
@@ -60,10 +63,15 @@ export interface Region {
 
 export type ReadOutput = Output_Browser;
 
-export interface Output_Browser {
+export type ReadOutputCommon = {
   regions: Regions;
-  imgPacks: ImgPacks_Browser;
   ocrTexts: OcrTexts;
+  normalizedTexts: NormalizedTexts;
+  logs: NormalizeLog;
+};
+
+export interface Output_Browser extends ReadOutputCommon {
+  imgPacks: ImgPacks_Browser;
 }
 
 export type ImgPacks_Browser = Record<OcrLabel, ImgPack_Browser>;
@@ -73,3 +81,77 @@ export type ImgPack_Browser = Record<ImgPackLabel, HTMLCanvasElement>;
 
 export type OcrTexts = Record<OcrLabel, OcrText>;
 export type OcrText = Record<ImgPackLabel, string>;
+
+export const NORMALIZED_TEXTS_LABELS = ["name", "totalLevel"] as const;
+export type NormalizedTextsLabel = (typeof NORMALIZED_TEXTS_LABELS)[number];
+
+export type NormalizedTexts = {
+  name: string | null;
+  totalLevel: TotalLevel | null;
+};
+
+export const OcrTextSchema = v.object(
+  v.entriesFromList(IMG_PACK_LABELS, v.string()),
+);
+
+export const PreInputSchema = v.object({
+  ocrText: OcrTextSchema,
+});
+export type PreInput = v.InferOutput<typeof PreInputSchema>;
+
+export const SelectInputSchema = v.object({
+  ocrText: OcrTextSchema,
+  selectedText: v.nullable(v.string()),
+});
+export type SelectInput = v.InferOutput<typeof SelectInputSchema>;
+
+export const NormalizeInputSchema = v.object({
+  ocrText: OcrTextSchema,
+  selectedText: v.string(),
+  normalizedText: v.string(),
+});
+export type NormalizeInput = v.InferOutput<typeof NormalizeInputSchema>;
+
+export const PreProcessSchema = (logic: (input: PreInput) => PreInput) =>
+  v.transform(logic);
+
+export const SelectProcessSchema = (
+  logic: (input: SelectInput) => SelectInput,
+) => v.transform(logic);
+
+export const NormalizeProcessSchema = (
+  logic: (input: NormalizeInput) => NormalizeInput,
+) => v.transform(logic);
+
+export const PreOutputSchema = v.pipe(
+  PreInputSchema,
+  v.transform((input) => ({ ...input, selectedText: null })),
+  SelectInputSchema,
+);
+
+export const SelectOutputSchema = v.pipe(
+  v.object({
+    ocrText: OcrTextSchema,
+    selectedText: v.string(),
+  }),
+  v.transform((input) => ({
+    ...input,
+    normalizedText: input.selectedText,
+  })),
+  NormalizeInputSchema,
+);
+
+export const NormalizeOutputSchema = v.pipe(
+  NormalizeInputSchema,
+  v.transform((input) => input.normalizedText),
+  v.string(),
+);
+
+export type NormalizeLog = Record<NormalizedTextsLabel, LogDetail[]>;
+
+export interface LogDetail {
+  input: string;
+  output: string;
+  action: string;
+  param?: unknown;
+}

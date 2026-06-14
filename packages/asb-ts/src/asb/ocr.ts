@@ -1,12 +1,24 @@
 import {
   createWorker,
   type ImageLike,
+  type Lang,
+  OEM,
   PSM,
   type Worker,
+  type WorkerOptions,
   type WorkerParams,
 } from "tesseract.js";
+import * as v from "valibot";
 import {
+  IMG_PACK_LABELS,
   type ImgPacks_Browser,
+  type LogDetail,
+  type NormalizedTexts,
+  type NormalizeInput,
+  NormalizeInputSchema,
+  type NormalizeLog,
+  NormalizeOutputSchema,
+  NormalizeProcessSchema,
   OCR_LABELS,
   OCR_STAT_NAME_LABELS,
   OCR_STAT_VALUE_LABELS,
@@ -14,8 +26,17 @@ import {
   type OcrLabel,
   type OcrText,
   type OcrTexts,
+  type PreInput,
+  PreInputSchema,
+  PreOutputSchema,
+  PreProcessSchema,
   type Region,
   type Regions,
+  type SelectInput,
+  SelectInputSchema,
+  SelectOutputSchema,
+  SelectProcessSchema,
+  TotalLevelSchema,
 } from "./types/index.js";
 
 const Status = ["Not initialized", "Suspended", "Running"] as const;
@@ -37,13 +58,23 @@ export class OcrQueueManager {
     completeCnt: number,
   ) => void;
 
+  private langs: string | string[] | Lang[] = ["jpn"];
+  private oem: OEM = OEM.LSTM_ONLY;
+  private options: Partial<WorkerOptions> = {};
+
   constructor(
+    langs: string | string[] | Lang[] = ["jpn"],
+    oem: OEM = OEM.LSTM_ONLY,
+    options: Partial<WorkerOptions> = {},
     callBack?: (
       status: OcrQueueManagerStatus,
       requestCnt: number,
       completeCnt: number,
     ) => void,
   ) {
+    this.langs = langs;
+    this.oem = oem;
+    this.options = options;
     if (callBack) this.callBack = callBack;
   }
 
@@ -57,11 +88,13 @@ export class OcrQueueManager {
     }
 
     // 最初の1回目だけ、新しく初期化の Promise を作成して保持する
-    this.initPromise = createWorker("jpn").then((worker) => {
-      if (this.callBack)
-        this.callBack(this.status, this.requestCnt, this.completeCnt);
-      return worker;
-    });
+    this.initPromise = createWorker(this.langs, this.oem, this.options).then(
+      (worker) => {
+        if (this.callBack)
+          this.callBack(this.status, this.requestCnt, this.completeCnt);
+        return worker;
+      },
+    );
 
     return this.initPromise;
   }
@@ -232,9 +265,11 @@ const defaultParams: Partial<WorkerParams> = {
   tessedit_char_whitelist: "",
 } as const;
 
+const levelWhiteListString = "レベル:" as const;
+const whiteListNumber = "0123456789" as const;
 const levelParams: Partial<WorkerParams> = {
   ...defaultParams,
-  tessedit_char_whitelist: "レベル:0123456789",
+  tessedit_char_whitelist: levelWhiteListString + whiteListNumber,
 } as const;
 
 const statNameParams: Partial<WorkerParams> = {
@@ -243,9 +278,10 @@ const statNameParams: Partial<WorkerParams> = {
     "体力スタミナ酸素量食料重量近接攻撃力気絶値刷り込み中",
 } as const;
 
+const statValueWhiteListString = "./%" as const;
 const statValueParams: Partial<WorkerParams> = {
   ...defaultParams,
-  tessedit_char_whitelist: "0123456789./%",
+  tessedit_char_whitelist: statValueWhiteListString + whiteListNumber,
 } as const;
 
 export async function getOcrTexts(
@@ -291,4 +327,148 @@ export async function getOcrText(
       binary,
     },
   ]);
+}
+
+export function getNormalizedTexts(ocrTexts: OcrTexts): {
+  normalizedTexts: NormalizedTexts;
+  logs: NormalizeLog;
+} {
+  const logs: NormalizeLog = { name: [], totalLevel: [] };
+  const name = getNormalizedTextName(ocrTexts, logs.name);
+  const totalLevel = getNormalizedTextTotalLevel(ocrTexts, logs.totalLevel);
+  return {
+    normalizedTexts: {
+      name,
+      totalLevel,
+    },
+    logs,
+  };
+}
+
+function getNormalizedTextName(
+  ocrTexts: OcrTexts,
+  _log: LogDetail[],
+): string | null {
+  const ocrText = ocrTexts.name;
+  const result = v.safeParse(
+    v.pipe(
+      PreInputSchema,
+      PreProcessSchema(preRemoveSpace),
+      PreOutputSchema,
+      SelectInputSchema,
+      SelectProcessSchema(selectIfSameString),
+      SelectProcessSchema(selectFallback),
+      SelectOutputSchema,
+      NormalizeInputSchema,
+      NormalizeOutputSchema,
+    ),
+    { ocrText },
+  );
+  if (result.success) {
+    return result.output;
+  } else {
+    return null;
+  }
+}
+
+function getNormalizedTextTotalLevel(
+  ocrTexts: OcrTexts,
+  _log: LogDetail[],
+): NormalizedTexts["totalLevel"] {
+  const ocrText = ocrTexts.level;
+  const result = v.safeParse(
+    v.pipe(
+      PreInputSchema,
+      PreProcessSchema(preRemoveSpace),
+      PreOutputSchema,
+      SelectInputSchema,
+      SelectProcessSchema(selectIfSameString),
+      SelectProcessSchema(selectTextIfMatchTotalLevelRegExp),
+      SelectProcessSchema(selectFallback),
+      SelectOutputSchema,
+      NormalizeInputSchema,
+      NormalizeProcessSchema(normalizeRemoveLevel),
+      NormalizeOutputSchema,
+      v.toNumber(),
+      TotalLevelSchema,
+    ),
+    { ocrText },
+  );
+  if (result.success) {
+    return result.output;
+  } else {
+    return null;
+  }
+}
+
+const preRemoveSpace = ({
+  ocrText: { original, grayscale, binary },
+}: PreInput): PreInput => ({
+  ocrText: {
+    original: removeStringCore(original, spaceString),
+    grayscale: removeStringCore(grayscale, spaceString),
+    binary: removeStringCore(binary, spaceString),
+  },
+});
+
+const selectIfSameString = (input: SelectInput): SelectInput => {
+  const { original, grayscale, binary } = input.ocrText;
+  let selectedText = null;
+  if (original === grayscale && original === binary) {
+    selectedText = original;
+  } else if (original === grayscale) {
+    selectedText = original;
+  } else if (grayscale === binary) {
+    selectedText = grayscale;
+  } else if (binary === original) {
+    selectedText = binary;
+  } else {
+    selectedText = null;
+  }
+
+  return { ...input, selectedText };
+};
+
+const totalLevelRegExp = /レベル:\d{1,3}/;
+
+const selectTextIfMatchTotalLevelRegExp = (
+  input: SelectInput,
+): SelectInput => ({
+  ...input,
+  selectedText: selectTextIfMatchCore(input, totalLevelRegExp),
+});
+
+function selectTextIfMatchCore(
+  { ocrText }: SelectInput,
+  target: RegExp,
+): string | null {
+  const matchList = IMG_PACK_LABELS.filter((label) =>
+    target.test(ocrText[label]),
+  );
+  if (matchList.length > 0) {
+    if (matchList.includes("original")) {
+      return ocrText.original;
+    } else if (matchList.includes("grayscale")) {
+      return ocrText.grayscale;
+    } else {
+      return ocrText.binary;
+    }
+  } else {
+    return null;
+  }
+}
+
+const selectFallback = (input: SelectInput): SelectInput => ({
+  ...input,
+  selectedText: input.ocrText.original,
+});
+
+const normalizeRemoveLevel = (input: NormalizeInput): NormalizeInput => ({
+  ...input,
+  normalizedText: removeStringCore(input.normalizedText, levelWhiteListString),
+});
+
+const spaceString = " 　";
+function removeStringCore(input: string, param: string): string {
+  return Array.from(param).reduce((acc, v) => acc.replaceAll(v, ""), input);
 }
