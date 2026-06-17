@@ -128,6 +128,10 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
                 c.SelectProcessSchema(c.selectFallback, logs[label]),
                 c.ToNormalizeInputSchema,
                 c.NormalizeProcessSchema(c.normalizeRemoveParcet, logs[label]),
+                c.NormalizeProcessSchema(
+                  c.normalizeAddDotIfNotExistDot,
+                  logs[label],
+                ),
                 c.ToStringSchema,
                 v.toNumber(),
                 PositiveValueSchema,
@@ -162,6 +166,10 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
                 ),
                 c.NormalizeProcessSchema(
                   c.normalizeSplitIf_nn_dot_n_7_nn,
+                  logs[label],
+                ),
+                c.NormalizeProcessSchema(
+                  c.normalizeAddDotIfNotExistDot,
                   logs[label],
                 ),
                 c.ToStringSchema,

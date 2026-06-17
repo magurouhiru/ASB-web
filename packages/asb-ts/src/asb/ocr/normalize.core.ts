@@ -368,6 +368,19 @@ export const normalizeSplitIf_nn_dot_n_7_nn: NormalizeProcessLogic = ({
   };
 };
 
+export const normalizeAddDotIfNotExistDot: NormalizeProcessLogic = ({
+  normalizedText,
+}: NormalizeInput) => {
+  let output = null;
+  const dots = [...normalizedText.matchAll(dotRegExp)].map((v) => v.index);
+  if (dots.length === 0)
+    output = `${normalizedText.slice(0, -1)}.${normalizedText.slice(-1)}`;
+  return {
+    action: "normalizeAddDotIfNotExistDot",
+    output,
+  };
+};
+
 export const normalizeRemoveParcet: NormalizeProcessLogic = ({
   normalizedText,
 }: NormalizeInput) => {
