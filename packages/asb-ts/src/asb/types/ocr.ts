@@ -1,5 +1,5 @@
 import type * as v from "valibot";
-import type { Imprinting, TotalLevel } from "./calculator.js";
+import type { Imprinting, TotalLevel, Type } from "./calculator.js";
 import { type StatsName, StatsNames } from "./stats-name.js";
 
 /////////////////////////////////////////////////////////
@@ -125,6 +125,7 @@ export const NORMALIZE_TYPE_LABELS = [
   ...OCR_COMMON_LABELS,
   "stat_name",
   ...DISPLAY_STAT_NAME_LABELS,
+  null,
 ] as const;
 export type NormalizeTypeLabel = (typeof NORMALIZE_TYPE_LABELS)[number];
 
@@ -136,7 +137,9 @@ export type NormalizeType<T extends NormalizeTypeLabel> = T extends "name"
       ? DisplayStatNameLabel
       : T extends StatsName
         ? number
-        : Imprinting;
+        : T extends "imprinting"
+          ? Imprinting
+          : null;
 
 export type NormalizeResult<T extends NormalizeTypeLabel> = {
   type: T;
@@ -150,7 +153,7 @@ export type OcrNormalizedTextRecord = {
       ? NormalizeResult<"level">
       : K extends OcrStatNameLabel
         ? NormalizeResult<"stat_name">
-        : NormalizeResult<DisplayStatNameLabel>;
+        : NormalizeResult<DisplayStatNameLabel | null>;
 };
 
 export type OcrNormalizeLogRecord = OcrRecord<LogDetail[]>;
@@ -168,3 +171,121 @@ export type LogDetail =
       output: string | null;
       param?: string;
     };
+
+export type StatsPositionCombinationName = {
+  type: Type;
+  hasOxygen: boolean;
+  comb: Record<OcrStatNameLabel, DisplayStatNameLabel | null>;
+};
+
+export type StatsPositionCombinationValue = {
+  type: Type;
+  hasOxygen: boolean;
+  comb: Record<OcrStatValueLabel, DisplayStatNameLabel | null>;
+};
+
+export const STATS_POSITION_NAME_COMBINATIONS: StatsPositionCombinationName[] =
+  [
+    {
+      type: "wild",
+      hasOxygen: true,
+      comb: {
+        stat_name_0: "health",
+        stat_name_1: "stamina",
+        stat_name_2: "oxygen",
+        stat_name_3: "food",
+        stat_name_4: "weight",
+
+        stat_name_5: "meleeDamageMultiplier",
+        stat_name_6: "torpidity",
+        stat_name_7: null,
+        stat_name_8: null,
+        stat_name_9: null,
+      },
+    },
+    {
+      type: "wild",
+      hasOxygen: false,
+      comb: {
+        stat_name_0: "health",
+        stat_name_1: "stamina",
+        stat_name_2: "food",
+        stat_name_3: "weight",
+        stat_name_4: "meleeDamageMultiplier",
+
+        stat_name_5: "torpidity",
+        stat_name_6: null,
+        stat_name_7: null,
+        stat_name_8: null,
+        stat_name_9: null,
+      },
+    },
+    {
+      type: "dom",
+      hasOxygen: true,
+      comb: {
+        stat_name_0: null,
+        stat_name_1: "health",
+        stat_name_2: "stamina",
+        stat_name_3: "oxygen",
+        stat_name_4: "food",
+
+        stat_name_5: "weight",
+        stat_name_6: "meleeDamageMultiplier",
+        stat_name_7: "torpidity",
+        stat_name_8: null,
+        stat_name_9: null,
+      },
+    },
+    {
+      type: "dom",
+      hasOxygen: false,
+      comb: {
+        stat_name_0: null,
+        stat_name_1: "health",
+        stat_name_2: "stamina",
+        stat_name_3: "food",
+        stat_name_4: "weight",
+
+        stat_name_5: "meleeDamageMultiplier",
+        stat_name_6: "torpidity",
+        stat_name_7: null,
+        stat_name_8: null,
+        stat_name_9: null,
+      },
+    },
+    {
+      type: "dom",
+      hasOxygen: true,
+      comb: {
+        stat_name_0: null,
+        stat_name_1: "health",
+        stat_name_2: "stamina",
+        stat_name_3: "oxygen",
+        stat_name_4: "food",
+
+        stat_name_5: "weight",
+        stat_name_6: "meleeDamageMultiplier",
+        stat_name_7: "torpidity",
+        stat_name_8: "imprinting",
+        stat_name_9: null,
+      },
+    },
+    {
+      type: "dom",
+      hasOxygen: false,
+      comb: {
+        stat_name_0: null,
+        stat_name_1: "health",
+        stat_name_2: "stamina",
+        stat_name_3: "food",
+        stat_name_4: "weight",
+
+        stat_name_5: "meleeDamageMultiplier",
+        stat_name_6: "torpidity",
+        stat_name_7: "imprinting",
+        stat_name_8: null,
+        stat_name_9: null,
+      },
+    },
+  ];
