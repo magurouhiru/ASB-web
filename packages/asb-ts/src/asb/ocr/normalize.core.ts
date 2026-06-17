@@ -92,7 +92,7 @@ export const SelectProcessSchema = (
 
 export type NormalizeProcessLogic = (input: NormalizeInput) => {
   action: string;
-  output: string;
+  output: string | null;
   param?: string;
 };
 
@@ -104,13 +104,23 @@ export const NormalizeProcessSchema = (
     NormalizeInputSchema,
     v.transform((input: NormalizeInput) => {
       const result = logic(input);
-      log.push({
-        ...result,
-        isValibotError: false,
-        input: input.normalizedText,
-        output: result.output,
-      });
-      return { ...input, normalizedText: result.output };
+      if (result.output !== null) {
+        log.push({
+          ...result,
+          isValibotError: false,
+          input: input.normalizedText,
+          output: result.output,
+        });
+        return { ...input, normalizedText: result.output };
+      } else {
+        log.push({
+          ...result,
+          isValibotError: false,
+          input: input.normalizedText,
+          output: "do nothing",
+        });
+        return input;
+      }
     }),
   );
 
@@ -258,22 +268,43 @@ export const selectFallback: SelectProcessLogic = (_: SelectInput) => ({
   output: "original",
 });
 
-export const selectIfExistSlashBetweenDots: SelectProcessLogic = (
+const nn_dot_n_slash_nn_dot_n = /^\d+\.\d\/\d+\.\d$/;
+
+export const selectIf_nn_dot_n_slash_nn_dot_n: SelectProcessLogic = (
   input: SelectInput,
 ) => ({
-  action: "selectIfExistSlashBetweenDots",
-  output: selectIfTestSuccess(input, isExistSlashBetweenDots),
+  action: "nn_dot_n_slash_nn_dot_n",
+  output: selectIfTestSuccess(input, (text) =>
+    nn_dot_n_slash_nn_dot_n.test(text),
+  ),
 });
 
-const slashRegExp = /\//g;
-const dotRegExp = /\./g;
-function isExistSlashBetweenDots(text: string): boolean {
-  const slash = [...text.matchAll(slashRegExp)].map((v) => v.index);
-  const dot = [...text.matchAll(dotRegExp)].map((v) => v.index);
-  return (
-    slash.length === 1 && dot.length === 2 && (dot[0] ?? -10) + 2 === slash[0]
-  );
-}
+const nn_dot_n_7_nn_dot_n = /^\d+\.\d7\d+\.\d$/;
+
+export const selectIf_nn_dot_n_7_nn_dot_n: SelectProcessLogic = (
+  input: SelectInput,
+) => ({
+  action: "selectIf_nn_dot_n_7_nn_dot_n",
+  output: selectIfTestSuccess(input, (text) => nn_dot_n_7_nn_dot_n.test(text)),
+});
+
+const nn_dot_n_parcent = /^\d+\.\d%$/;
+
+export const selectIf_nn_dot_n_parcent: SelectProcessLogic = (
+  input: SelectInput,
+) => ({
+  action: "selectIf_nn_dot_n_parcent",
+  output: selectIfTestSuccess(input, (text) => nn_dot_n_parcent.test(text)),
+});
+
+const nn_parcent = /^\d+%$/;
+
+export const selectIf_nn_parcent: SelectProcessLogic = (
+  input: SelectInput,
+) => ({
+  action: "selectIf_nn_parcent",
+  output: selectIfTestSuccess(input, (text) => nn_parcent.test(text)),
+});
 
 export const normalizeRemoveLevel: NormalizeProcessLogic = (
   input: NormalizeInput,
@@ -288,16 +319,64 @@ function removeStringCore(input: string, param: string): string {
   return Array.from(param).reduce((acc, v) => acc.replaceAll(v, ""), input);
 }
 
-export const normalizeSplitIfExistSlashBetweenDots: NormalizeProcessLogic = ({
+export const normalizeSplitIf_nn_dot_n_slash_nn_dot_n: NormalizeProcessLogic =
+  ({ normalizedText }: NormalizeInput) => {
+    let output = null;
+    if (nn_dot_n_slash_nn_dot_n.test(normalizedText)) {
+      const splitted = normalizedText.split("/")[1];
+      if (splitted) output = splitted;
+    }
+    return {
+      action: "normalizeSplitIf_nn_dot_n_slash_nn_dot_n",
+      output,
+    };
+  };
+
+const dotRegExp = /\./g;
+
+export const normalizeSplitIf_nn_dot_n_7_nn_dot_n: NormalizeProcessLogic = ({
   normalizedText,
 }: NormalizeInput) => {
-  let output = normalizedText;
-  if (isExistSlashBetweenDots(normalizedText)) {
-    const splitted = normalizedText.split("/")[1];
-    if (splitted) output = splitted;
+  let output = null;
+  if (nn_dot_n_7_nn_dot_n.test(normalizedText)) {
+    const first = [...normalizedText.matchAll(dotRegExp)].map(
+      (v) => v.index,
+    )[0];
+    if (first) output = normalizedText.slice(first + 3);
   }
   return {
-    action: "normalizeSplitIfExistSlashBetweenDots",
+    action: "normalizeSplitIf_nn_dot_n_7_nn_dot_n",
+    output,
+  };
+};
+
+const nn_dot_n_7_nn = /^\d+\.\d7\d+$/;
+
+export const normalizeSplitIf_nn_dot_n_7_nn: NormalizeProcessLogic = ({
+  normalizedText,
+}: NormalizeInput) => {
+  let output = null;
+  if (nn_dot_n_7_nn.test(normalizedText)) {
+    const first = [...normalizedText.matchAll(dotRegExp)].map(
+      (v) => v.index,
+    )[0];
+    if (first) output = normalizedText.slice(first + 3);
+  }
+  return {
+    action: "normalizeSplitIf_nn_dot_n_7_nn",
+    output,
+  };
+};
+
+export const normalizeRemoveParcet: NormalizeProcessLogic = ({
+  normalizedText,
+}: NormalizeInput) => {
+  let output = null;
+  if (normalizedText.includes("%")) {
+    output = normalizedText.replaceAll("%", "");
+  }
+  return {
+    action: "normalizeRemoveParcet",
     output,
   };
 };

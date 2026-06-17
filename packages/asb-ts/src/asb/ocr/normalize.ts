@@ -91,7 +91,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
 
   const ocrStatValues = R.fromKeys(OCR_STAT_VALUE_LABELS, (label) => {
     const nt = comb[label];
-    nt === null
+    return nt === null
       ? normalizeText(ocrTexts[label], logs[label], nt, v.null())
       : nt === "imprinting"
         ? normalizeText(
@@ -102,17 +102,12 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
               c.PreProcessSchema(c.preRemoveSplitChar, logs[label]),
               c.PreProcessSchema(c.preRemoveSpace, logs[label]),
               c.ToSelectInputSchema,
-              c.SelectProcessSchema(
-                c.selectIfExistSlashBetweenDots,
-                logs[label],
-              ),
+              c.SelectProcessSchema(c.selectIf_nn_dot_n_parcent, logs[label]),
+              c.SelectProcessSchema(c.selectIf_nn_parcent, logs[label]),
               c.SelectProcessSchema(c.selectIfSameString, logs[label]),
               c.SelectProcessSchema(c.selectFallback, logs[label]),
               c.ToNormalizeInputSchema,
-              c.NormalizeProcessSchema(
-                c.normalizeSplitIfExistSlashBetweenDots,
-                logs[label],
-              ),
+              c.NormalizeProcessSchema(c.normalizeRemoveParcet, logs[label]),
               c.ToStringSchema,
               v.toNumber(),
               ImprintingSchema,
@@ -127,17 +122,12 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
                 c.PreProcessSchema(c.preRemoveSplitChar, logs[label]),
                 c.PreProcessSchema(c.preRemoveSpace, logs[label]),
                 c.ToSelectInputSchema,
-                c.SelectProcessSchema(
-                  c.selectIfExistSlashBetweenDots,
-                  logs[label],
-                ),
+                c.SelectProcessSchema(c.selectIf_nn_dot_n_parcent, logs[label]),
+                c.SelectProcessSchema(c.selectIf_nn_parcent, logs[label]),
                 c.SelectProcessSchema(c.selectIfSameString, logs[label]),
                 c.SelectProcessSchema(c.selectFallback, logs[label]),
                 c.ToNormalizeInputSchema,
-                c.NormalizeProcessSchema(
-                  c.normalizeSplitIfExistSlashBetweenDots,
-                  logs[label],
-                ),
+                c.NormalizeProcessSchema(c.normalizeRemoveParcet, logs[label]),
                 c.ToStringSchema,
                 v.toNumber(),
                 PositiveValueSchema,
@@ -152,14 +142,26 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
                 c.PreProcessSchema(c.preRemoveSpace, logs[label]),
                 c.ToSelectInputSchema,
                 c.SelectProcessSchema(
-                  c.selectIfExistSlashBetweenDots,
+                  c.selectIf_nn_dot_n_slash_nn_dot_n,
+                  logs[label],
+                ),
+                c.SelectProcessSchema(
+                  c.selectIf_nn_dot_n_7_nn_dot_n,
                   logs[label],
                 ),
                 c.SelectProcessSchema(c.selectIfSameString, logs[label]),
                 c.SelectProcessSchema(c.selectFallback, logs[label]),
                 c.ToNormalizeInputSchema,
                 c.NormalizeProcessSchema(
-                  c.normalizeSplitIfExistSlashBetweenDots,
+                  c.normalizeSplitIf_nn_dot_n_slash_nn_dot_n,
+                  logs[label],
+                ),
+                c.NormalizeProcessSchema(
+                  c.normalizeSplitIf_nn_dot_n_7_nn_dot_n,
+                  logs[label],
+                ),
+                c.NormalizeProcessSchema(
+                  c.normalizeSplitIf_nn_dot_n_7_nn,
                   logs[label],
                 ),
                 c.ToStringSchema,
