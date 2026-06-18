@@ -15,13 +15,22 @@ function HomeComponent() {
               mode: "value->level",
               type: "wild",
               n: "",
+
               h: 0,
               s: 0,
               o: 0,
               f: 0,
+
+              wtr: 0,
+              temp: 0,
               w: 0,
               m: 0,
+
+              spd: 0,
+              tempf: 0,
+              crft: 0,
               t: 0,
+
               i: 0,
               level: 0,
               withDom: "false",

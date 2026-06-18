@@ -1,5 +1,6 @@
 import type { Key } from "@heroui/react";
 import {
+  Accordion,
   Alert,
   Autocomplete,
   Chip,
@@ -63,13 +64,22 @@ const searchSchema = v.pipe(
     mode: v.fallback(v.picklist(MODE_LIST), "value->level"),
     type: v.fallback(v.picklist(Types), "wild"),
     n: v.fallback(v.string(), ""),
+
     h: v.fallback(v.number(), 0),
     s: v.fallback(v.number(), 0),
     o: v.fallback(v.number(), 0),
     f: v.fallback(v.number(), 0),
+
+    wtr: v.fallback(v.number(), 0),
+    temp: v.fallback(v.number(), 0),
     w: v.fallback(v.number(), 0),
     m: v.fallback(v.number(), 0),
+
+    spd: v.fallback(v.number(), 0),
+    tempf: v.fallback(v.number(), 0),
+    crft: v.fallback(v.number(), 0),
     t: v.fallback(v.number(), 0),
+
     i: v.fallback(v.number(), 0),
     level: v.fallback(v.number(), 0),
     withDom: v.fallback(
@@ -102,8 +112,30 @@ const { useAppForm } = createFormHook({
 });
 
 function CalcComponent() {
-  const { mode, type, n, h, s, o, f, w, m, t, i, level, withDom } =
-    Route.useSearch();
+  const {
+    mode,
+    type,
+    n,
+
+    h,
+    s,
+    o,
+    f,
+
+    wtr,
+    temp,
+    w,
+    m,
+
+    spd,
+    tempf,
+    crft,
+    t,
+
+    i,
+    level,
+    withDom,
+  } = Route.useSearch();
 
   const settings = createSettings();
   const speciesList = createSpeciesList(settings);
@@ -129,14 +161,14 @@ function CalcComponent() {
       oxygen: o,
       food: f,
 
-      water: 0, // 無視
-      temperature: 0, // 無視
+      water: wtr,
+      temperature: temp,
       weight: w,
       meleeDamageMultiplier: m,
 
-      speedMultiplier: 0, // 無視
-      temperatureFortitude: 0, // 無視
-      craftingSpeedMultiplier: 0, // 無視
+      speedMultiplier: spd,
+      temperatureFortitude: tempf,
+      craftingSpeedMultiplier: crft,
       torpidity: t,
     } satisfies Values,
 
@@ -334,10 +366,11 @@ function CalcComponent() {
         )}
       </form.AppField>
 
-      <Label>withDom</Label>
+      <Label htmlFor="withDom">withDom</Label>
       <form.AppField name="withDom">
         {(field) => (
           <field.Switch
+            id="withDom"
             defaultSelected={field.form.options.defaultValues?.withDom}
             onChange={(e) => field.setValue(e)}
             name="withDom"
@@ -442,164 +475,189 @@ function CalcComponent() {
         )}
       </form.AppField>
 
-      {DISPLAY_STATS_NAME_LIST.map((sn) => {
-        const tmp = meta?.statsMeta[sn]?.valueDiff ?? 0;
-        const diff = toDiffStr(tmp, sn);
-        return (
-          <div key={sn}>
-            <div className="flex gap-2">
-              <Label className="col-span-full">{sn}</Label>
-              {meta?.statsMeta[sn]?.hasMissingStatsForCalculation && (
-                <ErrorMessage>
-                  計算に必要な値がないので計算できませんでした
-                </ErrorMessage>
-              )}
-            </div>
-            <div className="grid grid-cols-1 gap-x-1 sm:grid-cols-3">
-              <div className="col-span-1 grow">
-                <form.AppField name={`values.${sn}`}>
-                  {(field) => (
-                    <field.NumberField
-                      defaultValue={
-                        field.form.options.defaultValues?.values[sn]
-                      }
-                      value={field.state.value}
-                      onChange={(e) => field.setValue(e)}
-                      isDisabled={
-                        field.form.state.values.mode === "level->value"
-                      }
-                      minValue={0}
-                      formatOptions={{
-                        maximumFractionDigits: 1,
-                        minimumFractionDigits: 1,
-                        style:
-                          sn === "meleeDamageMultiplier"
-                            ? "percent"
-                            : undefined,
-                      }}
-                    >
-                      <Label>value</Label>
-                      <NumberField.Group>
-                        <NumberField.DecrementButton />
-                        <NumberField.Input />
-                        <NumberField.IncrementButton />
-                      </NumberField.Group>
-                      <FieldError></FieldError>
-                      {diff && <ErrorMessage>{diff}</ErrorMessage>}
-                    </field.NumberField>
-                  )}
-                </form.AppField>
-              </div>
+      <Accordion
+        allowsMultipleExpanded
+        className="w-full"
+        defaultExpandedKeys={DISPLAY_STATS_NAME_LIST}
+      >
+        {StatsNames.map((sn) => {
+          const tmp = meta?.statsMeta[sn]?.valueDiff ?? 0;
+          const diff = toDiffStr(tmp, sn);
+          return (
+            <Accordion.Item key={sn} id={sn}>
+              <Accordion.Heading>
+                <Accordion.Trigger className="p-0">
+                  <div className="flex gap-2">
+                    <Label>{sn}</Label>
+                    {meta?.statsMeta[sn]?.hasMissingStatsForCalculation && (
+                      <ErrorMessage>
+                        計算に必要な値がないので計算できませんでした
+                      </ErrorMessage>
+                    )}
+                  </div>
+                  <Accordion.Indicator />
+                </Accordion.Trigger>
+              </Accordion.Heading>
+              <Accordion.Panel>
+                <Accordion.Panel>
+                  <div className="grid grid-cols-1 gap-x-1 px-0.5 pb-1 sm:grid-cols-3">
+                    <div className="col-span-1 grow">
+                      <form.AppField name={`values.${sn}`}>
+                        {(field) => (
+                          <field.NumberField
+                            defaultValue={
+                              field.form.options.defaultValues?.values[sn]
+                            }
+                            value={field.state.value}
+                            onChange={(e) => field.setValue(e)}
+                            isDisabled={
+                              field.form.state.values.mode === "level->value"
+                            }
+                            minValue={0}
+                            formatOptions={{
+                              maximumFractionDigits: 1,
+                              minimumFractionDigits: 1,
+                              style:
+                                sn === "meleeDamageMultiplier"
+                                  ? "percent"
+                                  : undefined,
+                            }}
+                          >
+                            <Label>value</Label>
+                            <NumberField.Group>
+                              <NumberField.DecrementButton />
+                              <NumberField.Input />
+                              <NumberField.IncrementButton />
+                            </NumberField.Group>
+                            <FieldError></FieldError>
+                            {diff && <ErrorMessage>{diff}</ErrorMessage>}
+                          </field.NumberField>
+                        )}
+                      </form.AppField>
+                    </div>
 
-              <div className="col-span-2">
-                <div className="flex gap-x-1">
-                  <div className="flex-1 grow">
-                    <form.AppField name={`levels.${sn}.wild`}>
-                      {(field) => (
-                        <field.NumberField
-                          defaultValue={
-                            field.form.options.defaultValues?.levels[sn].wild
-                          }
-                          value={field.state.value}
-                          onChange={(e) => field.setValue(e)}
-                          isDisabled={
-                            field.form.state.values.mode === "value->level"
-                          }
-                          minValue={0}
-                          formatOptions={{
-                            maximumFractionDigits: 0,
-                            minimumFractionDigits: 0,
-                          }}
-                        >
-                          <Label>wild</Label>
-                          <NumberField.Group>
-                            <NumberField.DecrementButton className="max-sm:hidden" />
-                            <NumberField.Input />
-                            <NumberField.IncrementButton className="max-sm:hidden" />
-                          </NumberField.Group>
-                        </field.NumberField>
-                      )}
-                    </form.AppField>
+                    <div className="col-span-2">
+                      <div className="flex gap-x-1">
+                        <div className="flex-1 grow">
+                          <form.AppField name={`levels.${sn}.wild`}>
+                            {(field) => (
+                              <field.NumberField
+                                defaultValue={
+                                  field.form.options.defaultValues?.levels[sn]
+                                    .wild
+                                }
+                                value={field.state.value}
+                                onChange={(e) => field.setValue(e)}
+                                isDisabled={
+                                  field.form.state.values.mode ===
+                                  "value->level"
+                                }
+                                minValue={0}
+                                formatOptions={{
+                                  maximumFractionDigits: 0,
+                                  minimumFractionDigits: 0,
+                                }}
+                              >
+                                <Label>wild</Label>
+                                <NumberField.Group>
+                                  <NumberField.DecrementButton className="max-sm:hidden" />
+                                  <NumberField.Input />
+                                  <NumberField.IncrementButton className="max-sm:hidden" />
+                                </NumberField.Group>
+                              </field.NumberField>
+                            )}
+                          </form.AppField>
+                        </div>
+                        <div className="flex-1 grow">
+                          <form.AppField name={`levels.${sn}.mut`}>
+                            {(field) => (
+                              <field.NumberField
+                                defaultValue={
+                                  field.form.options.defaultValues?.levels[sn]
+                                    .mut
+                                }
+                                value={field.state.value}
+                                onChange={(e) => field.setValue(e)}
+                                isDisabled={
+                                  field.form.state.values.mode ===
+                                    "value->level" ||
+                                  field.form.state.values.type === "wild" ||
+                                  field.form.state.values.type === "dom"
+                                }
+                                minValue={0}
+                                formatOptions={{
+                                  maximumFractionDigits: 0,
+                                  minimumFractionDigits: 0,
+                                }}
+                              >
+                                <Label>mut</Label>
+                                <NumberField.Group>
+                                  <NumberField.DecrementButton className="max-sm:hidden" />
+                                  <NumberField.Input />
+                                  <NumberField.IncrementButton className="max-sm:hidden" />
+                                </NumberField.Group>
+                                {meta?.statsMeta[sn]
+                                  ?.equalWildMutationRates && (
+                                  <Description>
+                                    野生と上昇率が同じ
+                                    <br />
+                                    {field.form.state.values.mode ===
+                                      "value->level" &&
+                                      "なので、野生にまとめてます"}
+                                  </Description>
+                                )}
+                                {meta?.statsMeta[sn]
+                                  ?.isMutLevelCalculatedAsZero && (
+                                  <Description>0として計算</Description>
+                                )}
+                              </field.NumberField>
+                            )}
+                          </form.AppField>
+                        </div>
+                        <div className="flex-1 grow">
+                          <form.AppField name={`levels.${sn}.dom`}>
+                            {(field) => (
+                              <field.NumberField
+                                defaultValue={
+                                  field.form.options.defaultValues?.levels[sn]
+                                    .dom
+                                }
+                                value={field.state.value}
+                                onChange={(e) => field.setValue(e)}
+                                isDisabled={
+                                  field.form.state.values.mode ===
+                                    "value->level" ||
+                                  field.form.state.values.type === "wild"
+                                }
+                                minValue={0}
+                                formatOptions={{
+                                  maximumFractionDigits: 0,
+                                  minimumFractionDigits: 0,
+                                }}
+                              >
+                                <Label>dom</Label>
+                                <NumberField.Group>
+                                  <NumberField.DecrementButton className="max-sm:hidden" />
+                                  <NumberField.Input />
+                                  <NumberField.IncrementButton className="max-sm:hidden" />
+                                </NumberField.Group>
+                                {meta?.statsMeta[sn]
+                                  ?.isDomLevelCalculatedAsZero && (
+                                  <Description>0として計算</Description>
+                                )}
+                              </field.NumberField>
+                            )}
+                          </form.AppField>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex-1 grow">
-                    <form.AppField name={`levels.${sn}.mut`}>
-                      {(field) => (
-                        <field.NumberField
-                          defaultValue={
-                            field.form.options.defaultValues?.levels[sn].mut
-                          }
-                          value={field.state.value}
-                          onChange={(e) => field.setValue(e)}
-                          isDisabled={
-                            field.form.state.values.mode === "value->level" ||
-                            field.form.state.values.type === "wild" ||
-                            field.form.state.values.type === "dom"
-                          }
-                          minValue={0}
-                          formatOptions={{
-                            maximumFractionDigits: 0,
-                            minimumFractionDigits: 0,
-                          }}
-                        >
-                          <Label>mut</Label>
-                          <NumberField.Group>
-                            <NumberField.DecrementButton className="max-sm:hidden" />
-                            <NumberField.Input />
-                            <NumberField.IncrementButton className="max-sm:hidden" />
-                          </NumberField.Group>
-                          {meta?.statsMeta[sn]?.equalWildMutationRates && (
-                            <Description>
-                              野生と上昇率が同じ
-                              <br />
-                              {field.form.state.values.mode ===
-                                "value->level" && "なので、野生にまとめてます"}
-                            </Description>
-                          )}
-                          {meta?.statsMeta[sn]?.isMutLevelCalculatedAsZero && (
-                            <Description>0として計算</Description>
-                          )}
-                        </field.NumberField>
-                      )}
-                    </form.AppField>
-                  </div>
-                  <div className="flex-1 grow">
-                    <form.AppField name={`levels.${sn}.dom`}>
-                      {(field) => (
-                        <field.NumberField
-                          defaultValue={
-                            field.form.options.defaultValues?.levels[sn].dom
-                          }
-                          value={field.state.value}
-                          onChange={(e) => field.setValue(e)}
-                          isDisabled={
-                            field.form.state.values.mode === "value->level" ||
-                            field.form.state.values.type === "wild"
-                          }
-                          minValue={0}
-                          formatOptions={{
-                            maximumFractionDigits: 0,
-                            minimumFractionDigits: 0,
-                          }}
-                        >
-                          <Label>dom</Label>
-                          <NumberField.Group>
-                            <NumberField.DecrementButton className="max-sm:hidden" />
-                            <NumberField.Input />
-                            <NumberField.IncrementButton className="max-sm:hidden" />
-                          </NumberField.Group>
-                          {meta?.statsMeta[sn]?.isDomLevelCalculatedAsZero && (
-                            <Description>0として計算</Description>
-                          )}
-                        </field.NumberField>
-                      )}
-                    </form.AppField>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      })}
+                </Accordion.Panel>
+              </Accordion.Panel>
+            </Accordion.Item>
+          );
+        })}
+      </Accordion>
 
       <form.AppField name="tameEffectiveness">
         {(field) => (
