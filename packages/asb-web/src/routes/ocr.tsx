@@ -40,7 +40,7 @@ function OcrComponent() {
 
   const [ocrResult, setOcrResult] = useState<ExtractTextsOutput | null>(null);
 
-  const [showLog, setShowLog] = useState<boolean>(true);
+  const [showLog, setShowLog] = useState<boolean>(false);
 
   const regionsOptions: [
     string,
@@ -180,7 +180,7 @@ function OcrComponent() {
       <Separator />
 
       <section>
-        <h3>切り抜き結果と生の結果</h3>
+        <h3>結果</h3>
         <p>{`OCRステータス: ${status}, 完了/全量 ${completeCnt}/${requestCnt}`}</p>
         <Switch isSelected={showLog} onChange={setShowLog}>
           <Switch.Content>
@@ -194,19 +194,12 @@ function OcrComponent() {
         </Switch>
         {ocrResult && (
           <>
-            <Suspense fallback={<div>待機中...</div>}>
-              <ShowType resultPromise={ocrResult.resultPromise}></ShowType>
-            </Suspense>
-            <Suspense fallback={<div>待機中...</div>}>
-              <ShowWithDome
-                resultPromise={ocrResult.resultPromise}
-              ></ShowWithDome>
-            </Suspense>
-            <Suspense fallback={<div>待機中...</div>}>
-              <ShowWithDomeLog
-                resultPromise={ocrResult.resultPromise}
-              ></ShowWithDomeLog>
-            </Suspense>
+            <div>
+              {`type: `}
+              <Suspense fallback={<div>待機中...</div>}>
+                <ShowType resultPromise={ocrResult.resultPromise}></ShowType>
+              </Suspense>
+            </div>
             <Table>
               <Table.ScrollContainer>
                 <Table.Content aria-label="Example table">
@@ -234,8 +227,7 @@ function OcrComponent() {
                                   ocrResult.result.extractedPromiseTexs[ol],
                                 ).map(([et, ev]) => (
                                   <p key={et}>
-                                    {`${et}: `}
-                                    <Suspense fallback={<div>抽出中...</div>}>
+                                    <Suspense fallback={<div>待機中...</div>}>
                                       <ShowExtractedText
                                         textPromise={ev[il]}
                                       ></ShowExtractedText>
@@ -270,6 +262,54 @@ function OcrComponent() {
                         )}
                       </Table.Row>
                     ))}
+                    <Table.Row>
+                      <Table.Cell>withDom</Table.Cell>
+                      {R.entries(
+                        ocrResult.result.croppedImages.stat_name_0,
+                      ).map(([il, iv]) => (
+                        <Table.Cell key={il}>
+                          <div>
+                            <img
+                              src={iv.toDataURL()}
+                              aria-label="cropped image"
+                            />
+                            {R.entries(
+                              ocrResult.result.extractedPromiseTexs.stat_name_0,
+                            ).map(([et, ev]) =>
+                              et === "statValue" ? (
+                                <p key={et}>
+                                  <Suspense fallback={<div>待機中...</div>}>
+                                    <ShowExtractedText
+                                      textPromise={ev[il]}
+                                    ></ShowExtractedText>
+                                  </Suspense>
+                                </p>
+                              ) : undefined,
+                            )}
+                          </div>
+                        </Table.Cell>
+                      ))}
+                      <Table.Cell>
+                        <span>
+                          <Suspense fallback={<div>待機中...</div>}>
+                            <ShowWithDome
+                              resultPromise={ocrResult.resultPromise}
+                            ></ShowWithDome>
+                          </Suspense>
+                        </span>
+                      </Table.Cell>
+                      {showLog && (
+                        <Table.Cell>
+                          <span>
+                            <Suspense fallback={<div>待機中...</div>}>
+                              <ShowWithDomeLog
+                                resultPromise={ocrResult.resultPromise}
+                              ></ShowWithDomeLog>
+                            </Suspense>
+                          </span>
+                        </Table.Cell>
+                      )}
+                    </Table.Row>
                   </Table.Body>
                 </Table.Content>
               </Table.ScrollContainer>
@@ -330,7 +370,7 @@ function ShowType({
   resultPromise: ExtractTextsOutput["resultPromise"];
 }) {
   const type = use(resultPromise).type;
-  return <p>{type}</p>;
+  return <span>{type}</span>;
 }
 
 function ShowWithDome({
@@ -338,8 +378,15 @@ function ShowWithDome({
 }: {
   resultPromise: ExtractTextsOutput["resultPromise"];
 }) {
-  const withDom = use(resultPromise).withDom;
-  return <p>{JSON.stringify(withDom)}</p>;
+  const result = use(resultPromise).withDom;
+  return (
+    <p>
+      <div>
+        <p>{result.type}</p>
+        <p>{JSON.stringify(result.text)}</p>
+      </div>
+    </p>
+  );
 }
 
 function ShowWithDomeLog({
