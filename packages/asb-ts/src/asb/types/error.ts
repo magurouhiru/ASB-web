@@ -37,6 +37,7 @@ export class ASBTSErrorCommon extends Error implements ASBTSErrorCommonObject {
     public readonly context?: object | undefined,
   ) {
     super(message);
+    this.name = "ASBTSErrorCommon";
   }
 
   toObject(): ASBTSErrorCommonObject {
@@ -55,22 +56,10 @@ export class ASBTSErrorCommon extends Error implements ASBTSErrorCommonObject {
   }
 }
 
-export function isASBTSErrorCommonObject(
-  // biome-ignore lint/suspicious/noExplicitAny: 型判定のためなんでも受け取れるようにanyにする
-  error: any,
-): error is ASBTSErrorCommonObject {
-  return (
-    error &&
-    typeof error === "object" &&
-    error._tag === "ASBTSError" &&
-    error.type === "common"
-  );
-}
-
 export function isASBTSErrorCommon(
   // biome-ignore lint/suspicious/noExplicitAny: 型判定のためなんでも受け取れるようにanyにする
   error: any,
-): typeof isASBTSErrorCommon {
+): error is ASBTSErrorCommon | ASBTSErrorCommonObject {
   return (
     error &&
     typeof error === "object" &&
