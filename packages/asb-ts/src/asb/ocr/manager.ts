@@ -43,11 +43,7 @@ export class OcrQueueManager {
     oem: OEM = OEM.LSTM_ONLY,
     options: Partial<WorkerOptions> = {},
     numberOfWorker = 2,
-    callBack?: (
-      status: OcrQueueManagerStatus,
-      requestCnt: number,
-      completeCnt: number,
-    ) => void,
+    callBack: typeof this.callBack,
   ) {
     this.langs = langs;
     this.oem = oem;

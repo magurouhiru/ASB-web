@@ -188,7 +188,7 @@ function OcrComponent() {
 
       <section>
         <h3>結果</h3>
-        <p>{`OCRステータス: ${status}, 完了/全量 ${completeCnt}/${requestCnt}`}</p>
+        <p>{`OCRステータス: ${status}, 残タスク: ${requestCnt - completeCnt}`}</p>
         <div className="flex gap-2">
           <Switch isSelected={showLog} onChange={setShowLog}>
             <Switch.Content>
@@ -228,15 +228,21 @@ function OcrComponent() {
                             </div>
                             {R.keys(
                               ocrResult.result.extractedPromiseTexs[ol],
-                            ).map((et) => (
-                              <ShowExtractedText
-                                key={et}
-                                fileName={file.name}
-                                ocrResult={ocrResult}
-                                ol={ol}
-                                et={et}
-                                il={il}
-                              />
+                            ).map((et, i, array) => (
+                              <>
+                                <div className="flex gap-2">
+                                  <span>{et}:</span>
+                                  <ShowExtractedText
+                                    key={et}
+                                    fileName={file.name}
+                                    ocrResult={ocrResult}
+                                    ol={ol}
+                                    et={et}
+                                    il={il}
+                                  />
+                                </div>
+                                {i + 1 !== array.length && <Separator />}
+                              </>
                             ))}
                           </Table.Cell>
                         ))}
@@ -246,6 +252,15 @@ function OcrComponent() {
                             ocrResult={ocrResult}
                             ol={ol}
                           />
+                          {ol === "stat_name_0" && (
+                            <>
+                              <Separator />
+                              <ShowNormalizedTextWithDom
+                                fileName={file.name}
+                                ocrResult={ocrResult}
+                              />
+                            </>
+                          )}
                         </Table.Cell>
                         {showLog && (
                           <Table.Cell>
@@ -254,6 +269,15 @@ function OcrComponent() {
                               ocrResult={ocrResult}
                               ol={ol}
                             />
+                            {ol === "stat_name_0" && (
+                              <>
+                                <Separator />
+                                <ShowLogWithDom
+                                  fileName={file.name}
+                                  ocrResult={ocrResult}
+                                />
+                              </>
+                            )}
                           </Table.Cell>
                         )}
                       </Table.Row>
@@ -320,7 +344,7 @@ function ShowNormalizedText({
     return (
       <div>
         <div>{data.type}</div>
-        <div>{data.text}</div>
+        <div>{JSON.stringify(data.text)}</div>
       </div>
     );
   }
@@ -338,6 +362,61 @@ function ShowLog({
   const { data, isPending, isError } = useQuery({
     queryKey: ["logs", fileName, ol],
     queryFn: () => ocrResult.resultPromise.then((p) => p.logs[ol] ?? []),
+  });
+  if (isError) {
+    return <div>エラーが発生しました。</div>;
+  } else if (isPending) {
+    return <div>待機中...</div>;
+  } else {
+    return (
+      <ol>
+        {data.map((log) => (
+          <li key={JSON.stringify(log)}>
+            {log.isValibotError
+              ? `action: ${log.action}, flatError: ${JSON.stringify(log.flatError, null, 2)},`
+              : `action: ${log.action}, output: ${log.output}${log.param !== undefined ? "" : `, param: ${log.param}`}}`}
+          </li>
+        ))}
+      </ol>
+    );
+  }
+}
+
+function ShowNormalizedTextWithDom({
+  fileName,
+  ocrResult,
+}: {
+  fileName: string;
+  ocrResult: ExtractTextsOutput;
+}) {
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["normalizedTextsWithDom", fileName],
+    queryFn: () => ocrResult.resultPromise.then((p) => p.withDom ?? null),
+  });
+  if (isError) {
+    return <div>エラーが発生しました。</div>;
+  } else if (isPending) {
+    return <div>待機中...</div>;
+  } else {
+    return (
+      <div>
+        <div>{data.type}</div>
+        <div>{JSON.stringify(data.text)}</div>
+      </div>
+    );
+  }
+}
+
+function ShowLogWithDom({
+  fileName,
+  ocrResult,
+}: {
+  fileName: string;
+  ocrResult: ExtractTextsOutput;
+}) {
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["logsWithDom", fileName],
+    queryFn: () => ocrResult.resultPromise.then((p) => p.withDomLog ?? []),
   });
   if (isError) {
     return <div>エラーが発生しました。</div>;
