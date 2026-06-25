@@ -36,14 +36,19 @@ function cropImages(
   cropRect: CropRect,
 ): CroppedImageRecord {
   const { x, y, width, height } = cropRect;
+  const scale = 3; //拡大倍率
+  const padding = 20; //余白
+
+  const targetWidth = width * scale + padding * 2;
+  const targetHeight = height * scale + padding * 2;
   // 1. 各Canvas要素と2Dコンテキストを作成する共通処理
   const createTargetCanvas = (): [
     HTMLCanvasElement,
     CanvasRenderingContext2D,
   ] => {
     const canvas = document.createElement("canvas");
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
     const ctx = canvas.getContext("2d");
     if (!ctx) {
       throw new ASBTSErrorCommon(
@@ -59,16 +64,33 @@ function cropImages(
   const [grayscale, gCtx] = createTargetCanvas(); // グレースケール用
   const [binary, bCtx] = createTargetCanvas(); // 二値化用
 
+  // 塗りつぶして余白にする
+  oCtx.fillStyle = "#000000";
+  oCtx.fillRect(0, 0, targetWidth, targetHeight);
+
   // 2. 元のCanvasから指定された範囲を「a (original)」に切り取って描画
-  oCtx.drawImage(sourceCanvas, x, y, width, height, 0, 0, width, height);
+  oCtx.drawImage(
+    sourceCanvas,
+    x,
+    y,
+    // 元画像からの切り出し範囲
+    width,
+    height,
+    // 描画位置（余白の内側）
+    padding,
+    padding,
+    // 3倍に拡大
+    width * scale,
+    height * scale,
+  );
 
   // 3. 画像処理のために「sourceCanvas」のピクセルデータを取得
-  const imgData = oCtx.getImageData(0, 0, width, height);
+  const imgData = oCtx.getImageData(0, 0, targetWidth, targetHeight);
   const data = imgData.data;
 
   // 4. グレースケール用と二値化用の ImageData 領域を新しく用意
-  const grayImgData = gCtx.createImageData(width, height);
-  const binaryImgData = bCtx.createImageData(width, height);
+  const grayImgData = gCtx.createImageData(targetWidth, targetHeight);
+  const binaryImgData = bCtx.createImageData(targetWidth, targetHeight);
 
   const grayData = grayImgData.data;
   const binaryData = binaryImgData.data;
@@ -95,7 +117,10 @@ function cropImages(
     }
 
     // 輝度（グレースケール値）の計算 (BT.601)
-    const v = 0.299 * r + 0.587 * g + 0.114 * b;
+    const tmpV = 0.299 * r + 0.587 * g + 0.114 * b;
+
+    // 白黒反転させる
+    const v = 255 - tmpV;
 
     // グレースケールデータの書き込み
     grayData[i] = v;
