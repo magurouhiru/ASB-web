@@ -78,3 +78,8 @@ ARKStatsExtractor/ARKBreedingStats/values/Values.cs:576行付近を参照
 
 **備考**
 公式資料には「変異」に関する記述はありません。
+
+
+レベルから値を算出する方法について(ソースはARKStatsExtractor/ARKBreedingStats/Extraction.cs)
+
+まず、各ステータス毎にレベルと取りうるTEの範囲をまとめたものを出力し、その後TEの範囲がかぶってそれっぽいレベルを抽出している。
