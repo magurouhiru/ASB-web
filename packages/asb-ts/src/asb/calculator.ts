@@ -198,14 +198,16 @@ export function calculateLevelController(
     }
     case "dom": {
       [levels, teRange] = calculateLevelDomBred(
-        TE_MIN as TameEffectiveness,
-        TE_MAX as TameEffectiveness,
+        { teMin: TE_MIN, teMax: TE_MAX } as TeRange,
         ip,
       );
       break;
     }
     case "bred": {
-      [levels, teRange] = calculateLevelDomBred(BRED_TE, BRED_TE, ip);
+      [levels, teRange] = calculateLevelDomBred(
+        { teMin: BRED_TE, teMax: BRED_TE },
+        ip,
+      );
       break;
     }
   }
@@ -238,8 +240,7 @@ function calculateLevelWild(
 type FlatResult = Partial<Record<StatLabel, CLptResultItem>>;
 
 function calculateLevelDomBred(
-  teMin: TameEffectiveness,
-  teMax: TameEffectiveness,
+  teRange: TeRange,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
 ): [StatLevels, TeRange, number] {
   const cLptResult = R.mapValues(ip.values, (value, sl) => {
@@ -252,7 +253,7 @@ function calculateLevelDomBred(
     ) {
       return undefined;
     } else {
-      return cLpt(sl, value, stat, teMin, teMax, ip);
+      return cLpt(sl, value, stat, teRange, ip);
     }
   });
   const cLptEntries = R.entries(cLptResult);
@@ -339,21 +340,21 @@ function calculateLevelDomBred(
     throw new ASBTSErrorCommon(
       "いい感じのレベルが見つからなかったです。",
       "calculateLevelDomBred",
-      { teMin, teMax, ip },
+      { teRange, ip },
     );
   }
-  const teRange = toValidTeRange(target);
-  if (teRange === null) {
+  const teRangeTmp = toValidTeRange(target);
+  if (teRangeTmp === null) {
     throw new ASBTSErrorCommon(
       "いい感じのTEが見つからなかったです。",
       "calculateLevelDomBred",
-      { teMin, teMax, ip },
+      { teRange, ip },
     );
   }
 
   return [
     R.fromKeys(STAT_LABELS, (sl) => target[sl]?.ld),
-    teRange,
+    { ...teRangeTmp },
     minTotalLevelDiff,
   ];
 }
@@ -474,8 +475,7 @@ function cLpt(
   sl: StatLabel,
   value: PositiveNumber,
   stat: SpeciesStat,
-  teMin: TameEffectiveness,
-  teMax: TameEffectiveness,
+  teRange: TeRange,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
 ): [CLptResultItem, ...CLptResultItem[]] {
   const roundValue = round(value, sl);
@@ -512,14 +512,12 @@ function cLpt(
       );
     const teMinTmp = binarySearchMax(
       TE_DIGIT,
-      teMin,
-      teMax,
+      teRange,
       (te) => fnCV(te) <= roundValue,
     );
     const teMaxTmp = binarySearchMin(
       TE_DIGIT,
-      teMin,
-      teMax,
+      teRange,
       (te) => fnCV(te) >= roundValue,
     );
     if (teMinTmp !== null && teMaxTmp !== null) {
@@ -533,15 +531,14 @@ function cLpt(
     throw new ASBTSErrorCommon(
       "いい感じのレベルが見つからなかったです。",
       "cLpt",
-      { sl, value, stat, teMin, teMax, ip },
+      { sl, value, stat, teRange, ip },
     );
   }
 }
 
 function binarySearchMax(
   digit: number,
-  teMin: TameEffectiveness,
-  teMax: TameEffectiveness,
+  { teMin, teMax }: TeRange,
   check: (te: TameEffectiveness) => boolean,
 ): TameEffectiveness | null {
   const teRange = teMax - teMin;
@@ -572,8 +569,7 @@ function binarySearchMax(
 
 function binarySearchMin(
   digit: number,
-  teMin: TameEffectiveness,
-  teMax: TameEffectiveness,
+  { teMin, teMax }: TeRange,
   check: (te: TameEffectiveness) => boolean,
 ): TameEffectiveness | null {
   const teRange = teMax - teMin;
