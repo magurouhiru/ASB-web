@@ -15,6 +15,7 @@ export interface ASBTSErrorValibotObject {
 export interface ASBTSErrorCommonObject {
   readonly _tag: "ASBTSError";
   readonly type: "common";
+  readonly message: string;
   readonly functionName: string;
   readonly input: object;
   readonly context?: object | undefined;
@@ -32,7 +33,7 @@ export class ASBTSErrorCommon extends Error implements ASBTSErrorCommonObject {
   public readonly type = "common";
 
   constructor(
-    message: string,
+    readonly message: string,
     public readonly functionName: string,
     public readonly input: object,
     public readonly context?: object | undefined,
@@ -45,6 +46,7 @@ export class ASBTSErrorCommon extends Error implements ASBTSErrorCommonObject {
     return {
       _tag: this._tag,
       type: this.type,
+      message: this.message,
       functionName: this.functionName,
       input: this.input,
       ...(this.context !== undefined ? { context: this.context } : {}),

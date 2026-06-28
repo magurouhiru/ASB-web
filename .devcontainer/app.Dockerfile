@@ -1,6 +1,6 @@
 # 公式のDev Containerイメージをベースに使用
-# https://github.com/devcontainers/images/tree/main/src/dotnet
-FROM mcr.microsoft.com/devcontainers/dotnet:10.0
+# https://github.com/devcontainers/images/tree/main/src/base-debian
+FROM mcr.microsoft.com/devcontainers/base:trixie
 
 # 定数の定義
 ARG USERNAME=vscode \

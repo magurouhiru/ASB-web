@@ -12,7 +12,6 @@
   "scripts": {
     "build": "tsc -b",
     "watch": "tsc -b -w",
-    "test": "vitest run --dir src",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe .",
     "tools": "bun run tools:create-values && bun run tools:create-name-dict && bun run tools:create-variants-default-unselected",
@@ -30,9 +29,7 @@
   "devDependencies": {
     "@biomejs/biome": "catalog:",
     "@types/bun": "latest",
-    "@types/node": "^25.5.2",
     "license-checker-rseidelsohn": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
+    "typescript": "catalog:"
   }
 }

@@ -10,6 +10,7 @@ import {
   DEFAULT_MUTATION_MULTIPLIER,
   DEFAULT_STAT_IMPRINT_MULTIPLIER,
   DEFAULT_TBHM,
+  type Diffs,
   DOM_IMP,
   type Imprinting,
   type LevelDetail,
@@ -21,7 +22,6 @@ import {
   type Species,
   type SpeciesStat,
   STAT_LABELS,
-  type StatDiff,
   type StatLabel,
   type StatLevels,
   StatLevelsSchema,
@@ -29,9 +29,10 @@ import {
   StatValuesSchema,
   type StatValuesUnsafe,
   type TameEffectiveness,
-  TameEffectivenessSchema,
+  TE_DIGIT,
   TE_MAX,
-  WILD_TE,
+  TE_MIN,
+  type TeRange,
 } from "./types/index.js";
 
 export function calculateValueController(
@@ -189,35 +190,40 @@ export function calculateLevelController(
   ip: CalculateLevelInputPack,
 ): CalculateLevelOutputPack {
   let levels: StatLevels | null = null;
-  let te: TameEffectiveness | null = null;
-  let diffs: StatDiff | null = null;
+  let teRange: TeRange | null = null;
+  let diffs: Diffs | null = null;
+
   switch (ip.type) {
     case "wild": {
       [levels, diffs] = calculateLevelWild(ip);
-      te = WILD_TE;
       break;
     }
     case "dom": {
-      [levels, diffs, te] = calculateLevelDom(ip);
+      [levels, teRange, diffs] = calculateLevelDomBred(
+        { teMin: TE_MIN, teMax: TE_MAX } as TeRange,
+        ip,
+      );
       break;
     }
     case "bred": {
-      te = BRED_TE;
-      [levels, diffs] = calculateLevelDomBred(te, ip);
+      [levels, teRange, diffs] = calculateLevelDomBred(
+        { teMin: BRED_TE, teMax: BRED_TE },
+        ip,
+      );
       break;
     }
   }
 
   return {
     levels: v.parse(StatLevelsSchema, levels),
-    tameEffectiveness: te,
+    teRange,
     diffs,
   };
 }
 
 function calculateLevelWild(
   ip: Extract<CalculateLevelInputPack, { type: "wild" }>,
-): [StatLevels, StatDiff] {
+): [StatLevels, Diffs] {
   const results = R.mapValues(ip.values, (value, sl) => {
     const stat = ip.species.stats[sl];
     if (
@@ -233,69 +239,19 @@ function calculateLevelWild(
   });
   return [
     R.mapValues(results, (result) => result?.ld),
-    R.mapValues(results, (result) => result?.diff),
+    {
+      totalLevelDiff: ip.totalLevel - 1 - calcTotalLevel(results),
+      statDiffs: R.fromKeys(STAT_LABELS, (sl) => results[sl]?.diff),
+    },
   ];
 }
 
-const TARGET_TE_LIST_SIZE = 10;
-const TARGET_TE_LIST = Array.from(
-  { length: TE_MAX * TARGET_TE_LIST_SIZE + 1 },
-  (_, i) => v.parse(TameEffectivenessSchema, i / TARGET_TE_LIST_SIZE),
-);
-
-function calculateLevelDom(
-  ip: Extract<CalculateLevelInputPack, { type: "dom" }>,
-): [StatLevels, StatDiff, TameEffectiveness] {
-  let buffLevels: StatLevels | null = null;
-  let buffTe: TameEffectiveness | null = null;
-  let buffDiffs: StatDiff | null = null;
-  let buffTotalLevelDiff = Number.MAX_SAFE_INTEGER;
-  let buffSumDiff = Number.MAX_SAFE_INTEGER;
-  for (const te of TARGET_TE_LIST) {
-    const [tmpLevels, tmpDiffs, tmpTotalLevelDiff] = calculateLevelDomBred(
-      te,
-      ip,
-    );
-    const tmpSumDiff = R.pipe(
-      R.pickBy(tmpDiffs, R.isDefined),
-      R.entries(),
-      R.filter(([sl]) => sl !== "torpidity"),
-      R.reduce(
-        (acc, [sl, value]) =>
-          acc + Math.abs(value / (ip.species.stats[sl]?.baseValue ?? 1)),
-        0,
-      ),
-    );
-    if (tmpTotalLevelDiff < buffTotalLevelDiff) {
-      buffLevels = tmpLevels;
-      buffTe = te;
-      buffDiffs = tmpDiffs;
-      buffTotalLevelDiff = tmpTotalLevelDiff;
-      buffSumDiff = tmpSumDiff;
-    } else if (
-      tmpTotalLevelDiff === buffTotalLevelDiff &&
-      tmpSumDiff <= buffSumDiff
-    ) {
-      buffLevels = tmpLevels;
-      buffTe = te;
-      buffDiffs = tmpDiffs;
-      buffTotalLevelDiff = tmpTotalLevelDiff;
-      buffSumDiff = tmpSumDiff;
-    }
-  }
-  if (buffLevels === null || buffTe === null || buffDiffs === null)
-    throw new ASBTSErrorCommon(
-      "いい感じのテイム効果が見つからなかったです。",
-      "calculateLevelDom",
-      { ip },
-    );
-  return [buffLevels, buffDiffs, buffTe];
-}
+type FlatResult = Partial<Record<StatLabel, CLptResultItem>>;
 
 function calculateLevelDomBred(
-  te: TameEffectiveness,
+  teRange: TeRange,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
-): [StatLevels, StatDiff, number] {
+): [StatLevels, TeRange, Diffs] {
   const cLptResult = R.mapValues(ip.values, (value, sl) => {
     const stat = ip.species.stats[sl];
     if (
@@ -306,12 +262,11 @@ function calculateLevelDomBred(
     ) {
       return undefined;
     } else {
-      return cLpt(sl, value, stat, te, ip);
+      return cL(sl, value, stat, teRange, ip);
     }
   });
   const cLptEntries = R.entries(cLptResult);
 
-  type FlatResult = Partial<Record<StatLabel, CLptResultItem | undefined>>;
   const flatResults = cLptEntries.reduce((acc, [sl, results]): FlatResult[] => {
     if (results === undefined) {
       return acc;
@@ -326,22 +281,21 @@ function calculateLevelDomBred(
     }
   }, []);
 
-  const calcTotalLevel = (fr: FlatResult) =>
-    R.pipe(
-      R.pickBy(fr, R.isDefined),
-      R.entries(),
-      R.filter(([sl]) => sl !== "torpidity"),
-      R.reduce((acc, [, { ld }]) => acc + ld.wild + ld.mut + ld.dom, 0),
-    );
-  const [minTotalLevelDiff, minTotalLevelDiffResults] = flatResults.reduce(
-    (acc, fr): [number, FlatResult[]] => {
-      const tmpDiff = Math.abs(ip.totalLevel - 1 - calcTotalLevel(fr));
-      if (tmpDiff === acc[0]) return [tmpDiff, [...acc[1], fr]];
-      else if (tmpDiff < acc[0]) return [tmpDiff, [fr]];
-      else return acc;
-    },
-    [Number.MAX_SAFE_INTEGER, []],
+  const removedInvalidTerange = R.pipe(
+    flatResults,
+    R.filter((result) => toValidTeRange(result) !== null),
   );
+
+  const [minTotalLevelDiff, minTotalLevelDiffResults] =
+    removedInvalidTerange.reduce(
+      (acc, fr): [number, FlatResult[]] => {
+        const tmpDiff = Math.abs(ip.totalLevel - 1 - calcTotalLevel(fr));
+        if (tmpDiff === acc[0]) return [tmpDiff, [...acc[1], fr]];
+        else if (tmpDiff < acc[0]) return [tmpDiff, [fr]];
+        else return acc;
+      },
+      [Number.MAX_SAFE_INTEGER, []],
+    );
 
   // レベルの差が同じものが複数ある場合は、ASBと同様に、各statの野生のレベル平均に近い奴を採用する
   // ARKStatsExtractor/ARKBreedingStats/Form1.extractor.cs:422行付近を参照
@@ -354,9 +308,9 @@ function calculateLevelDomBred(
         R.filter(([sl]) => sl !== "torpidity"),
         R.filter(
           ([, { ld }]) =>
-            ld.wild === POSITIVE_INTEGER_0 &&
-            ld.mut === POSITIVE_INTEGER_0 &&
-            ld.dom === POSITIVE_INTEGER_0,
+            ld.wild !== POSITIVE_INTEGER_0 ||
+            ld.mut !== POSITIVE_INTEGER_0 ||
+            ld.dom !== POSITIVE_INTEGER_0,
         ),
       );
       const tmpMeanWildLevel = tmpTotalLevel / tmpFiltered.length;
@@ -381,22 +335,66 @@ function calculateLevelDomBred(
     },
     [Number.MAX_SAFE_INTEGER, []],
   );
-  // targetResults.forEach((result) => console.log(result));
 
   const target = targetResults[0];
   if (target === undefined) {
     throw new ASBTSErrorCommon(
       "いい感じのレベルが見つからなかったです。",
       "calculateLevelDomBred",
-      { te, ip },
+      { teRange, ip },
+    );
+  }
+  const teRangeTmp = toValidTeRange(target);
+  if (teRangeTmp === null) {
+    throw new ASBTSErrorCommon(
+      "いい感じのTEが見つからなかったです。",
+      "calculateLevelDomBred",
+      { teRange, ip },
     );
   }
 
   return [
     R.fromKeys(STAT_LABELS, (sl) => target[sl]?.ld),
-    R.fromKeys(STAT_LABELS, (sl) => target[sl]?.diff),
-    minTotalLevelDiff,
+    { ...teRangeTmp },
+    {
+      totalLevelDiff: minTotalLevelDiff,
+      statDiffs: R.fromKeys(STAT_LABELS, (sl) => target[sl]?.diff),
+    },
   ];
+}
+
+function calcTotalLevel(
+  fr: Partial<Record<StatLabel, { ld: LevelDetail } | undefined>>,
+): number {
+  return R.pipe(
+    R.pickBy(fr, R.isDefined),
+    R.entries(),
+    R.filter(([sl]) => sl !== "torpidity"),
+    R.reduce((acc, [, { ld }]) => acc + ld.wild + ld.mut + ld.dom, 0),
+  );
+}
+
+function toValidTeRange(result: FlatResult): TeRange | null {
+  let teMinTmp = TE_MIN;
+  let teMaxTmp = TE_MAX;
+  let flag = true;
+  for (const {
+    teRange: { teMin, teMax },
+  } of R.values(result)) {
+    if (teMin <= teMaxTmp && teMinTmp <= teMax) {
+      teMinTmp = Math.max(teMin, teMinTmp) as TameEffectiveness;
+      teMaxTmp = Math.min(teMax, teMaxTmp) as TameEffectiveness;
+    } else {
+      flag = false;
+      break;
+    }
+  }
+  return flag
+    ? {
+        teMin: teMinTmp as TameEffectiveness,
+        teMax: teMaxTmp as TameEffectiveness,
+      }
+    : null;
 }
 
 // とりあえずレベル100まで計算する。これ以上は現実的に存在しないと思うので。
@@ -451,20 +449,24 @@ function cLw(
   stat: SpeciesStat,
   ip: Extract<CalculateLevelInputPack, { type: "wild" }>,
 ): { ld: LevelDetail; diff: number } {
+  const roundValue = round(value, sl);
   let buffLd: LevelDetail | null = null;
   let buffDiff = Number.MAX_SAFE_INTEGER;
 
   for (const ld of sl === "torpidity"
     ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
     : TARGET_LEVEL_DETAIL_LIST_WILD) {
-    const tmpVw = cVw(
+    const tmpVw = round(
+      cVw(
+        sl,
+        ld,
+        stat,
+        ip.species.mutationMultiplier,
+        ip.settings.statMultipliers[sl],
+      ),
       sl,
-      ld,
-      stat,
-      ip.species.mutationMultiplier,
-      ip.settings.statMultipliers[sl],
     );
-    const tmpDiff = value - round(tmpVw, sl);
+    const tmpDiff = roundValue - round(tmpVw, sl);
     if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
       buffLd = ld;
       buffDiff = tmpDiff;
@@ -473,23 +475,29 @@ function cLw(
   if (buffLd === null) {
     throw new ASBTSErrorCommon(
       "いい感じの野生のレベルが見つからなかったです。",
-      "calculateLevelDom",
+      "cLw",
       { sl, value, stat, ip },
     );
   }
   return { ld: buffLd, diff: buffDiff };
 }
 
-type CLptResultItem = { ld: LevelDetail; diff: number };
-function cLpt(
+type CLptResultItem = {
+  ld: LevelDetail;
+  teRange: TeRange;
+  diff: number;
+};
+
+function cL(
   sl: StatLabel,
   value: PositiveNumber,
   stat: SpeciesStat,
-  te: TameEffectiveness,
+  teRange: TeRange,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
 ): [CLptResultItem, ...CLptResultItem[]] {
-  let buffDiff = Number.MAX_SAFE_INTEGER;
-  let buff: CLptResultItem[] = [];
+  const roundedValue = round(value, sl);
+  let resultBuff: CLptResultItem[] = [];
+  let diffBuff = Number.MAX_SAFE_INTEGER;
 
   const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sl];
   const targetLevel =
@@ -507,31 +515,104 @@ function cLpt(
             ? TARGET_LEVEL_DETAIL_LIST_WILD
             : TARGET_LEVEL_DETAIL_LIST_WILD_MUT;
   for (const ld of targetLevel) {
-    const tmpVpt = cV(
-      sl,
-      ld,
-      stat,
-      te,
-      ip.type === "dom" ? DOM_IMP : ip.imprinting,
-      ip.species,
-      ip.settings,
+    const fnCV = (te: TameEffectiveness) =>
+      round(
+        cV(
+          sl,
+          ld,
+          stat,
+          te,
+          ip.type === "dom" ? DOM_IMP : ip.imprinting,
+          ip.species,
+          ip.settings,
+        ),
+        sl,
+      );
+    const [teRangeTmp, diffTmp] = searchTeRange(
+      TE_DIGIT,
+      teRange,
+      fnCV,
+      roundedValue,
     );
-    const tmpDiff = value - round(tmpVpt, sl);
-    if (Math.abs(tmpDiff) === Math.abs(buffDiff)) {
-      buff.push({ ld: ld, diff: tmpDiff });
-    } else if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
-      buffDiff = tmpDiff;
-      buff = [{ ld: ld, diff: tmpDiff }];
+    if (Math.abs(diffTmp) < Math.abs(diffBuff)) {
+      resultBuff = [{ ld, teRange: teRangeTmp, diff: diffTmp }];
+      diffBuff = diffTmp;
+    } else if (Math.abs(diffTmp) === Math.abs(diffBuff)) {
+      resultBuff.push({ ld, teRange: teRangeTmp, diff: diffTmp });
     }
   }
-  const first = buff[0];
+  const first = resultBuff[0];
   if (first) {
-    return [first, ...buff];
+    return [first, ...resultBuff.slice(1)];
   } else {
     throw new ASBTSErrorCommon(
       "いい感じのレベルが見つからなかったです。",
-      "calculateLevelDom",
-      { sl, value, stat, te, ip },
+      "cLpt",
+      { sl, value, stat, teRange, ip },
     );
   }
+}
+
+function searchTeRange(
+  digit: number,
+  teRange: TeRange,
+  fn: (te: TameEffectiveness) => number,
+  target: number,
+): [TeRange, number] {
+  const teRangeTarget = teRange.teMax - teRange.teMin;
+  if (teRangeTarget < 0) {
+    throw new ASBTSErrorCommon(
+      "TEの調べる範囲がおかしいです",
+      "searchTeRange",
+      { teRange },
+    );
+  } else if (teRangeTarget === 0) {
+    if (fn(teRange.teMin) === target) {
+      return [teRange, 0];
+    }
+  }
+  const min = fn(teRange.teMin);
+  const max = fn(teRange.teMax);
+  if (target < min || max < target) {
+    return [
+      { teMin: teRange.teMin, teMax: teRange.teMax },
+      target - (min + max) / 2,
+    ];
+  } else if (min === max) {
+    return [{ teMin: teRange.teMin, teMax: teRange.teMax }, target - min];
+  } else if (min === target) {
+    return [{ teMin: teRange.teMin, teMax: teRange.teMin }, 0];
+  } else if (max === target) {
+    return [{ teMin: teRange.teMax, teMax: teRange.teMax }, 0];
+  }
+
+  const teRangeBuff = { ...teRange };
+  const range = 10 ** digit;
+  let left = 0;
+  let right = range;
+  while (left <= right) {
+    const mid = (left + right) >> 1;
+    const teMid = (mid / range) as TameEffectiveness;
+    const tmp = fn(teMid);
+    if (tmp <= target) {
+      teRangeBuff.teMin = teMid;
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+
+  right = range;
+  while (left <= right) {
+    const mid = (left + right) >> 1;
+    const teMid = (mid / range) as TameEffectiveness;
+    const tmp = fn(teMid);
+    if (tmp < target) {
+      left = mid + 1;
+    } else {
+      teRangeBuff.teMax = teMid;
+      right = mid - 1;
+    }
+  }
+  return [teRangeBuff, 0];
 }
