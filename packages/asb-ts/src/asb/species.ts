@@ -120,7 +120,9 @@ export function searchSpecies(
       threshold: 1,
     },
   );
-  const hit = fuse.search(name).at(0)?.item;
+  const lastIndex = name.lastIndexOf("(");
+  const extractedName = name.slice(lastIndex < 0 ? undefined : lastIndex);
+  const hit = fuse.search(extractedName).at(0)?.item;
   if (!hit) {
     throw new ASBTSErrorCommon(
       "生物が見つかりませんでした。",

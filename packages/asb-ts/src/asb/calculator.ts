@@ -363,10 +363,12 @@ function toValidTeRange(result: FlatResult): TeRange | null {
   let teMinTmp = TE_MIN;
   let teMaxTmp = TE_MAX;
   let flag = true;
-  for (const item of R.values(result)) {
-    if (item.teMin <= teMaxTmp && teMinTmp <= item.teMax) {
-      teMinTmp = Math.max(item.teMin, teMinTmp) as TameEffectiveness;
-      teMaxTmp = Math.min(item.teMax, teMaxTmp) as TameEffectiveness;
+  for (const {
+    teRange: { teMin, teMax },
+  } of R.values(result)) {
+    if (teMin <= teMaxTmp && teMinTmp <= teMax) {
+      teMinTmp = Math.max(teMin, teMinTmp) as TameEffectiveness;
+      teMaxTmp = Math.min(teMax, teMaxTmp) as TameEffectiveness;
     } else {
       flag = false;
       break;
@@ -467,8 +469,7 @@ function cLw(
 
 type CLptResultItem = {
   ld: LevelDetail;
-  teMin: TameEffectiveness;
-  teMax: TameEffectiveness;
+  teRange: TeRange;
 };
 
 function cLpt(
@@ -478,7 +479,7 @@ function cLpt(
   teRange: TeRange,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
 ): [CLptResultItem, ...CLptResultItem[]] {
-  const roundValue = round(value, sl);
+  const roundedValue = round(value, sl);
   const buff: CLptResultItem[] = [];
 
   const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sl];
@@ -510,18 +511,9 @@ function cLpt(
         ),
         sl,
       );
-    const teMinTmp = binarySearchMax(
-      TE_DIGIT,
-      teRange,
-      (te) => fnCV(te) <= roundValue,
-    );
-    const teMaxTmp = binarySearchMin(
-      TE_DIGIT,
-      teRange,
-      (te) => fnCV(te) >= roundValue,
-    );
-    if (teMinTmp !== null && teMaxTmp !== null) {
-      buff.push({ ld, teMin: teMinTmp, teMax: teMaxTmp });
+    const teRangeTmp = searchTeRange(TE_DIGIT, teRange, fnCV, roundedValue);
+    if (teRangeTmp !== null) {
+      buff.push({ ld, teRange: teRangeTmp });
     }
   }
   const first = buff[0];
@@ -536,67 +528,63 @@ function cLpt(
   }
 }
 
-function binarySearchMax(
+function searchTeRange(
   digit: number,
-  { teMin, teMax }: TeRange,
-  check: (te: TameEffectiveness) => boolean,
-): TameEffectiveness | null {
-  const teRange = teMax - teMin;
-  const range = 10 ** digit;
-  let left = teMin;
-  let right = teMax;
-  let result = null;
-
-  if (teRange <= 0) {
-    if (check(left)) {
-      result = left;
+  teRange: TeRange,
+  fn: (te: TameEffectiveness) => number,
+  target: number,
+): TeRange | null {
+  const teRangeTarget = teRange.teMax - teRange.teMin;
+  if (teRangeTarget < 0) {
+    throw new ASBTSErrorCommon(
+      "TEの調べる範囲がおかしいです",
+      "searchTeRange",
+      { teRange },
+    );
+  } else if (teRangeTarget === 0) {
+    if (fn(teRange.teMin) === target) {
+      return teRange;
     }
-  } else {
-    while (left <= right) {
-      const mid = ((left + right) / 2) as TameEffectiveness;
+  }
+  const min = fn(teRange.teMin);
+  const max = fn(teRange.teMax);
+  if (target < min || max < target) {
+    return null;
+  } else if (min === max) {
+    return { teMin: teRange.teMin, teMax: teRange.teMax };
+  } else if (min === target) {
+    return { teMin: teRange.teMin, teMax: teRange.teMin };
+  } else if (max === target) {
+    return { teMin: teRange.teMax, teMax: teRange.teMax };
+  }
 
-      if (check(mid)) {
-        result = mid; // midは条件を満たすので、一旦キープ
-        left = (mid + teRange / range) as TameEffectiveness; // さらに大きい値（右側）に満たすものがないか探す
-      } else {
-        right = (mid - teRange / range) as TameEffectiveness; // midが条件を満たさないので、より小さい範囲（左側）を探す
-      }
+  const teRangeBuff = { ...teRange };
+  const range = 10 ** digit;
+  let left = 0;
+  let right = range;
+  while (left <= right) {
+    const mid = (left + right) >> 1;
+    const teMid = (mid / range) as TameEffectiveness;
+    const tmp = fn(teMid);
+    if (tmp <= target) {
+      teRangeBuff.teMin = teMid;
+      left = mid + 1;
+    } else {
+      right = mid - 1;
     }
   }
 
-  return result;
-}
-
-function binarySearchMin(
-  digit: number,
-  { teMin, teMax }: TeRange,
-  check: (te: TameEffectiveness) => boolean,
-): TameEffectiveness | null {
-  const teRange = teMax - teMin;
-  const range = 10 ** digit;
-  let left = teMin;
-  let right = teMax;
-  let result = null;
-
-  if (teRange <= 0) {
-    if (check(left)) {
-      result = left;
-    }
-  } else if (check(teMin)) {
-    result = teMin;
-  } else if (check(teMax)) {
-    result = teMax;
-  } else {
-    while (left <= right) {
-      const mid = ((left + right) / 2) as TameEffectiveness;
-      if (check(mid)) {
-        result = mid; // midは条件を満たすので、一旦キープ
-        left = (mid + teRange / range) as TameEffectiveness; // さらに大きい値（右側）に満たすものがないか探す
-      } else {
-        right = (mid - teRange / range) as TameEffectiveness; // midが条件を満たさないので、より小さい範囲（左側）を探す
-      }
+  right = range;
+  while (left <= right) {
+    const mid = (left + right) >> 1;
+    const teMid = (mid / range) as TameEffectiveness;
+    const tmp = fn(teMid);
+    if (tmp < target) {
+      left = mid + 1;
+    } else {
+      teRangeBuff.teMax = teMid;
+      right = mid - 1;
     }
   }
-
-  return result;
+  return teRangeBuff;
 }
